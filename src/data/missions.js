@@ -241,10 +241,13 @@ export const MISSIONS = [
       },
       {
         tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Gemini Notebook',
+        hook: 'Two variations worth knowing.',
         estMinutes: 3,
         title: 'Ideas: other ways in',
         body:
-          'Two variations worth knowing. You can run Deep Research from INSIDE Gemini Notebook instead, and the report lands in your notebook as a source automatically, which sets up Mission 2 with zero copying. And when you run it in Gemini, prefer "Export to Docs" at the end: a Doc drops straight into a notebook through the Drive picker.',
+          'You can run Deep Research from INSIDE Gemini Notebook instead, and the report lands in your notebook as a source automatically, which sets up Mission 2 with zero copying. And when you run it in Gemini, prefer "Export to Docs" at the end: a Doc drops straight into a notebook through the Drive picker.',
       },
     ],
     verdict:
@@ -257,6 +260,8 @@ export const MISSIONS = [
     level: 2,
     title: 'The Evidence',
     pageTitle: 'Question the Report in Gemini Notebook',
+    stretchTitle: 'CHOOSE YOUR NEXT MOVE',
+    stretchIntro: 'Pick ONE path below; come back for another any time.',
     tools: [TOOLS.notebook],
     estMinutesCore: 12,
     summary: 'Question the research report in Gemini Notebook.',
@@ -301,6 +306,9 @@ export const MISSIONS = [
       },
       {
         tier: 'stretch',
+        choice: 'A',
+        toolChip: 'Notebook + Deep Research',
+        hook: 'For the researcher who wants the gaps found.',
         estMinutes: 5,
         title: 'Close the loop',
         body:
@@ -310,6 +318,9 @@ export const MISSIONS = [
       },
       {
         tier: 'stretch',
+        choice: 'B',
+        toolChip: 'Notebook Studio',
+        hook: 'For the visual, on-brand option.',
         estMinutes: 6,
         title: 'Infographic, then make it Cardiff',
         body:
@@ -320,6 +331,9 @@ export const MISSIONS = [
       },
       {
         tier: 'stretch',
+        choice: 'C',
+        toolChip: 'Notebook Studio',
+        hook: 'For the commute.',
         estMinutes: 4,
         title: 'Make it listenable',
         body:
@@ -336,6 +350,9 @@ export const MISSIONS = [
     level: 1,
     title: 'The Customers',
     pageTitle: 'Customer Feedback Analysis with Gemini',
+    stretchTitle: 'CHOOSE YOUR NEXT MOVE',
+    stretchIntro:
+      'The analysis is done; now decide what to make of it. Like the old adventure books: pick ONE path below. You can always come back and take another.',
     tools: [TOOLS.gemini],
     estMinutesCore: 11,
     summary: "Analyse the customer feedback spreadsheet with Gemini's code analysis.",
@@ -376,27 +393,56 @@ export const MISSIONS = [
       },
       {
         tier: 'stretch',
+        choice: 'A',
+        toolChip: 'Gemini',
+        hook: 'For the visual thinker.',
         estMinutes: 3,
         title: 'Chart the trend',
+        body: 'Follow up in the same chat:',
         prompt:
           'Chart the weekly average rating across the term. Explain in two bullets what happened in the middle weeks, and what evidence in the comments supports your explanation.',
-        body: 'Follow up in the same chat:',
       },
       {
         tier: 'stretch',
+        choice: 'B',
+        toolChip: 'Gemini Notebook',
+        hook: 'For the one who has a meeting about this later.',
         estMinutes: 6,
-        title: 'Canvas add-on: the living dashboard',
+        title: 'Present the findings as slides',
         body:
-          'Spreadsheets are where data lives; dashboards are where people look at it. Open the feedback file in Google Sheets, open the Ask Gemini side panel and choose Create canvas. The result is a visual front end for the sheet: filters and edits write back to the cells underneath.',
+          'Paste your themes answer into Gemini Notebook as a new source, then in Studio generate a Slide Deck: "five slides for the stall owner: what customers say, and what to do about it". Fancy it up with the Cardiff design prompt from Mission 5.',
+      },
+      {
+        tier: 'stretch',
+        choice: 'C',
+        toolChip: 'Sheets + Canvas',
+        hook: 'For the one who wants it updating itself.',
+        estMinutes: 6,
+        title: 'Build the live dashboard',
+        body:
+          'Open the feedback file in Google Sheets, open the Ask Gemini side panel and choose Create canvas. Filters and edits write back to the sheet underneath.',
         prompt:
           'Build an interactive dashboard from this sheet. KPI cards along the top for average rating, total responses and total spend; a weekly average-rating chart across the term; filter toggles for time slot and item; and a bar chart of complaint themes from the comments.',
       },
       {
         tier: 'stretch',
-        estMinutes: 6,
-        title: 'Turn the spreadsheet into an infographic',
+        choice: 'D',
+        toolChip: 'Gemini',
+        hook: 'For the poster-on-the-stall option.',
+        estMinutes: 5,
+        title: 'Turn it into an infographic',
         body:
-          'Two routes, both worth trying. Route one, stay in Gemini: "Using this analysis, create a clean, simple infographic a stall customer would understand: white background, one accent colour, large readable labels, no clutter." Route two, cross tools: paste your summary text into Gemini Notebook as a new source (the spreadsheet itself will not ingest, and hitting that wall IS the lesson), generate an infographic in Studio, then revise it with the Cardiff design prompt from Mission 2.',
+          'In Gemini: "Using this analysis, create a clean, simple infographic a stall customer would understand: white background, one accent colour, large readable labels, no clutter." Or paste your summary into Gemini Notebook as a text source (the spreadsheet itself will not ingest, and hitting that wall IS the lesson) and generate one in Studio.',
+      },
+      {
+        tier: 'stretch',
+        choice: 'E',
+        toolChip: 'Gemini',
+        hook: 'For the pessimist, and therefore the planner.',
+        estMinutes: 4,
+        title: 'Predict the failure',
+        prompt:
+          'It is next term and the stall has closed. Using only this feedback data, write the post-mortem: what killed it, which warning signs were already in these comments, and what single change would most likely have saved it.',
       },
     ],
     verdict:
@@ -409,6 +455,8 @@ export const MISSIONS = [
     level: 3,
     title: 'The Audit',
     pageTitle: 'Business Plan Audit with Copilot',
+    stretchTitle: 'CHOOSE YOUR NEXT MOVE',
+    stretchIntro: 'Pick ONE path below; come back for another any time.',
     tools: [TOOLS.copilot],
     estMinutesCore: 15,
     summary: 'Audit the flawed business plan using Copilot chat.',
@@ -456,6 +504,9 @@ export const MISSIONS = [
       },
       {
         tier: 'stretch',
+        choice: 'A',
+        toolChip: 'Copilot + Gemini',
+        hook: 'For the sceptic: agreement between models is weak evidence.',
         estMinutes: 5,
         title: 'Second opinion, adjudicated',
         body:
@@ -465,8 +516,11 @@ export const MISSIONS = [
       },
       {
         tier: 'stretch',
+        choice: 'B',
+        toolChip: 'Gemini Canvas',
+        hook: 'For the one who wants to watch the numbers fall over.',
         estMinutes: 6,
-        title: 'Canvas add-on: break the plan with sliders',
+        title: 'Break the plan with sliders',
         body:
           'The plan claims £1,800 a week. Make the claim move. Build a scenario dashboard in Gemini Canvas and drag the sliders until the plan\'s own numbers fall over: it cannot survive its stated production ceiling.',
         prompt:
@@ -474,6 +528,9 @@ export const MISSIONS = [
       },
       {
         tier: 'stretch',
+        choice: 'C',
+        toolChip: 'Copilot',
+        hook: 'For your actual work.',
         estMinutes: 5,
         title: 'Your own draft',
         body:
@@ -490,6 +547,8 @@ export const MISSIONS = [
     level: 3,
     title: 'The Pitch',
     pageTitle: 'Pitch Deck in Notebook Studio',
+    stretchTitle: 'CHOOSE YOUR NEXT MOVE',
+    stretchIntro: 'Pick ONE path below; come back for another any time.',
     tools: [TOOLS.notebook],
     estMinutesCore: 12,
     summary: 'Build the investor slide deck in Gemini Notebook Studio.',
@@ -525,6 +584,9 @@ export const MISSIONS = [
       },
       {
         tier: 'stretch',
+        choice: 'A',
+        toolChip: 'Notebook Studio',
+        hook: 'For the on-brand deck.',
         estMinutes: 6,
         title: 'Make it Cardiff',
         body:
@@ -535,6 +597,9 @@ export const MISSIONS = [
       },
       {
         tier: 'stretch',
+        choice: 'B',
+        toolChip: 'Notebook Studio',
+        hook: 'For the pitch that plays itself.',
         estMinutes: 6,
         title: 'The video pitch',
         body:
@@ -588,9 +653,12 @@ export const MISSIONS = [
       },
       {
         tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Gemini',
+        hook: 'The honest final step.',
         estMinutes: 4,
         title: 'Grade your own build',
-        body: 'The honest final step: check the build against the evidence it came from.',
+        body: 'Check the build against the evidence it came from.',
         prompt:
           'Here is the HTML of an app built to fix a customer complaint, plus the list of complaint themes from the feedback data. Which theme does the app actually solve, which does it partially help, and which does it ignore? Be blunt.',
       },

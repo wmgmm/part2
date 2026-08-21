@@ -51,7 +51,39 @@ function WorkflowStrip({ workflow }) {
   );
 }
 
+// Collapsed accordion row for a choice path: letter, title, tool chip, hook.
+function ChoiceStep({ step }) {
+  return (
+    <li className="mission-step mission-step--path">
+      <details className="path-acc">
+        <summary className="path-acc__summary">
+          <span className="mission-step__num">{step.choice || '+'}</span>
+          <span className="path-acc__title">{step.title}</span>
+          {step.toolChip && <span className="path-chip">{step.toolChip}</span>}
+          <span className="path-acc__chevron" aria-hidden="true">▾</span>
+        </summary>
+        <div className="path-acc__content">
+          {step.hook && <p className="path-acc__hook">{step.hook}</p>}
+          {step.body && <p className="mission-step__body">{step.body}</p>}
+          {step.prompt && <PromptBox prompt={step.prompt} label={step.promptLabel} />}
+          {step.link && (
+            <a
+              className="mission-step__link"
+              href={step.link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {step.link.label} ↗
+            </a>
+          )}
+        </div>
+      </details>
+    </li>
+  );
+}
+
 function Step({ step, number, lane }) {
+  const badge = step.choice || number;
   // With no licence question at login, show every lane note that exists.
   const laneNotes = step.laneNotes
     ? (lane && step.laneNotes[lane] ? [step.laneNotes[lane]] : Object.values(step.laneNotes))
@@ -59,7 +91,7 @@ function Step({ step, number, lane }) {
   return (
     <li className={`mission-step ${step.check ? 'mission-step--check' : ''}`}>
       <div className="mission-step__head">
-        <span className="mission-step__num">{step.check ? '✓' : number}</span>
+        <span className="mission-step__num">{step.check ? '✓' : badge}</span>
         <h4 className="mission-step__title">{step.title}</h4>
       </div>
       <p className="mission-step__body">{step.body}</p>
@@ -158,12 +190,19 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
       {stretch.length > 0 && (
         <>
           <h3 className="mission-detail__section mission-detail__section--stretch">
-            USEFUL HINTS AND TIPS
+            {mission.stretchTitle || 'GO FURTHER (OPTIONAL)'}
           </h3>
+          {mission.stretchIntro && (
+            <p className="mission-brief">{mission.stretchIntro}</p>
+          )}
           <ol className="mission-steps mission-steps--stretch">
-            {stretch.map((step, i) => (
-              <Step key={i} step={step} number={core.length + i + 1} lane={lane} />
-            ))}
+            {stretch.map((step, i) =>
+              step.choice || step.collapsed ? (
+                <ChoiceStep key={i} step={step} />
+              ) : (
+                <Step key={i} step={step} number={core.length + i + 1} lane={lane} />
+              )
+            )}
           </ol>
         </>
       )}
