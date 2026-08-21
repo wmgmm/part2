@@ -5,41 +5,33 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-npm run dev       # dev server at http://localhost:5173/escaperoom/ (port increments if busy)
+npm run dev       # dev server at http://localhost:5173/part2/ (port increments if busy)
 npm run build     # production build to dist/
 npm run preview   # serve the dist/ build locally
 ```
 
 No linter or test runner is configured.
 
+## What this is
+
+"Field Missions", the AI in the Workplace Part 2 workshop website for Cardiff University staff: six guided missions teaching best practice across Microsoft Copilot, Google Gemini and NotebookLM, including cross-tool workflows. Converted from an earlier escape-room game; the approved conversion plan and build log live in `tasks/todo.md`.
+
 ## Architecture
 
-Single-page React app (Vite, framer-motion). No router -- stage transitions are managed in `App.jsx` via a `stage` state string: `SPLASH` → `ACTIVE` → `SUCCESS` or `FAILURE`.
+Single-page React app (Vite, framer-motion). No router library. `App.jsx` renders SPLASH (login) until a user exists, then the mission gallery or a mission page selected by hash routing (`#/m1` … `#/m6`, via a `hashchange` listener).
 
-**Game flow**
-1. `SplashScreen` -- collects name + Cardiff University email, calls `onStart`
-2. `App` starts a 1-second countdown interval (30 min). At 10 min remaining, Web Audio API fires a warning tone. At 0 the stage flips to `FAILURE`.
-3. `ACTIVE` stage renders `Countdown`, `EvidenceGallery`, and `SubmissionPortal` stacked vertically.
-4. `handleSubmit` in `App.jsx` scores the answer (checks for "server room b" in location, "unsanctioned"/"ai tool" in failure), writes the entry to `localStorage` key `escaperoom_leaderboard`, then transitions to `SUCCESS` or `FAILURE`.
+**Content lives in `src/data/missions.js`** -- briefs, steps, prompts, artifacts, Gravitas verdict lines. Components are generic renderers; to change a mission, edit the data file. Step fields: `tier: 'core' | 'stretch'` (renders under "Today's path" vs "Take home"), `estMinutes`, `check: true` (the "30-second check" ritual), `prompt` (copyable PromptBox), `type: 'sort'` (SortGame), `laneNotes` (per-Copilot-licence guidance keyed by lane id).
 
-**Evidence artifacts**
-Defined as a plain array in `EvidenceGallery.jsx`. Each entry has `id`, `label`, `filename` (the download name), `svgPath` (served from `public/placeholders/`), `altText`, `accentType`, and `accentText`. Clicking a card triggers a browser download via a synthetic `<a>` element. The `accentType` drives a CSS modifier class on `.evidence-card__accent`.
+**Key components** (`src/components/`): `SplashScreen` (name + email + Copilot licence lane), `MissionGallery`/`MissionCard` (card grid; whole card is a button opening the mission), `MissionDetail` (brief, artifact download strip, tiered steps, check-in, verdict), `PromptBox` (copy with select-text fallback), `SortGame` (green/amber/red data-classification sort).
 
-All six real artifact images live in `public/placeholders/` as PNGs. The old placeholder SVGs remain there but are no longer referenced.
+**Persistence** (`src/lib/progress.js`): localStorage. `workshop_user_v1` holds `{name, email, lane}` for refresh-resume; `workshop_progress_v1:<lowercased email>` holds per-mission completion. The legacy escaperoom leaderboard code (`src/lib/leaderboard.js`, Apps Script mirror in `google_apps_script.js`, `?admin` and `?leaderboard` URL modes) is still wired but pending rework into check-in walls; see tasks/todo.md step 5.
 
-**Special URL modes**
-- `?admin` -- renders `AdminPanel` instead of the game (no auth). Shows all leaderboard entries, filterable, with CSV export.
-- `?leaderboard` -- renders `LeaderboardPage` (read-only leaderboard view for projecting on screen).
+**Legacy components** (`Countdown`, `SubmissionPortal`, `SuccessScreen`, `FailureScreen`, `HintReveal`, `CopilotHint`) are no longer referenced by `App.jsx`; delete once the check-in flow settles.
 
-**Persistence**
-`localStorage` only. No backend. The leaderboard is capped at 30 entries (`escaperoom_leaderboard`). Clearing browser storage resets it.
+**Styling**: single file `src/styles.css`. Palette matched to the thematts google.html workshop page (page `#f5f5f7`, white cards, charcoal `#1d1d1f`, blue accent `#0071e3`) over the original tabloid/evidence-tag devices (stamps, tags, Playfair Display). CSS custom properties at `:root`; later "FIELD MISSIONS" and "GOOGLE-PAGE SKIN" sections override earlier rules by cascade order -- append restyles there rather than editing old blocks. Mission grid auto-flows (not hard-wired to six cards).
 
-**Styling**
-Single file: `src/styles.css`. CSS custom properties are declared at `:root`. The evidence grid is `repeat(3, 1fr)` with fixed row heights; at ≤768px it collapses to single column. The `BASE_URL` from Vite (`/escaperoom/`) is used for all asset paths.
+**Artifacts** are served from `public/placeholders/` and downloaded via a synthetic `<a download>` (same-origin only). Missions m2, m5, m6 still need their artifact packs authored (todo step 6).
 
-**Content / narrative**
-`src/data/gravitas.js` -- Gravitas failure quotes, tiered by attempt count (keys 1, 2, 3+).
-`src/data/hints.js` -- hint text for `HintReveal` / `CopilotHint`.
+## Deployment
 
-**Deployment**
-`.github/workflows/deploy.yml` builds with Node 22 and deploys to GitHub Pages. The Vite base path is `/escaperoom/` -- do not change this without updating the workflow and any hardcoded asset references.
+`.github/workflows/deploy.yml` builds with Node 22 and deploys to GitHub Pages (repo `wmgmm/part2` → https://wmgmm.github.io/part2/). The Vite base path is `/part2/` -- keep it matching the repo name. Never `git push` unless Matt explicitly asks.
