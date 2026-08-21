@@ -133,17 +133,11 @@ Break a rule only to make the message land harder. Never break: palette, Welsh-f
 one message per unit, the spine.`;
 
 const A = {
-  brief: {
-    label: 'THE BRIEF',
-    filename: 'Venture_Research_Brief.docx',
-    downloadPath: `${BASE}placeholders/Venture_Research_Brief.docx`,
-    note: 'The market research brief, ready to paste or adapt.',
-  },
   report: {
-    label: 'THE REPORT (FALLBACK)',
+    label: 'THE MARKET REPORT',
     filename: 'Venture_Market_Report.pdf',
     downloadPath: `${BASE}placeholders/Venture_Market_Report.pdf`,
-    note: 'A finished research report, so nothing ever waits on a live run.',
+    note: 'The finished market research report.',
   },
   feedbackXlsx: {
     label: 'CUSTOMER FEEDBACK (EXCEL)',
@@ -189,7 +183,7 @@ export const MISSIONS = [
     code: '01',
     level: 1,
     title: 'The Market',
-    pageTitle: 'Market Research with Deep Research',
+    pageTitle: 'Research ANYTHING with Deep Research',
     tools: [TOOLS.deepResearch],
     accentType: 'stamp-red',
     accentText: 'START HERE',
@@ -201,8 +195,14 @@ export const MISSIONS = [
     },
     workflow: ['Paste the brief', 'Edit the plan', 'Walk away ☕', 'Skim the report', 'Make the infographic'],
     brief:
-      'Gravitas wants evidence that a campus Welsh cake stall can work before he spends his pension on a griddle. Deep Research reads the open web for you and returns a sourced report, but it takes around fifteen minutes, so this mission comes first: start the run, walk away, come back. SWAP: researching your own venture idea instead is encouraged; just rewrite the brief.',
-    artifacts: [A.brief, A.report],
+      'Gravitas wants evidence the stall can work before he spends his pension on a griddle. Start the research run, walk away, come back. Prefer your own idea? Rewrite the brief.',
+    artifacts: [
+      {
+        ...A.report,
+        label: 'BACKUP: THE FINISHED REPORT',
+        note: 'Only needed if your Deep Research run fails or you cannot wait: a ready-made report so you can carry on.',
+      },
+    ],
     steps: [
       {
         tier: 'core',
@@ -219,14 +219,14 @@ export const MISSIONS = [
         estMinutes: 3,
         title: 'Edit the plan. Then walk away',
         body:
-          'Before it runs, Gemini shows you its research plan. EDIT IT: cross out what you do not need, add what is missing. That edit is the entire skill; people who skip it get a report about the wrong thing. Then press start and go to Mission 2 or 3. One warning: runs are limited per day on some accounts, so if yours misfires, the provided report below is the path, not a consolation prize.',
+          'Before it runs, Gemini shows you its research plan. EDIT IT: cross out what you do not need, add what is missing. That edit is the entire skill.',
       },
       {
         tier: 'core',
         estMinutes: 3,
         title: 'Return and skim like an executive',
         body:
-          'When the report lands (yours or the provided one), do not read it top to bottom. Ask for what changes your decisions.',
+          'When the report is done, use this to ask for how this info changes your decisions.',
         prompt:
           'Give me the five findings in this report that should change my plans, each in one sentence, each with its source. Then the single biggest risk the report identifies.',
       },
@@ -266,7 +266,7 @@ export const MISSIONS = [
     },
     workflow: ['Add the report as a source', 'Mind map', 'Ask with citations', '30-second check'],
     brief:
-      'A report you skim once is a report you misremember forever. Gemini Notebook (until recently NotebookLM) answers questions using ONLY the sources you give it, with citations you can click. Load the market report and interrogate it. SWAP: any non-sensitive document you already have works exactly as well as the venture files.',
+      'A report you skim once is a report you misremember forever. Load the market report and interrogate it. Any non-sensitive document of your own works just as well.',
     artifacts: [A.report],
     steps: [
       {
@@ -345,7 +345,7 @@ export const MISSIONS = [
     },
     workflow: ['Upload the spreadsheet', 'Verified summary', 'Find the themes', '30-second check'],
     brief:
-      'The stall has run for a term and collected 120 feedback responses. Language models are eloquent and terrible at mental arithmetic, so the rule here is one sentence: make it write code. This file is fictional; real customer data belongs only in work-protected tools. SWAP: any non-sensitive spreadsheet you already have, from module feedback to helpdesk tickets, works with the same prompts.',
+      'The stall has run for a term and collected 120 customer feedback responses (fictional, upload anywhere). Find out what they are really saying. Any non-sensitive spreadsheet of your own works with the same prompts.',
     artifacts: [A.feedbackXlsx, A.feedbackCsv],
     steps: [
       {
@@ -418,7 +418,7 @@ export const MISSIONS = [
     },
     workflow: ["Devil's advocate", 'Post-mortem from the future', 'Score with the rubric', '30-second check'],
     brief:
-      'Gravitas asked an AI to write his business plan overnight and submitted the first draft without reading it. It looks professional. It is not. Your job is to find what a sceptical investor would find, because AI is a better critic than author, and the plan contains real, findable flaws. Everyone audits the same plan so the room can compare catches. One hazard: on a work Copilot licence, opening the file in Word can drop you into agent mode, which starts FIXING the document instead of critiquing it. Use the chat: agents do, chats think. SWAP (see stretch): run the rubric on any draft of your own afterwards.',
+      'Gravitas asked an AI to write his business plan overnight and submitted it unread. It looks professional. It is not: find the flaws before an investor does. Everyone audits the same plan, so you can compare catches with the room.',
     artifacts: [A.plan, A.rubric],
     steps: [
       {
@@ -499,7 +499,7 @@ export const MISSIONS = [
     },
     workflow: ['Load three sources', 'Generate the deck', 'Take your own quiz'],
     brief:
-      'Gravitas has a meeting with someone who owns a griddle franchise and twenty minutes to impress them. Blank-page slide generation produces generic slop; grounded generation from real sources produces a pitch. Load the evidence into Gemini Notebook and let Studio build from it. SWAP: any non-sensitive document set of your own makes exactly this deck for your own work.',
+      'Gravitas has twenty minutes to impress a griddle-franchise owner. Slides built from your sources beat slides built from a blank page. Load the evidence and let Studio do the deck; your own documents work just as well.',
     artifacts: [A.plan, A.report, A.feedbackSummary],
     steps: [
       {
@@ -560,7 +560,7 @@ export const MISSIONS = [
     },
     workflow: ['Pick the target', 'Build it in Canvas', 'Show someone'],
     brief:
-      'Mission 3 found the problem: queues and empty trays. Gravitas cannot code and no longer has an IT department, which is a sentence he asks you not to repeat. Gemini Canvas builds working single-file web apps from a prompt, so build the fix. SWAP: building for your own venture or team problem is the best version of this mission.',
+      'Mission 3 found the problem: queues and empty trays. Gravitas cannot code and no longer has an IT department, which he asks you not to repeat. Build the fix; better still, build one for a problem your own team has.',
     artifacts: [A.themes],
     steps: [
       {

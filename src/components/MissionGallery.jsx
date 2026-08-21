@@ -2,22 +2,31 @@ import React from 'react';
 import MissionCard from './MissionCard.jsx';
 import { MISSIONS } from '../data/missions.js';
 
+const BASE = import.meta.env.BASE_URL;
+
 export default function MissionGallery({ player, progress }) {
   const completedCount = MISSIONS.filter(m => progress[m.id]).length;
 
   return (
     <section className="evidence-section">
-      <div className="directive">
-        <div className="directive__top">
-          <span className="directive__label">WHY YOU&rsquo;RE HERE</span>
+      <div className="intro-row">
+        <div className="directive">
+          <div className="directive__top">
+            <span className="directive__label">WHY YOU&rsquo;RE HERE</span>
+          </div>
+          <p className="directive__text">
+            Hey {player.name}, welcome. The premise: I have left IT Services to open a Welsh
+            cake stall on campus (flour, butter, sugar, currants: the only supply chain I
+            still trust), and you are going to help me build the business using AI. I have
+            the recipe and I have the griddle. How hard can the rest possibly be?
+          </p>
+          <span className="directive__sig">— Christopher Gravitas, Founder, Chief Executive and only employee</span>
         </div>
-        <p className="directive__text">
-          Hey {player.name}, welcome. The premise: I have left IT Services to open a Welsh
-          cake stall on campus (flour, butter, sugar, currants: the only supply chain I
-          still trust), and you are going to help me build the business using AI. I have
-          the recipe and I have the griddle. How hard can the rest possibly be?
-        </p>
-        <span className="directive__sig">— Christopher Gravitas, Founder, Chief Executive and only employee</span>
+        <img
+          className="intro-row__image"
+          src={`${BASE}venture_stall.webp`}
+          alt="Cartoon of the campus Welsh cake stall: two founders at the griddle under a dragon canopy, a sign reading Campus Welsh Cakes £2, AI-powered?, and a student consulting an AI business plan on a tablet"
+        />
       </div>
 
       <div className="evidence-section__header">

@@ -84,25 +84,9 @@ function Step({ step, number, lane }) {
 
 export default function MissionDetail({ mission, lane, completed, onComplete }) {
   const [justCompleted, setJustCompleted] = useState(false);
-  const [checkingIn, setCheckingIn] = useState(false);
-  const [gotWrong, setGotWrong] = useState('');
-  const [bestPrompt, setBestPrompt] = useState('');
-  const [checkInError, setCheckInError] = useState('');
   const core = mission.steps.filter(s => s.tier === 'core');
   const stretch = mission.steps.filter(s => s.tier === 'stretch');
   const showVerdict = completed || justCompleted;
-
-  const submitCheckIn = () => {
-    if (!gotWrong.trim()) {
-      setCheckInError('Even one small thing. Nobody has ever finished a mission where the AI was flawless.');
-      return;
-    }
-    setJustCompleted(true);
-    onComplete(mission.id, {
-      gotWrong: gotWrong.trim(),
-      bestPrompt: bestPrompt.trim(),
-    });
-  };
 
   const handleDownload = artifact => {
     const link = document.createElement('a');
@@ -128,16 +112,10 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
         {mission.toolInfo?.feature && (
           <p className="tool-strap">{mission.toolInfo.feature}</p>
         )}
+        <p className="mission-brief">{mission.brief}</p>
       </header>
 
       {mission.workflow && <WorkflowStrip workflow={mission.workflow} />}
-
-      <div className="directive">
-        <div className="directive__top">
-          <span className="directive__label">BRIEFING</span>
-        </div>
-        <p className="directive__text">{mission.brief}</p>
-      </div>
 
       {mission.artifacts?.map(artifact => (
         <div className="mission-artifact" key={artifact.filename}>
@@ -180,7 +158,7 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
       {stretch.length > 0 && (
         <>
           <h3 className="mission-detail__section mission-detail__section--stretch">
-            TAKE HOME <span>when you want more</span>
+            USEFUL HINTS AND TIPS
           </h3>
           <ol className="mission-steps mission-steps--stretch">
             {stretch.map((step, i) => (
@@ -191,51 +169,17 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
       )}
 
       <div className="mission-detail__complete">
-        {!showVerdict && !checkingIn && (
+        {!showVerdict && (
           <button
             type="button"
             className="btn-start btn-complete"
-            onClick={() => setCheckingIn(true)}
+            onClick={() => {
+              setJustCompleted(true);
+              onComplete(mission.id, {});
+            }}
           >
-            MISSION COMPLETE: CHECK IN
+            MISSION COMPLETE
           </button>
-        )}
-        {!showVerdict && checkingIn && (
-          <div className="checkin">
-            <p className="checkin__title">DEBRIEF</p>
-            <label className="checkin__field">
-              <span className="checkin__label">
-                One thing the AI got wrong, or you had to fix
-              </span>
-              <textarea
-                className="checkin__input"
-                rows={2}
-                value={gotWrong}
-                onChange={e => { setGotWrong(e.target.value); setCheckInError(''); }}
-                placeholder="e.g. It invented a deadline that was not in the transcript"
-                aria-required="true"
-                aria-invalid={checkInError ? 'true' : undefined}
-              />
-            </label>
-            {checkInError && (
-              <p className="checkin__error" role="alert">{checkInError}</p>
-            )}
-            <label className="checkin__field">
-              <span className="checkin__label">
-                Your best prompt of the mission <em>(optional, worth keeping)</em>
-              </span>
-              <textarea
-                className="checkin__input"
-                rows={2}
-                value={bestPrompt}
-                onChange={e => setBestPrompt(e.target.value)}
-                placeholder="Paste the prompt that worked"
-              />
-            </label>
-            <button type="button" className="btn-start btn-complete" onClick={submitCheckIn}>
-              FILE THE DEBRIEF
-            </button>
-          </div>
         )}
         {showVerdict && (
           <div className="mission-verdict" role="status">

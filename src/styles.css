@@ -3382,3 +3382,47 @@ a:hover,
 .mission-detail__title {
   font-size: clamp(1.6rem, 4vw, 2.2rem);
 }
+
+/* Mission brief: plain text in the header, no card */
+.mission-brief {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--black);
+  margin: 0.7rem 0 0;
+}
+
+/* Intro row: memo left, stall illustration right */
+.intro-row {
+  display: flex;
+  align-items: stretch;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.intro-row .directive {
+  flex: 1 1 24rem;
+  margin-bottom: 0;
+}
+
+.intro-row__image {
+  flex: 0 1 320px;
+  min-width: 0;
+  max-height: 280px;
+  object-fit: cover;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-card);
+  align-self: center;
+}
+
+@media (max-width: 768px) {
+  .intro-row {
+    flex-direction: column;
+  }
+
+  .intro-row__image {
+    flex-basis: auto;
+    width: 100%;
+    max-height: 320px;
+  }
+}
