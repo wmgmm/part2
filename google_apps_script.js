@@ -26,6 +26,19 @@ function doPost(e) {
       return respond({ error: 'Unauthorised' });
     }
 
+    // Attendance: workshop site posts {type:'signin', v:1, name, email, at}
+    // on every login. Rows land in an "Attendance" sheet.
+    if (payload.type === 'signin') {
+      const att = getAttendanceSheet();
+      att.appendRow([
+        new Date(),
+        payload.at    || '',
+        payload.name  || '',
+        payload.email || '',
+      ]);
+      return respond({ ok: true });
+    }
+
     const sheet = getSheet();
     const rows = sheet.getDataRange().getValues();
 
@@ -87,6 +100,17 @@ function doGet(e) {
   } catch (err) {
     return respond({ error: err.message });
   }
+}
+
+function getAttendanceSheet() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName('Attendance');
+  if (!sheet) {
+    sheet = ss.insertSheet('Attendance');
+    sheet.appendRow(['Received', 'Client Time', 'Name', 'Email']);
+    sheet.setFrozenRows(1);
+  }
+  return sheet;
 }
 
 function getSheet() {

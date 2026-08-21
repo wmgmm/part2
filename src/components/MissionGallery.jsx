@@ -9,21 +9,19 @@ export default function MissionGallery({ player, progress }) {
     <section className="evidence-section">
       <div className="directive">
         <div className="directive__top">
-          <span className="directive__label">FIELD ORDERS</span>
+          <span className="directive__label">WHY YOU&rsquo;RE HERE</span>
         </div>
         <p className="directive__text">
-          Welcome, {player.name}. Six missions, three AI tools, no timer. Start with
-          Mission 02 (it runs a fifteen-minute job in the background while you work),
-          then take the rest in any order. Each mission is a real workplace task:
-          download its materials, work the steps in Copilot, Gemini or NotebookLM,
-          and check in when you are done. Core steps fit inside a session; stretch
-          steps are yours to take home.
+          Hey {player.name}, welcome. The premise: I have left IT Services to open a Welsh
+          cake stall on campus (flour, butter, sugar, currants: the only supply chain I
+          still trust), and you are going to help me build the business using AI. I have
+          the recipe and I have the griddle. How hard can the rest possibly be?
         </p>
-        <span className="directive__sig">— Christopher Gravitas, Training Officer, IT Services</span>
+        <span className="directive__sig">— Christopher Gravitas, Founder, Chief Executive and only employee</span>
       </div>
 
       <div className="evidence-section__header">
-        <h2 className="evidence-section__title">SIX FIELD MISSIONS</h2>
+        <h2 className="evidence-section__title">BUILD A BUSINESS WITH AI AS YOUR ASSISTANT</h2>
         <p className="mission-progress-line">
           {completedCount} of {MISSIONS.length} missions complete
         </p>
@@ -37,6 +35,18 @@ export default function MissionGallery({ player, progress }) {
             completed={Boolean(progress[mission.id])}
           />
         ))}
+      </div>
+
+      <div className="governance-callout governance-callout--discreet">
+        <p>
+          <strong>✓ At Cardiff University:</strong> Gemini and NotebookLM are approved for
+          confidential (C1/C2) data, but only when you sign in with your CU account
+          (cardiff.ac.uk).
+        </p>
+        <p>
+          <strong>• For other organisations:</strong> treat them as personal
+          learning tools, stick to public, non-confidential work data.
+        </p>
       </div>
     </section>
   );

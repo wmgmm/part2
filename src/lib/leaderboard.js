@@ -29,6 +29,27 @@ export function submitEntry(entry) {
   } catch {}
 }
 
+// Fire-and-forget attendance record on login; failures are silent so the
+// workshop never blocks on the network.
+export function recordAttendance({ name, email }) {
+  if (!LEADERBOARD_URL) return;
+  try {
+    fetch(LEADERBOARD_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        type: 'signin',
+        v: 1,
+        name,
+        email,
+        at: new Date().toISOString(),
+        token: LEADERBOARD_TOKEN,
+      }),
+    }).catch(() => {});
+  } catch {}
+}
+
 // Synchronous local read for instant first paint.
 export function loadLocalBoard() {
   return loadLocal();

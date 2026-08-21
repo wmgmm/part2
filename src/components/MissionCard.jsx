@@ -17,9 +17,9 @@ export default function MissionCard({ mission, completed }) {
       transition={{ duration: 0.2 }}
       aria-label={`Open mission ${mission.code}: ${mission.title}${completed ? ' (completed)' : ''}`}
     >
-      {mission.artifact?.thumb ? (
+      {mission.artifacts?.[0]?.thumb ? (
         <div className="evidence-card__image">
-          <img src={mission.artifact.thumb} alt="" draggable={false} />
+          <img src={mission.artifacts[0].thumb} alt="" draggable={false} />
         </div>
       ) : (
         <div className="mission-card__panel">
@@ -28,20 +28,18 @@ export default function MissionCard({ mission, completed }) {
         </div>
       )}
 
-      <div className={`evidence-card__accent evidence-card__accent--${mission.accentType}`}>
-        {mission.accentText}
-      </div>
+      {mission.accentText && (
+        <div className={`evidence-card__accent evidence-card__accent--${mission.accentType}`}>
+          {mission.accentText}
+        </div>
+      )}
 
       {completed && <div className="mission-card__done-stamp">DONE</div>}
 
       <div className="evidence-card__label mission-card__label">
-        <span className="evidence-card__id">
-          MISSION {mission.code} · LEVEL {mission.level}
-        </span>
+        <span className="evidence-card__id">MISSION {mission.code}</span>
         <span className="evidence-card__name">{mission.title}</span>
-        <span className="mission-card__meta">
-          {mission.tools.join(' + ')} · ~{mission.estMinutesCore} min
-        </span>
+        <span className="mission-card__meta">{mission.tools.join(' + ')}</span>
       </div>
     </motion.button>
   );

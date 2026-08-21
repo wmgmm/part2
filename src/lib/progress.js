@@ -40,9 +40,9 @@ export function loadProgress(email) {
   }
 }
 
-export function markComplete(email, missionId) {
+export function markComplete(email, missionId, checkIn = {}) {
   const progress = loadProgress(email);
-  progress[missionId] = { completedAt: new Date().toISOString() };
+  progress[missionId] = { completedAt: new Date().toISOString(), ...checkIn };
   try {
     localStorage.setItem(progressKey(email), JSON.stringify(progress));
   } catch {

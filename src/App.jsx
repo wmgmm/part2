@@ -7,6 +7,7 @@ import TaglineBar from './components/TaglineBar.jsx';
 import AdminPanel from './components/AdminPanel.jsx';
 import LeaderboardPage from './components/LeaderboardPage.jsx';
 import { getMission } from './data/missions.js';
+import { recordAttendance } from './lib/leaderboard.js';
 import { loadUser, saveUser, clearUser, loadProgress, markComplete } from './lib/progress.js';
 
 const _params = new URLSearchParams(window.location.search);
@@ -30,11 +31,12 @@ export default function App() {
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
 
-  const handleStart = ({ name, email, lane }) => {
-    const user = { name, email, lane };
+  const handleStart = ({ name, email }) => {
+    const user = { name, email };
     saveUser(user);
     setPlayer(user);
     setProgress(loadProgress(email));
+    recordAttendance(user);
   };
 
   const handleSignOut = () => {
@@ -43,8 +45,8 @@ export default function App() {
     window.location.hash = '#/';
   };
 
-  const handleComplete = missionId => {
-    setProgress(markComplete(player.email, missionId));
+  const handleComplete = (missionId, checkIn) => {
+    setProgress(markComplete(player.email, missionId, checkIn));
   };
 
   const pageVariants = {

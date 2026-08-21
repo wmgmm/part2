@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { LANES } from '../data/missions.js';
 
 export default function SplashScreen({ onStart }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [lane, setLane] = useState('notSure');
   const [errors, setErrors] = useState({});
 
   const validate = () => {
@@ -18,7 +16,7 @@ export default function SplashScreen({ onStart }) {
   const handleStart = () => {
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
-    onStart({ name: name.trim(), email: email.trim(), lane });
+    onStart({ name: name.trim(), email: email.trim() });
   };
 
   return (
@@ -27,14 +25,14 @@ export default function SplashScreen({ onStart }) {
 
         {/* Stamps row */}
         <div className="splash-hero">
-          <div className="cover-brand-stamp cover-brand-stamp--main">THE MATTS PRESENT AN AI TRAINING DOSSIER</div>
+          <div className="cover-brand-stamp cover-brand-stamp--main">THE MATTS PRESENT AI IN THE WORKPLACE PART 2</div>
           <div className="cover-brand-stamp cover-brand-stamp--uni">CARDIFF UNIVERSITY</div>
         </div>
 
         {/* Headline */}
-        <h1 className="splash-headline">FIELD MISSIONS</h1>
+        <h1 className="splash-headline">AI in the Workplace Part 2</h1>
         <p className="splash-deck">
-          AI in the Workplace: Six Missions, Three Tools, Skills You Will Use on Monday
+          Three Tools, Skills You Will Use on Monday
         </p>
         <p className="splash-byline">
           Training officer: <strong>Christopher Gravitas</strong>, IT Services
@@ -55,19 +53,13 @@ export default function SplashScreen({ onStart }) {
               <a href="https://notebooklm.google.com/" target="_blank" rel="noopener noreferrer" className="splash-link">
                 NotebookLM
               </a>{' '}
-              <em>(sign in with your university account where you can).</em>
+              <em>(sign in with your work account).</em>
             </span>
           </li>
           <li className="splash-step">
             <span className="splash-step__num">2</span>
             <span className="splash-step__text">
               <strong>Pick a mission</strong> and download its materials. Every file is fictional and safe to upload.
-            </span>
-          </li>
-          <li className="splash-step">
-            <span className="splash-step__num">3</span>
-            <span className="splash-step__text">
-              <strong>Work the steps</strong>, check in when done, and collect the verdict. No timer, no failure state.
             </span>
           </li>
         </ol>
@@ -108,22 +100,6 @@ export default function SplashScreen({ onStart }) {
             </div>
           </div>
 
-          <fieldset className="splash-lanes">
-            <legend className="splash-register__label">WHICH COPILOT DO YOU HAVE?</legend>
-            {LANES.map(l => (
-              <label key={l.id} className={`splash-lane ${lane === l.id ? 'splash-lane--active' : ''}`}>
-                <input
-                  type="radio"
-                  name="lane"
-                  value={l.id}
-                  checked={lane === l.id}
-                  onChange={() => setLane(l.id)}
-                />
-                <span className="splash-lane__label">{l.label}</span>
-                <span className="splash-lane__hint">{l.hint}</span>
-              </label>
-            ))}
-          </fieldset>
         </div>
 
         <motion.button
@@ -135,16 +111,6 @@ export default function SplashScreen({ onStart }) {
         >
           REPORT FOR DUTY
         </motion.button>
-
-        <p className="splash-warning">
-          &bull; All mission files are fictional &bull; Never paste confidential work data into an unapproved tool &bull;
-        </p>
-
-        <div className="splash-footer">
-          <span>TRAINING DOSSIER</span>
-          <span>SHARE FREELY</span>
-          <span>ALL STAFF WELCOME</span>
-        </div>
 
       </div>
     </div>
