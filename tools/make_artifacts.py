@@ -81,16 +81,32 @@ def make_pdf(path, title, blocks):
 
 
 # ================================================================ 1. THE BRIEF
+# Square brackets mark the swap points; the venture default stays inside them
+# so the prompt runs verbatim. Matches the prompt shown on the site.
 BRIEF_TEXT = (
-    "I am opening a small Welsh cake stall on a UK university campus (Cardiff). "
-    "Produce a sourced market briefing covering: who buys from campus food stalls "
+    "I am opening [a small Welsh cake stall on a UK university campus (Cardiff)]. "
+    "Produce a sourced market briefing covering: who buys [from campus food stalls] "
     "and when (footfall patterns across the day and the academic year); realistic "
-    "price expectations for a fresh Welsh cake and comparable snacks; who my "
-    "competitors would be on and near a typical campus, including mobile and "
-    "permanent options; what makes small campus food ventures succeed or fail, "
-    "including the regulatory basics for UK street food; and three opportunities "
-    "or risks I am probably not thinking about. Cite every source."
+    "price expectations for [a fresh Welsh cake and comparable "
+    "snacks]; who my competitors would be [on and near a typical campus, including "
+    "mobile and permanent options]; what makes [small campus food ventures] succeed "
+    "or fail, including [the regulatory basics for UK street food]; and three "
+    "opportunities or risks I am probably not thinking about. Cite every source."
 )
+
+# Drift guard: the same brief text lives in src/data/missions.js (the m1
+# PromptBox). If someone edits one copy, fail loudly here rather than shipping
+# a docx that disagrees with the site.
+import re as _re
+
+_missions = (Path(__file__).resolve().parent.parent / "src" / "data" / "missions.js").read_text(encoding="utf-8")
+_m = _re.search(r"promptLabel: 'THE BRIEF \(EDIT FOR YOUR IDEA\)',\s*prompt:\s*\n?\s*'((?:[^'\\]|\\.)*)'", _missions)
+_site_brief = _m.group(1).replace("\\'", "'") if _m else None
+if _site_brief != BRIEF_TEXT:
+    raise SystemExit(
+        "BRIEF_TEXT drift: tools/make_artifacts.py no longer matches the m1 brief "
+        "prompt in src/data/missions.js. Update both copies to say the same thing."
+    )
 
 make_docx(OUT / "Venture_Research_Brief.docx", "Market Research Brief: The Gravitas Venture", [
     ("p", "Paste the brief below into Gemini Deep Research, or rewrite it for your own idea. "
@@ -444,6 +460,72 @@ make_pdf(OUT / "Venture_Feedback_Summary.pdf", "Customer Feedback Summary: One T
           "they account for 48 per cent of all comments. Any intervention that smooths the "
           "lunch spike (pre-ordering, pickup slots, a live sold-out board) attacks both."),
 ])
+
+# ==================================================== 6b. THE SALES LOG (m8)
+# Planted Lean Six Sigma patterns, all deterministic:
+#  - Plain cakes ~60% of revenue (Pareto vital few among products)
+#  - Weeks 5-6: griddle temperature fault -> special-cause dip in sales and
+#    a spike in "Griddle temperature fault" waste
+#  - One clerical outlier: 2026-03-04 Plain units 250 (typo for 25)
+#  - Waste Pareto: Burnt + Broken ~80% of waste cost
+PRODUCTS = {  # name: (base daily units, unit price)
+    "Plain": (58, 2.50),
+    "Vanilla": (18, 2.50),
+    "Gluten-free": (9, 2.80),
+    "Box of six": (7, 12.00),
+}
+WEEKDAY_F = {0: 0.85, 1: 1.0, 2: 1.2, 3: 1.25, 4: 0.7}  # Mon..Fri
+WASTE_REASONS = [  # reason, weight, units-lost range
+    ("Burnt on griddle", 5, (4, 10)),
+    ("Broken in handling", 4, (3, 8)),
+    ("Over-proofed batch", 2, (2, 5)),
+    ("Dropped at counter", 1, (1, 3)),
+    ("Rain-damaged stock", 1, (1, 4)),
+]
+INGREDIENT_COST = 0.80  # per cake, for cost-of-poor-quality
+
+srng = random.Random(808)
+sales_rows, waste_rows = [], []
+for week in range(1, 12):
+    for dow in range(5):
+        day = TERM_START + timedelta(weeks=week - 1, days=dow)
+        week_f = 0.55 if week in (5, 6) else 1.0  # griddle fault fortnight
+        for name, (base, price) in PRODUCTS.items():
+            units = max(0, round(base * WEEKDAY_F[dow] * week_f * srng.uniform(0.82, 1.18)))
+            if day == date(2026, 3, 4) and name == "Plain":
+                units = 250  # the typo (should be 25)
+            channel = "Pre-order" if srng.random() < 0.2 else "Stall"
+            sales_rows.append({
+                "date": day.isoformat(), "product": name, "units": units,
+                "unit_price": price, "revenue": round(units * price, 2),
+                "channel": channel,
+            })
+        # waste log: most days one entry, griddle fortnight adds fault entries
+        if srng.random() < 0.75:
+            name_r, _, rng_r = srng.choices(WASTE_REASONS, weights=[w for _, w, _ in WASTE_REASONS])[0]
+            lost = srng.randint(*rng_r)
+            waste_rows.append({"date": day.isoformat(), "reason": name_r,
+                               "units_lost": lost, "cost": round(lost * INGREDIENT_COST, 2)})
+        if week in (5, 6) and dow in (1, 2, 3):
+            lost = srng.randint(12, 22)
+            waste_rows.append({"date": day.isoformat(), "reason": "Griddle temperature fault",
+                               "units_lost": lost, "cost": round(lost * INGREDIENT_COST, 2)})
+
+wb2 = Workbook()
+ws_s = wb2.active
+ws_s.title = "Sales"
+S_HEAD = ["date", "product", "units", "unit_price", "revenue", "channel"]
+ws_s.append(S_HEAD)
+for r in sales_rows:
+    ws_s.append([r[h] for h in S_HEAD])
+ws_s.freeze_panes = "A2"
+ws_w = wb2.create_sheet("Waste log")
+W_HEAD = ["date", "reason", "units_lost", "cost"]
+ws_w.append(W_HEAD)
+for r in waste_rows:
+    ws_w.append([r[h] for h in W_HEAD])
+ws_w.freeze_panes = "A2"
+wb2.save(OUT / "Venture_Sales_Log.xlsx")
 
 # ======================================================== 7. THE THEME LIST
 (OUT / "Venture_Theme_List.txt").write_text(

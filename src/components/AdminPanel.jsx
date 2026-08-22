@@ -62,7 +62,7 @@ export default function AdminPanel() {
       <div className="admin-header">
         <div className="admin-header__left">
           <h1 className="admin-title">LEADERBOARD ADMIN</h1>
-          <p className="admin-sub">THE ALBRIGHT AFFAIR &mdash; Session Data</p>
+          <p className="admin-sub">AI IN THE WORKPLACE PART 2 &mdash; Session Data</p>
         </div>
         <button className="admin-refresh" onClick={refresh}>&#8635; Refresh</button>
       </div>

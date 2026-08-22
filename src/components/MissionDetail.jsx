@@ -180,12 +180,16 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
         </div>
       ))}
 
-      <h3 className="mission-detail__section">TODAY&rsquo;S PATH</h3>
-      <ol className="mission-steps">
-        {core.map((step, i) => (
-          <Step key={i} step={step} number={i + 1} lane={lane} />
-        ))}
-      </ol>
+      {core.length > 0 && (
+        <>
+          <h3 className="mission-detail__section">TODAY&rsquo;S PATH</h3>
+          <ol className="mission-steps">
+            {core.map((step, i) => (
+              <Step key={i} step={step} number={i + 1} lane={lane} />
+            ))}
+          </ol>
+        </>
+      )}
 
       {stretch.length > 0 && (
         <>
@@ -196,13 +200,17 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
             <p className="mission-brief">{mission.stretchIntro}</p>
           )}
           <ol className="mission-steps mission-steps--stretch">
-            {stretch.map((step, i) =>
-              step.choice || step.collapsed ? (
-                <ChoiceStep key={i} step={step} />
-              ) : (
-                <Step key={i} step={step} number={core.length + i + 1} lane={lane} />
-              )
-            )}
+            {(() => {
+              // Number only the plain steps; lettered/collapsed rows carry no number.
+              let n = core.length;
+              return stretch.map((step, i) =>
+                step.choice || step.collapsed ? (
+                  <ChoiceStep key={i} step={step} />
+                ) : (
+                  <Step key={i} step={step} number={(n += 1)} lane={lane} />
+                )
+              );
+            })()}
           </ol>
         </>
       )}

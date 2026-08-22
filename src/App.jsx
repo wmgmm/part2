@@ -6,6 +6,7 @@ import MissionDetail from './components/MissionDetail.jsx';
 import TaglineBar from './components/TaglineBar.jsx';
 import AdminPanel from './components/AdminPanel.jsx';
 import LeaderboardPage from './components/LeaderboardPage.jsx';
+import DoctorPanel from './components/DoctorPanel.jsx';
 import { getMission } from './data/missions.js';
 import { recordAttendance } from './lib/leaderboard.js';
 import { loadUser, saveUser, clearUser, loadProgress, markComplete } from './lib/progress.js';
@@ -13,11 +14,14 @@ import { loadUser, saveUser, clearUser, loadProgress, markComplete } from './lib
 const _params = new URLSearchParams(window.location.search);
 const IS_ADMIN = _params.has('admin');
 const IS_LEADERBOARD = _params.has('leaderboard');
+const IS_DOCTOR = _params.has('doctor');
 
 // Hash routing: '#/' is the mission gallery, '#/m3' opens mission m3.
+// Plain anchors like '#main-content' (the skip link) are NOT routes.
 function parseHash() {
-  const hash = window.location.hash.replace(/^#\/?/, '');
-  return hash || null;
+  const hash = window.location.hash;
+  if (!hash.startsWith('#/')) return null;
+  return hash.slice(2) || null;
 }
 
 export default function App() {
@@ -26,7 +30,13 @@ export default function App() {
   const [route, setRoute] = useState(() => parseHash());
 
   useEffect(() => {
-    const onHashChange = () => setRoute(parseHash());
+    const onHashChange = () => {
+      // Plain anchors (e.g. the '#main-content' skip link) scroll natively
+      // and must not change the route or re-render the current view.
+      const h = window.location.hash;
+      if (h && !h.startsWith('#/')) return;
+      setRoute(parseHash());
+    };
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
@@ -57,6 +67,7 @@ export default function App() {
 
   if (IS_ADMIN) return <AdminPanel />;
   if (IS_LEADERBOARD) return <LeaderboardPage />;
+  if (IS_DOCTOR) return <DoctorPanel />;
 
   const mission = player && route ? getMission(route) : null;
 

@@ -8,13 +8,14 @@
 // The files in public/placeholders/ below are the whole scenario. Swap them
 // (same filenames, or update the artifacts arrays here) to re-skin the
 // workshop, e.g. venture_customer_feedback -> student module feedback.
-//   Venture_Research_Brief.docx     - M1 the Deep Research brief
+//   Venture_Research_Brief.docx     - facilitator copy of the M1 brief (site shows it as a prompt; no download card)
 //   Venture_Market_Report.pdf       - M1/M2/M5 pre-generated research report
 //   Venture_Customer_Feedback.xlsx  - M3 data (plus .csv twin)
 //   Venture_Business_Plan.docx      - M4/M5 deliberately flawed plan
 //   Venture_Rubric.pdf              - M4 scoring rubric
 //   Venture_Feedback_Summary.pdf    - M5 one-page stand-in for an M3 result
 //   Venture_Theme_List.txt          - M6 fallback complaint themes
+//   Venture_Sales_Log.xlsx          - M8 sales + waste data (Sales / Waste log sheets)
 // Regenerate all of them with: python3 tools/make_artifacts.py
 //
 // Step fields: tier 'core'|'stretch', estMinutes, check (30-second check),
@@ -35,8 +36,11 @@ export const TOOLS = {
 
 const PROMPT_LIBRARY_URL = 'https://wmgmm.github.io/notebooklm/';
 
+// Gallery hero image, shared with the ?doctor preflight so the check cannot drift.
+export const HERO_IMAGE = 'venture_stall.webp';
+
 // Click-to-open sign-in cards (google.html copilot-card pattern).
-const APPS = {
+export const APPS = {
   gemini: {
     name: 'Gemini',
     url: 'https://gemini.google.com',
@@ -169,6 +173,12 @@ const A = {
     downloadPath: `${BASE}placeholders/Venture_Feedback_Summary.pdf`,
     note: 'A one-page customer feedback summary (a Mission 3 stand-in).',
   },
+  salesLog: {
+    label: 'THE SALES LOG',
+    filename: 'Venture_Sales_Log.xlsx',
+    downloadPath: `${BASE}placeholders/Venture_Sales_Log.xlsx`,
+    note: 'A term of daily sales plus the waste log, on two sheets. Fictional, upload anywhere.',
+  },
   themes: {
     label: 'THEME LIST (FALLBACK)',
     filename: 'Venture_Theme_List.txt',
@@ -212,7 +222,7 @@ export const MISSIONS = [
           'In Gemini (gemini.google.com), choose Deep Research and paste the brief below, or rewrite it for your own idea. A good brief names the decisions the research should inform, not just the topic.',
         promptLabel: 'THE BRIEF (EDIT FOR YOUR IDEA)',
         prompt:
-          'I am opening a small Welsh cake stall on a UK university campus (Cardiff). Produce a sourced market briefing covering: who buys from campus food stalls and when (footfall patterns across the day and the academic year); realistic price expectations for a fresh Welsh cake and comparable snacks; who my competitors would be on and near a typical campus, including mobile and permanent options; what makes small campus food ventures succeed or fail, including the regulatory basics for UK street food; and three opportunities or risks I am probably not thinking about. Cite every source.',
+          'I am opening [a small Welsh cake stall on a UK university campus (Cardiff)]. Produce a sourced market briefing covering: who buys [from campus food stalls] and when (footfall patterns across the day and the academic year); realistic price expectations for [a fresh Welsh cake and comparable snacks]; who my competitors would be [on and near a typical campus, including mobile and permanent options]; what makes [small campus food ventures] succeed or fail, including [the regulatory basics for UK street food]; and three opportunities or risks I am probably not thinking about. Cite every source.',
       },
       {
         tier: 'core',
@@ -294,7 +304,7 @@ export const MISSIONS = [
         title: 'Ask with citations',
         body: 'Now the difference from ordinary chat: every claim must come from your sources.',
         prompt:
-          'Based only on the sources: what should I charge for a single Welsh cake? Cite the passage that supports the answer. Then list every risk the sources name for a venture like this, each with its source. If the sources do not cover something, say so plainly rather than guessing.',
+          'Based only on the sources: what should I charge for [a single Welsh cake]? Cite the passage that supports the answer. Then list every risk the sources name for [a venture like this], each with its source. If the sources do not cover something, say so plainly rather than guessing.',
       },
       {
         tier: 'core',
@@ -314,7 +324,7 @@ export const MISSIONS = [
         body:
           'The newest move in the toolkit: run Deep Research from INSIDE the notebook, grounded in your own evidence plus the open web. This is the research step almost nobody demonstrates.',
         prompt:
-          'Based only on my sources, what has my evidence failed to cover that a sceptical funder would ask about? List the gaps, then research those gaps and report back with sources.',
+          'Based only on my sources, what has my evidence failed to cover that a sceptical [funder] would ask about? List the gaps, then research those gaps and report back with sources.',
       },
       {
         tier: 'stretch',
@@ -381,7 +391,7 @@ export const MISSIONS = [
         body:
           'The free-text comments are where the truth lives, and nobody has time to read a hundred of them. Make the machine do the reading and show its working.',
         prompt:
-          'Categorise every free-text comment in this file into themes you derive from the data itself. Give me: the themes ranked by count with percentages; one representative quote per theme with its response_id; and the comments you found hard to place, with why. Finish with this: if I could fix only one thing, what does the data say it should be?',
+          'Categorise every free-text comment in this file into themes you derive from the data itself. Give me: the themes ranked by count with percentages; one representative quote per theme with its row reference ([response_id]); and the comments you found hard to place, with why. Finish with this: if I could fix only one thing, what does the data say it should be?',
       },
       {
         tier: 'core',
@@ -400,7 +410,7 @@ export const MISSIONS = [
         title: 'Chart the trend',
         body: 'Follow up in the same chat:',
         prompt:
-          'Chart the weekly average rating across the term. Explain in two bullets what happened in the middle weeks, and what evidence in the comments supports your explanation.',
+          'Chart [the weekly average rating] across [the term]. Explain in two bullets what happened [in the middle weeks], and what evidence in the comments supports your explanation.',
       },
       {
         tier: 'stretch',
@@ -422,7 +432,7 @@ export const MISSIONS = [
         body:
           'Open the feedback file in Google Sheets, open the Ask Gemini side panel and choose Create canvas. Filters and edits write back to the sheet underneath.',
         prompt:
-          'Build an interactive dashboard from this sheet. KPI cards along the top for average rating, total responses and total spend; a weekly average-rating chart across the term; filter toggles for time slot and item; and a bar chart of complaint themes from the comments.',
+          'Build an interactive dashboard from this sheet. KPI cards along the top for [average rating, total responses and total spend]; a [weekly average-rating] chart across [the term]; filter toggles for [time slot and item]; and a bar chart of [complaint themes] from the comments.',
       },
       {
         tier: 'stretch',
@@ -432,7 +442,9 @@ export const MISSIONS = [
         estMinutes: 5,
         title: 'Turn it into an infographic',
         body:
-          'In Gemini: "Using this analysis, create a clean, simple infographic a stall customer would understand: white background, one accent colour, large readable labels, no clutter." Or paste your summary into Gemini Notebook as a text source (the spreadsheet itself will not ingest, and hitting that wall IS the lesson) and generate one in Studio.',
+          'Run the prompt below in Gemini. Or paste your summary into Gemini Notebook as a text source (the spreadsheet itself will not ingest, and hitting that wall IS the lesson) and generate one in Studio.',
+        prompt:
+          'Using this analysis, create a clean, simple infographic [a stall customer] would understand: white background, one accent colour, large readable labels, no clutter.',
       },
       {
         tier: 'stretch',
@@ -475,7 +487,7 @@ export const MISSIONS = [
         title: "Devil's advocate",
         body: 'Upload the plan to Copilot chat in a NEW chat (fresh eyes, no accumulated politeness).',
         prompt:
-          'Act as a constructive devil\'s advocate reviewing this business plan. Identify the weaknesses a sceptical investor would seize on: unsupported claims, arithmetic that does not add up, missing regulatory or operational basics, and internal contradictions. Be specific: quote the sentence, then state the problem. Do not soften criticism.',
+          'Act as a constructive devil\'s advocate reviewing this [business plan]. Identify the weaknesses a sceptical [investor] would seize on: unsupported claims, arithmetic that does not add up, missing regulatory or operational basics, and internal contradictions. Be specific: quote the sentence, then state the problem. Do not soften criticism.',
       },
       {
         tier: 'core',
@@ -484,7 +496,7 @@ export const MISSIONS = [
         body:
           'Critique finds flaws; a post-mortem finds the ones that kill. Time-travel makes the AI commit to consequences.',
         prompt:
-          'It is one year after launch and the Welsh cake stall has failed. Write the post-mortem: the five most likely causes of death, each traced to a specific weakness in this business plan, quoting the passage that planted it.',
+          'It is [one year after launch] and [the Welsh cake stall] has failed. Write the post-mortem: the five most likely causes of death, each traced to a specific weakness in this [business plan], quoting the passage that planted it.',
       },
       {
         tier: 'core',
@@ -492,7 +504,7 @@ export const MISSIONS = [
         title: 'Score it against the rubric',
         body: 'Structured assessment with cited evidence: the actual workplace skill.',
         prompt:
-          'Score this business plan against the attached rubric, 1 to 5 per criterion. For every score, cite the exact sentence or figure from the plan that justifies it. Finish with the three revisions that would most improve the total score.',
+          'Score this [business plan] against the attached rubric, 1 to 5 per criterion. For every score, cite the exact sentence or figure from the plan that justifies it. Finish with the three revisions that would most improve the total score.',
       },
       {
         tier: 'core',
@@ -512,7 +524,7 @@ export const MISSIONS = [
         body:
           'Run the same devil\'s advocate prompt in Gemini. Then paste both critiques into a third prompt. Agreement between models is weak evidence; disagreement is a flag worth chasing.',
         prompt:
-          'Here are two AI reviews of the same business plan. Where do they disagree? For each disagreement, decide which review is right based on the evidence in the plan itself, quoting it. What did each reviewer miss that the other caught?',
+          'Here are two AI reviews of the same [business plan]. Where do they disagree? For each disagreement, decide which review is right based on the evidence in the plan itself, quoting it. What did each reviewer miss that the other caught?',
       },
       {
         tier: 'stretch',
@@ -524,7 +536,7 @@ export const MISSIONS = [
         body:
           'The plan claims £1,800 a week. Make the claim move. Build a scenario dashboard in Gemini Canvas and drag the sliders until the plan\'s own numbers fall over: it cannot survive its stated production ceiling.',
         prompt:
-          'Build an interactive financial scenario dashboard for a campus food stall as a single-page web app. Sliders: price per cake (£1.50 to £4.00), cakes sold per day (50 to 600) and trading weeks per year (20 to 52); a fixed-costs input defaulting to £75 per week pitch fee. Show weekly revenue, weekly profit assuming 40 per cent ingredient costs, and annual profit. Highlight the daily-sales figure in red beyond 320 cakes per day, labelled "exceeds single-griddle capacity".',
+          'Build an interactive financial scenario dashboard for [a campus food stall] as a single-page web app. Sliders: price per cake (£1.50 to £4.00), cakes sold per day (50 to 600) and trading weeks per year (20 to 52); a fixed-costs input defaulting to £75 per week pitch fee. Show weekly revenue, weekly profit assuming 40 per cent ingredient costs, and annual profit. Highlight the daily-sales figure in red beyond 320 cakes per day, labelled "exceeds single-griddle capacity".',
       },
       {
         tier: 'stretch',
@@ -573,7 +585,9 @@ export const MISSIONS = [
         estMinutes: 5,
         title: 'Generate the deck',
         body:
-          'In Studio, generate a Slide Deck. Ask it for "a ten-slide investor pitch for the stall, honest about the risks the sources raise". Note: deck generation is gated to some education tiers; if you do not see it, export the notebook Report to Docs and ask Gemini Canvas to build the deck from it, which is nearly as good and teaches the same lesson.',
+          'In Studio, generate a Slide Deck with the ask below. Note: deck generation is gated on some education tiers; if you do not see it, export the notebook Report to Docs and ask Gemini Canvas to build the deck from it, which is nearly as good and teaches the same lesson.',
+        prompt:
+          'Create a ten-slide [investor pitch for the stall] from these sources, honest about the risks the sources raise. One message per slide, a clear ask on the final slide.',
       },
       {
         tier: 'core',
@@ -642,7 +656,7 @@ export const MISSIONS = [
         body:
           'In Gemini, open Canvas and use the prompt below. Yes, it produces a working app. No, you do not need to read the code. Iterate in plain English: "bigger buttons", "add a Welsh language toggle", "show a running total".',
         prompt:
-          'Create a single-page web app for a campus Welsh cake stall that fixes this customer problem: [PASTE YOUR TOP THEME, e.g. "long queues at lunchtime and selling out by 1pm"]. Ideas if useful: a pre-order form with pickup time slots, a live sold-out board, a Build-a-Box picker with a running price total. Friendly and fast, single HTML file with Tailwind CSS and vanilla JavaScript, no backend: fake the data in JavaScript.',
+          'Create a single-page web app for [a campus Welsh cake stall] that fixes this customer problem: [PASTE YOUR TOP THEME, e.g. "long queues at lunchtime and selling out by 1pm"]. Ideas if useful: [a pre-order form with pickup time slots, a live sold-out board, a Build-a-Box picker with a running price total]. Friendly and fast, single HTML file with Tailwind CSS and vanilla JavaScript, no backend: fake the data in JavaScript.',
       },
       {
         tier: 'core',
@@ -666,7 +680,179 @@ export const MISSIONS = [
     verdict:
       'You built software that shortens a queue for griddle cakes. Somewhere my old job title weeps, and I have never been happier. Ship it.',
   },
+  {
+    id: 'm7',
+    code: '07',
+    level: 1,
+    title: 'Useful Prompts',
+    pageTitle: 'Prompts to Take Back to Work',
+    tools: ['Any AI chat'],
+    estMinutesCore: 0,
+    summary: 'Reusable templates and meta-prompting for your own work.',
+    toolInfo: {
+      feature:
+        'Works in any AI chat. The square brackets mark what to swap for your own task; everything inside them is just the Welsh cake default.',
+      apps: [APPS.gemini, APPS.notebook, APPS.copilot],
+    },
+    brief:
+      'A good prompt is a reusable asset, not a one-off. These are the prompts behind the missions with the Welsh cakes stripped out: steal them, swap the brackets, keep them somewhere you can find on a Tuesday.',
+    artifacts: [],
+    stretchTitle: 'THE PROMPTS',
+    stretchIntro: 'Open one, copy it, swap the [brackets].',
+    steps: [
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Gemini Deep Research',
+        hook: 'The fifteen-minute researcher, on any topic.',
+        estMinutes: 1,
+        title: 'Deep Research on anything',
+        prompt:
+          'Produce a sourced briefing on [TOPIC]. Cover: what has changed in the last 12 months; who the key players are; realistic costs and prices; what makes efforts like this succeed or fail; and three risks or opportunities I am probably not thinking about. Cite every source.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Any chat',
+        hook: 'Meta-prompting: the best prompt writer is the AI itself.',
+        estMinutes: 1,
+        title: 'Let AI write the prompt',
+        prompt:
+          'You are an expert prompt designer. Write the most effective prompt for this task: [DESCRIBE THE TASK, WHO THE OUTPUT IS FOR, AND WHAT GOOD LOOKS LIKE]. Include the role the AI should take, the constraints, and the exact output format. Ask me up to three clarifying questions first if the answers would improve the prompt.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Gemini',
+        hook: 'Meta-prompting again: a better brief means better research.',
+        estMinutes: 1,
+        title: 'Let AI write your Deep Research brief',
+        prompt:
+          'Draft a Deep Research brief for me. The decision it must inform: [WHAT YOU NEED TO DECIDE]. Write the brief so it names the questions to answer, the evidence to prefer, and the timeframe that matters, and end it with "Cite every source." Show me the brief for editing before I run it.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Gemini',
+        hook: 'Make it compute, not guess.',
+        estMinutes: 1,
+        title: 'Verified spreadsheet analysis',
+        prompt:
+          'Summarise this spreadsheet. Use code (Python) to calculate the figures, do not estimate them. Report: the rows, columns and what the data covers; the key numbers (totals, averages, highest and lowest); any missing values, outliers or suspect entries; and three insights in plain business English.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Any chat',
+        hook: 'AI is a better critic than author.',
+        estMinutes: 1,
+        title: "Devil's advocate",
+        prompt:
+          'Act as a constructive devil\'s advocate reviewing this [draft / plan / proposal]. Identify the weaknesses a sceptical reader would seize on: unsupported claims, arithmetic that does not add up, missing basics, internal contradictions. Be specific: quote the sentence, then state the problem. Do not soften criticism.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Any chat',
+        hook: 'Time travel makes the critique commit.',
+        estMinutes: 1,
+        title: 'Post-mortem from the future',
+        prompt:
+          'It is [a year from now] and [this plan] has failed. Write the post-mortem: the five most likely causes, each traced to a specific weakness in the document, quoting the passage that planted it.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Gemini Notebook',
+        hook: 'Receipts or it did not happen.',
+        estMinutes: 1,
+        title: 'Grounded answers only',
+        prompt:
+          'Based only on the sources: [YOUR QUESTION]. Cite the passage supporting each claim, and say plainly if the sources do not cover something rather than guessing.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Gemini Canvas',
+        hook: 'Working software from a sentence.',
+        estMinutes: 1,
+        title: 'Build a small tool',
+        prompt:
+          'Create a single-page web app that [solves this problem: DESCRIBE IT]. Friendly and fast, single HTML file with Tailwind CSS and vanilla JavaScript, no backend: fake the data in JavaScript.',
+      },
+    ],
+    verdict:
+      'You are leaving with my prompts in your pocket. Stealing from the founder: the first sound business decision anyone has made all day.',
+  },
+  {
+    id: 'm8',
+    code: '08',
+    level: 2,
+    title: 'The Dashboard',
+    pageTitle: 'Build a Dashboard, Twice',
+    tools: ['Copilot', 'Gemini Canvas'],
+    estMinutesCore: 15,
+    summary: 'Same sales data: dashboard in Copilot, control room in Canvas.',
+    toolInfo: {
+      feature:
+        'Tool duel: Copilot builds the dashboard inside your spreadsheet; Gemini Canvas builds a control room around it. Same data, two philosophies.',
+      apps: [APPS.copilot, APPS.gemini],
+    },
+    workflow: ['Download the sales log', 'Dashboard in Copilot', 'Control room in Canvas', 'Compare'],
+    brief:
+      'A term of stall sales and the waste log, warts and all: something odd happened mid-term, and one number is a typo. Build a dashboard twice and see which tool tells you the truth faster. Any non-sensitive sales or activity data of your own works the same way.',
+    artifacts: [A.salesLog],
+    steps: [
+      {
+        tier: 'core',
+        estMinutes: 6,
+        title: 'The dashboard, in Copilot',
+        body:
+          'Upload the workbook to Copilot (or open it in Excel and use Copilot there). Copilot works IN the spreadsheet: pivots, charts, a written verdict.',
+        prompt:
+          'Analyse this sales workbook (Sales and Waste log sheets). Build me a dashboard on a new sheet: revenue by [product] and week, the weekly revenue trend, waste cost by reason, and a written panel of the five insights a manager should act on. Flag anything in the data that looks abnormal or wrong, and say why.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 7,
+        title: 'The control room, in Gemini Canvas',
+        body:
+          'Now the same data as an app. Open Canvas, attach the workbook, and use the prompt below. This one has party tricks: press SIMULATE A BAD WEEK and watch the control chart catch it.',
+        prompt:
+          'Build an interactive sales control room for [a campus Welsh cake stall] from this spreadsheet, as a single-page web app with a dark control-room theme. Across the top: an andon strip with one status lamp per [product] - green, amber or red based on the latest week against that product\'s own average. Charts: (1) a statistical process control chart of daily revenue with the mean and plus/minus three sigma limits calculated from the data, highlighting in red any point outside the limits or any run of eight points on one side of the mean, labelled "special cause: investigate"; (2) a Pareto chart of [waste reasons] by cost with a cumulative percentage line and the vital-few cutoff marked; (3) KPI cards that count up on load: revenue, units, average sale, and cost of poor quality (waste cost). Under every chart, write one plain-English sentence of insight that updates when I filter. Filters: date range and [product]. Add a SITUATION REPORT button that turns whatever is on screen into five bullet points I can paste into an email, and a Cymraeg/English toggle for the labels. Party tricks: a SIMULATE A BAD WEEK button that injects a realistic failure into the data so the control chart and lamps catch it live, and a REPLAY button that streams the term in day by day like a live feed. Single HTML file, Tailwind CSS and vanilla JavaScript, no backend: embed the data as JSON.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 2,
+        title: 'The 30-second check',
+        check: true,
+        body:
+          'Two things are hiding in this data: a fortnight that is genuinely abnormal, and one typed-wrong number. Did each dashboard find them? Open the raw sheet and confirm at least one of them yourself.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 2,
+        title: 'Pick a winner',
+        body:
+          'Honest question: which of the two would you actually send to your manager, and which would you keep for yourself? There is no right answer, and that is the lesson: Copilot upgraded your spreadsheet, Canvas replaced it.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Sheets + Canvas',
+        hook: 'The live version.',
+        estMinutes: 5,
+        title: 'Wire it to the sheet',
+        body:
+          'Upload the workbook to Google Sheets, open the Ask Gemini side panel and choose Create canvas with the same prompt. Built this way, the dashboard reads the live sheet: edits to the data update the control room.',
+      },
+    ],
+    verdict:
+      'Two dashboards before lunch, and one of them caught the griddle fortnight on its own. The quality department used to take a quarter to do that. Do not tell them.',
+  },
 ];
+
+
 
 export function getMission(id) {
   return MISSIONS.find(m => m.id === id) || null;

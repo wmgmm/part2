@@ -1,0 +1,1 @@
+- 2026-08-21: Matt's no-em-dash rule covers ALL prose I write, including README/docs/task logs, not just code comments. Use commas, colons or hyphens. Caught by code review; swept README.md and tasks/todo.md.

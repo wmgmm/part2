@@ -1,6 +1,6 @@
 import React from 'react';
 import MissionCard from './MissionCard.jsx';
-import { MISSIONS } from '../data/missions.js';
+import { MISSIONS, HERO_IMAGE } from '../data/missions.js';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -24,16 +24,23 @@ export default function MissionGallery({ player, progress }) {
         </div>
         <img
           className="intro-row__image"
-          src={`${BASE}venture_stall.webp`}
+          src={`${BASE}${HERO_IMAGE}`}
           alt="Cartoon of the campus Welsh cake stall: two founders at the griddle under a dragon canopy, a sign reading Campus Welsh Cakes £2, AI-powered?, and a student consulting an AI business plan on a tablet"
         />
       </div>
 
       <div className="evidence-section__header">
         <h2 className="evidence-section__title">BUILD A BUSINESS WITH AI AS YOUR ASSISTANT</h2>
-        <p className="mission-progress-line">
-          {completedCount} of {MISSIONS.length} missions complete
-        </p>
+        {completedCount === MISSIONS.length ? (
+          <p className="mission-progress-line mission-progress-line--done">
+            All {MISSIONS.length} complete. &ldquo;The stall is in better hands than mine,
+            which the stall and I both suspected.&rdquo; &mdash; C.G.
+          </p>
+        ) : (
+          <p className="mission-progress-line">
+            {completedCount} of {MISSIONS.length} missions complete
+          </p>
+        )}
       </div>
 
       <div className="evidence-grid mission-grid">

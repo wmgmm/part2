@@ -18,8 +18,8 @@ export default function LeaderboardPage() {
       <div className="lb-page">
         <div className="lb-page__header">
           <div>
-            <h1 className="lb-page__title">PROMPT LEADERBOARD</h1>
-            <p className="lb-page__sub">THE ALBRIGHT AFFAIR &mdash; Full Session Results</p>
+            <h1 className="lb-page__title">SESSION BOARD</h1>
+            <p className="lb-page__sub">AI IN THE WORKPLACE PART 2 &mdash; Session Results</p>
           </div>
           <div className="lb-page__actions">
             <button className="admin-refresh" onClick={refresh}>&#8635; Refresh</button>
