@@ -197,10 +197,10 @@ export const MISSIONS = [
     tools: [TOOLS.deepResearch],
     accentType: 'stamp-red',
     accentText: 'START HERE',
-    estMinutesCore: 11,
+    estMinutesCore: 12,
     summary: "Start the market research using Gemini's Deep Research.",
     toolInfo: {
-      feature: 'Tool: Gemini Deep Research. A research agent that does your google searches and takes a while to run.',
+      feature: 'Tool: Gemini Deep Research. A research agent that does your Google searches and takes five to fifteen minutes to run.',
       apps: [APPS.gemini],
     },
     workflow: ['Paste the brief', 'Edit the plan', 'Walk away ☕', 'Skim the report', 'Make the infographic'],
@@ -219,7 +219,7 @@ export const MISSIONS = [
         estMinutes: 2,
         title: 'Brief your researcher',
         body:
-          'In Gemini (gemini.google.com), choose Deep Research and paste the brief below, or rewrite it for your own idea. A good brief names the decisions the research should inform, not just the topic.',
+          'In Gemini (gemini.google.com), choose Deep Research in the tools menu beneath the prompt box and paste the brief below, or rewrite it for your own idea. A good brief names the decisions the research should inform, not just the topic.',
         promptLabel: 'THE BRIEF (EDIT FOR YOUR IDEA)',
         prompt:
           'I am opening [a small Welsh cake stall on a UK university campus (Cardiff)]. Produce a sourced market briefing covering: who buys [from campus food stalls] and when (footfall patterns across the day and the academic year); realistic price expectations for [a fresh Welsh cake and comparable snacks]; who my competitors would be [on and near a typical campus, including mobile and permanent options]; what makes [small campus food ventures] succeed or fail, including [the regulatory basics for UK street food]; and three opportunities or risks I am probably not thinking about. Cite every source.',
@@ -229,25 +229,33 @@ export const MISSIONS = [
         estMinutes: 3,
         title: 'Edit the plan. Then walk away',
         body:
-          'Before it runs, Gemini shows you its research plan. EDIT IT: cross out what you do not need, add what is missing. That edit is the entire skill.',
+          'Before it runs, Gemini shows you its research plan. EDIT IT: tell it what to cut and what to add, then press Start research. That edit is the entire skill.',
       },
       {
         tier: 'core',
         estMinutes: 3,
         title: 'Return and skim like an executive',
         body:
-          'When the report is done, use this to ask for how this info changes your decisions.',
+          'When the report is done, do not read it top to bottom. Ask how it changes your decisions.',
         prompt:
           'Give me the five findings in this report that should change my plans, each in one sentence, each with its source. Then the single biggest risk the report identifies.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 1,
+        title: 'The 30-second check',
+        check: true,
+        body:
+          'Pick one of the five findings and click through to its source. Does the source actually say that? Deep Research cites well, not perfectly, and the habit starts here.',
       },
       {
         tier: 'core',
         estMinutes: 3,
         title: 'Turn the findings into an infographic',
         body:
-          'Still in Gemini, make the findings shareable before you leave. Ask for an image, or open Canvas and use its Create menu to generate an Infographic from the same material.',
+          'Still in Gemini, make the findings shareable before you leave. Ask for an image, or open Gemini Canvas and use its Create menu to generate an Infographic from the same material.',
         prompt:
-          'Using the five findings above, create a clean, simple infographic a colleague would understand in ten seconds: white background, one accent colour, large readable labels, no clutter. Then make a second, portrait version sized for a phone screen.',
+          'Using the five findings above, create a clean, simple infographic [a colleague] would understand in ten seconds: white background, one accent colour, large readable labels, no clutter. Then make a second, portrait version sized for a phone screen.',
       },
       {
         tier: 'stretch',
@@ -257,7 +265,7 @@ export const MISSIONS = [
         estMinutes: 3,
         title: 'Ideas: other ways in',
         body:
-          'You can run Deep Research from INSIDE Gemini Notebook instead, and the report lands in your notebook as a source automatically, which sets up Mission 2 with zero copying. And when you run it in Gemini, prefer "Export to Docs" at the end: a Doc drops straight into a notebook through the Drive picker.',
+          'Run Deep Research from INSIDE Gemini Notebook and the report lands there as a source automatically: Mission 2 set up with zero copying. If you ran it in Gemini instead, choose Export to Docs at the end; a Doc adds to any notebook in one click.',
       },
     ],
     verdict:
@@ -289,14 +297,14 @@ export const MISSIONS = [
         estMinutes: 3,
         title: 'Ground it',
         body:
-          'Create a notebook at notebooklm.google.com (the old links still redirect) and add the market report as a source: your own via Export to Docs and the Drive picker, or the provided PDF.',
+          'Create a notebook at notebooklm.google.com (the old links still redirect) and add the market report as a source: the provided PDF, or your own Mission 1 report (Export to Docs in Gemini, then Add sources and pick it from Drive).',
       },
       {
         tier: 'core',
         estMinutes: 3,
         title: 'Map it',
         body:
-          'In the Studio panel, generate a Mind Map: a clickable visual index of everything the report covers. Thirty seconds, and you now know the report better than most people know documents they wrote themselves.',
+          'In the Studio panel (right-hand side), generate a Mind Map: a clickable visual index of everything the report covers. Thirty seconds, and you now know the report better than most people know documents they wrote themselves.',
       },
       {
         tier: 'core',
@@ -322,7 +330,7 @@ export const MISSIONS = [
         estMinutes: 5,
         title: 'Close the loop',
         body:
-          'The newest move in the toolkit: run Deep Research from INSIDE the notebook, grounded in your own evidence plus the open web. This is the research step almost nobody demonstrates.',
+          'The newest move in the toolkit: run Deep Research from INSIDE the notebook, grounded in your own evidence plus the open web. Find what your document misses before a reviewer does.',
         prompt:
           'Based only on my sources, what has my evidence failed to cover that a sceptical [funder] would ask about? List the gaps, then research those gaps and report back with sources.',
       },
@@ -334,7 +342,7 @@ export const MISSIONS = [
         estMinutes: 6,
         title: 'Infographic, then make it Cardiff',
         body:
-          'Generate a Key-Numbers Infographic in the Studio panel. Then, instead of accepting the default look, open the revise (pencil) panel and paste the Cardiff University design prompt below with the first line "MODE: INFOGRAPHIC". One click makes an infographic; a design prompt makes YOUR infographic.',
+          'Generate a Key-Numbers Infographic in the Studio panel. Then, instead of accepting the default look, open the revise (pencil) panel, type MODE: INFOGRAPHIC, and paste the Cardiff University design prompt below beneath it. One click makes an infographic; a design prompt makes YOUR infographic.',
         promptLabel: 'CARDIFF DESIGN PROMPT',
         prompt: CARDIFF_DESIGN_PROMPT,
         link: { href: PROMPT_LIBRARY_URL, label: "From The Matts' NotebookLM Prompt Library" },
@@ -385,13 +393,33 @@ export const MISSIONS = [
           'Summarise this spreadsheet. Use code (Python) to calculate the figures, do not estimate them. Report: the rows, columns and what the data covers; the key numbers (totals, averages, highest and lowest); any missing values, outliers or suspect entries; and three insights in plain business English.',
       },
       {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Gemini',
+        hook: 'Nobody has time to read a hundred of them.',
+        estMinutes: 1,
+        title: 'Find the themes in free-text comments',
+        prompt:
+          'Categorise every free-text comment in this file into themes you derive from the data itself. Give me: the themes ranked by count with percentages; one representative quote per theme with its row reference; and the comments you found hard to place, with why. Finish with this: if I could fix only one thing, what does the data say it should be?',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Any AI chat',
+        hook: 'Structured assessment with cited evidence.',
+        estMinutes: 1,
+        title: 'Score it against a rubric',
+        prompt:
+          'Score this [document] against the attached [rubric or criteria], 1 to 5 per criterion. For every score, cite the exact sentence or figure that justifies it. Finish with the three revisions that would most improve the total score.',
+      },
+      {
         tier: 'core',
         estMinutes: 5,
         title: 'Find the themes',
         body:
           'The free-text comments are where the truth lives, and nobody has time to read a hundred of them. Make the machine do the reading and show its working.',
         prompt:
-          'Categorise every free-text comment in this file into themes you derive from the data itself. Give me: the themes ranked by count with percentages; one representative quote per theme with its row reference ([response_id]); and the comments you found hard to place, with why. Finish with this: if I could fix only one thing, what does the data say it should be?',
+          'Categorise every free-text comment in this file into themes you derive from the data itself. Give me: the themes ranked by count with percentages; one representative quote per theme with its [response_id]; and the comments you found hard to place, with why. Finish with this: if I could fix only one thing, what does the data say it should be?',
       },
       {
         tier: 'core',
@@ -420,7 +448,10 @@ export const MISSIONS = [
         estMinutes: 6,
         title: 'Present the findings as slides',
         body:
-          'Paste your themes answer into Gemini Notebook as a new source, then in Studio generate a Slide Deck: "five slides for the stall owner: what customers say, and what to do about it". Fancy it up with the Cardiff design prompt from Mission 5.',
+          'Paste your themes answer into Gemini Notebook as a new source, then in Studio generate a Slide Deck with the brief below. Fancy it up with the Cardiff design prompt from Mission 5.',
+        prompt:
+          'Five slides for [the stall owner]: what customers say, and what to do about it.',
+        link: { href: 'https://notebooklm.google.com', label: 'Open Gemini Notebook' },
       },
       {
         tier: 'stretch',
@@ -430,7 +461,7 @@ export const MISSIONS = [
         estMinutes: 6,
         title: 'Build the live dashboard',
         body:
-          'Open the feedback file in Google Sheets, open the Ask Gemini side panel and choose Create canvas. Filters and edits write back to the sheet underneath.',
+          'Upload the Excel file to Google Drive, open it with Google Sheets, then open the Ask Gemini side panel and choose Create canvas. Filters and edits write back to the sheet underneath.',
         prompt:
           'Build an interactive dashboard from this sheet. KPI cards along the top for [average rating, total responses and total spend]; a [weekly average-rating] chart across [the term]; filter toggles for [time slot and item]; and a bar chart of [complaint themes] from the comments.',
       },
@@ -442,7 +473,8 @@ export const MISSIONS = [
         estMinutes: 5,
         title: 'Turn it into an infographic',
         body:
-          'Run the prompt below in Gemini. Or paste your summary into Gemini Notebook as a text source (the spreadsheet itself will not ingest, and hitting that wall IS the lesson) and generate one in Studio.',
+          'Follow up in the same chat with the prompt below. Or paste your summary into Gemini Notebook as a text source (the spreadsheet itself will not ingest, and hitting that wall IS the lesson) and generate one in Studio.',
+        link: { href: 'https://notebooklm.google.com', label: 'Open Gemini Notebook' },
         prompt:
           'Using this analysis, create a clean, simple infographic [a stall customer] would understand: white background, one accent colour, large readable labels, no clutter.',
       },
@@ -453,8 +485,9 @@ export const MISSIONS = [
         hook: 'For the pessimist, and therefore the planner.',
         estMinutes: 4,
         title: 'Predict the failure',
+        body: 'The pre-mortem. The same prompt works on any feedback file you are about to defend in a review.',
         prompt:
-          'It is next term and the stall has closed. Using only this feedback data, write the post-mortem: what killed it, which warning signs were already in these comments, and what single change would most likely have saved it.',
+          'It is [next term] and [the stall] has closed. Using only this feedback data, write the post-mortem: what killed it, which warning signs were already in these comments, and what single change would most likely have saved it.',
       },
     ],
     verdict:
@@ -478,7 +511,7 @@ export const MISSIONS = [
     },
     workflow: ["Devil's advocate", 'Post-mortem from the future', 'Score with the rubric', '30-second check'],
     brief:
-      'Gravitas asked an AI to write his business plan overnight and submitted it unread. It looks professional. It is not: find the flaws before an investor does. Everyone audits the same plan, so you can compare catches with the room.',
+      'Gravitas asked an AI to write his business plan overnight and submitted it unread. It looks professional. It is not: find the flaws before an investor does. Everyone audits the same plan, so you can compare catches with colleagues.',
     artifacts: [A.plan, A.rubric],
     steps: [
       {
@@ -494,7 +527,7 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'The post-mortem from the future',
         body:
-          'Critique finds flaws; a post-mortem finds the ones that kill. Time-travel makes the AI commit to consequences.',
+          'Stay in the same chat. Critique finds flaws; a post-mortem finds the ones that kill. Time-travel makes the AI commit to consequences.',
         prompt:
           'It is [one year after launch] and [the Welsh cake stall] has failed. Write the post-mortem: the five most likely causes of death, each traced to a specific weakness in this [business plan], quoting the passage that planted it.',
       },
@@ -502,7 +535,7 @@ export const MISSIONS = [
         tier: 'core',
         estMinutes: 5,
         title: 'Score it against the rubric',
-        body: 'Structured assessment with cited evidence: the actual workplace skill.',
+        body: 'Upload the rubric to the same chat. Structured assessment with cited evidence: the actual workplace skill.',
         prompt:
           'Score this [business plan] against the attached rubric, 1 to 5 per criterion. For every score, cite the exact sentence or figure from the plan that justifies it. Finish with the three revisions that would most improve the total score.',
       },
@@ -522,7 +555,7 @@ export const MISSIONS = [
         estMinutes: 5,
         title: 'Second opinion, adjudicated',
         body:
-          'Run the same devil\'s advocate prompt in Gemini. Then paste both critiques into a third prompt. Agreement between models is weak evidence; disagreement is a flag worth chasing.',
+          'Run the same devil\'s advocate prompt in Gemini. Then start a fresh Copilot chat, attach the plan, and paste both critiques in. Disagreement is a flag worth chasing.',
         prompt:
           'Here are two AI reviews of the same [business plan]. Where do they disagree? For each disagreement, decide which review is right based on the evidence in the plan itself, quoting it. What did each reviewer miss that the other caught?',
       },
@@ -562,10 +595,10 @@ export const MISSIONS = [
     stretchTitle: 'CHOOSE YOUR NEXT MOVE',
     stretchIntro: 'Pick ONE path below; come back for another any time.',
     tools: [TOOLS.notebook],
-    estMinutesCore: 12,
-    summary: 'Build the investor slide deck in Gemini Notebook Studio.',
+    estMinutesCore: 13,
+    summary: 'Build the investor slide deck in Notebook Studio.',
     toolInfo: {
-      feature: 'Tool: Gemini Notebook Studio. One button turns your sources into slides, quizzes and video.',
+      feature: 'Tool: the Studio panel in Gemini Notebook (until recently NotebookLM). One button turns your sources into slides, quizzes and video.',
       apps: [APPS.notebook],
     },
     workflow: ['Load three sources', 'Generate the deck', 'Take your own quiz'],
@@ -578,14 +611,14 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'Load the evidence',
         body:
-          'New notebook, three sources: the business plan, the market report and the feedback summary (all provided; substitute your own versions if you made them in earlier missions).',
+          'Create a new notebook and add the three files below as sources: the business plan, the market report and the feedback summary (all provided; substitute your own versions if you made them in earlier missions).',
       },
       {
         tier: 'core',
         estMinutes: 5,
         title: 'Generate the deck',
         body:
-          'In Studio, generate a Slide Deck with the ask below. Note: deck generation is gated on some education tiers; if you do not see it, export the notebook Report to Docs and ask Gemini Canvas to build the deck from it, which is nearly as good and teaches the same lesson.',
+          'In Studio, choose Slide Deck and paste the prompt below into its customise box before generating. Note: some university accounts do not offer deck generation; if you do not see it, export the notebook Report to Docs and ask Gemini Canvas to build the deck from it.',
         prompt:
           'Create a ten-slide [investor pitch for the stall] from these sources, honest about the risks the sources raise. One message per slide, a clear ask on the final slide.',
       },
@@ -595,6 +628,14 @@ export const MISSIONS = [
         title: 'Take your own quiz',
         body:
           'Generate a Quiz from the same sources and take it. If your pitch cannot survive its own quiz, the pitch is not ready, and better to learn that here than in the meeting.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 1,
+        title: 'The 30-second check',
+        check: true,
+        body:
+          'Pick one number on any slide and find it in the sources. Polished is not the same as true.',
       },
       {
         tier: 'stretch',
@@ -617,7 +658,7 @@ export const MISSIONS = [
         estMinutes: 6,
         title: 'The video pitch',
         body:
-          'Generate a Video Overview (generation queues for a few minutes; start it and do something else, which by now is a habit). Then revise it with the same Cardiff prompt, "MODE: VIDEO".',
+          'Generate a Video Overview (generation queues for a few minutes; start it and do something else, which by now is a habit). Then open its revise (pencil) panel, type MODE: VIDEO, and paste the Cardiff design prompt from Path A beneath it.',
       },
     ],
     verdict:
@@ -654,16 +695,16 @@ export const MISSIONS = [
         estMinutes: 7,
         title: 'Build it',
         body:
-          'In Gemini, open Canvas and use the prompt below. Yes, it produces a working app. No, you do not need to read the code. Iterate in plain English: "bigger buttons", "add a Welsh language toggle", "show a running total".',
+          'In Gemini, pick Canvas from the tools under the message box, then use the prompt below. Yes, it produces a working app. No, you do not need to read the code. Iterate in plain English: "bigger buttons", "add a Welsh language toggle", "show a running total".',
         prompt:
-          'Create a single-page web app for [a campus Welsh cake stall] that fixes this customer problem: [PASTE YOUR TOP THEME, e.g. "long queues at lunchtime and selling out by 1pm"]. Ideas if useful: [a pre-order form with pickup time slots, a live sold-out board, a Build-a-Box picker with a running price total]. Friendly and fast, single HTML file with Tailwind CSS and vanilla JavaScript, no backend: fake the data in JavaScript.',
+          'Create a single-page web app for [a campus Welsh cake stall] that fixes this customer problem: [long queues at lunchtime and selling out by 1pm]. Ideas if useful: [a pre-order form with pickup time slots, a live sold-out board, a Build-a-Box picker with a running price total]. Friendly and fast, single HTML file with Tailwind CSS and vanilla JavaScript, no backend: fake the data in JavaScript.',
       },
       {
         tier: 'core',
         estMinutes: 2,
         title: 'Show someone',
         body:
-          'Turn to a neighbour (or a colleague on Monday) and let them press the buttons. Software that fixes a complaint gets used; software that is merely impressive gets a nod.',
+          'Turn to a neighbour (or a colleague on Monday) and let them press the buttons. Canvas can share the app as a link; keep real personal data out of prototypes.',
       },
       {
         tier: 'stretch',
@@ -672,7 +713,7 @@ export const MISSIONS = [
         hook: 'The honest final step.',
         estMinutes: 4,
         title: 'Grade your own build',
-        body: 'Check the build against the evidence it came from.',
+        body: 'In Canvas, switch to the Code view and copy it all. Paste it into a new Gemini chat with the theme list, then run the prompt.',
         prompt:
           'Here is the HTML of an app built to fix a customer complaint, plus the list of complaint themes from the feedback data. Which theme does the app actually solve, which does it partially help, and which does it ignore? Be blunt.',
       },
@@ -686,15 +727,15 @@ export const MISSIONS = [
     level: 2,
     title: 'The Dashboard',
     pageTitle: 'Build a Dashboard, Twice',
-    tools: ['Copilot', 'Gemini Canvas'],
-    estMinutesCore: 15,
+    tools: [TOOLS.copilot, TOOLS.canvas],
+    estMinutesCore: 17,
     summary: 'Same sales data: dashboard in Copilot, control room in Canvas.',
     toolInfo: {
       feature:
         'Tool duel: Copilot builds the dashboard inside your spreadsheet; Gemini Canvas builds a control room around it. Same data, two philosophies.',
       apps: [APPS.copilot, APPS.gemini],
     },
-    workflow: ['Download the sales log', 'Dashboard in Copilot', 'Control room in Canvas', 'Compare'],
+    workflow: ['Download the sales log', 'Dashboard in Copilot', 'Control room in Canvas', '30-second check', 'Compare'],
     brief:
       'A term of stall sales and the waste log, warts and all: something odd happened mid-term, and one number is a typo. Build a dashboard twice and see which tool tells you the truth faster. Any non-sensitive sales or activity data of your own works the same way.',
     artifacts: [A.salesLog],
@@ -704,18 +745,18 @@ export const MISSIONS = [
         estMinutes: 6,
         title: 'The dashboard, in Copilot',
         body:
-          'Upload the workbook to Copilot (or open it in Excel and use Copilot there). Copilot works IN the spreadsheet: pivots, charts, a written verdict.',
+          'Upload the workbook to Copilot chat at m365copilot.com, or open it in Excel and use Copilot there if your licence includes it. In chat you get the charts and the written verdict; in Excel the dashboard lands on a real new sheet.',
         prompt:
-          'Analyse this sales workbook (Sales and Waste log sheets). Build me a dashboard on a new sheet: revenue by [product] and week, the weekly revenue trend, waste cost by reason, and a written panel of the five insights a manager should act on. Flag anything in the data that looks abnormal or wrong, and say why.',
+          'Analyse this sales workbook (the [Sales] and [Waste log] sheets). Build me a dashboard (on a new sheet if you are in Excel, otherwise here): revenue by [product] and week, the weekly revenue trend, waste cost by reason, and a written panel of the five insights a manager should act on. Flag anything in the data that looks abnormal or wrong, and say why.',
       },
       {
         tier: 'core',
         estMinutes: 7,
         title: 'The control room, in Gemini Canvas',
         body:
-          'Now the same data as an app. Open Canvas, attach the workbook, and use the prompt below. This one has party tricks: press SIMULATE A BAD WEEK and watch the control chart catch it.',
+          'Now the same data as an app. In Gemini (gemini.google.com), open Canvas, attach the workbook and use the prompt below. It talks like a quality engineer, but the ideas are plain: status lamps, "is this dip real or just noise?", and "which few problems cause most of the cost". Press SIMULATE A BAD WEEK and watch the control chart catch it. If a button does nothing, tell Canvas so in plain English; it fixes its own bugs.',
         prompt:
-          'Build an interactive sales control room for [a campus Welsh cake stall] from this spreadsheet, as a single-page web app with a dark control-room theme. Across the top: an andon strip with one status lamp per [product] - green, amber or red based on the latest week against that product\'s own average. Charts: (1) a statistical process control chart of daily revenue with the mean and plus/minus three sigma limits calculated from the data, highlighting in red any point outside the limits or any run of eight points on one side of the mean, labelled "special cause: investigate"; (2) a Pareto chart of [waste reasons] by cost with a cumulative percentage line and the vital-few cutoff marked; (3) KPI cards that count up on load: revenue, units, average sale, and cost of poor quality (waste cost). Under every chart, write one plain-English sentence of insight that updates when I filter. Filters: date range and [product]. Add a SITUATION REPORT button that turns whatever is on screen into five bullet points I can paste into an email, and a Cymraeg/English toggle for the labels. Party tricks: a SIMULATE A BAD WEEK button that injects a realistic failure into the data so the control chart and lamps catch it live, and a REPLAY button that streams the term in day by day like a live feed. Single HTML file, Tailwind CSS and vanilla JavaScript, no backend: embed the data as JSON.',
+          'Build an interactive sales control room for [a campus Welsh cake stall] from this workbook, as a single-page web app with a dark control-room theme. Across the top: an andon strip with one status lamp per [product] - green, amber or red based on the latest week against that product\'s own average. Charts: (1) a statistical process control chart of daily revenue with the mean and plus/minus three sigma limits calculated from the data, highlighting in red any point outside the limits or any run of eight points on one side of the mean, labelled "special cause: investigate"; (2) a Pareto chart of [waste reasons] by cost with a cumulative percentage line and the vital-few cutoff marked; (3) KPI cards that count up on load: revenue, units, average sale, and cost of poor quality (waste cost). Under every chart, write one plain-English sentence of insight that updates when I filter. Filters: date range and [product]. Add a SITUATION REPORT button that turns whatever is on screen into five bullet points I can paste into an email, and a Cymraeg/English toggle for the labels. Party tricks: a SIMULATE A BAD WEEK button that injects a realistic failure into the data so the control chart and lamps catch it live, and a REPLAY button that streams [the term] in day by day like a live feed. Single HTML file, Tailwind CSS and vanilla JavaScript, no backend: embed the data as JSON.',
       },
       {
         tier: 'core',
@@ -730,7 +771,7 @@ export const MISSIONS = [
         estMinutes: 2,
         title: 'Pick a winner',
         body:
-          'Honest question: which of the two would you actually send to your manager, and which would you keep for yourself? There is no right answer, and that is the lesson: Copilot upgraded your spreadsheet, Canvas replaced it.',
+          'Before you vote, press SITUATION REPORT: a screen turned into five email-ready bullets is the part you will reuse on Monday. Then the honest question: which of the two would you actually send to your manager? There is no right answer, and that is the lesson: Copilot upgraded your spreadsheet, Canvas replaced it.',
       },
       {
         tier: 'stretch',
@@ -776,7 +817,7 @@ export const MISSIONS = [
         tier: 'core',
         estMinutes: 4,
         title: 'Make the AI rewrite the prompt',
-        body: 'In a NEW chat, hand the lazy prompt over for demolition.',
+        body: 'In a NEW chat (a fresh one, so the critic has no stake in the first attempt), hand the lazy prompt over for demolition.',
         prompt:
           'Critique this prompt, then rewrite it to be far more effective: "Write a poster for [the reopening of a campus Welsh cake stall]." Your rewrite must specify: the role the AI should take, the audience, the tone, the constraints (size, word limits, what must be included), and the exact output format. Finish with two bullets on why your version will produce better work.',
       },
@@ -786,7 +827,7 @@ export const MISSIONS = [
         title: 'The 30-second check',
         check: true,
         body:
-          'Run the rewritten prompt and put the two outputs side by side. Which one would you actually put on a wall? The gap between them is the prompt, not the model.',
+          'Run the rewritten prompt in the same chat, then compare the two outputs (two browser tabs works). Which one would you actually put on a wall? The gap between them is the prompt, not the model.',
       },
       {
         tier: 'core',
@@ -795,28 +836,18 @@ export const MISSIONS = [
         body:
           'Now the transferable version, on your real work. The AI asks the questions you did not know your prompt needed to answer.',
         prompt:
-          'I need a prompt for this task: [DESCRIBE A REAL TASK FROM YOUR OWN WORK]. Interview me first: ask up to five questions, one at a time, that will make the prompt better. Then write the final prompt, and one line on when I should reuse it.',
+          'I need a prompt for this task: [writing the monthly update email for my team]. Interview me first: ask up to five questions, one at a time, that will make the prompt better. Then write the final prompt, and one line on when I should reuse it.',
       },
       {
         tier: 'stretch',
         collapsed: true,
-        toolChip: 'Any chat',
+        toolChip: 'Any AI chat',
         hook: 'Turn it into a standing habit.',
         estMinutes: 2,
         title: 'The IMPROVE: trick',
         body: 'Paste this once at the start of a chat and you have a prompt editor on call.',
         prompt:
           'From now on in this chat, whenever I send a message starting with IMPROVE:, do not answer the prompt that follows. Instead return a stronger version of that prompt and one sentence on what you changed.',
-      },
-      {
-        tier: 'stretch',
-        collapsed: true,
-        toolChip: 'Gems / Copilot agents',
-        hook: 'Make your best prompt a button.',
-        estMinutes: 5,
-        title: 'Package it',
-        body:
-          'Take the prompt the interview produced and paste it into the instructions of a Gemini Gem or a Copilot agent. Congratulations: your best prompt is now a reusable assistant rather than a thing you hunt for in old chats.',
       },
     ],
     verdict:
@@ -833,7 +864,7 @@ export const MISSIONS = [
     summary: 'Reusable templates and meta-prompting for your own work.',
     toolInfo: {
       feature:
-        'Works in any AI chat. The square brackets mark what to swap for your own task; everything inside them is just the Welsh cake default.',
+        'Works in any AI chat. The [square brackets] mark what to swap for your own task.',
       apps: [APPS.gemini, APPS.notebook, APPS.copilot],
     },
     brief:
@@ -855,8 +886,18 @@ export const MISSIONS = [
       {
         tier: 'stretch',
         collapsed: true,
-        toolChip: 'Any chat',
-        hook: 'Meta-prompting: the best prompt writer is the AI itself.',
+        toolChip: 'Gemini',
+        hook: 'A better brief in, better research out.',
+        estMinutes: 1,
+        title: 'Let AI write your Deep Research brief',
+        prompt:
+          'Draft a Deep Research brief for me. The decision it must inform: [WHAT YOU NEED TO DECIDE]. Write the brief so it names the questions to answer, the evidence to prefer, and the timeframe that matters, and end it with "Cite every source." Show me the brief for editing before I run it.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Any AI chat',
+        hook: 'The best prompt writer is the AI itself.',
         estMinutes: 1,
         title: 'Let AI write the prompt',
         prompt:
@@ -865,22 +906,12 @@ export const MISSIONS = [
       {
         tier: 'stretch',
         collapsed: true,
-        toolChip: 'Any chat',
+        toolChip: 'Any AI chat',
         hook: 'A prompt editor on call for the whole chat.',
         estMinutes: 1,
-        title: 'The IMPROVE: trick (reusable meta-prompt)',
+        title: 'The IMPROVE: trick',
         prompt:
           'From now on in this chat, whenever I send a message starting with IMPROVE:, do not answer the prompt that follows. Instead return a stronger version of that prompt and one sentence on what you changed.',
-      },
-      {
-        tier: 'stretch',
-        collapsed: true,
-        toolChip: 'Gemini',
-        hook: 'Meta-prompting again: a better brief means better research.',
-        estMinutes: 1,
-        title: 'Let AI write your Deep Research brief',
-        prompt:
-          'Draft a Deep Research brief for me. The decision it must inform: [WHAT YOU NEED TO DECIDE]. Write the brief so it names the questions to answer, the evidence to prefer, and the timeframe that matters, and end it with "Cite every source." Show me the brief for editing before I run it.',
       },
       {
         tier: 'stretch',
@@ -895,17 +926,37 @@ export const MISSIONS = [
       {
         tier: 'stretch',
         collapsed: true,
-        toolChip: 'Any chat',
-        hook: 'AI is a better critic than author.',
+        toolChip: 'Gemini',
+        hook: 'Nobody has time to read a hundred of them.',
         estMinutes: 1,
-        title: "Devil's advocate",
+        title: 'Find the themes in free-text comments',
         prompt:
-          'Act as a constructive devil\'s advocate reviewing this [draft / plan / proposal]. Identify the weaknesses a sceptical reader would seize on: unsupported claims, arithmetic that does not add up, missing basics, internal contradictions. Be specific: quote the sentence, then state the problem. Do not soften criticism.',
+          'Categorise every free-text comment in this file into themes you derive from the data itself. Give me: the themes ranked by count with percentages; one representative quote per theme with its row reference; and the comments you found hard to place, with why. Finish with this: if I could fix only one thing, what does the data say it should be?',
       },
       {
         tier: 'stretch',
         collapsed: true,
-        toolChip: 'Any chat',
+        toolChip: 'Any AI chat',
+        hook: 'AI is a better critic than author.',
+        estMinutes: 1,
+        title: "Devil's advocate",
+        prompt:
+          'Act as a constructive devil\'s advocate reviewing this [draft / plan / proposal]. Identify the weaknesses a sceptical reader would seize on: unsupported claims, arithmetic that does not add up, missing regulatory or operational basics, internal contradictions. Be specific: quote the sentence, then state the problem. Do not soften criticism.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Any AI chat',
+        hook: 'Structured assessment with cited evidence.',
+        estMinutes: 1,
+        title: 'Score it against a rubric',
+        prompt:
+          'Score this [document] against the attached [rubric or criteria], 1 to 5 per criterion. For every score, cite the exact sentence or figure that justifies it. Finish with the three revisions that would most improve the total score.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Any AI chat',
         hook: 'Time travel makes the critique commit.',
         estMinutes: 1,
         title: 'Post-mortem from the future',
@@ -916,7 +967,7 @@ export const MISSIONS = [
         tier: 'stretch',
         collapsed: true,
         toolChip: 'Gemini Notebook',
-        hook: 'Receipts or it did not happen.',
+        hook: 'Answers only from files you have added to a notebook, with receipts.',
         estMinutes: 1,
         title: 'Grounded answers only',
         prompt:
@@ -930,7 +981,7 @@ export const MISSIONS = [
         estMinutes: 1,
         title: 'Build a small tool',
         prompt:
-          'Create a single-page web app that [solves this problem: DESCRIBE IT]. Friendly and fast, single HTML file with Tailwind CSS and vanilla JavaScript, no backend: fake the data in JavaScript.',
+          'Create a single-page web app that solves this problem: [DESCRIBE IT]. Friendly and fast, single HTML file with Tailwind CSS and vanilla JavaScript, no backend: fake the data in JavaScript.',
       },
     ],
     verdict:
