@@ -219,10 +219,10 @@ export const MISSIONS = [
         estMinutes: 2,
         title: 'Brief your researcher',
         body:
-          'In Gemini (gemini.google.com), choose Deep Research in the tools menu beneath the prompt box and paste the brief below, or rewrite it for your own idea. A good brief names the decisions the research should inform, not just the topic.',
+          'In Gemini (gemini.google.com), choose Deep Research in the tools menu beneath the prompt box and paste the brief below, or rewrite it for your own idea. A good brief dictates the report\'s sections and tells the tool what to do when data is missing, not just the topic.',
         promptLabel: 'THE BRIEF (EDIT FOR YOUR IDEA)',
         prompt:
-          'I am opening [a small Welsh cake stall on a UK university campus (Cardiff)]. Produce a sourced market briefing covering: who buys [from campus food stalls] and when (footfall patterns across the day and the academic year); realistic price expectations for [a fresh Welsh cake and comparable snacks]; who my competitors would be [on and near a typical campus, including mobile and permanent options]; what makes [small campus food ventures] succeed or fail, including [the regulatory basics for UK street food]; and three opportunities or risks I am probably not thinking about. Cite every source.',
+          'ROLE: You are a market research analyst preparing a briefing for a first-time food vendor.\nTASK: Research the viability of [a small Welsh cake stall on a UK university campus (Cardiff)].\nFORMAT: Use exactly these section headings:\n- Who Buys, and When: footfall patterns for [campus food stalls] across the day and the academic year.\n- Price Expectations: realistic prices for [a fresh Welsh cake and comparable snacks].\n- Competitors: [on and near a typical campus, including mobile and permanent options].\n- Succeed or Fail: what decides it for [small campus food ventures], including [the regulatory basics for UK street food].\n- Blind Spots: three opportunities or risks I am probably not thinking about.\nCONSTRAINTS: Cite every claim to its source. If a price or figure is not in your sources, write DATA UNAVAILABLE rather than estimating it.',
       },
       {
         tier: 'core',
@@ -238,7 +238,7 @@ export const MISSIONS = [
         body:
           'When the report is done, do not read it top to bottom. Ask how it changes your decisions.',
         prompt:
-          'Give me the five findings in this report that should change my plans, each in one sentence, each with its source. Then the single biggest risk the report identifies.',
+          'From this report only, give me a three-column table: Finding, So I Should, Source. Fill it with the five findings most likely to change my plans, one sentence per cell, naming the report\'s cited source in each row. Below the table, one line: the single biggest risk the report identifies, with its source. No preamble.',
       },
       {
         tier: 'core',
@@ -255,7 +255,7 @@ export const MISSIONS = [
         body:
           'Still in Gemini, make the findings shareable before you leave. Ask for an image, or open Gemini Canvas and use its Create menu to generate an Infographic from the same material.',
         prompt:
-          'Using the five findings above, create a clean, simple infographic [a colleague] would understand in ten seconds: white background, one accent colour, large readable labels, no clutter. Then make a second, portrait version sized for a phone screen.',
+          'Using only the five findings in the table above (no new numbers, no invented claims), create a clean, simple infographic [a colleague] would understand in ten seconds: white background, one accent colour, large readable labels, no clutter. Then make a second, portrait version sized for a phone screen.',
       },
       {
         tier: 'stretch',
@@ -310,9 +310,9 @@ export const MISSIONS = [
         tier: 'core',
         estMinutes: 4,
         title: 'Ask with citations',
-        body: 'Now the difference from ordinary chat: every claim must come from your sources.',
+        body: 'Now the difference from ordinary chat: every claim must come from your sources, and a blunt INSUFFICIENT_DATA beats a confident guess.',
         prompt:
-          'Based only on the sources: what should I charge for [a single Welsh cake]? Cite the passage that supports the answer. Then list every risk the sources name for [a venture like this], each with its source. If the sources do not cover something, say so plainly rather than guessing.',
+          'ROLE: a strict, literal fact-checker. Answer from the sources in this notebook and nothing else.\nQ1: What should I charge for [a single Welsh cake]? Cite the passage that supports the figure.\nQ2: List every risk the sources name for [a venture like this], each with its citation.\nRULES: no outside knowledge, no estimates, no filler. If the sources cannot fully answer a question, output the exact phrase INSUFFICIENT_DATA for that question instead of guessing.',
       },
       {
         tier: 'core',
@@ -332,7 +332,7 @@ export const MISSIONS = [
         body:
           'The newest move in the toolkit: run Deep Research from INSIDE the notebook, grounded in your own evidence plus the open web. Find what your document misses before a reviewer does.',
         prompt:
-          'Based only on my sources, what has my evidence failed to cover that a sceptical [funder] would ask about? List the gaps, then research those gaps and report back with sources.',
+          'Based only on my sources: what has my evidence failed to cover that a sceptical [funder] would ask about?\nOutput three sections:\nGAP REGISTER: 3-5 gaps, each phrased as one specific research question.\nFINDINGS: research each question on the open web; a short answer per gap, with sources.\nVERDICT: the single gap I most need to fix before anyone sceptical reads this.',
       },
       {
         tier: 'stretch',
@@ -388,9 +388,9 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'The verified summary',
         body:
-          'Upload the file to Gemini with the prompt below. The magic words are "use code". A good analysis also confesses what is wrong with the data; watch whether it finds the problems on its own.',
+          'Upload the file to Gemini with the prompt below. The magic words are "use code". The prompt also demands a confession: a stated DATA UNAVAILABLE beats a confident guess, and section 3 is where the machine owns up to the mess.',
         prompt:
-          'Summarise this spreadsheet. Use code (Python) to calculate the figures, do not estimate them. Report: the rows, columns and what the data covers; the key numbers (totals, averages, highest and lowest); any missing values, outliers or suspect entries; and three insights in plain business English.',
+          'Act as a careful data analyst. Summarise this spreadsheet. Use code (Python) for every figure; if something cannot be computed from the file itself, write DATA UNAVAILABLE rather than estimating it. Report, in this order:\n1. Shape: rows, columns and what the data covers.\n2. Key numbers: totals, averages, highest and lowest, each computed by code.\n3. Anomalies: every missing value, outlier or suspect entry, each with its [response_id]. If there are none, write NONE FOUND rather than staying silent.\n4. Three insights in plain business English, each tied to a number above.',
       },
       {
         tier: 'stretch',
@@ -419,7 +419,7 @@ export const MISSIONS = [
         body:
           'The free-text comments are where the truth lives, and nobody has time to read a hundred of them. Make the machine do the reading and show its working.',
         prompt:
-          'Categorise every free-text comment in this file into themes you derive from the data itself. Give me: the themes ranked by count with percentages; one representative quote per theme with its [response_id]; and the comments you found hard to place, with why. Finish with this: if I could fix only one thing, what does the data say it should be?',
+          'Categorise every free-text comment in this file into themes you derive from the data itself, not a preset list. Answer as a table, ranked by count, with columns: Theme | Count | % of comments | Verbatim quote | [response_id]. Rules: assign each comment to exactly one theme; the counts must sum to the number of comments; quotes must be word for word from the file. Below the table, list any comments you could not place, with why. Finish with one line: if I could fix only one thing, what does the data say it should be, and how many comments back it?',
       },
       {
         tier: 'core',
@@ -438,7 +438,7 @@ export const MISSIONS = [
         title: 'Chart the trend',
         body: 'Follow up in the same chat:',
         prompt:
-          'Chart [the weekly average rating] across [the term]. Explain in two bullets what happened [in the middle weeks], and what evidence in the comments supports your explanation.',
+          'Chart [the weekly average rating] across [the term], computed with code from the file, not read off by eye. Then exactly two bullets about [the middle weeks]: first, what happened, with the weeks and the size of the change; second, one verbatim comment (with its [response_id]) that supports your explanation. If the comments do not actually explain it, say so rather than inventing a cause.',
       },
       {
         tier: 'stretch',
@@ -463,7 +463,7 @@ export const MISSIONS = [
         body:
           'Upload the Excel file to Google Drive, open it with Google Sheets, then open the Ask Gemini side panel and choose Create canvas. Filters and edits write back to the sheet underneath.',
         prompt:
-          'Build an interactive dashboard from this sheet. KPI cards along the top for [average rating, total responses and total spend]; a [weekly average-rating] chart across [the term]; filter toggles for [time slot and item]; and a bar chart of [complaint themes] from the comments.',
+          'Build an interactive dashboard from this sheet. KPI cards along the top for [average rating, total responses and total spend]; a [weekly average-rating] chart across [the term]; filter toggles for [time slot and item]; and a bar chart of [complaint themes] from the comments. Compute every figure from the sheet itself, and add a small data-quality note listing any rows you excluded or doubted, each with its [response_id]. If a KPI cannot be computed cleanly, label it DATA UNAVAILABLE rather than guessing.',
       },
       {
         tier: 'stretch',
@@ -476,7 +476,7 @@ export const MISSIONS = [
           'Follow up in the same chat with the prompt below. Or paste your summary into Gemini Notebook as a text source (the spreadsheet itself will not ingest, and hitting that wall IS the lesson) and generate one in Studio.',
         link: { href: 'https://notebooklm.google.com', label: 'Open Gemini Notebook' },
         prompt:
-          'Using this analysis, create a clean, simple infographic [a stall customer] would understand: white background, one accent colour, large readable labels, no clutter.',
+          'Using this analysis and nothing else, create a clean, simple infographic [a stall customer] would understand: white background, one accent colour, large readable labels, no clutter. Show at most [four] numbers, each taken verbatim from the analysis above; if a figure is not in the analysis, leave it out rather than inventing one. No decorative statistics.',
       },
       {
         tier: 'stretch',
@@ -487,7 +487,7 @@ export const MISSIONS = [
         title: 'Predict the failure',
         body: 'The pre-mortem. The same prompt works on any feedback file you are about to defend in a review.',
         prompt:
-          'It is [next term] and [the stall] has closed. Using only this feedback data, write the post-mortem: what killed it, which warning signs were already in these comments, and what single change would most likely have saved it.',
+          'It is [next term] and [the stall] has closed. Using only this feedback data, write the post-mortem.\nThe Incident: two sentences on how it failed.\nThen the top [three] causes of death. For each give:\n- Probability score: how likely this was the killer. The scores must sum to exactly 100%.\n- The Seed: one verbatim comment from the file, with its [response_id], that showed the warning sign.\n- The Mechanism: how that complaint grew into a closure.\nFinish with the single change most likely to have saved it, and how many comments support it.',
       },
     ],
     verdict:
@@ -520,7 +520,7 @@ export const MISSIONS = [
         title: "Devil's advocate",
         body: 'Upload the plan to Copilot chat in a NEW chat (fresh eyes, no accumulated politeness).',
         prompt:
-          'Act as a constructive devil\'s advocate reviewing this [business plan]. Identify the weaknesses a sceptical [investor] would seize on: unsupported claims, arithmetic that does not add up, missing regulatory or operational basics, and internal contradictions. Be specific: quote the sentence, then state the problem. Do not soften criticism.',
+          'You are a hostile, hyper-rational risk auditor reviewing this [business plan] before a sceptical [investor] sees it. Hunt for unsupported claims, arithmetic that does not add up, internal contradictions, and missing regulatory or operational basics.\nReport your findings only as a table with these columns:\nVerbatim Quote | Identified Flaw | Category (Logic / Data / Assumption / Compliance) | Severity (1-10) | Fix\nRules:\n- Every row must begin with an exact quote from the plan.\n- Where the arithmetic is wrong, show the correct calculation in the Identified Flaw column.\n- Limit yourself to the 7 most severe flaws.\n- Critique only what is actually written. No compliments, no preamble: begin immediately with the table.',
       },
       {
         tier: 'core',
@@ -529,7 +529,7 @@ export const MISSIONS = [
         body:
           'Stay in the same chat. Critique finds flaws; a post-mortem finds the ones that kill. Time-travel makes the AI commit to consequences.',
         prompt:
-          'It is [one year after launch] and [the Welsh cake stall] has failed. Write the post-mortem: the five most likely causes of death, each traced to a specific weakness in this [business plan], quoting the passage that planted it.',
+          'It is [one year after launch] and [the Welsh cake stall] has failed. You are the forensic analyst writing the post-mortem.\nOpen with The Incident: two sentences on how it collapsed. Then give the top 5 root causes. For each one:\n- Root Cause: name it\n- Probability Score: how likely this was the primary killer. The five scores must sum to exactly 100%.\n- The Seed: the exact passage in this [business plan] that planted the failure, quoted verbatim\n- The Mechanism: step by step, how that passage became a real-world collapse\nGeneric causes ("poor communication", "bad timing") are banned: every cause must trace to something written in the plan.',
       },
       {
         tier: 'core',
@@ -537,7 +537,7 @@ export const MISSIONS = [
         title: 'Score it against the rubric',
         body: 'Upload the rubric to the same chat. Structured assessment with cited evidence: the actual workplace skill.',
         prompt:
-          'Score this [business plan] against the attached rubric, 1 to 5 per criterion. For every score, cite the exact sentence or figure from the plan that justifies it. Finish with the three revisions that would most improve the total score.',
+          'Score this [business plan] against the attached rubric, 1 to 5 per criterion. Present the results as a table:\nCriterion | Score (1-5) | Verbatim Evidence | Why That Score\nThe Verbatim Evidence column must quote the exact sentence or figure from the plan. If the plan contains nothing relevant to a criterion, write NO EVIDENCE IN PLAN and score it accordingly; do not invent a justification. Finish with the three revisions that would most improve the total score, in priority order.',
       },
       {
         tier: 'core',
@@ -557,7 +557,7 @@ export const MISSIONS = [
         body:
           'Run the same devil\'s advocate prompt in Gemini. Then start a fresh Copilot chat, attach the plan, and paste both critiques in. Disagreement is a flag worth chasing.',
         prompt:
-          'Here are two AI reviews of the same [business plan]. Where do they disagree? For each disagreement, decide which review is right based on the evidence in the plan itself, quoting it. What did each reviewer miss that the other caught?',
+          'Here are two AI reviews of the same [business plan]. Adjudicate them using only the plan\'s own text as evidence.\nPresent the disagreements as a table:\nPoint of Disagreement | Review 1 Says | Review 2 Says | Verdict | Verbatim Evidence From the Plan\nJudge each verdict on what the plan actually says, not on which reviewer sounds more confident. Then finish with two short lists: flaws only Review 1 caught, and flaws only Review 2 caught.',
       },
       {
         tier: 'stretch',
@@ -620,7 +620,7 @@ export const MISSIONS = [
         body:
           'In Studio, choose Slide Deck and paste the prompt below into its customise box before generating. Note: some university accounts do not offer deck generation; if you do not see it, export the notebook Report to Docs and ask Gemini Canvas to build the deck from it.',
         prompt:
-          'Create a ten-slide [investor pitch for the stall] from these sources, honest about the risks the sources raise. One message per slide, a clear ask on the final slide.',
+          'Create a ten-slide [investor pitch for the stall] from these sources only. One message per slide, each backed by a figure or quote from the sources; no invented numbers. Give the risks the sources raise one honest slide. Slide ten is "The Ask": [funding for a second griddle].',
       },
       {
         tier: 'core',
@@ -695,9 +695,9 @@ export const MISSIONS = [
         estMinutes: 7,
         title: 'Build it',
         body:
-          'In Gemini, pick Canvas from the tools under the message box, then use the prompt below. Yes, it produces a working app. No, you do not need to read the code. Iterate in plain English: "bigger buttons", "add a Welsh language toggle", "show a running total".',
+          'In Gemini, pick Canvas from the tools under the message box, then use the prompt below. Yes, it produces a working app. No, you do not need to read the code. Iterate in plain English: "bigger buttons", "add a Welsh language toggle", "show a running total". It will show a short plan before the app appears; that is deliberate, and it is why the app works first time.',
         prompt:
-          'Create a single-page web app for [a campus Welsh cake stall] that fixes this customer problem: [long queues at lunchtime and selling out by 1pm]. Ideas if useful: [a pre-order form with pickup time slots, a live sold-out board, a Build-a-Box picker with a running price total]. Friendly and fast, single HTML file with Tailwind CSS and vanilla JavaScript, no backend: fake the data in JavaScript.',
+          'You are a front-end engineer who ships. Build a single-page web app for [a campus Welsh cake stall] that fixes this customer problem: [long queues at lunchtime and selling out by 1pm]. Ideas if useful: [a pre-order form with pickup time slots, a live sold-out board, a Build-a-Box picker with a running price total]. Rules: one HTML file with Tailwind CSS and vanilla JavaScript, no backend; invent realistic fake data in the JavaScript so the app looks busy from the first click. Do not jump straight to code. In order: 1) a short spec, under 100 words, saying what the app does and where its data lives; 2) a numbered build plan; 3) the complete app; 4) a self-check confirming there are no placeholder comments like "add logic here", every button does something, and the fake data actually appears on screen. Friendly and fast.',
       },
       {
         tier: 'core',
@@ -715,7 +715,7 @@ export const MISSIONS = [
         title: 'Grade your own build',
         body: 'In Canvas, switch to the Code view and copy it all. Paste it into a new Gemini chat with the theme list, then run the prompt.',
         prompt:
-          'Here is the HTML of an app built to fix a customer complaint, plus the list of complaint themes from the feedback data. Which theme does the app actually solve, which does it partially help, and which does it ignore? Be blunt.',
+          'You are a blunt product reviewer. Below is the list of complaint themes from the feedback data, then the full HTML of an app built to fix one of them. Grade the app in a single table with columns: Theme | Verdict (SOLVES / PARTLY HELPS / IGNORES) | Evidence. Evidence must be a short verbatim snippet from the HTML (a button label, heading or function name) proving the verdict, or the word NONE. No credit for good intentions: judge only what the code actually does. Under the table, one sentence naming what to build next. Begin with the table; no warm-up.',
       },
     ],
     verdict:
@@ -747,7 +747,7 @@ export const MISSIONS = [
         body:
           'Upload the workbook to Copilot chat at m365copilot.com, or open it in Excel and use Copilot there if your licence includes it. In chat you get the charts and the written verdict; in Excel the dashboard lands on a real new sheet.',
         prompt:
-          'Analyse this sales workbook (the [Sales] and [Waste log] sheets). Build me a dashboard (on a new sheet if you are in Excel, otherwise here): revenue by [product] and week, the weekly revenue trend, waste cost by reason, and a written panel of the five insights a manager should act on. Flag anything in the data that looks abnormal or wrong, and say why.',
+          'Analyse this sales workbook (the [Sales] and [Waste log] sheets). Build me a dashboard (on a new sheet if you are in Excel, otherwise here) with four named sections.\nREVENUE: revenue by [product] and by week, plus the weekly revenue trend.\nWASTE: waste cost by reason, biggest first.\nMANAGER\'S FIVE: the five insights a manager should act on, one sentence each.\nDATA HEALTH: anything in the raw data that looks abnormal or mistyped, quoting the exact row or cell and one line on why you suspect it; check especially for weeks that break the normal pattern and single values that do not fit their column. If you genuinely find nothing wrong, write "NO ANOMALIES FOUND" rather than inventing something.',
       },
       {
         tier: 'core',
@@ -756,7 +756,7 @@ export const MISSIONS = [
         body:
           'Now the same data as an app. In Gemini (gemini.google.com), open Canvas, attach the workbook and use the prompt below. It talks like a quality engineer, but the ideas are plain: status lamps, "is this dip real or just noise?", and "which few problems cause most of the cost". Press SIMULATE A BAD WEEK and watch the control chart catch it. If a button does nothing, tell Canvas so in plain English; it fixes its own bugs.',
         prompt:
-          'Build an interactive sales control room for [a campus Welsh cake stall] from this workbook, as a single-page web app with a dark control-room theme. Across the top: an andon strip with one status lamp per [product] - green, amber or red based on the latest week against that product\'s own average. Charts: (1) a statistical process control chart of daily revenue with the mean and plus/minus three sigma limits calculated from the data, highlighting in red any point outside the limits or any run of eight points on one side of the mean, labelled "special cause: investigate"; (2) a Pareto chart of [waste reasons] by cost with a cumulative percentage line and the vital-few cutoff marked; (3) KPI cards that count up on load: revenue, units, average sale, and cost of poor quality (waste cost). Under every chart, write one plain-English sentence of insight that updates when I filter. Filters: date range and [product]. Add a SITUATION REPORT button that turns whatever is on screen into five bullet points I can paste into an email, and a Cymraeg/English toggle for the labels. Party tricks: a SIMULATE A BAD WEEK button that injects a realistic failure into the data so the control chart and lamps catch it live, and a REPLAY button that streams [the term] in day by day like a live feed. Single HTML file, Tailwind CSS and vanilla JavaScript, no backend: embed the data as JSON.',
+          'Build an interactive sales control room for [a campus Welsh cake stall] from this workbook, as a single-page web app with a dark control-room theme. Across the top: an andon strip with one status lamp per [product] - green, amber or red based on the latest week against that product\'s own average. Charts: (1) a statistical process control chart of daily revenue with the mean and plus/minus three sigma limits calculated from the data, highlighting in red any point outside the limits or any run of eight points on one side of the mean, labelled "special cause: investigate"; (2) a Pareto chart of [waste reasons] by cost with a cumulative percentage line and the vital-few cutoff marked; (3) KPI cards that count up on load: revenue, units, average sale, and cost of poor quality (waste cost). Under every chart, write one plain-English sentence of insight that updates when I filter. Filters: date range and [product]. Add a SITUATION REPORT button that turns whatever is on screen into five bullet points I can paste into an email, and a Cymraeg/English toggle for the labels. Party tricks: a SIMULATE A BAD WEEK button that injects a realistic failure into the data so the control chart and lamps catch it live, and a REPLAY button that streams [the term] in day by day like a live feed. Single HTML file, Tailwind CSS and vanilla JavaScript, no backend: embed the data as JSON. Every number on screen must come from the embedded workbook data (or from the simulate button\'s clearly labelled injection), never invented. Before you declare it finished, self-check: every button visibly does something, there are no placeholder comments or unfinished code, and each chart is correctly bound to the embedded JSON.',
       },
       {
         tier: 'core',
@@ -819,7 +819,7 @@ export const MISSIONS = [
         title: 'Make the AI rewrite the prompt',
         body: 'In a NEW chat (a fresh one, so the critic has no stake in the first attempt), hand the lazy prompt over for demolition.',
         prompt:
-          'Critique this prompt, then rewrite it to be far more effective: "Write a poster for [the reopening of a campus Welsh cake stall]." Your rewrite must specify: the role the AI should take, the audience, the tone, the constraints (size, word limits, what must be included), and the exact output format. Finish with two bullets on why your version will produce better work.',
+          'Critique this prompt, then rewrite it to be far more effective: "Write a poster for [the reopening of a campus Welsh cake stall]." Your rewrite must specify: the role the AI should take, the audience it is writing for, the tone, the constraints (size, word limits, what must be included), and the exact output format. The rewritten prompt must also end with a one-line self-check telling the AI to confirm it has met every constraint before answering. Finish with two bullets on why your version will produce better work.',
       },
       {
         tier: 'core',
@@ -836,7 +836,7 @@ export const MISSIONS = [
         body:
           'Now the transferable version, on your real work. The AI asks the questions you did not know your prompt needed to answer.',
         prompt:
-          'I need a prompt for this task: [writing the monthly update email for my team]. Interview me first: ask up to five questions, one at a time, that will make the prompt better. Then write the final prompt, and one line on when I should reuse it.',
+          'I need a prompt for this task: [writing the monthly update email for my team]. Interview me first: ask up to five questions, one at a time, that will make the prompt better, and wait for my answers. Then write the final prompt in a copyable block, ending with a short self-check for the AI to run before answering, plus one line on when I should reuse it.',
       },
       {
         tier: 'stretch',
@@ -847,7 +847,7 @@ export const MISSIONS = [
         title: 'The IMPROVE: trick',
         body: 'Paste this once at the start of a chat and you have a prompt editor on call.',
         prompt:
-          'From now on in this chat, whenever I send a message starting with IMPROVE:, do not answer the prompt that follows. Instead return a stronger version of that prompt and one sentence on what you changed.',
+          'From now on in this chat, whenever I send a message starting with IMPROVE:, do not answer the prompt that follows. Instead return a stronger version of that prompt and one sentence on what you changed and why.',
       },
     ],
     verdict:
@@ -878,30 +878,30 @@ export const MISSIONS = [
         collapsed: true,
         toolChip: 'Gemini Deep Research',
         hook: 'The fifteen-minute researcher, on any topic.',
-        estMinutes: 1,
+        estMinutes: 2,
         title: 'Deep Research on anything',
         prompt:
-          'Produce a sourced briefing on [TOPIC]. Cover: what has changed in the last 12 months; who the key players are; realistic costs and prices; what makes efforts like this succeed or fail; and three risks or opportunities I am probably not thinking about. Cite every source.',
+          'ROLE: You are a Principal Research Analyst at a top-tier corporate intelligence firm.\nTASK: Produce an exhaustive, evidence-based briefing on [TOPIC]. Synthesise current realities and discard outdated paradigms.\nFORMAT: Use exactly these Markdown headers:\n- Executive Summary (max 150 words)\n- The 12-Month Delta: material changes, regulatory shifts and technological advances in the last year\n- Market Ecology: 3-5 key players, their share and positioning\n- Financial Realities: realistic costs, pricing models and capital requirements\n- Success/Failure Matrix: a table mapping 3 critical success factors against 3 failure modes\n- Asymmetric Blind Spots: 3 high-impact risks or opportunities consensus analyses miss\nCONSTRAINTS: Keep reasoning concise; prefer definitive, data-backed statements. Cite every source inline (e.g. [Source Name]). CRITICAL: if financial data, pricing or market-share figures are unavailable in the retrieved data, state DATA UNAVAILABLE; do not estimate, extrapolate or invent figures.',
       },
       {
         tier: 'stretch',
         collapsed: true,
         toolChip: 'Gemini',
         hook: 'A better brief in, better research out.',
-        estMinutes: 1,
+        estMinutes: 2,
         title: 'Let AI write your Deep Research brief',
         prompt:
-          'Draft a Deep Research brief for me. The decision it must inform: [WHAT YOU NEED TO DECIDE]. Write the brief so it names the questions to answer, the evidence to prefer, and the timeframe that matters, and end it with "Cite every source." Show me the brief for editing before I run it.',
+          'ROLE: You are a Strategic Decision Architect.\nTASK: Draft a strictly scoped, execution-ready Deep Research brief to inform this decision: [WHAT YOU NEED TO DECIDE].\nFORMAT, with these sections:\n- Core Decision Vector: the binary or categorical choice this research must inform\n- Primary Intelligence Requirements: exactly 3-5 hyper-specific, mutually exclusive questions the research must answer\n- Temporal Scope: the exact timeframe that matters\n- Evidence Hierarchy: preferred sources (peer-reviewed journals, audited accounts, official regulatory guidance) and source categories to ignore (opinion blogs, social media, marketing copy)\n- Output Artifact: the exact format the finished research should deliver\nCONSTRAINTS: Do not run the research yourself; output only the brief. The brief must command the researcher to cite every source with its exact URL and extraction date. Show me the brief for editing before I run it.',
       },
       {
         tier: 'stretch',
         collapsed: true,
         toolChip: 'Any AI chat',
         hook: 'The best prompt writer is the AI itself.',
-        estMinutes: 1,
+        estMinutes: 2,
         title: 'Let AI write the prompt',
         prompt:
-          'You are an expert prompt designer. Write the most effective prompt for this task: [DESCRIBE THE TASK, WHO THE OUTPUT IS FOR, AND WHAT GOOD LOOKS LIKE]. Include the role the AI should take, the constraints, and the exact output format. Ask me up to three clarifying questions first if the answers would improve the prompt.',
+          'ROLE: You are a Lead AI Systems Architect specialising in 2026 prompt optimisation.\nTASK: Design the optimal prompt for this objective: [DESCRIBE THE TASK, WHO THE OUTPUT IS FOR, AND WHAT GOOD LOOKS LIKE].\nWORKFLOW:\n- First ask me up to three clarifying questions, one of which must be: "Will this run on a fast everyday model, or a reasoning model that thinks before it answers?" Wait for my answers.\n- For a fast model: use Role, Task, Format structure, explicit step-by-step instructions, and two short examples to set the tone.\n- For a reasoning model: no examples, no "think step-by-step"; state the problem plainly and demand concrete intermediate artefacts (specification, then plan, then output).\n- The finished prompt must end with a Self-Check section telling the AI to verify its own output before answering.\nFORMAT: output the final prompt in a copyable block.',
       },
       {
         tier: 'stretch',
@@ -911,77 +911,87 @@ export const MISSIONS = [
         estMinutes: 1,
         title: 'The IMPROVE: trick',
         prompt:
-          'From now on in this chat, whenever I send a message starting with IMPROVE:, do not answer the prompt that follows. Instead return a stronger version of that prompt and one sentence on what you changed.',
+          'From now on in this chat, whenever I send a message starting with IMPROVE:, do not answer the prompt that follows. Instead return a stronger version of that prompt and one sentence on what you changed and why.',
       },
       {
         tier: 'stretch',
         collapsed: true,
         toolChip: 'Gemini',
         hook: 'Make it compute, not guess.',
-        estMinutes: 1,
+        estMinutes: 2,
         title: 'Verified spreadsheet analysis',
         prompt:
-          'Summarise this spreadsheet. Use code (Python) to calculate the figures, do not estimate them. Report: the rows, columns and what the data covers; the key numbers (totals, averages, highest and lowest); any missing values, outliers or suspect entries; and three insights in plain business English.',
+          'Act as a careful data analyst. Summarise this spreadsheet. Use code (Python) for every figure; if something cannot be computed from the file itself, write DATA UNAVAILABLE rather than estimating it. Report, in this order:\n1. Shape: rows, columns and what the data covers.\n2. Key numbers: totals, averages, highest and lowest, each computed by code.\n3. Anomalies: every missing value, outlier or suspect entry, each with its row reference. If there are none, write NONE FOUND rather than staying silent.\n4. Three insights in plain business English, each tied to a number above.',
       },
       {
         tier: 'stretch',
         collapsed: true,
         toolChip: 'Gemini',
         hook: 'Nobody has time to read a hundred of them.',
-        estMinutes: 1,
+        estMinutes: 2,
         title: 'Find the themes in free-text comments',
         prompt:
-          'Categorise every free-text comment in this file into themes you derive from the data itself. Give me: the themes ranked by count with percentages; one representative quote per theme with its row reference; and the comments you found hard to place, with why. Finish with this: if I could fix only one thing, what does the data say it should be?',
+          'Categorise every free-text comment in this file into themes you derive from the data itself, not a preset list. Answer as a table, ranked by count, with columns: Theme | Count | % of comments | Verbatim quote | Row reference. Rules: assign each comment to exactly one theme; the counts must sum to the number of comments; quotes must be word for word from the file. Below the table, list any comments you could not place, with why. Finish with one line: if I could fix only one thing, what does the data say it should be, and how many comments back it?',
       },
       {
         tier: 'stretch',
         collapsed: true,
         toolChip: 'Any AI chat',
         hook: 'AI is a better critic than author.',
-        estMinutes: 1,
-        title: "Devil's advocate",
+        estMinutes: 2,
+        title: 'Devil\'s advocate',
         prompt:
-          'Act as a constructive devil\'s advocate reviewing this [draft / plan / proposal]. Identify the weaknesses a sceptical reader would seize on: unsupported claims, arithmetic that does not add up, missing regulatory or operational basics, internal contradictions. Be specific: quote the sentence, then state the problem. Do not soften criticism.',
+          'ROLE: You are a hostile, hyper-rational Risk Auditor and Devil\'s Advocate.\nTASK: Conduct a ruthless, unsoftened critique of the provided [draft / plan / proposal]: unsupported claims, flawed arithmetic, logical contradictions, missing foundational assumptions, regulatory blind spots.\nFORMAT: exclusively a table with columns:\nVerbatim Quote | Identified Flaw | Category (Logic/Data/Assumption/Compliance) | Severity (1-10) | Remediation Directive\nCONSTRAINTS: No compliments, introductions or softened language; begin immediately with the table. Every row must begin with a direct, verbatim quote from the text. Where arithmetic fails, show the correct calculation in the Identified Flaw column. Limit the analysis to the 7 most severe flaws. Critique only what is explicitly written.',
       },
       {
         tier: 'stretch',
         collapsed: true,
         toolChip: 'Any AI chat',
         hook: 'Structured assessment with cited evidence.',
-        estMinutes: 1,
+        estMinutes: 2,
         title: 'Score it against a rubric',
         prompt:
-          'Score this [document] against the attached [rubric or criteria], 1 to 5 per criterion. For every score, cite the exact sentence or figure that justifies it. Finish with the three revisions that would most improve the total score.',
+          'Score this [document] against the attached [rubric or criteria], 1 to 5 per criterion. Present the results as a table:\nCriterion | Score (1-5) | Verbatim Evidence | Why That Score\nThe Verbatim Evidence column must quote the exact sentence or figure from the document. If the document contains nothing relevant to a criterion, write NO EVIDENCE and score it accordingly; do not invent a justification. Finish with the three revisions that would most improve the total score, in priority order.',
       },
       {
         tier: 'stretch',
         collapsed: true,
         toolChip: 'Any AI chat',
         hook: 'Time travel makes the critique commit.',
-        estMinutes: 1,
+        estMinutes: 2,
         title: 'Post-mortem from the future',
         prompt:
-          'It is [a year from now] and [this plan] has failed. Write the post-mortem: the five most likely causes, each traced to a specific weakness in the document, quoting the passage that planted it.',
+          'ROLE: You are a Forensic Systems Analyst in the year [CURRENT YEAR + 1].\nTASK: The initiative in the provided [document / plan] has failed catastrophically. Write the analytical post-mortem tracing the collapse to weaknesses present in the original document.\nFORMAT:\n- The Incident: a two-sentence summary of how it collapsed.\n- Causal Chain Analysis: the top 5 root causes. For each: Root Cause (name it); Probability Score (the five scores must sum to exactly 100%); The Seed (the exact passage that planted the failure, quoted verbatim); The Mechanism (exactly how that text became real-world failure).\nCONSTRAINTS: Avoid generic business risks ("lack of communication", "poor market timing"); focus strictly on structural, technical, strategic or compliance flaws in the text. State all assumptions explicitly.',
       },
       {
         tier: 'stretch',
         collapsed: true,
         toolChip: 'Gemini Notebook',
         hook: 'Answers only from files you have added to a notebook, with receipts.',
-        estMinutes: 1,
+        estMinutes: 2,
         title: 'Grounded answers only',
         prompt:
-          'Based only on the sources: [YOUR QUESTION]. Cite the passage supporting each claim, and say plainly if the sources do not cover something rather than guessing.',
+          'ROLE: You are a strict, literal Data Extraction Engine.\nTASK: Answer the QUESTION using ABSOLUTELY NO OUTSIDE KNOWLEDGE; rely exclusively on the provided sources.\nQUESTION: [YOUR QUESTION]\nCONSTRAINTS:\n- Every claim, fact or metric must carry an inline citation naming the exact source and passage.\n- CRITICAL HARD-FAIL: if the sources do not contain enough to answer fully and accurately, output the exact phrase INSUFFICIENT_DATA.\n- Do not guess, infer or synthesise outside knowledge under any circumstances.\n- No conversational filler; do not attempt to be helpful if the data is absent.',
       },
       {
         tier: 'stretch',
         collapsed: true,
         toolChip: 'Gemini Canvas',
         hook: 'Working software from a sentence.',
-        estMinutes: 1,
+        estMinutes: 2,
         title: 'Build a small tool',
         prompt:
-          'Create a single-page web app that solves this problem: [DESCRIBE IT]. Friendly and fast, single HTML file with Tailwind CSS and vanilla JavaScript, no backend: fake the data in JavaScript.',
+          'ROLE: You are a Staff Front-End Engineer.\nTASK: Create a robust single-page web application that solves this problem: [DESCRIBE THE PROBLEM].\nCONSTRAINTS: one HTML file with Tailwind CSS and vanilla JavaScript, no backend; generate realistic mock data in the JavaScript so the app looks fully populated; fast, responsive and free of console errors.\nWORKFLOW: you are prohibited from outputting code immediately. In order:\n1. Architecture Spec: component structure and state approach (max 150 words).\n2. Action Plan: a numbered implementation plan.\n3. Implementation: the complete, finalised code in a single html block.\n4. Self-Check: confirm there are no placeholder comments and all mock data is bound to the interface.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Any AI chat',
+        hook: 'Brainstorming that escapes the obvious.',
+        estMinutes: 2,
+        title: 'The scenario matrix',
+        prompt:
+          'ROLE: You are a Strategic Futurist.\nTASK: Conduct a divergent, probabilistic scenario analysis on the future of [INSERT TOPIC, INDUSTRY OR TECHNOLOGY] over the next [5 years].\nFORMAT: a table in four quadrants, two specific scenarios per quadrant:\n1. The Consensus Reality (high probability, low/medium impact): the likely linear progression.\n2. The Systemic Shift (high probability, high impact): the near-certain change that rewrites the landscape.\n3. The Quiet Disruption (low probability, low/medium impact): creeping changes that never make headlines but alter daily reality.\n4. The Black Swan (low probability, high impact): outliers that would instantly rewrite the rules.\nCONSTRAINTS: for each of the 8 scenarios give A) Scenario Name, B) Core Mechanism (the specific trigger), C) First-Order Consequence. No generic corporate jargon ("synergy", "digital transformation"); be highly specific. No conversational filler; begin immediately with the table.',
       },
     ],
     verdict:

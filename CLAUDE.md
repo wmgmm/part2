@@ -20,6 +20,8 @@ The AI in the Workplace Part 2 workshop website for Cardiff University staff: ni
 
 Single-page React app (Vite, framer-motion). No router library. `App.jsx` renders SPLASH (login) until a user exists, then the mission gallery or a mission page selected by hash routing (`#/m1` … `#/m9`, via a `hashchange` listener that ignores plain anchors like `#main-content`). URL modes: `?admin`, `?leaderboard`, and `?doctor` (facilitator preflight, `DoctorPanel`).
 
+**All prompts follow `docs/PROMPT_GUIDANCE_2026.md`** (the expert prompt-engineering standard: RTF structure, answer shaping, failure states, verbatim grounding). Consult it before editing any prompt.
+
 **Content lives in `src/data/missions.js`** -- briefs, steps, prompts, artifacts, Gravitas verdict lines. Components are generic renderers; to change a mission, edit the data file. Step fields: `tier: 'core' | 'stretch'` (renders under "Today's path" vs "Take home"), `estMinutes`, `check: true` (the "30-second check" ritual), `prompt` (copyable PromptBox), `type: 'sort'` (SortGame), `laneNotes` (per-Copilot-licence guidance keyed by lane id).
 
 **Key components** (`src/components/`): `SplashScreen` (name + email + Copilot licence lane), `MissionGallery`/`MissionCard` (card grid; whole card is a button opening the mission), `MissionDetail` (brief, artifact download strip, tiered steps, check-in, verdict), `PromptBox` (copy with select-text fallback), `SortGame` (green/amber/red data-classification sort).

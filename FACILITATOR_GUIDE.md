@@ -70,6 +70,9 @@ Teaching point: Copilot upgrades the spreadsheet, Canvas replaces it; a control 
 ### 08 The Prompt Workshop
 Teaching point: meta-prompting - the AI critiques and rewrites your prompt, then interviews you to design one. The before/after poster comparison is the lesson; say out loud that the gap is the prompt, not the model. The interview step works best on a task from their real job.
 
+## Prompt standard
+Every prompt on the site follows `docs/PROMPT_GUIDANCE_2026.md` (the expert report: structure, output formats, failure states like DATA UNAVAILABLE and INSUFFICIENT_DATA, verbatim quotes, probability scores). Worth saying in the room: the odd-looking ALL-CAPS sections are what makes the outputs reliable.
+
 ## Re-skinning
 All artefacts regenerate from `tools/make_artifacts.py` (deterministic). Swap the feedback file for module evals or helpdesk tickets, keep the filenames, and the whole workshop re-skins. Mission copy lives in `src/data/missions.js`.
 

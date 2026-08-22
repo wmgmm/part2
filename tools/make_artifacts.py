@@ -82,16 +82,18 @@ def make_pdf(path, title, blocks):
 
 # ================================================================ 1. THE BRIEF
 # Square brackets mark the swap points; the venture default stays inside them
-# so the prompt runs verbatim. Matches the prompt shown on the site.
+# so the prompt runs verbatim. Matches the prompt shown on the site (real
+# newlines here correspond to \n escapes in the missions.js string).
 BRIEF_TEXT = (
-    "I am opening [a small Welsh cake stall on a UK university campus (Cardiff)]. "
-    "Produce a sourced market briefing covering: who buys [from campus food stalls] "
-    "and when (footfall patterns across the day and the academic year); realistic "
-    "price expectations for [a fresh Welsh cake and comparable "
-    "snacks]; who my competitors would be [on and near a typical campus, including "
-    "mobile and permanent options]; what makes [small campus food ventures] succeed "
-    "or fail, including [the regulatory basics for UK street food]; and three "
-    "opportunities or risks I am probably not thinking about. Cite every source."
+    "ROLE: You are a market research analyst preparing a briefing for a first-time food vendor.\n"
+    "TASK: Research the viability of [a small Welsh cake stall on a UK university campus (Cardiff)].\n"
+    "FORMAT: Use exactly these section headings:\n"
+    "- Who Buys, and When: footfall patterns for [campus food stalls] across the day and the academic year.\n"
+    "- Price Expectations: realistic prices for [a fresh Welsh cake and comparable snacks].\n"
+    "- Competitors: [on and near a typical campus, including mobile and permanent options].\n"
+    "- Succeed or Fail: what decides it for [small campus food ventures], including [the regulatory basics for UK street food].\n"
+    "- Blind Spots: three opportunities or risks I am probably not thinking about.\n"
+    "CONSTRAINTS: Cite every claim to its source. If a price or figure is not in your sources, write DATA UNAVAILABLE rather than estimating it."
 )
 
 # Drift guard: the same brief text lives in src/data/missions.js (the m1
@@ -101,7 +103,7 @@ import re as _re
 
 _missions = (Path(__file__).resolve().parent.parent / "src" / "data" / "missions.js").read_text(encoding="utf-8")
 _m = _re.search(r"promptLabel: 'THE BRIEF \(EDIT FOR YOUR IDEA\)',\s*prompt:\s*\n?\s*'((?:[^'\\]|\\.)*)'", _missions)
-_site_brief = _m.group(1).replace("\\'", "'") if _m else None
+_site_brief = _m.group(1).replace("\\'", "'").replace("\\n", "\n") if _m else None
 if _site_brief != BRIEF_TEXT:
     raise SystemExit(
         "BRIEF_TEXT drift: tools/make_artifacts.py no longer matches the m1 brief "
@@ -112,7 +114,7 @@ make_docx(OUT / "Venture_Research_Brief.docx", "Market Research Brief: The Gravi
     ("p", "Paste the brief below into Gemini Deep Research, or rewrite it for your own idea. "
           "Edit the research plan it proposes before you press start."),
     ("h", "The brief"),
-    ("p", BRIEF_TEXT),
+    *[("p", _line) for _line in BRIEF_TEXT.split("\n")],
     ("h", "Rewriting it for your own idea"),
     ("p", "Keep the shape: what decision the research informs, the customer, the price question, "
           "the competition, the regulations, and an open invitation for risks you have not "
