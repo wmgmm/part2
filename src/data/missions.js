@@ -865,6 +865,16 @@ export const MISSIONS = [
       {
         tier: 'stretch',
         collapsed: true,
+        toolChip: 'Any chat',
+        hook: 'A prompt editor on call for the whole chat.',
+        estMinutes: 1,
+        title: 'The IMPROVE: trick (reusable meta-prompt)',
+        prompt:
+          'From now on in this chat, whenever I send a message starting with IMPROVE:, do not answer the prompt that follows. Instead return a stronger version of that prompt and one sentence on what you changed.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
         toolChip: 'Gemini',
         hook: 'Meta-prompting again: a better brief means better research.',
         estMinutes: 1,
