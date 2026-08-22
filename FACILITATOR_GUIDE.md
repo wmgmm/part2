@@ -8,6 +8,7 @@ Premise: Christopher Gravitas has left IT Services to open a campus Welsh cake s
 **90 minutes:** all six missions (cards 01-06), core paths only, choice paths ("CHOOSE YOUR NEXT MOVE") as take-home.
 **60 minutes:** missions 01, 03 and 06 (research → customers → app). Say so out loud at the start.
 **Card 07 (the dashboard duel)** is the flexible one: for a data-heavy room swap it in for 04; otherwise its SIMULATE A BAD WEEK button makes a strong five-minute live demo from the front.
+**Card 08 (the prompt workshop)** plays two ways: as an opener for a prompt-sceptical room (the before/after poster wins doubters in ten minutes), or as the first take-home alongside 09. It needs no files and no particular tool, so it also absorbs latecomers.
 Either way: everyone fires Mission 01's Deep Research run in the first five minutes, then works around it. Close by pointing everyone at **card 09 "Useful Prompts (for after the workshop)"**: the mission prompts stripped generic, plus meta-prompting (AI writes your prompt, AI writes your Deep Research brief). It is the take-home.
 
 **The bracket convention (worth saying out loud):** in every prompt on the site, [square brackets] mark what to swap for your own work; the text inside them is just the Welsh cake default, so prompts run verbatim today and transfer on Monday.
