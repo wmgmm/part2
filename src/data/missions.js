@@ -681,10 +681,152 @@ export const MISSIONS = [
       'You built software that shortens a queue for griddle cakes. Somewhere my old job title weeps, and I have never been happier. Ship it.',
   },
   {
-    id: 'm7',
+    id: 'm8',
     code: '07',
+    level: 2,
+    title: 'The Dashboard',
+    pageTitle: 'Build a Dashboard, Twice',
+    tools: ['Copilot', 'Gemini Canvas'],
+    estMinutesCore: 15,
+    summary: 'Same sales data: dashboard in Copilot, control room in Canvas.',
+    toolInfo: {
+      feature:
+        'Tool duel: Copilot builds the dashboard inside your spreadsheet; Gemini Canvas builds a control room around it. Same data, two philosophies.',
+      apps: [APPS.copilot, APPS.gemini],
+    },
+    workflow: ['Download the sales log', 'Dashboard in Copilot', 'Control room in Canvas', 'Compare'],
+    brief:
+      'A term of stall sales and the waste log, warts and all: something odd happened mid-term, and one number is a typo. Build a dashboard twice and see which tool tells you the truth faster. Any non-sensitive sales or activity data of your own works the same way.',
+    artifacts: [A.salesLog],
+    steps: [
+      {
+        tier: 'core',
+        estMinutes: 6,
+        title: 'The dashboard, in Copilot',
+        body:
+          'Upload the workbook to Copilot (or open it in Excel and use Copilot there). Copilot works IN the spreadsheet: pivots, charts, a written verdict.',
+        prompt:
+          'Analyse this sales workbook (Sales and Waste log sheets). Build me a dashboard on a new sheet: revenue by [product] and week, the weekly revenue trend, waste cost by reason, and a written panel of the five insights a manager should act on. Flag anything in the data that looks abnormal or wrong, and say why.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 7,
+        title: 'The control room, in Gemini Canvas',
+        body:
+          'Now the same data as an app. Open Canvas, attach the workbook, and use the prompt below. This one has party tricks: press SIMULATE A BAD WEEK and watch the control chart catch it.',
+        prompt:
+          'Build an interactive sales control room for [a campus Welsh cake stall] from this spreadsheet, as a single-page web app with a dark control-room theme. Across the top: an andon strip with one status lamp per [product] - green, amber or red based on the latest week against that product\'s own average. Charts: (1) a statistical process control chart of daily revenue with the mean and plus/minus three sigma limits calculated from the data, highlighting in red any point outside the limits or any run of eight points on one side of the mean, labelled "special cause: investigate"; (2) a Pareto chart of [waste reasons] by cost with a cumulative percentage line and the vital-few cutoff marked; (3) KPI cards that count up on load: revenue, units, average sale, and cost of poor quality (waste cost). Under every chart, write one plain-English sentence of insight that updates when I filter. Filters: date range and [product]. Add a SITUATION REPORT button that turns whatever is on screen into five bullet points I can paste into an email, and a Cymraeg/English toggle for the labels. Party tricks: a SIMULATE A BAD WEEK button that injects a realistic failure into the data so the control chart and lamps catch it live, and a REPLAY button that streams the term in day by day like a live feed. Single HTML file, Tailwind CSS and vanilla JavaScript, no backend: embed the data as JSON.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 2,
+        title: 'The 30-second check',
+        check: true,
+        body:
+          'Two things are hiding in this data: a fortnight that is genuinely abnormal, and one typed-wrong number. Did each dashboard find them? Open the raw sheet and confirm at least one of them yourself.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 2,
+        title: 'Pick a winner',
+        body:
+          'Honest question: which of the two would you actually send to your manager, and which would you keep for yourself? There is no right answer, and that is the lesson: Copilot upgraded your spreadsheet, Canvas replaced it.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Sheets + Canvas',
+        hook: 'The live version.',
+        estMinutes: 5,
+        title: 'Wire it to the sheet',
+        body:
+          'Upload the workbook to Google Sheets, open the Ask Gemini side panel and choose Create canvas with the same prompt. Built this way, the dashboard reads the live sheet: edits to the data update the control room.',
+      },
+    ],
+    verdict:
+      'Two dashboards before lunch, and one of them caught the griddle fortnight on its own. The quality department used to take a quarter to do that. Do not tell them.',
+  },
+  {
+    id: 'm9',
+    code: '08',
+    level: 2,
+    title: 'The Prompt Workshop',
+    pageTitle: 'Make AI Write Better Prompts Than You',
+    tools: ['Any AI chat'],
+    estMinutesCore: 13,
+    summary: 'Meta-prompting: make the AI critique, rewrite and design your prompts.',
+    toolInfo: {
+      feature:
+        'Tool: any AI chat. Meta-prompting: the fastest route to a great prompt is making the AI write it.',
+      apps: [APPS.copilot, APPS.gemini],
+    },
+    workflow: ['Run the lazy prompt', 'AI rewrites it', 'Compare the outputs', 'AI interviews you'],
+    brief:
+      'Gravitas needs a poster for the stall\'s reopening, and his prompt, in full, is "write a poster". Do not fix the prompt yourself: make the AI fix it. This is the skill that improves every other skill on this site.',
+    artifacts: [],
+    steps: [
+      {
+        tier: 'core',
+        estMinutes: 2,
+        title: 'Run the lazy prompt',
+        body: 'Run it exactly as written. Keep the output; it is the before photo.',
+        prompt: 'Write a poster for [the reopening of a campus Welsh cake stall].',
+      },
+      {
+        tier: 'core',
+        estMinutes: 4,
+        title: 'Make the AI rewrite the prompt',
+        body: 'In a NEW chat, hand the lazy prompt over for demolition.',
+        prompt:
+          'Critique this prompt, then rewrite it to be far more effective: "Write a poster for [the reopening of a campus Welsh cake stall]." Your rewrite must specify: the role the AI should take, the audience, the tone, the constraints (size, word limits, what must be included), and the exact output format. Finish with two bullets on why your version will produce better work.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 3,
+        title: 'The 30-second check',
+        check: true,
+        body:
+          'Run the rewritten prompt and put the two outputs side by side. Which one would you actually put on a wall? The gap between them is the prompt, not the model.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 4,
+        title: 'Let the AI interview you',
+        body:
+          'Now the transferable version, on your real work. The AI asks the questions you did not know your prompt needed to answer.',
+        prompt:
+          'I need a prompt for this task: [DESCRIBE A REAL TASK FROM YOUR OWN WORK]. Interview me first: ask up to five questions, one at a time, that will make the prompt better. Then write the final prompt, and one line on when I should reuse it.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Any chat',
+        hook: 'Turn it into a standing habit.',
+        estMinutes: 2,
+        title: 'The IMPROVE: trick',
+        body: 'Paste this once at the start of a chat and you have a prompt editor on call.',
+        prompt:
+          'From now on in this chat, whenever I send a message starting with IMPROVE:, do not answer the prompt that follows. Instead return a stronger version of that prompt and one sentence on what you changed.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Gems / Copilot agents',
+        hook: 'Make your best prompt a button.',
+        estMinutes: 5,
+        title: 'Package it',
+        body:
+          'Take the prompt the interview produced and paste it into the instructions of a Gemini Gem or a Copilot agent. Congratulations: your best prompt is now a reusable assistant rather than a thing you hunt for in old chats.',
+      },
+    ],
+    verdict:
+      'You made the machine improve your instructions to the machine. Recursion, as a productivity gain. My old department would have formed a working group.',
+  },
+  {
+    id: 'm7',
+    code: '09',
     level: 1,
-    title: 'Useful Prompts',
+    title: 'Useful Prompts (for after the workshop)',
     pageTitle: 'Prompts to Take Back to Work',
     tools: ['Any AI chat'],
     estMinutesCore: 0,
@@ -784,72 +926,7 @@ export const MISSIONS = [
     verdict:
       'You are leaving with my prompts in your pocket. Stealing from the founder: the first sound business decision anyone has made all day.',
   },
-  {
-    id: 'm8',
-    code: '08',
-    level: 2,
-    title: 'The Dashboard',
-    pageTitle: 'Build a Dashboard, Twice',
-    tools: ['Copilot', 'Gemini Canvas'],
-    estMinutesCore: 15,
-    summary: 'Same sales data: dashboard in Copilot, control room in Canvas.',
-    toolInfo: {
-      feature:
-        'Tool duel: Copilot builds the dashboard inside your spreadsheet; Gemini Canvas builds a control room around it. Same data, two philosophies.',
-      apps: [APPS.copilot, APPS.gemini],
-    },
-    workflow: ['Download the sales log', 'Dashboard in Copilot', 'Control room in Canvas', 'Compare'],
-    brief:
-      'A term of stall sales and the waste log, warts and all: something odd happened mid-term, and one number is a typo. Build a dashboard twice and see which tool tells you the truth faster. Any non-sensitive sales or activity data of your own works the same way.',
-    artifacts: [A.salesLog],
-    steps: [
-      {
-        tier: 'core',
-        estMinutes: 6,
-        title: 'The dashboard, in Copilot',
-        body:
-          'Upload the workbook to Copilot (or open it in Excel and use Copilot there). Copilot works IN the spreadsheet: pivots, charts, a written verdict.',
-        prompt:
-          'Analyse this sales workbook (Sales and Waste log sheets). Build me a dashboard on a new sheet: revenue by [product] and week, the weekly revenue trend, waste cost by reason, and a written panel of the five insights a manager should act on. Flag anything in the data that looks abnormal or wrong, and say why.',
-      },
-      {
-        tier: 'core',
-        estMinutes: 7,
-        title: 'The control room, in Gemini Canvas',
-        body:
-          'Now the same data as an app. Open Canvas, attach the workbook, and use the prompt below. This one has party tricks: press SIMULATE A BAD WEEK and watch the control chart catch it.',
-        prompt:
-          'Build an interactive sales control room for [a campus Welsh cake stall] from this spreadsheet, as a single-page web app with a dark control-room theme. Across the top: an andon strip with one status lamp per [product] - green, amber or red based on the latest week against that product\'s own average. Charts: (1) a statistical process control chart of daily revenue with the mean and plus/minus three sigma limits calculated from the data, highlighting in red any point outside the limits or any run of eight points on one side of the mean, labelled "special cause: investigate"; (2) a Pareto chart of [waste reasons] by cost with a cumulative percentage line and the vital-few cutoff marked; (3) KPI cards that count up on load: revenue, units, average sale, and cost of poor quality (waste cost). Under every chart, write one plain-English sentence of insight that updates when I filter. Filters: date range and [product]. Add a SITUATION REPORT button that turns whatever is on screen into five bullet points I can paste into an email, and a Cymraeg/English toggle for the labels. Party tricks: a SIMULATE A BAD WEEK button that injects a realistic failure into the data so the control chart and lamps catch it live, and a REPLAY button that streams the term in day by day like a live feed. Single HTML file, Tailwind CSS and vanilla JavaScript, no backend: embed the data as JSON.',
-      },
-      {
-        tier: 'core',
-        estMinutes: 2,
-        title: 'The 30-second check',
-        check: true,
-        body:
-          'Two things are hiding in this data: a fortnight that is genuinely abnormal, and one typed-wrong number. Did each dashboard find them? Open the raw sheet and confirm at least one of them yourself.',
-      },
-      {
-        tier: 'core',
-        estMinutes: 2,
-        title: 'Pick a winner',
-        body:
-          'Honest question: which of the two would you actually send to your manager, and which would you keep for yourself? There is no right answer, and that is the lesson: Copilot upgraded your spreadsheet, Canvas replaced it.',
-      },
-      {
-        tier: 'stretch',
-        collapsed: true,
-        toolChip: 'Sheets + Canvas',
-        hook: 'The live version.',
-        estMinutes: 5,
-        title: 'Wire it to the sheet',
-        body:
-          'Upload the workbook to Google Sheets, open the Ask Gemini side panel and choose Create canvas with the same prompt. Built this way, the dashboard reads the live sheet: edits to the data update the control room.',
-      },
-    ],
-    verdict:
-      'Two dashboards before lunch, and one of them caught the griddle fortnight on its own. The quality department used to take a quarter to do that. Do not tell them.',
-  },
+
 ];
 
 

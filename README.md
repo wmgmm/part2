@@ -1,6 +1,6 @@
 # AI in the Workplace Part 2
 
-A hands-on workshop website for Cardiff University staff: eight mission cards that teach practical AI skills with **Microsoft Copilot, Google Gemini and Gemini Notebook (formerly NotebookLM)** by building a fictional business (Christopher Gravitas's campus Welsh cake stall) from market research to a working app.
+A hands-on workshop website for Cardiff University staff: nine mission cards that teach practical AI skills with **Microsoft Copilot, Google Gemini and Gemini Notebook (formerly NotebookLM)** by building a fictional business (Christopher Gravitas's campus Welsh cake stall) from market research to a working app.
 
 **Live site:** https://wmgmm.github.io/part2/
 

@@ -1,13 +1,14 @@
 # Facilitator Guide - AI in the Workplace Part 2
 
-Site: https://wmgmm.github.io/part2/ · One page per mission, hash links `#/m1` … `#/m8`.
+Site: https://wmgmm.github.io/part2/ · One page per mission, hash links `#/m1` … `#/m9`.
 Premise: Christopher Gravitas has left IT Services to open a campus Welsh cake stall; participants build the business with AI. All files are fictional and safe to upload anywhere. Every mission is self-contained (provided files stand in for any other mission's output), so any order works.
 
 ## Session plans
 
 **90 minutes:** all six missions (cards 01-06), core paths only, choice paths ("CHOOSE YOUR NEXT MOVE") as take-home.
 **60 minutes:** missions 01, 03 and 06 (research → customers → app). Say so out loud at the start.
-Either way: everyone fires Mission 01's Deep Research run in the first five minutes, then works around it. Close by pointing everyone at **card 07 "Useful Prompts"**: the mission prompts stripped generic, plus meta-prompting (AI writes your prompt, AI writes your Deep Research brief). It is the take-home.
+**Card 07 (the dashboard duel)** is the flexible one: for a data-heavy room swap it in for 04; otherwise its SIMULATE A BAD WEEK button makes a strong five-minute live demo from the front.
+Either way: everyone fires Mission 01's Deep Research run in the first five minutes, then works around it. Close by pointing everyone at **card 09 "Useful Prompts (for after the workshop)"**: the mission prompts stripped generic, plus meta-prompting (AI writes your prompt, AI writes your Deep Research brief). It is the take-home.
 
 **The bracket convention (worth saying out loud):** in every prompt on the site, [square brackets] mark what to swap for your own work; the text inside them is just the Welsh cake default, so prompts run verbatim today and transfer on Monday.
 
@@ -61,9 +62,12 @@ Choice paths use the Cardiff University Slide Design prompt (Matts' NotebookLM P
 Teaching point: plain-English iteration; fix the top complaint (capacity), not an easy one.
 Endings that land: pre-order form with pickup slots; live sold-out board; Build-a-Box picker.
 
-### 08 Build a Dashboard, Twice
+### 07 Build a Dashboard, Twice
 Teaching point: Copilot upgrades the spreadsheet, Canvas replaces it; a control chart separates common from special cause.
 **Planted patterns in Venture_Sales_Log.xlsx** (Sales + Waste log sheets): Plain cakes 51% of revenue; weeks 5-6 revenue drops ~51% (griddle temperature fault, matching waste-log entries) - genuine special-cause variation the SPC chart should flag; one clerical outlier (2026-03-04, Plain, units 250, a typo for 25); two waste causes carry ~68% of waste cost (griddle-related waste ~67%: the vital few). The Canvas prompt's SIMULATE A BAD WEEK button is the demo moment; the Cymraeg toggle plays well in the room.
+
+### 08 The Prompt Workshop
+Teaching point: meta-prompting - the AI critiques and rewrites your prompt, then interviews you to design one. The before/after poster comparison is the lesson; say out loud that the gap is the prompt, not the model. The interview step works best on a task from their real job.
 
 ## Re-skinning
 All artefacts regenerate from `tools/make_artifacts.py` (deterministic). Swap the feedback file for module evals or helpdesk tickets, keep the filenames, and the whole workshop re-skins. Mission copy lives in `src/data/missions.js`.

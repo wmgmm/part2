@@ -14,11 +14,11 @@ No linter or test runner is configured.
 
 ## What this is
 
-The AI in the Workplace Part 2 workshop website for Cardiff University staff: eight cards (seven guided missions plus a "Useful Prompts" library) teaching best practice across Microsoft Copilot, Google Gemini and NotebookLM, including cross-tool workflows. Converted from an earlier escape-room game; the approved conversion plan and build log live in `tasks/todo.md`.
+The AI in the Workplace Part 2 workshop website for Cardiff University staff: nine cards (eight guided missions plus a "Useful Prompts" library) teaching best practice across Microsoft Copilot, Google Gemini and NotebookLM, including cross-tool workflows. Converted from an earlier escape-room game; the approved conversion plan and build log live in `tasks/todo.md`.
 
 ## Architecture
 
-Single-page React app (Vite, framer-motion). No router library. `App.jsx` renders SPLASH (login) until a user exists, then the mission gallery or a mission page selected by hash routing (`#/m1` … `#/m8`, via a `hashchange` listener that ignores plain anchors like `#main-content`). URL modes: `?admin`, `?leaderboard`, and `?doctor` (facilitator preflight, `DoctorPanel`).
+Single-page React app (Vite, framer-motion). No router library. `App.jsx` renders SPLASH (login) until a user exists, then the mission gallery or a mission page selected by hash routing (`#/m1` … `#/m9`, via a `hashchange` listener that ignores plain anchors like `#main-content`). URL modes: `?admin`, `?leaderboard`, and `?doctor` (facilitator preflight, `DoctorPanel`).
 
 **Content lives in `src/data/missions.js`** -- briefs, steps, prompts, artifacts, Gravitas verdict lines. Components are generic renderers; to change a mission, edit the data file. Step fields: `tier: 'core' | 'stretch'` (renders under "Today's path" vs "Take home"), `estMinutes`, `check: true` (the "30-second check" ritual), `prompt` (copyable PromptBox), `type: 'sort'` (SortGame), `laneNotes` (per-Copilot-licence guidance keyed by lane id).
 
