@@ -27,6 +27,7 @@ Either way: everyone fires Mission 01's Deep Research run in the first five minu
 ### 01 Market Research with Deep Research
 Teaching point: EDIT the research plan before running; long jobs run while you work.
 Watch for: runs capped per day on some tiers - the backup report on the page is the recovery path. Prefer "Export to Docs" for the Mission 2 handoff.
+The walk-away step ("make it personal") maps the three tools onto each person's real job while the research runs; reading two answers aloud is a strong early-room moment.
 
 ### 02 Question the Report in Gemini Notebook
 Teaching point: grounded answers with citations; the 30-second check (open one citation).

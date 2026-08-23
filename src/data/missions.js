@@ -197,13 +197,13 @@ export const MISSIONS = [
     tools: [TOOLS.deepResearch],
     accentType: 'stamp-red',
     accentText: 'START HERE',
-    estMinutesCore: 12,
+    estMinutesCore: 15,
     summary: "Start the market research using Gemini's Deep Research.",
     toolInfo: {
       feature: 'Tool: Gemini Deep Research. A research agent that does your Google searches and takes five to fifteen minutes to run.',
       apps: [APPS.gemini],
     },
-    workflow: ['Paste the brief', 'Edit the plan', 'Walk away ☕', 'Skim the report', 'Make the infographic'],
+    workflow: ['Paste the brief', 'Edit the plan', 'Make it personal', 'Skim the report', 'Make the infographic'],
     brief:
       'Gravitas wants evidence the stall can work before he spends his pension on a griddle. Start the research run, walk away, come back. Prefer your own idea? Rewrite the brief.',
     artifacts: [
@@ -230,6 +230,15 @@ export const MISSIONS = [
         title: 'Edit the plan. Then walk away',
         body:
           'Before it runs, Gemini shows you its research plan. EDIT IT: tell it what to cut and what to add, then press Start research. That edit is the entire skill.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 3,
+        title: 'While it runs: make it personal',
+        body:
+          'The research is grinding away, so spend the wait on yourself. Open a NEW chat and run the prompt below with your real job in the brackets. The answer is your personal syllabus for the rest of this site.',
+        prompt:
+          'I work as [a project officer] in [a university professional services team]. Map three AI tools onto my actual job: Gemini Deep Research (long, sourced research runs), Gemini Notebook (answers grounded only in files I give it, plus mind maps, decks and audio) and Gemini Canvas (builds small working web apps from a description).\nFORMAT: for each tool, exactly three lines:\n- The task: one task from my role it would genuinely improve.\n- The prompt: an example prompt I could run tomorrow, with swap points in [square brackets].\n- Building it in: one line on where it fits in my week.\nCONSTRAINTS: no filler, no generic advice; every example must be specific to the role I named. If a tool has no honest use for my role, say NO STRONG FIT and why rather than forcing one. Finish with one line: the single tool I should try first, and why.',
       },
       {
         tier: 'core',
@@ -876,6 +885,16 @@ export const MISSIONS = [
       {
         tier: 'stretch',
         collapsed: true,
+        toolChip: 'Gemini',
+        hook: 'Three tools, mapped to your actual job.',
+        estMinutes: 2,
+        title: 'What can these tools do for my job?',
+        prompt:
+          'I work as [a project officer] in [a university professional services team]. Map three AI tools onto my actual job: Gemini Deep Research (long, sourced research runs), Gemini Notebook (answers grounded only in files I give it, plus mind maps, decks and audio) and Gemini Canvas (builds small working web apps from a description).\nFORMAT: for each tool, exactly three lines:\n- The task: one task from my role it would genuinely improve.\n- The prompt: an example prompt I could run tomorrow, with swap points in [square brackets].\n- Building it in: one line on where it fits in my week.\nCONSTRAINTS: no filler, no generic advice; every example must be specific to the role I named. If a tool has no honest use for my role, say NO STRONG FIT and why rather than forcing one. Finish with one line: the single tool I should try first, and why.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
         toolChip: 'Gemini Deep Research',
         hook: 'The fifteen-minute researcher, on any topic.',
         estMinutes: 2,
@@ -922,6 +941,16 @@ export const MISSIONS = [
         title: 'Verified spreadsheet analysis',
         prompt:
           'Act as a careful data analyst. Summarise this spreadsheet. Use code (Python) for every figure; if something cannot be computed from the file itself, write DATA UNAVAILABLE rather than estimating it. Report, in this order:\n1. Shape: rows, columns and what the data covers.\n2. Key numbers: totals, averages, highest and lowest, each computed by code.\n3. Anomalies: every missing value, outlier or suspect entry, each with its row reference. If there are none, write NONE FOUND rather than staying silent.\n4. Three insights in plain business English, each tied to a number above.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Gemini',
+        hook: 'Audit the file before the file embarrasses you.',
+        estMinutes: 2,
+        title: 'QA an Excel file with code',
+        prompt:
+          'ROLE: You are a meticulous data quality auditor.\nTASK: Audit this spreadsheet using code (Python) for every check; nothing judged by eye.\nFORMAT: one table, columns: Check | Result | Rows affected (row references) | Severity (1-5) | Suggested fix. Run these checks in order:\n1. Structure: row and column counts, column types, header problems (blank, duplicate or merged headers).\n2. Completeness: missing or blank values per column, with counts.\n3. Uniqueness: duplicate rows and duplicate IDs. Flag them, do not delete: similar rows can be legitimate.\n4. Validity: values that break their column\'s rules (dates out of range, negative quantities, text in number columns, categories outside the expected set).\n5. Consistency: mixed formats within one column (date styles, units, spellings, capitalisation).\n6. Outliers: values statistically far from their column\'s norm, each with its row reference.\nCONSTRAINTS: every finding must be computed by code and carry its row reference. If a check finds nothing, write CLEAN in its row rather than staying silent. If a check cannot run on this file, write NOT APPLICABLE and why. Do not invent issues and do not alter the data. Finish with one line: is this file fit for analysis as it stands, YES or NO, and the single most urgent fix.',
       },
       {
         tier: 'stretch',
