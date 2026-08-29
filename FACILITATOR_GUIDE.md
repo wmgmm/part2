@@ -1,81 +1,65 @@
 # Facilitator Guide - AI in the Workplace Part 2
 
-Site: https://wmgmm.github.io/part2/ · One page per mission, hash links `#/m1` … `#/m9`.
-Premise: Christopher Gravitas has left IT Services to open a campus Welsh cake stall; participants build the business with AI. All files are fictional and safe to upload anywhere. Every mission is self-contained (provided files stand in for any other mission's output), so any order works.
+Site: https://wmgmm.github.io/part2/ · One page per mission, hash links `#/m1` … `#/m6`.
+Premise (self-contained, no Part 2 backstory needed): Chris Gravitas is the participants' new line manager, freshly moved into the Sustainability Engagement job. Two real documents landed on his desk in week one: Cardiff University's Sustainable Futures plan 2025-35 and a university AI position statement. He has volunteered the team to build the briefing pack: an infographic, a slide deck and a working decision tool, all grounded in the two documents. One mission per piece; every mission is self-contained, so any order works. (For returning Part 2 veterans only: yes, this is the Welsh cake man; the stall went to the students' union at the peak of the market.)
+
+**The two anchor documents** (download cards on the missions):
+- `Sustainable-Futures-en.pdf`: Cardiff's real ten-year Environmental Sustainability Plan (18pp, approved by UEB 8 July 2025). Public, safe to upload.
+- `AI_Position_Statement.pdf`: currently Cardiff Met's public statement, reproduced with attribution as the stand-in; swap in Cardiff's own under the same filename when it publishes.
+
+**The arc, said out loud at the close:** the day mirrors the plan's own change framework: Discover (01), Understand (02), Act (03, 04), Lead (05). Scattered experiments, then shared learning, then embedding AI-enabled ways of working in team processes. Mission 5's last step and card 06 are the "embed it" move.
 
 ## Session plans
 
-**90 minutes:** all six missions (cards 01-06), core paths only, choice paths ("CHOOSE YOUR NEXT MOVE") as take-home.
-**60 minutes:** missions 01, 03 and 06 (research → customers → app). Say so out loud at the start.
-**Card 07 (the dashboard duel)** is the flexible one: for a data-heavy room swap it in for 04; otherwise its SIMULATE A BAD WEEK button makes a strong five-minute live demo from the front.
-**Card 08 (the prompt workshop)** plays two ways: as an opener for a prompt-sceptical room (the before/after poster wins doubters in ten minutes), or as the first take-home alongside 09. It needs no files and no particular tool, so it also absorbs latecomers.
-Either way: everyone fires Mission 01's Deep Research run in the first five minutes, then works around it. Close by pointing everyone at **card 09 "Useful Prompts (for after the workshop)"**: the mission prompts stripped generic, plus meta-prompting (AI writes your prompt, AI writes your Deep Research brief). It is the take-home.
+**90 minutes:** all five missions (01-05), core paths only, choice paths as take-home.
+**60 minutes:** missions 01, 03 and 04 (research, infographic duel, critique-and-chain).
+Either way: everyone fires Mission 01's Deep Research run in the first five minutes, then works around it (the "make it personal" step fills the wait).
+Close by pointing everyone at **card 06 "Useful Prompts (for after the workshop)"**: the mission prompts stripped generic. It is the take-home.
 
-**The bracket convention (worth saying out loud):** in every prompt on the site, [square brackets] mark what to swap for your own work; the text inside them is just the Welsh cake default, so prompts run verbatim today and transfer on Monday.
+**The bracket convention (worth saying out loud):** in every prompt on the site, [square brackets] mark what to swap for your own work; the text inside them is a runnable default, so prompts work verbatim today and transfer on Monday.
 
-**Closer (recommended):** while people finish Mission 6, drop the day's artefacts into a Gemini Notebook and generate an Audio Overview. Play 60 seconds of two synthetic hosts earnestly discussing a Welsh cake queueing crisis. Doubles as the wrap-up.
+**Closer (recommended):** while people finish Mission 5, generate an Audio Overview of the day's own briefing pack in a Gemini Notebook. Two synthetic hosts earnestly discussing whether the AI statement survives the Demand First test doubles as the wrap-up.
 
 ## Preflight (five minutes before)
 
 1. Open **https://wmgmm.github.io/part2/?doctor** - it checks every artifact and asset automatically and tells you "Run the session" or lists what failed.
-2. On a STANDARD staff account (not yours): check Gemini Notebook Studio shows **Slide Deck** generation (education-tier gated; Mission 5 has a fallback line if absent).
-3. Deep Research visible in Gemini's tool picker on a standard account.
-4. If using attendance: Apps Script deployed with the current `google_apps_script.js` (Attendance sheet) and `src/config.js` pointing at it.
+2. The sustainability plan PDF is 10.7 MB: on thin venue wifi, have it on a stick or ask people to download it while Deep Research runs.
+3. On a STANDARD staff account (not yours): check Gemini Notebook Studio shows **Slide Deck** generation (education-tier gated; Mission 5 has a fallback line if absent), and that Deep Research is visible in Gemini's tool picker.
+4. If using attendance: Apps Script deployed with the current `google_apps_script.js` and `src/config.js` pointing at it.
 
 ## Per-mission crib
 
-### 01 Market Research with Deep Research
+### 01 The Landscape (Deep Research) - DISCOVER
 Teaching point: EDIT the research plan before running; long jobs run while you work.
-Watch for: runs capped per day on some tiers - the backup report on the page is the recovery path. Prefer "Export to Docs" for the Mission 2 handoff.
-The walk-away step ("make it personal") maps the three tools onto each person's real job while the research runs; reading two answers aloud is a strong early-room moment.
+One brief covers both themes: AI statements AND net-zero commitments across UK universities, and The Collision section makes them argue. Watch for: runs capped per day on some tiers; the backup landscape report on the page is the recovery path. Prefer "Export to Docs" for the Mission 2 handoff.
+The walk-away step ("make it personal") maps the three tools onto each person's real job; reading two answers aloud is a strong early-room moment.
 
-### 02 Question the Report in Gemini Notebook
+### 02 The Documents (Gemini Notebook) - UNDERSTAND
 Teaching point: grounded answers with citations; the 30-second check (open one citation).
-Wow moment: the choice path "Close the loop" runs Deep Research from INSIDE the notebook against their own evidence gaps.
+**The planted moment:** Q2 asks what the AI statement says about AI's environmental footprint. The statement genuinely says nothing, so a well-behaved notebook answers INSUFFICIENT_DATA. Say it in the room: that refusal is the tool working, and the silence it found is Mission 4's star catch. If a participant's notebook confabulates an answer instead, even better: the 30-second check catches it live.
 
-### 03 Customer Feedback Analysis with Gemini
-Teaching point: "use code, do not estimate", then verify one number by response_id.
-**Planted data quirks** (a good verified summary confesses them): 3 blank ratings; row **R067 spend £320.00** (typo); 16 rows with no comment. Ratings average 3.2, dipping below 2.8 in weeks 5–8 as queue complaints spike, recovering by term end.
-**Theme distribution** (~104 comments): queue ~34, price ~22 (split too-dear vs fair), sold-out-by-1pm ~19, dietary/allergens ~14, payment ~9, location/hours ~7, pure praise ~5; six comments straddle two themes; two are sarcastic (sentiment traps). Queue + sold-out are the same capacity problem: **48%** - the intended "fix one thing" answer, and Mission 6's target.
-Discussion gold: did people merge queue and sold-out into one theme or not? Both are defensible; that judgement call is the lesson.
+### 03 The Infographic (Gemini) - ACT
+Teaching point: the gap between outputs is the prompt, not the model.
+Facilitation of the blind step: give the room four quiet minutes to write and run their own prompt, then collect two volunteers' prompts and read them aloud BEFORE revealing the engineered card. Compare outputs side by side; then "Name the gap" (role, audience, format, constraints, failure state) does the teaching for you.
+The engineered prompt centres the Demand First ladder and caps the numbers at four, all verbatim.
 
-### 04 Business Plan Audit with Copilot
-Teaching point: AI as critic beats AI as author; structured scoring with cited evidence.
-Hazard: on work Copilot licences, opening the docx in Word can land in agent mode, which FIXES instead of critiquing. Chat, not agent.
-**The ten planted flaws** (finding six beats the AI that wrote it):
-1. 600 cakes/day claimed vs its own ops section's one-griddle ceiling (8 cakes/6 min × 4 h = 320).
-2. £1,800/week "profit" is actually revenue: no ingredient costs, pitch fee or labour.
-3. No allergen provision (Natasha's Law/PPDS) or 28-day food-business registration, despite gluten-free demand in the feedback.
-4. Annual figure = term-time week × 52; the market report says ~14 dead weeks.
-5. "No competition" vs the report's two named competitors (The Cwtch Coffee Co., Mrs Mabli's Bakes).
-6. Fabricated citation: "78% of students… (Cardiff Student Survey, 2024)" - exists nowhere. The AI-slop tell; the highest-value catch.
-7. Single point of failure everywhere: one griddle, one supplier, one operator, outdoor pitch, no contingency ("We do not anticipate significant risks").
-8. Untestable success measure ("go-to campus destination within the first year").
-9. Price contradiction: £2.50 in Pricing vs £3.20 in the financial model.
-10. Loyalty scheme "shares the list with local partner businesses": UK GDPR breach, meant to be discovered rather than lectured.
-Choice path B (Canvas sliders) makes flaws 1, 2 and 4 collapse visibly.
+### 04 The Gap (Gemini + Copilot) - ACT
+Teaching point: AI as critic beats AI as author, and CHAINING: the output of one tool becomes the input of another.
+**The real gap** (not planted, genuinely there): the AI statement never mentions AI's environmental footprint, implementation timelines or accountability structures; the plan demands Demand First thinking on every resource decision. The Demand First test's four rungs: Avoid and minimise demand; Source low-impact alternatives; Ensure circularity and recovery; Manage unavoidable impacts responsibly. Expect SILENT on most rungs; that is the point, and it is a finding about a real document, so keep the tone curious rather than gleeful.
+The chain step (Gemini critique pasted into Copilot for adjudication) is the mission's name-the-lesson moment: say the word "chaining" out loud.
 
-### 05 Pitch Deck in Notebook Studio
-Teaching point: grounded generation beats blank-page generation; the quiz-your-own-pitch check.
-Gate: slide generation is tier-dependent; fallback (in the step): export the notebook Report to Docs, build the deck in Gemini Canvas.
-Choice paths use the Cardiff University Slide Design prompt (Matts' NotebookLM Prompt Library) via Studio's revise pencil.
+### 05 The Briefing (Notebook Studio + Canvas) - LEAD
+Teaching point: grounded generation beats blank-page generation; then embed it.
+Gate: slide generation is tier-dependent; fallback in the step (export Report to Docs, build in Canvas). The Canvas step builds the Demand First decision helper: teams genuinely can use it on their next purchase, which is the "team processes" landing. Choice paths use the Cardiff University Slide Design prompt via Studio's revise pencil.
 
-### 06 Build an App with Gemini Canvas
-Teaching point: plain-English iteration; fix the top complaint (capacity), not an easy one.
-Endings that land: pre-order form with pickup slots; live sold-out board; Build-a-Box picker.
-
-### 07 Build a Dashboard, Twice
-Teaching point: Copilot upgrades the spreadsheet, Canvas replaces it; a control chart separates common from special cause.
-**Planted patterns in Venture_Sales_Log.xlsx** (Sales + Waste log sheets): Plain cakes 51% of revenue; weeks 5-6 revenue drops ~51% (griddle temperature fault, matching waste-log entries) - genuine special-cause variation the SPC chart should flag; one clerical outlier (2026-03-04, Plain, units 250, a typo for 25); two waste causes carry ~68% of waste cost (griddle-related waste ~67%: the vital few). The Canvas prompt's SIMULATE A BAD WEEK button is the demo moment; the Cymraeg toggle plays well in the room.
-
-### 08 The Prompt Workshop
-Teaching point: meta-prompting - the AI critiques and rewrites your prompt, then interviews you to design one. The before/after poster comparison is the lesson; say out loud that the gap is the prompt, not the model. The interview step works best on a task from their real job.
+### 06 Useful Prompts
+Eleven generic rows, including the new "Chain a second opinion". Point at "What can these tools do for my job?" first; it is the orientation prompt.
 
 ## Prompt standard
 Every prompt on the site follows `docs/PROMPT_GUIDANCE_2026.md` (the expert report: structure, output formats, failure states like DATA UNAVAILABLE and INSUFFICIENT_DATA, verbatim quotes, probability scores). Worth saying in the room: the odd-looking ALL-CAPS sections are what makes the outputs reliable.
 
 ## Re-skinning
-All artefacts regenerate from `tools/make_artifacts.py` (deterministic). Swap the feedback file for module evals or helpdesk tickets, keep the filenames, and the whole workshop re-skins. Mission copy lives in `src/data/missions.js`.
+The anchor documents are the whole scenario. Swap `AI_Position_Statement.pdf` for Cardiff's own statement (same filename) when it publishes; regenerate generated files with `python3 tools/make_artifacts.py`. Mission copy lives in `src/data/missions.js`.
 
 ---
 *The old FACILITATOR_GUIDE.txt/pdf and PARTICIPANT_GUIDE files describe Part 1's escape room, not this workshop.*
