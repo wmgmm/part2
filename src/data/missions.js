@@ -1,22 +1,25 @@
-// All mission content for the workshop site: "The Gravitas Venture".
-// One running thread: Christopher Gravitas has left IT Services to open a
-// Welsh cake stall on campus, and each mission is one stage of making the
-// venture real. Every mission is SELF-CONTAINED: provided files stand in for
-// any other mission's output, so missions work in any order.
+// All mission content for the workshop site: "The Policy Pivot".
+// One running thread: Chris Gravitas, the participant's new line manager, has
+// been moved into the university's Sustainability Engagement job and has
+// volunteered the team to respond to two real documents: the Sustainable
+// Futures plan and the AI position statement. Each mission builds one piece of
+// the team briefing pack (infographic, deck, decision tool). Every mission is
+// SELF-CONTAINED: provided files stand in for any other mission's output, so
+// missions work in any order.
 //
-// THE SWAPPABLE RESOURCE CONTRACT (for Matt):
-// The files in public/placeholders/ below are the whole scenario. Swap them
-// (same filenames, or update the artifacts arrays here) to re-skin the
-// workshop, e.g. venture_customer_feedback -> student module feedback.
-//   Venture_Research_Brief.docx     - facilitator copy of the M1 brief (site shows it as a prompt; no download card)
-//   Venture_Market_Report.pdf       - M1/M2/M5 pre-generated research report
-//   Venture_Customer_Feedback.xlsx  - M3 data (plus .csv twin)
-//   Venture_Business_Plan.docx      - M4/M5 deliberately flawed plan
-//   Venture_Rubric.pdf              - M4 scoring rubric
-//   Venture_Feedback_Summary.pdf    - M5 one-page stand-in for an M3 result
-//   Venture_Theme_List.txt          - M6 fallback complaint themes
-//   Venture_Sales_Log.xlsx          - M8 sales + waste data (Sales / Waste log sheets)
-// Regenerate all of them with: python3 tools/make_artifacts.py
+// THE ANCHOR DOCUMENTS AND THE SWAP CONTRACT (for Matt):
+//   Sustainable-Futures-en.pdf    - Cardiff University's real Environmental
+//                                   Sustainability Plan 2025-35. Not generated;
+//                                   a copy of the published document.
+//   AI_Position_Statement.pdf     - a university AI position statement
+//                                   (currently Cardiff Met's as the stand-in).
+//                                   When Cardiff publishes its own, replace the
+//                                   FILE under the same name and update the
+//                                   aiStatement note below. Nothing else moves.
+//   Policy_Landscape_Report.pdf   - Mission 1's backup: a Deep Research run of
+//                                   the M1 brief, exported to PDF (stand-in
+//                                   until a real run is dropped in).
+// Regenerate the generated files with: python3 tools/make_artifacts.py
 //
 // Step fields: tier 'core'|'stretch', estMinutes, check (30-second check),
 // prompt (+ optional promptLabel), link {href, label}.
@@ -37,7 +40,7 @@ export const TOOLS = {
 const PROMPT_LIBRARY_URL = 'https://wmgmm.github.io/notebooklm/';
 
 // Gallery hero image, shared with the ?doctor preflight so the check cannot drift.
-export const HERO_IMAGE = 'venture_stall.webp';
+export const HERO_IMAGE = 'policy_stall.webp';
 
 // Click-to-open sign-in cards (google.html copilot-card pattern).
 export const APPS = {
@@ -137,53 +140,23 @@ Break a rule only to make the message land harder. Never break: palette, Welsh-f
 one message per unit, the spine.`;
 
 const A = {
-  report: {
-    label: 'THE MARKET REPORT',
-    filename: 'Venture_Market_Report.pdf',
-    downloadPath: `${BASE}placeholders/Venture_Market_Report.pdf`,
-    note: 'The finished market research report.',
+  susPlan: {
+    label: 'THE SUSTAINABILITY PLAN',
+    filename: 'Sustainable-Futures-en.pdf',
+    downloadPath: `${BASE}placeholders/Sustainable-Futures-en.pdf`,
+    note: "Cardiff University's real ten-year plan, 18 pages. A public document: safe to upload.",
   },
-  feedbackXlsx: {
-    label: 'CUSTOMER FEEDBACK (EXCEL)',
-    filename: 'Venture_Customer_Feedback.xlsx',
-    downloadPath: `${BASE}placeholders/Venture_Customer_Feedback.xlsx`,
-    note: 'One term of stall feedback. Fictional, upload anywhere.',
+  aiStatement: {
+    label: 'THE AI POSITION STATEMENT',
+    filename: 'AI_Position_Statement.pdf',
+    downloadPath: `${BASE}placeholders/AI_Position_Statement.pdf`,
+    note: "A university AI position statement (currently Cardiff Met's, standing in until Cardiff publishes its own). Public: safe to upload.",
   },
-  feedbackCsv: {
-    label: 'CUSTOMER FEEDBACK (CSV)',
-    filename: 'Venture_Customer_Feedback.csv',
-    downloadPath: `${BASE}placeholders/Venture_Customer_Feedback.csv`,
-    note: 'Same data as CSV: the more reliable format for most AI tools.',
-  },
-  plan: {
-    label: 'THE BUSINESS PLAN',
-    filename: 'Venture_Business_Plan.docx',
-    downloadPath: `${BASE}placeholders/Venture_Business_Plan.docx`,
-    note: 'Written by an AI overnight. Submitted unread. Audit it.',
-  },
-  rubric: {
-    label: 'THE RUBRIC',
-    filename: 'Venture_Rubric.pdf',
-    downloadPath: `${BASE}placeholders/Venture_Rubric.pdf`,
-    note: 'Five criteria, scored 1 to 5, evidence required.',
-  },
-  feedbackSummary: {
-    label: 'FEEDBACK SUMMARY',
-    filename: 'Venture_Feedback_Summary.pdf',
-    downloadPath: `${BASE}placeholders/Venture_Feedback_Summary.pdf`,
-    note: 'A one-page customer feedback summary (a Mission 3 stand-in).',
-  },
-  salesLog: {
-    label: 'THE SALES LOG',
-    filename: 'Venture_Sales_Log.xlsx',
-    downloadPath: `${BASE}placeholders/Venture_Sales_Log.xlsx`,
-    note: 'A term of daily sales plus the waste log, on two sheets. Fictional, upload anywhere.',
-  },
-  themes: {
-    label: 'THEME LIST (FALLBACK)',
-    filename: 'Venture_Theme_List.txt',
-    downloadPath: `${BASE}placeholders/Venture_Theme_List.txt`,
-    note: 'The complaint themes, if you skipped Mission 3.',
+  landscapeReport: {
+    label: 'BACKUP: THE LANDSCAPE REPORT',
+    filename: 'Policy_Landscape_Report.pdf',
+    downloadPath: `${BASE}placeholders/Policy_Landscape_Report.pdf`,
+    note: 'Only needed if your Deep Research run fails or you cannot wait.',
   },
 };
 
@@ -192,37 +165,31 @@ export const MISSIONS = [
     id: 'm1',
     code: '01',
     level: 1,
-    title: 'The Market',
-    pageTitle: 'Research ANYTHING with Deep Research',
+    title: 'The Landscape',
+    pageTitle: 'Research the Policy Landscape with Deep Research',
     tools: [TOOLS.deepResearch],
     accentType: 'stamp-red',
     accentText: 'START HERE',
-    estMinutesCore: 15,
-    summary: "Start the market research using Gemini's Deep Research.",
+    estMinutesCore: 12,
+    summary: 'Start the policy landscape research with Deep Research.',
     toolInfo: {
       feature: 'Tool: Gemini Deep Research. A research agent that does your Google searches and takes five to fifteen minutes to run.',
       apps: [APPS.gemini],
     },
-    workflow: ['Paste the brief', 'Edit the plan', 'Make it personal', 'Skim the report', 'Make the infographic'],
+    workflow: ['Paste the brief', 'Edit the plan', 'Make it personal', 'Skim like an executive'],
     brief:
-      'Gravitas wants evidence the stall can work before he spends his pension on a griddle. Start the research run, walk away, come back. Prefer your own idea? Rewrite the brief.',
-    artifacts: [
-      {
-        ...A.report,
-        label: 'BACKUP: THE FINISHED REPORT',
-        note: 'Only needed if your Deep Research run fails or you cannot wait: a ready-made report so you can carry on.',
-      },
-    ],
+      'Two policies have landed on Chris\'s desk: a ten-year sustainability plan and an AI position statement. Before reading either, find out what every other UK university is saying about AI and about net zero, and where Cardiff sits. Start the run, walk away, come back. Prefer your own topic? Rewrite the brief. Plan stage: DISCOVER.',
+    artifacts: [A.landscapeReport],
     steps: [
       {
         tier: 'core',
         estMinutes: 2,
         title: 'Brief your researcher',
         body:
-          'In Gemini (gemini.google.com), choose Deep Research in the tools menu beneath the prompt box and paste the brief below, or rewrite it for your own idea. A good brief dictates the report\'s sections and tells the tool what to do when data is missing, not just the topic.',
-        promptLabel: 'THE BRIEF (EDIT FOR YOUR IDEA)',
+          'In Gemini (gemini.google.com), choose Deep Research in the tools menu beneath the prompt box and paste the brief below, or rewrite it for your own topic. A good brief dictates the report\'s sections and tells the tool what to do when data is missing, not just the topic.',
+        promptLabel: 'THE BRIEF (EDIT FOR YOUR TOPIC)',
         prompt:
-          'ROLE: You are a market research analyst preparing a briefing for a first-time food vendor.\nTASK: Research the viability of [a small Welsh cake stall on a UK university campus (Cardiff)].\nFORMAT: Use exactly these section headings:\n- Who Buys, and When: footfall patterns for [campus food stalls] across the day and the academic year.\n- Price Expectations: realistic prices for [a fresh Welsh cake and comparable snacks].\n- Competitors: [on and near a typical campus, including mobile and permanent options].\n- Succeed or Fail: what decides it for [small campus food ventures], including [the regulatory basics for UK street food].\n- Blind Spots: three opportunities or risks I am probably not thinking about.\nCONSTRAINTS: Cite every claim to its source. If a price or figure is not in your sources, write DATA UNAVAILABLE rather than estimating it.',
+          'ROLE: You are a policy analyst preparing a briefing for a university team.\nTASK: Research the landscape of [UK university] statements on generative AI and the sustainability and net-zero commitments the same institutions have made, and how they reconcile the two.\nFORMAT: Use exactly these section headings:\n- The AI Statements: what [UK universities] publish about generative AI, and the principles they commit to.\n- The Net-Zero Commitments: the sustainability and net-zero pledges [the same institutions] have made, with target dates.\n- The Collision: how AI\'s energy, water and hardware footprint squares with those pledges, and which institutions acknowledge the tension.\n- Where [Cardiff University] Sits: how its published positions compare with the rest of the sector.\n- Blind Spots: three things I am probably not thinking about.\nCONSTRAINTS: Cite every claim to its source. If a figure, date or policy detail is not in your sources, write DATA UNAVAILABLE rather than estimating it.',
       },
       {
         tier: 'core',
@@ -245,9 +212,9 @@ export const MISSIONS = [
         estMinutes: 3,
         title: 'Return and skim like an executive',
         body:
-          'When the report is done, do not read it top to bottom. Ask how it changes your decisions.',
+          'When the report is done, do not read it top to bottom. Ask how it changes your team\'s decisions.',
         prompt:
-          'From this report only, give me a three-column table: Finding, So I Should, Source. Fill it with the five findings most likely to change my plans, one sentence per cell, naming the report\'s cited source in each row. Below the table, one line: the single biggest risk the report identifies, with its source. No preamble.',
+          'From this report only, give me a three-column table with the columns Finding, So We Should, Source. Exactly five rows, one sentence per cell, naming the report\'s cited source in each row. Below the table, one line: the single finding most likely to change [our team]\'s behaviour, and why. No preamble.',
       },
       {
         tier: 'core',
@@ -256,15 +223,6 @@ export const MISSIONS = [
         check: true,
         body:
           'Pick one of the five findings and click through to its source. Does the source actually say that? Deep Research cites well, not perfectly, and the habit starts here.',
-      },
-      {
-        tier: 'core',
-        estMinutes: 3,
-        title: 'Turn the findings into an infographic',
-        body:
-          'Still in Gemini, make the findings shareable before you leave. Ask for an image, or open Gemini Canvas and use its Create menu to generate an Infographic from the same material.',
-        prompt:
-          'Using only the five findings in the table above (no new numbers, no invented claims), create a clean, simple infographic [a colleague] would understand in ten seconds: white background, one accent colour, large readable labels, no clutter. Then make a second, portrait version sized for a phone screen.',
       },
       {
         tier: 'stretch',
@@ -278,50 +236,51 @@ export const MISSIONS = [
       },
     ],
     verdict:
-      'You edited the plan before pressing the button. In IT Services we called that requirements gathering. In baking it is how you avoid burning the first batch.',
+      'You edited the plan before pressing the button, then made the wait useful. In my old department we called that requirements gathering followed by capacity planning. Here it is just called Tuesday.',
   },
 
   {
     id: 'm2',
     code: '02',
     level: 2,
-    title: 'The Evidence',
-    pageTitle: 'Question the Report in Gemini Notebook',
+    title: 'The Documents',
+    pageTitle: 'Question Both Policies in Gemini Notebook',
     stretchTitle: 'CHOOSE YOUR NEXT MOVE',
     stretchIntro: 'Pick ONE path below; come back for another any time.',
     tools: [TOOLS.notebook],
-    estMinutesCore: 12,
-    summary: 'Question the research report in Gemini Notebook.',
+    estMinutesCore: 11,
+    summary: 'Question both policies in Gemini Notebook.',
     toolInfo: {
       feature: 'Tool: Gemini Notebook (until recently NotebookLM). It only answers from the files you give it, and shows its receipts.',
       apps: [APPS.notebook],
     },
-    workflow: ['Add the report as a source', 'Mind map', 'Ask with citations', '30-second check'],
+    workflow: ['Add both documents', 'Mind map', 'Ask with citations', '30-second check'],
     brief:
-      'A report you skim once is a report you misremember forever. Load the market report and interrogate it. Any non-sensitive document of your own works just as well.',
-    artifacts: [A.report],
+      'Before the team can be briefed, somebody has to actually understand the two documents; a policy you skim once is a policy you misremember forever. Load both documents and interrogate them: grounded answers with citations, and a blunt refusal when the sources fall short. Plan stage: UNDERSTAND.',
+    artifacts: [A.susPlan, A.aiStatement],
     steps: [
       {
         tier: 'core',
         estMinutes: 3,
         title: 'Ground it',
         body:
-          'Create a notebook at notebooklm.google.com (the old links still redirect) and add the market report as a source: the provided PDF, or your own Mission 1 report (Export to Docs in Gemini, then Add sources and pick it from Drive).',
+          'Create a notebook at notebooklm.google.com (the old links still redirect) and add BOTH documents above as sources. Made your own Mission 1 report? Add it too (Export to Docs in Gemini, then Add sources and pick it from Drive).',
       },
       {
         tier: 'core',
-        estMinutes: 3,
+        estMinutes: 2,
         title: 'Map it',
         body:
-          'In the Studio panel (right-hand side), generate a Mind Map: a clickable visual index of everything the report covers. Thirty seconds, and you now know the report better than most people know documents they wrote themselves.',
+          'In the Studio panel (right-hand side), generate a Mind Map: a clickable visual index of everything the two documents cover. Thirty seconds, and you now know them better than most people know documents they wrote themselves.',
       },
       {
         tier: 'core',
         estMinutes: 4,
         title: 'Ask with citations',
-        body: 'Now the difference from ordinary chat: every claim must come from your sources, and a blunt INSUFFICIENT_DATA beats a confident guess.',
+        body:
+          'Now the difference from ordinary chat: every claim must come from your sources, and a blunt INSUFFICIENT_DATA beats a confident guess. An INSUFFICIENT_DATA is not a failure; it is a finding.',
         prompt:
-          'ROLE: a strict, literal fact-checker. Answer from the sources in this notebook and nothing else.\nQ1: What should I charge for [a single Welsh cake]? Cite the passage that supports the figure.\nQ2: List every risk the sources name for [a venture like this], each with its citation.\nRULES: no outside knowledge, no estimates, no filler. If the sources cannot fully answer a question, output the exact phrase INSUFFICIENT_DATA for that question instead of guessing.',
+          'ROLE: a strict, literal fact-checker. Answer from the sources in this notebook and nothing else.\nQ1: Before any new [software purchase], what does the Demand First hierarchy require us to do FIRST, and what are its four steps, in order? Cite the passage for each step.\nQ2: What does the AI position statement say about the [environmental footprint] of AI tools? Cite every passage you rely on.\nRULES: no outside knowledge, no estimates, no filler. If the sources cannot fully answer a question, output the exact phrase INSUFFICIENT_DATA for that question, then name which source falls short and what is missing from it.',
       },
       {
         tier: 'core',
@@ -329,224 +288,161 @@ export const MISSIONS = [
         title: 'The 30-second check',
         check: true,
         body:
-          'Click one citation. Does the passage actually support the claim? Grounded does not mean gospel; it means checkable. So check.',
+          'Click one citation. Does the passage actually support the claim? Grounded does not mean gospel; it means checkable. So check. And if one of your questions drew an INSUFFICIENT_DATA, remember which: Mission 4 pays it off.',
       },
       {
         tier: 'stretch',
         choice: 'A',
-        toolChip: 'Notebook + Deep Research',
-        hook: 'For the researcher who wants the gaps found.',
-        estMinutes: 5,
-        title: 'Close the loop',
-        body:
-          'The newest move in the toolkit: run Deep Research from INSIDE the notebook, grounded in your own evidence plus the open web. Find what your document misses before a reviewer does.',
-        prompt:
-          'Based only on my sources: what has my evidence failed to cover that a sceptical [funder] would ask about?\nOutput three sections:\nGAP REGISTER: 3-5 gaps, each phrased as one specific research question.\nFINDINGS: research each question on the open web; a short answer per gap, with sources.\nVERDICT: the single gap I most need to fix before anyone sceptical reads this.',
-      },
-      {
-        tier: 'stretch',
-        choice: 'B',
-        toolChip: 'Notebook Studio',
-        hook: 'For the visual, on-brand option.',
-        estMinutes: 6,
-        title: 'Infographic, then make it Cardiff',
-        body:
-          'Generate a Key-Numbers Infographic in the Studio panel. Then, instead of accepting the default look, open the revise (pencil) panel, type MODE: INFOGRAPHIC, and paste the Cardiff University design prompt below beneath it. One click makes an infographic; a design prompt makes YOUR infographic.',
-        promptLabel: 'CARDIFF DESIGN PROMPT',
-        prompt: CARDIFF_DESIGN_PROMPT,
-        link: { href: PROMPT_LIBRARY_URL, label: "From The Matts' NotebookLM Prompt Library" },
-      },
-      {
-        tier: 'stretch',
-        choice: 'C',
         toolChip: 'Notebook Studio',
         hook: 'For the commute.',
         estMinutes: 4,
         title: 'Make it listenable',
         body:
-          'Generate an Audio Overview: two hosts discussing your market evidence like it is the story of the year. Useful for the commute; unsettling the first time.',
+          'Generate an Audio Overview: two hosts discussing a sustainability plan and an AI statement like it is the story of the year. Useful for the commute; unsettling the first time.',
+      },
+      {
+        tier: 'stretch',
+        choice: 'B',
+        toolChip: 'Notebook + Deep Research',
+        hook: 'For the researcher who wants the gaps found.',
+        estMinutes: 5,
+        title: 'Close the loop',
+        body:
+          'The newest move in the toolkit: run Deep Research from INSIDE the notebook, grounded in your own sources plus the open web. Find what the documents miss before a colleague does.',
+        prompt:
+          'Act for [a sceptical member of staff] who has read both documents in this notebook. Based only on my sources: what questions can the two documents not answer between them?\nOutput three sections:\nGAP REGISTER: 3-5 gaps, each phrased as one specific research question that neither document answers.\nFINDINGS: research the top three gaps on the open web for the strongest external evidence; a short answer per gap, with sources.\nVERDICT: exactly one line, starting PASS WITH GAPS or NOT READY: whether the two policies together are ready to guide [our team]\'s decisions about using AI tools, and the single fix that matters most.',
       },
     ],
     verdict:
-      'You asked for evidence and then checked a citation. The stall does not exist yet and it is already better governed than several departments I could name.',
+      'You asked two policies to explain themselves and one of them went quiet. Write down which question drew the silence. That silence has a mission of its own.',
   },
 
   {
     id: 'm3',
     code: '03',
     level: 1,
-    title: 'The Customers',
-    pageTitle: 'Customer Feedback Analysis with Gemini',
+    title: 'The Infographic',
+    pageTitle: 'Explain the Plan to Staff: Your Prompt vs Ours',
     stretchTitle: 'CHOOSE YOUR NEXT MOVE',
-    stretchIntro:
-      'The analysis is done; now decide what to make of it. Like the old adventure books: pick ONE path below. You can always come back and take another.',
+    stretchIntro: 'Pick ONE path below; come back for another any time.',
     tools: [TOOLS.gemini],
     estMinutesCore: 11,
-    summary: "Analyse the customer feedback spreadsheet with Gemini's code analysis.",
+    summary: 'Your infographic prompt versus ours, on the real plan.',
     toolInfo: {
-      feature: 'Tool: Gemini. It writes code to do the maths on your spreadsheet, instead of guessing.',
+      feature: 'Tool: Gemini. Attach a PDF and it reads it; ask for an image and it draws it. Today you do both.',
       apps: [APPS.gemini],
     },
-    workflow: ['Upload the spreadsheet', 'Verified summary', 'Find the themes', '30-second check'],
+    workflow: ['Write your own prompt', 'Run it', 'Compare with ours', '30-second check'],
     brief:
-      'The stall has run for a term and collected 120 customer feedback responses (fictional, upload anywhere). Find out what they are really saying. Any non-sensitive spreadsheet of your own works with the same prompts.',
-    artifacts: [A.feedbackXlsx, A.feedbackCsv],
+      'The first piece of the briefing pack: the sustainability plan explained to the whole team in one emailable image. First write your own prompt, no help, no template. Then compare it with ours. Friendly rivalry encouraged. Plan stage: ACT.',
+    artifacts: [A.susPlan],
     steps: [
       {
         tier: 'core',
         estMinutes: 4,
-        title: 'The verified summary',
+        title: 'Your prompt, blind',
         body:
-          'Upload the file to Gemini with the prompt below. The magic words are "use code". The prompt also demands a confession: a stated DATA UNAVAILABLE beats a confident guess, and section 3 is where the machine owns up to the mess.',
-        prompt:
-          'Act as a careful data analyst. Summarise this spreadsheet. Use code (Python) for every figure; if something cannot be computed from the file itself, write DATA UNAVAILABLE rather than estimating it. Report, in this order:\n1. Shape: rows, columns and what the data covers.\n2. Key numbers: totals, averages, highest and lowest, each computed by code.\n3. Anomalies: every missing value, outlier or suspect entry, each with its [response_id]. If there are none, write NONE FOUND rather than staying silent.\n4. Three insights in plain business English, each tied to a number above.',
-      },
-      {
-        tier: 'stretch',
-        collapsed: true,
-        toolChip: 'Gemini',
-        hook: 'Nobody has time to read a hundred of them.',
-        estMinutes: 1,
-        title: 'Find the themes in free-text comments',
-        prompt:
-          'Categorise every free-text comment in this file into themes you derive from the data itself. Give me: the themes ranked by count with percentages; one representative quote per theme with its row reference; and the comments you found hard to place, with why. Finish with this: if I could fix only one thing, what does the data say it should be?',
-      },
-      {
-        tier: 'stretch',
-        collapsed: true,
-        toolChip: 'Any AI chat',
-        hook: 'Structured assessment with cited evidence.',
-        estMinutes: 1,
-        title: 'Score it against a rubric',
-        prompt:
-          'Score this [document] against the attached [rubric or criteria], 1 to 5 per criterion. For every score, cite the exact sentence or figure that justifies it. Finish with the three revisions that would most improve the total score.',
+          'Attach the plan PDF in a Gemini chat and write your own prompt for a one-page staff infographic. No peeking at the card below. Run it, then compare results with a neighbour: whose lands best, and what did their prompt have that yours did not?',
       },
       {
         tier: 'core',
-        estMinutes: 5,
-        title: 'Find the themes',
+        estMinutes: 4,
+        title: 'Now the engineered version',
         body:
-          'The free-text comments are where the truth lives, and nobody has time to read a hundred of them. Make the machine do the reading and show its working.',
+          'Same task, our prompt. Run it in a NEW chat with the PDF attached, then put the two outputs side by side.',
+        promptLabel: 'THE ENGINEERED PROMPT',
         prompt:
-          'Categorise every free-text comment in this file into themes you derive from the data itself, not a preset list. Answer as a table, ranked by count, with columns: Theme | Count | % of comments | Verbatim quote | [response_id]. Rules: assign each comment to exactly one theme; the counts must sum to the number of comments; quotes must be word for word from the file. Below the table, list any comments you could not place, with why. Finish with one line: if I could fix only one thing, what does the data say it should be, and how many comments back it?',
+          'ROLE: You are an internal communications designer at [a university].\nTASK: From the attached sustainability plan and nothing else, design a single-page infographic explaining the plan to [staff with no sustainability background]. It goes round by email, so it must land in ten seconds.\nCONTENT REQUIREMENTS:\n- One spine sentence across the top: the single thing a reader should remember, in plain English.\n- The visual centrepiece: the plan\'s Demand First decision hierarchy as a ladder of four named rungs, in the plan\'s own order.\n- At most [four] numbers, each taken verbatim from the document and labelled with what it means.\n- One strip along the bottom: what staff are actually being asked to do, as verbs, not values.\nRULES: anything not in the document is left out, never invented. If a figure you need is absent, write NOT IN DOCUMENT in its place rather than estimating.\nFORMAT: generate the infographic as an image: white background, one accent colour, large readable labels, no clutter, no decorative statistics. If you cannot generate an image, output a text specification instead: the layout zone by zone, with the exact wording of every label. No preamble; begin with the infographic.',
       },
       {
         tier: 'core',
         estMinutes: 2,
+        title: 'Name the gap',
+        body:
+          'No prompt for this one: just answer it. Which ingredient made the difference: the role, the audience, the format, the constraints, or the failure state? The gap between the two outputs is the prompt, not the model. That sentence is the workshop.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 1,
         title: 'The 30-second check',
         check: true,
         body:
-          'Pick one number from the answers, find the rows by response_id in the file, and verify it yourself. Also: did the summary mention the blank ratings and the suspicious spend entry? If not, you just caught the machine skimming.',
+          'Pick one number on the infographic and find it in the PDF. If it is not there, the machine invented it, and you have just caught your first hallucination in the wild.',
       },
       {
         tier: 'stretch',
         choice: 'A',
-        toolChip: 'Gemini',
-        hook: 'For the visual thinker.',
-        estMinutes: 3,
-        title: 'Chart the trend',
-        body: 'Follow up in the same chat:',
-        prompt:
-          'Chart [the weekly average rating] across [the term], computed with code from the file, not read off by eye. Then exactly two bullets about [the middle weeks]: first, what happened, with the weeks and the size of the change; second, one verbatim comment (with its [response_id]) that supports your explanation. If the comments do not actually explain it, say so rather than inventing a cause.',
+        toolChip: 'Notebook Studio',
+        hook: 'For the visual, on-brand option.',
+        estMinutes: 6,
+        title: 'Make it Cardiff',
+        body:
+          'Add the plan to a Gemini Notebook (your Mission 2 one already has it) and generate an Infographic in the Studio panel. Then, instead of accepting the default look, open the revise (pencil) panel, type MODE: INFOGRAPHIC, and paste the Cardiff University design prompt below beneath it. One click makes an infographic; a design prompt makes YOUR infographic.',
+        promptLabel: 'CARDIFF DESIGN PROMPT',
+        prompt: CARDIFF_DESIGN_PROMPT,
+        link: { href: PROMPT_LIBRARY_URL, label: "From The Matts' NotebookLM Prompt Library" },
       },
       {
         tier: 'stretch',
         choice: 'B',
-        toolChip: 'Gemini Notebook',
-        hook: 'For the one who has a meeting about this later.',
-        estMinutes: 6,
-        title: 'Present the findings as slides',
-        body:
-          'Paste your themes answer into Gemini Notebook as a new source, then in Studio generate a Slide Deck with the brief below. Fancy it up with the Cardiff design prompt from Mission 5.',
-        prompt:
-          'Five slides for [the stall owner]: what customers say, and what to do about it.',
-        link: { href: 'https://notebooklm.google.com', label: 'Open Gemini Notebook' },
-      },
-      {
-        tier: 'stretch',
-        choice: 'C',
-        toolChip: 'Sheets + Canvas',
-        hook: 'For the one who wants it updating itself.',
-        estMinutes: 6,
-        title: 'Build the live dashboard',
-        body:
-          'Upload the Excel file to Google Drive, open it with Google Sheets, then open the Ask Gemini side panel and choose Create canvas. Filters and edits write back to the sheet underneath.',
-        prompt:
-          'Build an interactive dashboard from this sheet. KPI cards along the top for [average rating, total responses and total spend]; a [weekly average-rating] chart across [the term]; filter toggles for [time slot and item]; and a bar chart of [complaint themes] from the comments. Compute every figure from the sheet itself, and add a small data-quality note listing any rows you excluded or doubted, each with its [response_id]. If a KPI cannot be computed cleanly, label it DATA UNAVAILABLE rather than guessing.',
-      },
-      {
-        tier: 'stretch',
-        choice: 'D',
         toolChip: 'Gemini',
-        hook: 'For the poster-on-the-stall option.',
-        estMinutes: 5,
-        title: 'Turn it into an infographic',
-        body:
-          'Follow up in the same chat with the prompt below. Or paste your summary into Gemini Notebook as a text source (the spreadsheet itself will not ingest, and hitting that wall IS the lesson) and generate one in Studio.',
-        link: { href: 'https://notebooklm.google.com', label: 'Open Gemini Notebook' },
-        prompt:
-          'Using this analysis and nothing else, create a clean, simple infographic [a stall customer] would understand: white background, one accent colour, large readable labels, no clutter. Show at most [four] numbers, each taken verbatim from the analysis above; if a figure is not in the analysis, leave it out rather than inventing one. No decorative statistics.',
-      },
-      {
-        tier: 'stretch',
-        choice: 'E',
-        toolChip: 'Gemini',
-        hook: 'For the pessimist, and therefore the planner.',
+        hook: 'For your own most-ignored policy.',
         estMinutes: 4,
-        title: 'Predict the failure',
-        body: 'The pre-mortem. The same prompt works on any feedback file you are about to defend in a review.',
-        prompt:
-          'It is [next term] and [the stall] has closed. Using only this feedback data, write the post-mortem.\nThe Incident: two sentences on how it failed.\nThen the top [three] causes of death. For each give:\n- Probability score: how likely this was the killer. The scores must sum to exactly 100%.\n- The Seed: one verbatim comment from the file, with its [response_id], that showed the warning sign.\n- The Mechanism: how that complaint grew into a closure.\nFinish with the single change most likely to have saved it, and how many comments support it.',
+        title: 'Make it yours',
+        body:
+          'Re-run the engineered prompt against [your own team\'s most-ignored policy or guidance document], or ask for a second, portrait version sized for a phone screen. The prompt transfers; that is the point of writing it properly once.',
       },
     ],
     verdict:
-      'Nearly half my customers are queueing too long or finding an empty tray. I am told this is a good problem to have. It is not. Mission 06 exists because of you.',
+      'Your first prompt against the engineered one: the gap between them is the whole discipline. And now several thousand colleagues can understand a ten-year plan in ten seconds, which is more than I can say for some strategies I have launched.',
   },
 
   {
     id: 'm4',
     code: '04',
     level: 3,
-    title: 'The Audit',
-    pageTitle: 'Business Plan Audit with Copilot',
+    title: 'The Gap',
+    pageTitle: 'Critique the Policies, Then Chain the Tools',
     stretchTitle: 'CHOOSE YOUR NEXT MOVE',
     stretchIntro: 'Pick ONE path below; come back for another any time.',
-    tools: [TOOLS.copilot],
+    tools: [TOOLS.gemini, TOOLS.copilot],
     estMinutesCore: 15,
-    summary: 'Audit the flawed business plan using Copilot chat.',
+    summary: 'Critique the two policies, then chain Copilot to judge the critique.',
     toolInfo: {
-      feature: 'Tool: Copilot chat. Upload a document and interrogate it. Chat critiques; agent mode rewrites, so stay in chat.',
-      apps: [APPS.copilot],
+      feature:
+        'Tools: Gemini critiques, Copilot adjudicates. Chaining: the output of one tool becomes the input of another.',
+      apps: [APPS.gemini, APPS.copilot],
     },
-    workflow: ["Devil's advocate", 'Post-mortem from the future', 'Score with the rubric', '30-second check'],
+    workflow: ["Devil's advocate", 'The Demand First test', 'Chain to Copilot', '30-second check'],
     brief:
-      'Gravitas asked an AI to write his business plan overnight and submitted it unread. It looks professional. It is not: find the flaws before an investor does. Everyone audits the same plan, so you can compare catches with colleagues.',
-    artifacts: [A.plan, A.rubric],
+      'Two documents, one university. Do they agree? Set an AI on the space between them, then chain a second AI to judge the first. AI as critic beats AI as author, and chained tools beat either alone. The briefing pack needs an honest page, and this is where it comes from. Plan stage: ACT.',
+    artifacts: [A.susPlan, A.aiStatement],
     steps: [
       {
         tier: 'core',
         estMinutes: 5,
         title: "Devil's advocate",
-        body: 'Upload the plan to Copilot chat in a NEW chat (fresh eyes, no accumulated politeness).',
+        body: 'Attach BOTH PDFs to Gemini in a NEW chat (fresh eyes, no accumulated politeness).',
         prompt:
-          'You are a hostile, hyper-rational risk auditor reviewing this [business plan] before a sceptical [investor] sees it. Hunt for unsupported claims, arithmetic that does not add up, internal contradictions, and missing regulatory or operational basics.\nReport your findings only as a table with these columns:\nVerbatim Quote | Identified Flaw | Category (Logic / Data / Assumption / Compliance) | Severity (1-10) | Fix\nRules:\n- Every row must begin with an exact quote from the plan.\n- Where the arithmetic is wrong, show the correct calculation in the Identified Flaw column.\n- Limit yourself to the 7 most severe flaws.\n- Critique only what is actually written. No compliments, no preamble: begin immediately with the table.',
+          'You are a hostile, hyper-rational [risk auditor] reviewing the two attached documents together: the university\'s [sustainability plan] and its [position statement on generative AI]. Your target is the space BETWEEN them: hunt for tensions, contradictions and silences where one document commits to something the other undermines or never mentions at all.\nReport your findings only as a table with these columns:\nVerbatim Quote | The Tension | Category | Severity (1-10) | The Fix\nRules:\n- Every row must begin with an exact quote from one of the documents, prefixed "Plan:" or "AI statement:". Where the flaw is that a document says nothing, write GAP: NOT ADDRESSED in that column and name the silent document.\n- Category must be exactly one of: Contradiction / Silence / Unfunded promise / Untestable claim / Governance.\n- Limit yourself to the 7 most severe findings, worst first.\n- Critique only what is written, or missing, in these two documents. No compliments, no preamble: begin immediately with the table.',
       },
       {
         tier: 'core',
         estMinutes: 4,
-        title: 'The post-mortem from the future',
+        title: 'The Demand First test',
         body:
-          'Stay in the same chat. Critique finds flaws; a post-mortem finds the ones that kill. Time-travel makes the AI commit to consequences.',
+          'Stay in the same chat. The sustainability plan contains its own decision hierarchy; make the AI statement climb it, one rung at a time.',
         prompt:
-          'It is [one year after launch] and [the Welsh cake stall] has failed. You are the forensic analyst writing the post-mortem.\nOpen with The Incident: two sentences on how it collapsed. Then give the top 5 root causes. For each one:\n- Root Cause: name it\n- Probability Score: how likely this was the primary killer. The five scores must sum to exactly 100%.\n- The Seed: the exact passage in this [business plan] that planted the failure, quoted verbatim\n- The Mechanism: step by step, how that passage became a real-world collapse\nGeneric causes ("poor communication", "bad timing") are banned: every cause must trace to something written in the plan.',
+          'ROLE: You are a strict, literal compliance assessor. Attached are the university\'s [sustainability plan], which defines the Demand First decision hierarchy, and its [position statement on generative AI].\nTASK: Apply the plan\'s own Demand First hierarchy to the AI statement, treating [adopting generative AI tools across the university] as the resource decision under review. Work one rung at a time, in the plan\'s order: 1 Avoid and minimise demand; 2 Source low-impact alternatives; 3 Ensure circularity and recovery; 4 Manage unavoidable impacts responsibly.\nFORMAT: a table with one row per rung and these columns:\nRung | What the Plan Requires (verbatim quote) | What the AI Statement Says (verbatim quote or NO EVIDENCE) | Verdict | Why\nRules:\n- Verdict must be exactly one of: PASSES / SILENT / CONFLICTS. No other wording.\n- Quotes must be word for word from the documents. If the AI statement contains nothing relevant to a rung, write NO EVIDENCE; do not paraphrase generosity into it.\n- End with exactly one summary line: can the AI statement survive its own university\'s decision hierarchy, yes or no, and the single rung that decides it.\nNo preamble; begin immediately with the table.',
       },
       {
         tier: 'core',
         estMinutes: 5,
-        title: 'Score it against the rubric',
-        body: 'Upload the rubric to the same chat. Structured assessment with cited evidence: the actual workplace skill.',
+        title: 'Chain it: the second opinion',
+        body:
+          'Copy the devil\'s advocate table. Open Copilot chat (m365copilot.com), attach BOTH PDFs, paste the prompt below, then paste the table under its marker line. The output of one tool has just become the input of another: that is chaining, and it is the difference between a party trick and a process.',
         prompt:
-          'Score this [business plan] against the attached rubric, 1 to 5 per criterion. Present the results as a table:\nCriterion | Score (1-5) | Verbatim Evidence | Why That Score\nThe Verbatim Evidence column must quote the exact sentence or figure from the plan. If the plan contains nothing relevant to a criterion, write NO EVIDENCE IN PLAN and score it accordingly; do not invent a justification. Finish with the three revisions that would most improve the total score, in priority order.',
+          'You are a neutral adjudicator. Attached are the two source documents: the [sustainability plan] and the [AI position statement]. Below the marker line is another AI\'s critique of them. Judge each row of that critique strictly against the documents\' own text, not against which claim sounds more confident.\nFORMAT: a table with these columns:\nCritique Row | Verdict | Verbatim Quote (supporting or refuting, with document named) | Why\nRules:\n- Verdict must be exactly one of: CONFIRMED / OVERSTATED / WRONG. No other wording, no diplomatic hedging.\n- Every verdict must rest on a verbatim quote from one of the documents. Where a critique row alleges a silence, quote the nearest passage that could have addressed it, or write NOTHING RELEVANT EXISTS.\n- After the table, list up to [three] material issues the critique missed entirely, each anchored to a verbatim quote or a named gap.\nNo preamble; begin immediately with the table.\nTHE CRITIQUE:',
       },
       {
         tier: 'core',
@@ -554,73 +450,60 @@ export const MISSIONS = [
         title: 'The 30-second check',
         check: true,
         body:
-          'Pick one rubric score. Open the plan. Does the cited sentence really say what the AI claims it says?',
+          'Pick one CONFIRMED row. Open the PDF. Does the quote exist, and does it mean what the verdict says it means?',
       },
       {
         tier: 'stretch',
         choice: 'A',
-        toolChip: 'Copilot + Gemini',
-        hook: 'For the sceptic: agreement between models is weak evidence.',
+        toolChip: 'Gemini',
+        hook: 'Time travel makes the critique commit.',
         estMinutes: 5,
-        title: 'Second opinion, adjudicated',
-        body:
-          'Run the same devil\'s advocate prompt in Gemini. Then start a fresh Copilot chat, attach the plan, and paste both critiques in. Disagreement is a flag worth chasing.',
+        title: 'Post-mortem from 2035',
         prompt:
-          'Here are two AI reviews of the same [business plan]. Adjudicate them using only the plan\'s own text as evidence.\nPresent the disagreements as a table:\nPoint of Disagreement | Review 1 Says | Review 2 Says | Verdict | Verbatim Evidence From the Plan\nJudge each verdict on what the plan actually says, not on which reviewer sounds more confident. Then finish with two short lists: flaws only Review 1 caught, and flaws only Review 2 caught.',
+          'It is [2035]. The university has missed the goals in its [sustainability plan] while its use of generative AI grew tenfold. You are the forensic analyst writing the post-mortem. Both documents, as published back in [2025], are attached.\nOpen with The Incident: two sentences on how the failure unfolded. Then give the top 5 causes. For each one:\n- Root Cause: name it\n- Probability Score: how likely this was the primary killer. The five scores must sum to exactly 100%.\n- The Seed: the exact passage, quoted verbatim from one of the two documents and prefixed "Plan:" or "AI statement:", where the failure was already visible in [2025]. A silence counts as a seed: quote the passage that should have addressed it and name what is missing.\n- The Mechanism: step by step, how that seed grew into the missed goals.\nGeneric causes ("lack of engagement", "insufficient funding") are banned unless tied to a specific quoted passage. No preamble; begin with The Incident.',
       },
       {
         tier: 'stretch',
         choice: 'B',
-        toolChip: 'Gemini Canvas',
-        hook: 'For the one who wants to watch the numbers fall over.',
-        estMinutes: 6,
-        title: 'Break the plan with sliders',
-        body:
-          'The plan claims £1,800 a week. Make the claim move. Build a scenario dashboard in Gemini Canvas and drag the sliders until the plan\'s own numbers fall over: it cannot survive its stated production ceiling.',
-        prompt:
-          'Build an interactive financial scenario dashboard for [a campus food stall] as a single-page web app. Sliders: price per cake (£1.50 to £4.00), cakes sold per day (50 to 600) and trading weeks per year (20 to 52); a fixed-costs input defaulting to £75 per week pitch fee. Show weekly revenue, weekly profit assuming 40 per cent ingredient costs, and annual profit. Highlight the daily-sales figure in red beyond 320 cakes per day, labelled "exceeds single-griddle capacity".',
-      },
-      {
-        tier: 'stretch',
-        choice: 'C',
-        toolChip: 'Copilot',
+        toolChip: 'Gemini + Copilot',
         hook: 'For your actual work.',
         estMinutes: 5,
-        title: 'Your own draft',
+        title: 'Your own pair',
         body:
-          'Now the transferable version: run the rubric prompt against any non-sensitive draft of your own, a proposal, a report, a course description. The rubric criteria transfer better than you expect.',
+          'Chain the same loop over [two documents your own team must reconcile]: a strategy and a budget, a policy and a job description, a plan and its progress report. Critique in one tool, adjudicate in the other, check one quote yourself.',
       },
     ],
     verdict:
-      'Ten flaws were planted in that plan. Find six and you have outperformed both the AI that wrote it and the man who submitted it unread. I can say this because the man was me.',
+      'You used one AI to mark another AI\'s homework and then checked the quotes yourself. In this job we call that assurance. In my old department we called it a turf war.',
   },
 
   {
     id: 'm5',
     code: '05',
     level: 3,
-    title: 'The Pitch',
-    pageTitle: 'Pitch Deck in Notebook Studio',
+    title: 'The Briefing',
+    pageTitle: 'The Team Briefing in Notebook Studio and Canvas',
     stretchTitle: 'CHOOSE YOUR NEXT MOVE',
     stretchIntro: 'Pick ONE path below; come back for another any time.',
-    tools: [TOOLS.notebook],
-    estMinutesCore: 13,
-    summary: 'Build the investor slide deck in Notebook Studio.',
+    tools: [TOOLS.notebook, TOOLS.canvas],
+    estMinutesCore: 17,
+    summary: 'Build the team briefing: deck, quiz and interactive helper.',
     toolInfo: {
-      feature: 'Tool: the Studio panel in Gemini Notebook (until recently NotebookLM). One button turns your sources into slides, quizzes and video.',
-      apps: [APPS.notebook],
+      feature:
+        'Tools: the Studio panel in Gemini Notebook turns your sources into slides, quizzes and video; Gemini Canvas builds the interactive piece.',
+      apps: [APPS.notebook, APPS.gemini],
     },
-    workflow: ['Load three sources', 'Generate the deck', 'Take your own quiz'],
+    workflow: ['Load the sources', 'Generate the deck', 'Quiz yourself', 'Make it interactive'],
     brief:
-      'Gravitas has twenty minutes to impress a griddle-franchise owner. Slides built from your sources beat slides built from a blank page. Load the evidence and let Studio do the deck; your own documents work just as well.',
-    artifacts: [A.plan, A.report, A.feedbackSummary],
+      'The finale: assemble the briefing pack the team actually receives. A deck grounded in the two documents, a quiz to prove it, and a working tool to hand round. Then the real question: how does this become how the team works every week, not what it did one Tuesday? Plan stage: LEAD.',
+    artifacts: [A.susPlan, A.aiStatement],
     steps: [
       {
         tier: 'core',
-        estMinutes: 4,
+        estMinutes: 3,
         title: 'Load the evidence',
         body:
-          'Create a new notebook and add the three files below as sources: the business plan, the market report and the feedback summary (all provided; substitute your own versions if you made them in earlier missions).',
+          'Create a new notebook and add both documents as sources. Made your own Mission 1 report or Mission 4 critique? Add those too (Export to Docs, or paste as a text source): the deck gets better with every source you feed it.',
       },
       {
         tier: 'core',
@@ -629,14 +512,14 @@ export const MISSIONS = [
         body:
           'In Studio, choose Slide Deck and paste the prompt below into its customise box before generating. Note: some university accounts do not offer deck generation; if you do not see it, export the notebook Report to Docs and ask Gemini Canvas to build the deck from it.',
         prompt:
-          'Create a ten-slide [investor pitch for the stall] from these sources only. One message per slide, each backed by a figure or quote from the sources; no invented numbers. Give the risks the sources raise one honest slide. Slide ten is "The Ask": [funding for a second griddle].',
+          'Create a ten-slide briefing for [my team in a university professional services department] from these sources only. One message per slide, each backed by a figure or quote traceable to a named source; no invented numbers or commitments. Cover, in order: what the sustainability plan commits the university to, including the four goals, the Demand First hierarchy and net zero Scope 1 and 2; what the AI position statement promises; exactly one honest slide stating plainly the gap between the two documents; then what both documents mean for [our team]\'s everyday work. If a critique table is among the sources, draw the gap slide\'s evidence from it first. Slide ten is titled "Monday: the first three changes": three concrete actions [our team] can start next week, each traceable to a source. If the sources cannot support a slide, say so on that slide rather than padding.',
       },
       {
         tier: 'core',
         estMinutes: 3,
         title: 'Take your own quiz',
         body:
-          'Generate a Quiz from the same sources and take it. If your pitch cannot survive its own quiz, the pitch is not ready, and better to learn that here than in the meeting.',
+          'Generate a Quiz from the same sources and take it. If your briefing cannot survive its own quiz, the briefing is not ready, and better to learn that here than in the team meeting.',
       },
       {
         tier: 'core',
@@ -645,6 +528,15 @@ export const MISSIONS = [
         check: true,
         body:
           'Pick one number on any slide and find it in the sources. Polished is not the same as true.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 5,
+        title: 'Make it interactive',
+        body:
+          'In Gemini, open Canvas from the tools menu and build the hand-round piece: a Demand First decision helper the team can use on its next purchase. Iterate in plain English: "bigger buttons", "add a Welsh language toggle". It fixes its own bugs if you tell it what is broken.',
+        prompt:
+          'You are a front-end engineer who ships. Build a single-page interactive [Demand First decision helper] for [a university team]. Flow: the user describes a [decision, e.g. buying new laptops or adopting an AI tool] in a short form, then walks the four rungs of the Demand First hierarchy one at a time, in order. Each rung is a card whose label is the rung\'s exact name, verbatim from the plan: 1 "Avoid and minimise demand", 2 "Source low-impact alternatives", 3 "Ensure circularity and recovery", 4 "Manage unavoidable impacts responsibly", with one plain-English question derived from that name; the user answers yes or no and can add a note per rung. At the end, show a verdict card restricted to exactly PROCEED, PROCEED WITH CHANGES or RETHINK, decided from the answers, plus a summary of the whole walk the user can copy into a briefing with one click. Rules: one HTML file with Tailwind CSS and vanilla JavaScript, no backend and no external data; embed one worked example decision so the tool looks alive from the first click. Do not jump straight to code. In order: 1) a short spec, under 100 words, saying what the tool does and how the verdict is decided; 2) a numbered build plan; 3) the complete app; 4) a self-check listing what you verified: the four rung labels match the wording above character for character, every button visibly does something, the copy button really copies, and there are no placeholder comments like "add logic here".',
       },
       {
         tier: 'stretch',
@@ -663,208 +555,20 @@ export const MISSIONS = [
         tier: 'stretch',
         choice: 'B',
         toolChip: 'Notebook Studio',
-        hook: 'For the pitch that plays itself.',
+        hook: 'For the briefing that plays itself.',
         estMinutes: 6,
-        title: 'The video pitch',
+        title: 'The video briefing',
         body:
           'Generate a Video Overview (generation queues for a few minutes; start it and do something else, which by now is a habit). Then open its revise (pencil) panel, type MODE: VIDEO, and paste the Cardiff design prompt from Path A beneath it.',
       },
     ],
     verdict:
-      'A deck grounded in evidence, on brand, and bilingual. The Vice-Chancellor once said my slides looked like a ransom note. Look at us now.',
+      'A briefing grounded in evidence, a quiz it survived, and a tool the team can press. The pack was the easy part. The real mission starts Monday: making this how the team works, not what it did once.',
   },
 
   {
     id: 'm6',
     code: '06',
-    level: 3,
-    title: 'The App',
-    pageTitle: 'Build an App with Gemini Canvas',
-    tools: [TOOLS.canvas],
-    estMinutesCore: 11,
-    summary: "Build the app that fixes the top complaint using Gemini Canvas.",
-    toolInfo: {
-      feature: 'Tool: Gemini Canvas. Describe an app in plain English; it builds the app.',
-      apps: [APPS.gemini],
-    },
-    workflow: ['Pick the target', 'Build it in Canvas', 'Show someone'],
-    brief:
-      'Mission 3 found the problem: queues and empty trays. Gravitas cannot code and no longer has an IT department, which he asks you not to repeat. Build the fix; better still, build one for a problem your own team has.',
-    artifacts: [A.themes],
-    steps: [
-      {
-        tier: 'core',
-        estMinutes: 2,
-        title: 'Pick the target',
-        body:
-          'Use the top complaint theme from YOUR Mission 3 analysis, or take one from the provided theme list. Fixing the biggest complaint is strategy; fixing an easy one is decoration.',
-      },
-      {
-        tier: 'core',
-        estMinutes: 7,
-        title: 'Build it',
-        body:
-          'In Gemini, pick Canvas from the tools under the message box, then use the prompt below. Yes, it produces a working app. No, you do not need to read the code. Iterate in plain English: "bigger buttons", "add a Welsh language toggle", "show a running total". It will show a short plan before the app appears; that is deliberate, and it is why the app works first time.',
-        prompt:
-          'You are a front-end engineer who ships. Build a single-page web app for [a campus Welsh cake stall] that fixes this customer problem: [long queues at lunchtime and selling out by 1pm]. Ideas if useful: [a pre-order form with pickup time slots, a live sold-out board, a Build-a-Box picker with a running price total]. Rules: one HTML file with Tailwind CSS and vanilla JavaScript, no backend; invent realistic fake data in the JavaScript so the app looks busy from the first click. Do not jump straight to code. In order: 1) a short spec, under 100 words, saying what the app does and where its data lives; 2) a numbered build plan; 3) the complete app; 4) a self-check confirming there are no placeholder comments like "add logic here", every button does something, and the fake data actually appears on screen. Friendly and fast.',
-      },
-      {
-        tier: 'core',
-        estMinutes: 2,
-        title: 'Show someone',
-        body:
-          'Turn to a neighbour (or a colleague on Monday) and let them press the buttons. Canvas can share the app as a link; keep real personal data out of prototypes.',
-      },
-      {
-        tier: 'stretch',
-        collapsed: true,
-        toolChip: 'Gemini',
-        hook: 'The honest final step.',
-        estMinutes: 4,
-        title: 'Grade your own build',
-        body: 'In Canvas, switch to the Code view and copy it all. Paste it into a new Gemini chat with the theme list, then run the prompt.',
-        prompt:
-          'You are a blunt product reviewer. Below is the list of complaint themes from the feedback data, then the full HTML of an app built to fix one of them. Grade the app in a single table with columns: Theme | Verdict (SOLVES / PARTLY HELPS / IGNORES) | Evidence. Evidence must be a short verbatim snippet from the HTML (a button label, heading or function name) proving the verdict, or the word NONE. No credit for good intentions: judge only what the code actually does. Under the table, one sentence naming what to build next. Begin with the table; no warm-up.',
-      },
-    ],
-    verdict:
-      'You built software that shortens a queue for griddle cakes. Somewhere my old job title weeps, and I have never been happier. Ship it.',
-  },
-  {
-    id: 'm8',
-    code: '07',
-    level: 2,
-    title: 'The Dashboard',
-    pageTitle: 'Build a Dashboard, Twice',
-    tools: [TOOLS.copilot, TOOLS.canvas],
-    estMinutesCore: 17,
-    summary: 'Same sales data: dashboard in Copilot, control room in Canvas.',
-    toolInfo: {
-      feature:
-        'Tool duel: Copilot builds the dashboard inside your spreadsheet; Gemini Canvas builds a control room around it. Same data, two philosophies.',
-      apps: [APPS.copilot, APPS.gemini],
-    },
-    workflow: ['Download the sales log', 'Dashboard in Copilot', 'Control room in Canvas', '30-second check', 'Compare'],
-    brief:
-      'A term of stall sales and the waste log, warts and all: something odd happened mid-term, and one number is a typo. Build a dashboard twice and see which tool tells you the truth faster. Any non-sensitive sales or activity data of your own works the same way.',
-    artifacts: [A.salesLog],
-    steps: [
-      {
-        tier: 'core',
-        estMinutes: 6,
-        title: 'The dashboard, in Copilot',
-        body:
-          'Upload the workbook to Copilot chat at m365copilot.com, or open it in Excel and use Copilot there if your licence includes it. In chat you get the charts and the written verdict; in Excel the dashboard lands on a real new sheet.',
-        prompt:
-          'Analyse this sales workbook (the [Sales] and [Waste log] sheets). Build me a dashboard (on a new sheet if you are in Excel, otherwise here) with four named sections.\nREVENUE: revenue by [product] and by week, plus the weekly revenue trend.\nWASTE: waste cost by reason, biggest first.\nMANAGER\'S FIVE: the five insights a manager should act on, one sentence each.\nDATA HEALTH: anything in the raw data that looks abnormal or mistyped, quoting the exact row or cell and one line on why you suspect it; check especially for weeks that break the normal pattern and single values that do not fit their column. If you genuinely find nothing wrong, write "NO ANOMALIES FOUND" rather than inventing something.',
-      },
-      {
-        tier: 'core',
-        estMinutes: 7,
-        title: 'The control room, in Gemini Canvas',
-        body:
-          'Now the same data as an app. In Gemini (gemini.google.com), open Canvas, attach the workbook and use the prompt below. It talks like a quality engineer, but the ideas are plain: status lamps, "is this dip real or just noise?", and "which few problems cause most of the cost". Press SIMULATE A BAD WEEK and watch the control chart catch it. If a button does nothing, tell Canvas so in plain English; it fixes its own bugs.',
-        prompt:
-          'Build an interactive sales control room for [a campus Welsh cake stall] from this workbook, as a single-page web app with a dark control-room theme. Across the top: an andon strip with one status lamp per [product] - green, amber or red based on the latest week against that product\'s own average. Charts: (1) a statistical process control chart of daily revenue with the mean and plus/minus three sigma limits calculated from the data, highlighting in red any point outside the limits or any run of eight points on one side of the mean, labelled "special cause: investigate"; (2) a Pareto chart of [waste reasons] by cost with a cumulative percentage line and the vital-few cutoff marked; (3) KPI cards that count up on load: revenue, units, average sale, and cost of poor quality (waste cost). Under every chart, write one plain-English sentence of insight that updates when I filter. Filters: date range and [product]. Add a SITUATION REPORT button that turns whatever is on screen into five bullet points I can paste into an email, and a Cymraeg/English toggle for the labels. Party tricks: a SIMULATE A BAD WEEK button that injects a realistic failure into the data so the control chart and lamps catch it live, and a REPLAY button that streams [the term] in day by day like a live feed. Single HTML file, Tailwind CSS and vanilla JavaScript, no backend: embed the data as JSON. Every number on screen must come from the embedded workbook data (or from the simulate button\'s clearly labelled injection), never invented. Before you declare it finished, self-check: every button visibly does something, there are no placeholder comments or unfinished code, and each chart is correctly bound to the embedded JSON.',
-      },
-      {
-        tier: 'core',
-        estMinutes: 2,
-        title: 'The 30-second check',
-        check: true,
-        body:
-          'Two things are hiding in this data: a fortnight that is genuinely abnormal, and one typed-wrong number. Did each dashboard find them? Open the raw sheet and confirm at least one of them yourself.',
-      },
-      {
-        tier: 'core',
-        estMinutes: 2,
-        title: 'Pick a winner',
-        body:
-          'Before you vote, press SITUATION REPORT: a screen turned into five email-ready bullets is the part you will reuse on Monday. Then the honest question: which of the two would you actually send to your manager? There is no right answer, and that is the lesson: Copilot upgraded your spreadsheet, Canvas replaced it.',
-      },
-      {
-        tier: 'stretch',
-        collapsed: true,
-        toolChip: 'Sheets + Canvas',
-        hook: 'The live version.',
-        estMinutes: 5,
-        title: 'Wire it to the sheet',
-        body:
-          'Upload the workbook to Google Sheets, open the Ask Gemini side panel and choose Create canvas with the same prompt. Built this way, the dashboard reads the live sheet: edits to the data update the control room.',
-      },
-    ],
-    verdict:
-      'Two dashboards before lunch, and one of them caught the griddle fortnight on its own. The quality department used to take a quarter to do that. Do not tell them.',
-  },
-  {
-    id: 'm9',
-    code: '08',
-    level: 2,
-    title: 'The Prompt Workshop',
-    pageTitle: 'Make AI Write Better Prompts Than You',
-    tools: ['Any AI chat'],
-    estMinutesCore: 13,
-    summary: 'Meta-prompting: make the AI critique, rewrite and design your prompts.',
-    toolInfo: {
-      feature:
-        'Tool: any AI chat. Meta-prompting: the fastest route to a great prompt is making the AI write it.',
-      apps: [APPS.copilot, APPS.gemini],
-    },
-    workflow: ['Run the lazy prompt', 'AI rewrites it', 'Compare the outputs', 'AI interviews you'],
-    brief:
-      'Gravitas needs a poster for the stall\'s reopening, and his prompt, in full, is "write a poster". Do not fix the prompt yourself: make the AI fix it. This is the skill that improves every other skill on this site.',
-    artifacts: [],
-    steps: [
-      {
-        tier: 'core',
-        estMinutes: 2,
-        title: 'Run the lazy prompt',
-        body: 'Run it exactly as written. Keep the output; it is the before photo.',
-        prompt: 'Write a poster for [the reopening of a campus Welsh cake stall].',
-      },
-      {
-        tier: 'core',
-        estMinutes: 4,
-        title: 'Make the AI rewrite the prompt',
-        body: 'In a NEW chat (a fresh one, so the critic has no stake in the first attempt), hand the lazy prompt over for demolition.',
-        prompt:
-          'Critique this prompt, then rewrite it to be far more effective: "Write a poster for [the reopening of a campus Welsh cake stall]." Your rewrite must specify: the role the AI should take, the audience it is writing for, the tone, the constraints (size, word limits, what must be included), and the exact output format. The rewritten prompt must also end with a one-line self-check telling the AI to confirm it has met every constraint before answering. Finish with two bullets on why your version will produce better work.',
-      },
-      {
-        tier: 'core',
-        estMinutes: 3,
-        title: 'The 30-second check',
-        check: true,
-        body:
-          'Run the rewritten prompt in the same chat, then compare the two outputs (two browser tabs works). Which one would you actually put on a wall? The gap between them is the prompt, not the model.',
-      },
-      {
-        tier: 'core',
-        estMinutes: 4,
-        title: 'Let the AI interview you',
-        body:
-          'Now the transferable version, on your real work. The AI asks the questions you did not know your prompt needed to answer.',
-        prompt:
-          'I need a prompt for this task: [writing the monthly update email for my team]. Interview me first: ask up to five questions, one at a time, that will make the prompt better, and wait for my answers. Then write the final prompt in a copyable block, ending with a short self-check for the AI to run before answering, plus one line on when I should reuse it.',
-      },
-      {
-        tier: 'stretch',
-        collapsed: true,
-        toolChip: 'Any AI chat',
-        hook: 'Turn it into a standing habit.',
-        estMinutes: 2,
-        title: 'The IMPROVE: trick',
-        body: 'Paste this once at the start of a chat and you have a prompt editor on call.',
-        prompt:
-          'From now on in this chat, whenever I send a message starting with IMPROVE:, do not answer the prompt that follows. Instead return a stronger version of that prompt and one sentence on what you changed and why.',
-      },
-    ],
-    verdict:
-      'You made the machine improve your instructions to the machine. Recursion, as a productivity gain. My old department would have formed a working group.',
-  },
-  {
-    id: 'm7',
-    code: '09',
     level: 1,
     title: 'Useful Prompts (for after the workshop)',
     pageTitle: 'Prompts to Take Back to Work',
@@ -877,7 +581,7 @@ export const MISSIONS = [
       apps: [APPS.gemini, APPS.notebook, APPS.copilot],
     },
     brief:
-      'A good prompt is a reusable asset, not a one-off. These are the prompts behind the missions with the Welsh cakes stripped out: steal them, swap the brackets, keep them somewhere you can find on a Tuesday.',
+      'A good prompt is a reusable asset, not a one-off. These are the prompts behind the missions with the policies stripped out: steal them, swap the brackets, keep them somewhere you can find on a Tuesday.',
     artifacts: [],
     stretchTitle: 'THE PROMPTS',
     stretchIntro: 'Open one, copy it, swap the [brackets].',
@@ -910,7 +614,7 @@ export const MISSIONS = [
         estMinutes: 2,
         title: 'Let AI write your Deep Research brief',
         prompt:
-          'ROLE: You are a Strategic Decision Architect.\nTASK: Draft a strictly scoped, execution-ready Deep Research brief to inform this decision: [WHAT YOU NEED TO DECIDE].\nFORMAT, with these sections:\n- Core Decision Vector: the binary or categorical choice this research must inform\n- Primary Intelligence Requirements: exactly 3-5 hyper-specific, mutually exclusive questions the research must answer\n- Temporal Scope: the exact timeframe that matters\n- Evidence Hierarchy: preferred sources (peer-reviewed journals, audited accounts, official regulatory guidance) and source categories to ignore (opinion blogs, social media, marketing copy)\n- Output Artifact: the exact format the finished research should deliver\nCONSTRAINTS: Do not run the research yourself; output only the brief. The brief must command the researcher to cite every source with its exact URL and extraction date. Show me the brief for editing before I run it.',
+          'ROLE: You are a Strategic Decision Architect.\nTASK: Draft a strictly scoped, execution-ready Deep Research brief to inform this decision: [WHAT YOU NEED TO DECIDE].\nFORMAT, with these sections:\n- Core Decision Vector: the binary or categorical choice this research must inform\n- Primary Intelligence Requirements: exactly 3-5 hyper-specific, mutually exclusive questions the research must answer\n- Temporal Scope: the exact timeframe that matters\n- Evidence Hierarchy: preferred sources (peer-reviewed journals, audited accounts, official regulatory guidance) and source categories to ignore (opinion blogs, social media, marketing copy)\n- Output Artefact: the exact format the finished research should deliver\nCONSTRAINTS: Do not run the research yourself; output only the brief. The brief must command the researcher to cite every source with its exact URL and extraction date. Show me the brief for editing before I run it.',
       },
       {
         tier: 'stretch',
@@ -931,36 +635,6 @@ export const MISSIONS = [
         title: 'The IMPROVE: trick',
         prompt:
           'From now on in this chat, whenever I send a message starting with IMPROVE:, do not answer the prompt that follows. Instead return a stronger version of that prompt and one sentence on what you changed and why.',
-      },
-      {
-        tier: 'stretch',
-        collapsed: true,
-        toolChip: 'Gemini',
-        hook: 'Make it compute, not guess.',
-        estMinutes: 2,
-        title: 'Verified spreadsheet analysis',
-        prompt:
-          'Act as a careful data analyst. Summarise this spreadsheet. Use code (Python) for every figure; if something cannot be computed from the file itself, write DATA UNAVAILABLE rather than estimating it. Report, in this order:\n1. Shape: rows, columns and what the data covers.\n2. Key numbers: totals, averages, highest and lowest, each computed by code.\n3. Anomalies: every missing value, outlier or suspect entry, each with its row reference. If there are none, write NONE FOUND rather than staying silent.\n4. Three insights in plain business English, each tied to a number above.',
-      },
-      {
-        tier: 'stretch',
-        collapsed: true,
-        toolChip: 'Gemini',
-        hook: 'Audit the file before the file embarrasses you.',
-        estMinutes: 2,
-        title: 'QA an Excel file with code',
-        prompt:
-          'ROLE: You are a meticulous data quality auditor.\nTASK: Audit this spreadsheet using code (Python) for every check; nothing judged by eye.\nFORMAT: one table, columns: Check | Result | Rows affected (row references) | Severity (1-5) | Suggested fix. Run these checks in order:\n1. Structure: row and column counts, column types, header problems (blank, duplicate or merged headers).\n2. Completeness: missing or blank values per column, with counts.\n3. Uniqueness: duplicate rows and duplicate IDs. Flag them, do not delete: similar rows can be legitimate.\n4. Validity: values that break their column\'s rules (dates out of range, negative quantities, text in number columns, categories outside the expected set).\n5. Consistency: mixed formats within one column (date styles, units, spellings, capitalisation).\n6. Outliers: values statistically far from their column\'s norm, each with its row reference.\nCONSTRAINTS: every finding must be computed by code and carry its row reference. If a check finds nothing, write CLEAN in its row rather than staying silent. If a check cannot run on this file, write NOT APPLICABLE and why. Do not invent issues and do not alter the data. Finish with one line: is this file fit for analysis as it stands, YES or NO, and the single most urgent fix.',
-      },
-      {
-        tier: 'stretch',
-        collapsed: true,
-        toolChip: 'Gemini',
-        hook: 'Nobody has time to read a hundred of them.',
-        estMinutes: 2,
-        title: 'Find the themes in free-text comments',
-        prompt:
-          'Categorise every free-text comment in this file into themes you derive from the data itself, not a preset list. Answer as a table, ranked by count, with columns: Theme | Count | % of comments | Verbatim quote | Row reference. Rules: assign each comment to exactly one theme; the counts must sum to the number of comments; quotes must be word for word from the file. Below the table, list any comments you could not place, with why. Finish with one line: if I could fix only one thing, what does the data say it should be, and how many comments back it?',
       },
       {
         tier: 'stretch',
@@ -995,22 +669,22 @@ export const MISSIONS = [
       {
         tier: 'stretch',
         collapsed: true,
+        toolChip: 'Any AI chat',
+        hook: 'One AI critiques, another judges the critique.',
+        estMinutes: 2,
+        title: 'Chain a second opinion',
+        prompt:
+          'You are a neutral adjudicator. Attached is [a document]; below is another AI\'s critique of it. Judge each point in the critique strictly against the document\'s own text, not against what sounds plausible. Answer as a table with columns:\nCritique Point | Verdict (CONFIRMED / OVERSTATED / WRONG) | Verbatim Quote From the Document | Why (one sentence)\nRules: every verdict must rest on an exact quote from the document; if the document contains nothing relevant to a point, write NO RELEVANT TEXT in the quote column rather than inventing one. After the table, list up to three material issues the critique missed, each with its own verbatim quote; if there are none, write NONE MISSED. End with one line: the single change to the document most worth making. Begin immediately with the table.\nTHE CRITIQUE:',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
         toolChip: 'Gemini Notebook',
         hook: 'Answers only from files you have added to a notebook, with receipts.',
         estMinutes: 2,
         title: 'Grounded answers only',
         prompt:
           'ROLE: You are a strict, literal Data Extraction Engine.\nTASK: Answer the QUESTION using ABSOLUTELY NO OUTSIDE KNOWLEDGE; rely exclusively on the provided sources.\nQUESTION: [YOUR QUESTION]\nCONSTRAINTS:\n- Every claim, fact or metric must carry an inline citation naming the exact source and passage.\n- CRITICAL HARD-FAIL: if the sources do not contain enough to answer fully and accurately, output the exact phrase INSUFFICIENT_DATA.\n- Do not guess, infer or synthesise outside knowledge under any circumstances.\n- No conversational filler; do not attempt to be helpful if the data is absent.',
-      },
-      {
-        tier: 'stretch',
-        collapsed: true,
-        toolChip: 'Gemini Canvas',
-        hook: 'Working software from a sentence.',
-        estMinutes: 2,
-        title: 'Build a small tool',
-        prompt:
-          'ROLE: You are a Staff Front-End Engineer.\nTASK: Create a robust single-page web application that solves this problem: [DESCRIBE THE PROBLEM].\nCONSTRAINTS: one HTML file with Tailwind CSS and vanilla JavaScript, no backend; generate realistic mock data in the JavaScript so the app looks fully populated; fast, responsive and free of console errors.\nWORKFLOW: you are prohibited from outputting code immediately. In order:\n1. Architecture Spec: component structure and state approach (max 150 words).\n2. Action Plan: a numbered implementation plan.\n3. Implementation: the complete, finalised code in a single html block.\n4. Self-Check: confirm there are no placeholder comments and all mock data is bound to the interface.',
       },
       {
         tier: 'stretch',
@@ -1024,7 +698,7 @@ export const MISSIONS = [
       },
     ],
     verdict:
-      'You are leaving with my prompts in your pocket. Stealing from the founder: the first sound business decision anyone has made all day.',
+      'You are leaving with my prompts in your pocket. Stealing from your new line manager in week one: exactly the initiative this team needs.',
   },
 
 ];

@@ -15,26 +15,30 @@ export default function MissionGallery({ player, progress }) {
             <span className="directive__label">WHY YOU&rsquo;RE HERE</span>
           </div>
           <p className="directive__text">
-            Hey {player.name}, welcome. The premise: I have left IT Services to open a Welsh
-            cake stall on campus (flour, butter, sugar, currants: the only supply chain I
-            still trust), and you are going to help me build the business using AI. I have
-            the recipe and I have the griddle. How hard can the rest possibly be?
+            Hey {player.name}, I&rsquo;m Chris, your new line manager. The university has
+            moved me into the Sustainability Engagement job, and two documents landed on my
+            desk in week one: a ten-year sustainability plan and an AI position statement.
+            I have volunteered our team to work out what we actually do about them. Your
+            job, over the missions below: build the briefing pack, the bundle we send the
+            rest of the team, an infographic that explains the plan, a slide deck, a
+            working decision tool, all grounded in the two documents. AI does the heavy
+            lifting; you check its work. One mission at a time.
           </p>
-          <span className="directive__sig">— Christopher Gravitas, Founder, Chief Executive and only employee</span>
+          <span className="directive__sig">— Chris Gravitas, Sustainability Engagement Officer (and your line manager, apparently)</span>
         </div>
         <img
           className="intro-row__image"
           src={`${BASE}${HERO_IMAGE}`}
-          alt="Cartoon of the campus Welsh cake stall: two founders at the griddle under a dragon canopy, a sign reading Campus Welsh Cakes £2, AI-powered?, and a student consulting an AI business plan on a tablet"
+          alt="Cartoon of The Matts at a campus stall under a dragon canopy, handing out AI policy documents (Campus AI Position Statement, AI Use Policy, Ethical AI Guidelines) to a staff member holding a tablet, beside a sign reading Campus AI Policy Documents and Research"
         />
       </div>
 
       <div className="evidence-section__header">
-        <h2 className="evidence-section__title">BUILD A BUSINESS WITH AI AS YOUR ASSISTANT</h2>
+        <h2 className="evidence-section__title">BUILD YOUR TEAM&rsquo;S BRIEFING PACK WITH AI AS YOUR ASSISTANT</h2>
         {completedCount === MISSIONS.length ? (
           <p className="mission-progress-line mission-progress-line--done">
-            All {MISSIONS.length} complete. &ldquo;The stall is in better hands than mine,
-            which the stall and I both suspected.&rdquo; &mdash; C.G.
+            All {MISSIONS.length} complete. &ldquo;The briefing pack exists. The real
+            mission is making this how the team works every week.&rdquo; &mdash; C.G.
           </p>
         ) : (
           <p className="mission-progress-line">

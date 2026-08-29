@@ -32,10 +32,10 @@ export default function SplashScreen({ onStart }) {
         {/* Headline */}
         <h1 className="splash-headline">AI in the Workplace Part 2</h1>
         <p className="splash-deck">
-          Three Tools, Skills You Will Use on Monday
+          Two Real Policies, Five Missions, Skills You Will Use on Monday
         </p>
         <p className="splash-byline">
-          Training officer: <strong>Christopher Gravitas</strong>, IT Services
+          Your new line manager: <strong>Chris Gravitas</strong>, Sustainability Engagement Officer
         </p>
 
         {/* 3-step instructions */}
@@ -59,7 +59,7 @@ export default function SplashScreen({ onStart }) {
           <li className="splash-step">
             <span className="splash-step__num">2</span>
             <span className="splash-step__text">
-              <strong>Pick a mission</strong> and download its materials. Every file is fictional and safe to upload.
+              <strong>Pick a mission</strong> and download its materials. Every file is a public document or teaching material, safe to upload.
             </span>
           </li>
         </ol>
