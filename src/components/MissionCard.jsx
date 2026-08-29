@@ -23,7 +23,10 @@ export default function MissionCard({ mission, completed }) {
         </div>
       ) : (
         <div className="mission-card__panel">
-          <span className="mission-card__big-code">{mission.code}</span>
+          <span className="mission-card__big-code">
+            {mission.code}
+            {mission.stage && <span className="mission-card__stage">{mission.stage}</span>}
+          </span>
           <span className="mission-card__summary">{mission.summary}</span>
         </div>
       )}

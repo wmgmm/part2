@@ -21,8 +21,8 @@ export default function MissionGallery({ player, progress }) {
             I have volunteered our team to work out what we actually do about them. Your
             job, over the missions below: build the briefing pack, the bundle we send the
             rest of the team, an infographic that explains the plan, a slide deck, a
-            working decision tool, all grounded in the two documents. AI does the heavy
-            lifting; you check its work. One mission at a time.
+            working decision tool, all grounded in the two documents. Remember Responsible
+            AI: this is your work, and AI is your assistant. One mission at a time.
           </p>
           <span className="directive__sig">— Chris Gravitas, Sustainability Engagement Officer (and your line manager, apparently)</span>
         </div>
@@ -34,7 +34,7 @@ export default function MissionGallery({ player, progress }) {
       </div>
 
       <div className="evidence-section__header">
-        <h2 className="evidence-section__title">BUILD YOUR TEAM&rsquo;S BRIEFING PACK WITH AI AS YOUR ASSISTANT</h2>
+        <h2 className="evidence-section__title">BUILD YOUR TEAM&rsquo;S BRIEFING PACK</h2>
         {completedCount === MISSIONS.length ? (
           <p className="mission-progress-line mission-progress-line--done">
             All {MISSIONS.length} complete. &ldquo;The briefing pack exists. The real
@@ -56,6 +56,15 @@ export default function MissionGallery({ player, progress }) {
           />
         ))}
       </div>
+
+      <button
+        type="button"
+        className="library-strip"
+        onClick={() => { window.location.hash = '#/prompts'; }}
+      >
+        <span className="library-strip__label">USEFUL PROMPTS (FOR AFTER THE WORKSHOP) →</span>
+        <span className="library-strip__line">The mission prompts stripped generic: steal them, swap the [brackets].</span>
+      </button>
 
       <div className="governance-callout governance-callout--discreet">
         <p>

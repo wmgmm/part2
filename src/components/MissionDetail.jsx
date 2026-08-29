@@ -134,7 +134,7 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
       <a href="#/" className="mission-detail__back">← ALL MISSIONS</a>
 
       <header className="mission-detail__header">
-        <p className="eyebrow">MISSION {mission.code}</p>
+        <p className="eyebrow">{mission.code ? `MISSION ${mission.code}` : 'THE PROMPT LIBRARY'}</p>
         <div className="mission-head-row">
           <div className="mission-head-row__text">
             <h2 className="mission-detail__title">{mission.pageTitle || mission.title}</h2>
@@ -182,7 +182,7 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
 
       {core.length > 0 && (
         <>
-          <h3 className="mission-detail__section">TODAY&rsquo;S PATH</h3>
+          <h3 className="mission-detail__section">INSTRUCTIONS</h3>
           <ol className="mission-steps">
             {core.map((step, i) => (
               <Step key={i} step={step} number={i + 1} lane={lane} />
@@ -194,7 +194,7 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
       {stretch.length > 0 && (
         <>
           <h3 className="mission-detail__section mission-detail__section--stretch">
-            {mission.stretchTitle || 'GO FURTHER (OPTIONAL)'}
+            {mission.stretchTitle || 'HINTS AND TIPS (OPTIONAL)'}
           </h3>
           {mission.stretchIntro && (
             <p className="mission-brief">{mission.stretchIntro}</p>

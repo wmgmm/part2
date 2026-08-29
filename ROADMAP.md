@@ -6,7 +6,7 @@ Status: **approved 2026-08-29, in progress.** This file is the working plan for 
 
 The workshop pivots from the fictional Welsh cake venture to two real Cardiff documents. Staff practise the same AI skills, but every output is something they could genuinely take back to their team. The narrative arc is the point of the day: scattered individual experiments, then shared learning, then embedding AI-enabled ways of working into team processes. That arc happens to be the sustainability plan's own change framework (Discover, Understand, Act, Lead), so the workshop practises AI on the plan while quietly following it.
 
-There is also a real, deliberate teaching gap: the AI position statement says nothing about AI's environmental footprint, while the sustainability plan demands Demand First thinking about every resource decision. The missions surface that gap honestly (Mission 2 hits INSUFFICIENT_DATA on it; Mission 4 makes it the star catch).
+There is also a real, deliberate teaching gap: the AI position statement says nothing about AI's environmental footprint, while the sustainability plan demands Demand First thinking about every resource decision. The missions surface that gap honestly (Mission 2 hits INSUFFICIENT_DATA on it; Mission 5 makes it the star catch).
 
 ## The two anchor documents
 
@@ -25,10 +25,11 @@ Backup artifact: `Policy_Landscape_Report.pdf`, one real Deep Research run of th
 |---|---|---|---|
 | 01 | The Landscape: research the policy landscape with Deep Research (one brief covering AI statements AND net-zero across UK universities) | Gemini Deep Research | Discover |
 | 02 | The Documents: question both policies in Gemini Notebook (grounded answers, mind map, the INSUFFICIENT_DATA moment) | Gemini Notebook | Understand |
-| 03 | The Infographic: explain the plan to staff; your prompt first, then ours | Gemini | Act |
-| 04 | The Gap: critique the policies, then chain the tools (Gemini critique, Copilot adjudicates) | Gemini + Copilot | Act |
-| 05 | The Briefing: team briefing deck in Notebook Studio, interactive Demand First helper in Canvas | Gemini Notebook + Canvas | Lead |
-| 06 | Useful Prompts (for after the workshop): the take-home library, 11 rows | Any AI chat | Take-home |
+| 03 | The Commitments: turn the plan into a data table (Notebook Data Tables), export, audit it with code | Gemini Notebook + Gemini | Understand |
+| 04 | The Infographic: explain the plan to staff; your prompt first, then ours | Gemini | Act |
+| 05 | The Post-Mortem: predict the failure (prospective hindsight), then chain Copilot to adjudicate | Gemini + Copilot | Act |
+| 06 | The Briefing: team briefing deck in Notebook Studio, interactive Demand First helper in Canvas | Gemini Notebook + Canvas | Lead |
+| - | Useful Prompts strip (not a mission, below the grid, #/prompts): the take-home library, 14 rows | Any AI chat | Take-home |
 
 Narrative: Christopher Gravitas is back. He sold the Welsh cake stall to the students' union at the peak of the market (freshers' week) and has been rehired as Sustainability Engagement Officer. Two documents landed on his desk in week one; he has volunteered your team to work out what to do about them. Each mission builds one piece of the team briefing pack.
 
@@ -81,7 +82,7 @@ Narrative: Christopher Gravitas is back. He sold the Welsh cake stall to the stu
 3. **10.7 MB plan PDF**: ship as-is (default) or recompress?
 4. **Backup landscape report**: run the final M1 brief once on your account for a genuine artifact? (Stand-in note ships until then.)
 5. **Gravitas lines**: approve "Sustainability Engagement Officer" and the freshers-week stall sale, or supply your own.
-6. **Card 06 pruning**: confirm dropping the four spreadsheet/data rows (verified spreadsheet analysis, Excel QA, find-the-themes, build-a-small-tool). Cheap to restore.
+6. ~~Card 06 pruning~~ RESOLVED: the spreadsheet pair (verified analysis, Excel QA) returned with the new data mission; the library strip holds 14 rows.
 
 ## Out of scope
 
@@ -91,3 +92,4 @@ Legacy escaperoom images in `public/placeholders/`, Part 1 guide files, leaderbo
 
 - 2026-08-29: Pivot approved. Roadmap written; Phase 1 begun.
 - 2026-08-29 (later): Phases 1-5 complete in one sitting. Artifacts generated and swapped; missions.js rewritten (six cards, prompts to the expert standard via three subagents, QA pass clean bar one spelling fix); gallery memo, splash, guides and docs updated; Matt supplied the new hero illustration (policy_stall.webp, wired in). Build green; ?doctor all 7 files 200; browser walk of gallery, 01, 04, 05, 06 clean; no console errors. Everything uncommitted, awaiting Matt.
+- 2026-08-30: New Mission 03 The Commitments (Notebook Data Tables + code audit); missions renumbered 04-06; Useful Prompts moved out of the grid to a strip + #/prompts. Also this week: Mission 1 slimmed to two core steps, Mission 5 recentred on the post-mortem method, style-capture prompt added, story made self-contained (Chris, your new line manager), stage words on cards, artifact-card alignment fix.

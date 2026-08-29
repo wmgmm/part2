@@ -14,11 +14,11 @@ No linter or test runner is configured.
 
 ## What this is
 
-The AI in the Workplace Part 2 workshop website for Cardiff University staff: six cards (five guided missions plus a "Useful Prompts" library) anchored on two real documents (Cardiff's Sustainable Futures plan 2025-35 and a university AI position statement), teaching Gemini Deep Research, Gemini Notebook, Gemini Canvas and Copilot, including an explicit tool-chaining mission (04). Narrative (self-contained, no escaperoom backstory): Chris Gravitas, the participants' new line manager in the Sustainability Engagement job, volunteers the team to build the briefing pack (infographic, deck, decision tool). The pivot roadmap is `ROADMAP.md`; the build log lives in `tasks/todo.md`.
+The AI in the Workplace Part 2 workshop website for Cardiff University staff: six guided missions plus a "Useful Prompts" library strip anchored on two real documents (Cardiff's Sustainable Futures plan 2025-35 and a university AI position statement), teaching Gemini Deep Research, Gemini Notebook, Gemini Canvas and Copilot, including an explicit tool-chaining mission (05) and a Notebook Data Tables data mission (03). Narrative (self-contained, no escaperoom backstory): Chris Gravitas, the participants' new line manager in the Sustainability Engagement job, volunteers the team to build the briefing pack (infographic, deck, decision tool). The pivot roadmap is `ROADMAP.md`; the build log lives in `tasks/todo.md`.
 
 ## Architecture
 
-Single-page React app (Vite, framer-motion). No router library. `App.jsx` renders SPLASH (login) until a user exists, then the mission gallery or a mission page selected by hash routing (`#/m1` … `#/m6`, via a `hashchange` listener that ignores plain anchors like `#main-content`; unknown routes fall back to the gallery). URL modes: `?admin`, `?leaderboard`, and `?doctor` (facilitator preflight, `DoctorPanel`).
+Single-page React app (Vite, framer-motion). No router library. `App.jsx` renders SPLASH (login) until a user exists, then the mission gallery or a mission page selected by hash routing (`#/m1` … `#/m6` plus `#/prompts` for the library, via a `hashchange` listener that ignores plain anchors like `#main-content`; unknown routes fall back to the gallery). The library lives in the `PROMPT_LIBRARY` export in `missions.js`, outside the `MISSIONS` array. URL modes: `?admin`, `?leaderboard`, and `?doctor` (facilitator preflight, `DoctorPanel`).
 
 **All prompts follow `docs/PROMPT_GUIDANCE_2026.md`** (the expert prompt-engineering standard: RTF structure, answer shaping, failure states, verbatim grounding). Consult it before editing any prompt.
 

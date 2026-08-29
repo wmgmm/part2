@@ -153,16 +153,17 @@ const A = {
     note: "A university AI position statement (currently Cardiff Met's, standing in until Cardiff publishes its own). Public: safe to upload.",
   },
   landscapeReport: {
-    label: 'BACKUP: THE LANDSCAPE REPORT',
+    label: 'BACKUP REPORT (YOU MIGHT NOT NEED IT)',
     filename: 'Policy_Landscape_Report.pdf',
     downloadPath: `${BASE}placeholders/Policy_Landscape_Report.pdf`,
-    note: 'Only needed if your Deep Research run fails or you cannot wait.',
+    note: 'A ready-made copy of the report. Skip it unless your run fails.',
   },
 };
 
 export const MISSIONS = [
   {
     id: 'm1',
+    stage: 'Discover',
     code: '01',
     level: 1,
     title: 'The Landscape',
@@ -170,15 +171,15 @@ export const MISSIONS = [
     tools: [TOOLS.deepResearch],
     accentType: 'stamp-red',
     accentText: 'START HERE',
-    estMinutesCore: 12,
+    estMinutesCore: 5,
     summary: 'Start the policy landscape research with Deep Research.',
     toolInfo: {
       feature: 'Tool: Gemini Deep Research. A research agent that does your Google searches and takes five to fifteen minutes to run.',
       apps: [APPS.gemini],
     },
-    workflow: ['Paste the brief', 'Edit the plan', 'Make it personal', 'Skim like an executive'],
+    workflow: ['Paste the brief', 'Edit the plan', 'Start and walk away'],
     brief:
-      'Two policies have landed on Chris\'s desk: a ten-year sustainability plan and an AI position statement. Before reading either, find out what every other UK university is saying about AI and about net zero, and where Cardiff sits. Start the run, walk away, come back. Prefer your own topic? Rewrite the brief. Plan stage: DISCOVER.',
+      'Two policies have landed on Chris\'s desk: a ten-year sustainability plan and an AI position statement. Before reading either, find out what every other UK university is saying about AI and about Net Zero, and where Cardiff sits. Start the Deep Research running.',
     artifacts: [A.landscapeReport],
     steps: [
       {
@@ -194,35 +195,9 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 3,
-        title: 'Edit the plan. Then walk away',
+        title: 'Edit the plan, start the research, walk away',
         body:
-          'Before it runs, Gemini shows you its research plan. EDIT IT: tell it what to cut and what to add, then press Start research. That edit is the entire skill.',
-      },
-      {
-        tier: 'core',
-        estMinutes: 3,
-        title: 'While it runs: make it personal',
-        body:
-          'The research is grinding away, so spend the wait on yourself. Open a NEW chat and run the prompt below with your real job in the brackets. The answer is your personal syllabus for the rest of this site.',
-        prompt:
-          'I work as [a project officer] in [a university professional services team]. Map three AI tools onto my actual job: Gemini Deep Research (long, sourced research runs), Gemini Notebook (answers grounded only in files I give it, plus mind maps, decks and audio) and Gemini Canvas (builds small working web apps from a description).\nFORMAT: for each tool, exactly three lines:\n- The task: one task from my role it would genuinely improve.\n- The prompt: an example prompt I could run tomorrow, with swap points in [square brackets].\n- Building it in: one line on where it fits in my week.\nCONSTRAINTS: no filler, no generic advice; every example must be specific to the role I named. If a tool has no honest use for my role, say NO STRONG FIT and why rather than forcing one. Finish with one line: the single tool I should try first, and why.',
-      },
-      {
-        tier: 'core',
-        estMinutes: 3,
-        title: 'Return and skim like an executive',
-        body:
-          'When the report is done, do not read it top to bottom. Ask how it changes your team\'s decisions.',
-        prompt:
-          'From this report only, give me a three-column table with the columns Finding, So We Should, Source. Exactly five rows, one sentence per cell, naming the report\'s cited source in each row. Below the table, one line: the single finding most likely to change [our team]\'s behaviour, and why. No preamble.',
-      },
-      {
-        tier: 'core',
-        estMinutes: 1,
-        title: 'The 30-second check',
-        check: true,
-        body:
-          'Pick one of the five findings and click through to its source. Does the source actually say that? Deep Research cites well, not perfectly, and the habit starts here.',
+          'Before it runs, Gemini shows you its research plan. A quick edit improves the report, though you can skip it: tell it what to cut and what to add. Then press Start research and walk away. That edit is the skill worth taking home.',
       },
       {
         tier: 'stretch',
@@ -241,6 +216,7 @@ export const MISSIONS = [
 
   {
     id: 'm2',
+    stage: 'Understand',
     code: '02',
     level: 2,
     title: 'The Documents',
@@ -288,7 +264,7 @@ export const MISSIONS = [
         title: 'The 30-second check',
         check: true,
         body:
-          'Click one citation. Does the passage actually support the claim? Grounded does not mean gospel; it means checkable. So check. And if one of your questions drew an INSUFFICIENT_DATA, remember which: Mission 4 pays it off.',
+          'Click one citation. Does the passage actually support the claim? Grounded does not mean gospel; it means checkable. So check. And if one of your questions drew an INSUFFICIENT_DATA, remember which: Mission 5 pays it off.',
       },
       {
         tier: 'stretch',
@@ -319,7 +295,91 @@ export const MISSIONS = [
 
   {
     id: 'm3',
+    stage: 'Understand',
     code: '03',
+    level: 2,
+    title: 'The Commitments',
+    pageTitle: 'Turn the Plan into Data with Notebook Data Tables',
+    stretchTitle: 'CHOOSE YOUR NEXT MOVE',
+    stretchIntro: 'Pick ONE path below; come back for another any time.',
+    tools: [TOOLS.notebook, TOOLS.gemini],
+    estMinutesCore: 12,
+    summary: 'Turn the plan into a data table, then audit it with code.',
+    toolInfo: {
+      feature:
+        'Tools: Data Tables in the Gemini Notebook Studio panel turn documents into structured tables; Gemini then audits the exported file with code.',
+      apps: [APPS.notebook, APPS.gemini],
+    },
+    workflow: ['Generate the data table', 'Export and download', 'Audit it with code', '30-second check'],
+    brief:
+      'A plan is promises in prose. Pull every commitment out into a data table, export it, and audit it with code: how many have a date, a number, an owner? The answer belongs in the briefing pack. Plan stage: UNDERSTAND.',
+    artifacts: [A.susPlan, A.aiStatement],
+    steps: [
+      {
+        tier: 'core',
+        estMinutes: 4,
+        title: 'Generate the data table',
+        body:
+          'In your Mission 2 notebook (or a new one with both PDFs added), open the Studio panel, choose Data Table, and paste the prompt below into the describe box. Watch prose become rows.',
+        promptLabel: 'THE TABLE SPEC',
+        prompt:
+          'Extract every commitment the university makes in these sources into a data table. A commitment is any sentence saying the university will do something.\nColumns, exactly these:\nCommitment (verbatim quote) | Source document | Goal served (one of: A globally responsible university / A resilient and healthy university / A prosperous and innovative university / An inclusive and connected university / CROSS-CUTTING) | Target date (or NONE STATED) | Measurable (YES only if a number or date is attached, otherwise NO) | Named owner (the team or group responsible, or NONE NAMED)\nRules: one row per commitment; quotes word for word from the source; do not merge or paraphrase; where a cell cannot be filled from the sources, use the stated fallback value rather than inventing one.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 2,
+        title: 'Export it, download it',
+        body:
+          'On the finished table, choose Export to Sheets. Then in Google Sheets: File, Download, Microsoft Excel (.xlsx). A Studio output has just become a dataset: chaining again, this time between formats.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 5,
+        title: 'The accountability audit',
+        body:
+          'Upload the .xlsx to Gemini in a NEW chat. The magic words are "use code": computed numbers, not estimated ones.',
+        prompt:
+          'Act as a careful data analyst. Use code (Python) for every figure; if something cannot be computed from the file itself, write DATA UNAVAILABLE rather than estimating it. This file is a register of commitments extracted from [a university sustainability plan and AI position statement]. Report, in this order:\n1. Shape: how many commitments, and whether every row has all six columns filled.\n2. The accountability numbers, each computed by code: the percentage of commitments with a target date, the percentage marked measurable, and the percentage with a named owner.\n3. By goal: a table of commitments per goal, with counts of dated and measurable ones.\n4. One chart: commitments by goal, split into dated versus NONE STATED.\n5. Three insights in plain business English, each tied to a number above.\nIf the register itself looks wrong (duplicate rows, empty cells, quotes that are not quotes), say so in a final DATA HEALTH line with row references; if it is clean, write DATA HEALTH: CLEAN.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 1,
+        title: 'The 30-second check',
+        check: true,
+        body:
+          'Pick one row of the table and find its commitment in the PDF. Word for word? Data Tables extracts well, not perfectly, and every audit inherits its table\'s errors.',
+      },
+      {
+        tier: 'stretch',
+        choice: 'A',
+        toolChip: 'Gemini Canvas',
+        hook: 'The dashboard flavour of the same audit.',
+        estMinutes: 6,
+        title: 'The control room compare',
+        body:
+          'Attach the same .xlsx in Gemini Canvas and build the dashboard version. Then the honest question: which would you send the team, the audit or the dashboard? There is no right answer; that is the lesson.',
+        prompt:
+          'You are a front-end engineer who ships. Build a single-page commitments tracker from this spreadsheet for [a university team]. Across the top, three KPI cards computed from the data: percentage with a target date, percentage measurable, percentage with a named owner. Below: a bar chart of commitments by goal split into dated versus NONE STATED, a filter by goal, and a toggle to show only undated commitments. Every number on screen must come from the embedded spreadsheet data, never invented. One HTML file, Tailwind CSS and vanilla JavaScript, no backend: embed the data as JSON. Do not jump straight to code. In order: 1) a short spec, under 100 words; 2) a numbered build plan; 3) the complete app; 4) a self-check confirming every number traces to the embedded data and every control visibly works.',
+      },
+      {
+        tier: 'stretch',
+        choice: 'B',
+        toolChip: 'Notebook + Gemini',
+        hook: 'For your actual work.',
+        estMinutes: 5,
+        title: 'Your own sources',
+        body:
+          'The same loop turns [a term of meeting notes] into an action register: sources into a notebook, a Data Table of actions (owner, deadline, done or not), export, audit. The commitments change; the method does not.',
+      },
+    ],
+    verdict:
+      'You turned a ten-year plan into a spreadsheet and made it confess how much of itself is measurable. The audit office does this with a working group and a term of Tuesdays.',
+  },
+
+  {
+    id: 'm4',
+    stage: 'Act',
+    code: '04',
     level: 1,
     title: 'The Infographic',
     pageTitle: 'Explain the Plan to Staff: Your Prompt vs Ours',
@@ -392,39 +452,53 @@ export const MISSIONS = [
         body:
           'Re-run the engineered prompt against [your own team\'s most-ignored policy or guidance document], or ask for a second, portrait version sized for a phone screen. The prompt transfers; that is the point of writing it properly once.',
       },
+      {
+        tier: 'stretch',
+        choice: 'C',
+        toolChip: 'Gemini',
+        hook: 'Bottle a style you like, reuse it anywhere.',
+        estMinutes: 4,
+        title: 'Steal the style',
+        body:
+          'The sustainability plan already has a look: capture it. Attach the plan (or any document or image whose style you like) and run the prompt below. It hands back a reusable style prompt: keep it, and paste your infographic content over the placeholder whenever you want that look again.',
+        prompt:
+          'Analyse the example I have attached (a document or an image). First tell me in one line what you can see in it; if you cannot open it, say so and stop.\nIdentify what makes its style distinctive: tone of voice, vocabulary, sentence structure, formatting and layout.\nWrite a single reusable prompt I can run on new material to reproduce that style. At the bottom of it, add the placeholder [PASTE NEW CONTENT HERE] to mark where my new material will go. That placeholder is for later: I do not fill it in now.\nOutput only the reusable prompt, nothing else.',
+      },
     ],
     verdict:
       'Your first prompt against the engineered one: the gap between them is the whole discipline. And now several thousand colleagues can understand a ten-year plan in ten seconds, which is more than I can say for some strategies I have launched.',
   },
 
   {
-    id: 'm4',
-    code: '04',
+    id: 'm5',
+    stage: 'Act',
+    code: '05',
     level: 3,
-    title: 'The Gap',
-    pageTitle: 'Critique the Policies, Then Chain the Tools',
+    title: 'The Post-Mortem',
+    pageTitle: 'Predict the Failure, Then Chain the Tools',
     stretchTitle: 'CHOOSE YOUR NEXT MOVE',
     stretchIntro: 'Pick ONE path below; come back for another any time.',
     tools: [TOOLS.gemini, TOOLS.copilot],
     estMinutesCore: 15,
-    summary: 'Critique the two policies, then chain Copilot to judge the critique.',
+    summary: 'Write the 2035 post-mortem of the two policies, then chain Copilot to judge it.',
     toolInfo: {
       feature:
-        'Tools: Gemini critiques, Copilot adjudicates. Chaining: the output of one tool becomes the input of another.',
+        'Tools: Gemini writes the post-mortem, Copilot adjudicates it. Chaining: the output of one tool becomes the input of another.',
       apps: [APPS.gemini, APPS.copilot],
     },
-    workflow: ["Devil's advocate", 'The Demand First test', 'Chain to Copilot', '30-second check'],
+    workflow: ['Post-mortem from 2035', 'The Demand First test', 'Chain to Copilot', '30-second check'],
     brief:
-      'Two documents, one university. Do they agree? Set an AI on the space between them, then chain a second AI to judge the first. AI as critic beats AI as author, and chained tools beat either alone. The briefing pack needs an honest page, and this is where it comes from. Plan stage: ACT.',
+      'It is 2035 and the university has missed its goals. Make the AI write the post-mortem now: the pre-mortem is a named prompt-engineering method, and the time travel forces concrete causes with quoted evidence instead of polite hedging. Then chain a second AI to judge the first. The briefing pack needs an honest page, and this is where it comes from. Plan stage: ACT.',
     artifacts: [A.susPlan, A.aiStatement],
     steps: [
       {
         tier: 'core',
         estMinutes: 5,
-        title: "Devil's advocate",
-        body: 'Attach BOTH PDFs to Gemini in a NEW chat (fresh eyes, no accumulated politeness).',
+        title: 'Post-mortem from 2035',
+        body:
+          'Attach BOTH PDFs to Gemini in a NEW chat. The trick is the time travel: asked "will this work?", an AI hedges; told "it failed, explain why", it commits to concrete causes and quotes its evidence.',
         prompt:
-          'You are a hostile, hyper-rational [risk auditor] reviewing the two attached documents together: the university\'s [sustainability plan] and its [position statement on generative AI]. Your target is the space BETWEEN them: hunt for tensions, contradictions and silences where one document commits to something the other undermines or never mentions at all.\nReport your findings only as a table with these columns:\nVerbatim Quote | The Tension | Category | Severity (1-10) | The Fix\nRules:\n- Every row must begin with an exact quote from one of the documents, prefixed "Plan:" or "AI statement:". Where the flaw is that a document says nothing, write GAP: NOT ADDRESSED in that column and name the silent document.\n- Category must be exactly one of: Contradiction / Silence / Unfunded promise / Untestable claim / Governance.\n- Limit yourself to the 7 most severe findings, worst first.\n- Critique only what is written, or missing, in these two documents. No compliments, no preamble: begin immediately with the table.',
+          'It is [2035]. The university has missed the goals in its [sustainability plan] while its use of generative AI grew tenfold. You are the forensic analyst writing the post-mortem. Both documents, as published back in [2025], are attached.\nOpen with The Incident: two sentences on how the failure unfolded. Then give the top 5 causes. For each one:\n- Root Cause: name it\n- Probability Score: how likely this was the primary killer. The five scores must sum to exactly 100%.\n- The Seed: the exact passage, quoted verbatim from one of the two documents and prefixed "Plan:" or "AI statement:", where the failure was already visible in [2025]. A silence counts as a seed: quote the passage that should have addressed it and name what is missing.\n- The Mechanism: step by step, how that seed grew into the missed goals.\nGeneric causes ("lack of engagement", "insufficient funding") are banned unless tied to a specific quoted passage. No preamble; begin with The Incident.',
       },
       {
         tier: 'core',
@@ -440,9 +514,9 @@ export const MISSIONS = [
         estMinutes: 5,
         title: 'Chain it: the second opinion',
         body:
-          'Copy the devil\'s advocate table. Open Copilot chat (m365copilot.com), attach BOTH PDFs, paste the prompt below, then paste the table under its marker line. The output of one tool has just become the input of another: that is chaining, and it is the difference between a party trick and a process.',
+          'Copy the whole post-mortem. Open Copilot chat (m365copilot.com), attach BOTH PDFs, paste the prompt below, then paste the post-mortem under its marker line. The output of one tool has just become the input of another: that is chaining, and it is the difference between a party trick and a process.',
         prompt:
-          'You are a neutral adjudicator. Attached are the two source documents: the [sustainability plan] and the [AI position statement]. Below the marker line is another AI\'s critique of them. Judge each row of that critique strictly against the documents\' own text, not against which claim sounds more confident.\nFORMAT: a table with these columns:\nCritique Row | Verdict | Verbatim Quote (supporting or refuting, with document named) | Why\nRules:\n- Verdict must be exactly one of: CONFIRMED / OVERSTATED / WRONG. No other wording, no diplomatic hedging.\n- Every verdict must rest on a verbatim quote from one of the documents. Where a critique row alleges a silence, quote the nearest passage that could have addressed it, or write NOTHING RELEVANT EXISTS.\n- After the table, list up to [three] material issues the critique missed entirely, each anchored to a verbatim quote or a named gap.\nNo preamble; begin immediately with the table.\nTHE CRITIQUE:',
+          'You are a neutral adjudicator. Attached are the two source documents: the [sustainability plan] and the [AI position statement]. Below the marker line is another AI\'s post-mortem of them. Judge each cause strictly against the documents\' own text, not against how confident it sounds.\nFORMAT: a table with these columns:\nCause | Verdict | Seed Check (does the quoted passage exist, word for word, in the named document?) | Why\nRules:\n- Verdict must be exactly one of: CONFIRMED / OVERSTATED / WRONG. No other wording, no diplomatic hedging.\n- Every verdict must rest on the documents\' own text. Where a cause rests on a silence, quote the nearest passage that could have addressed it, or write NOTHING RELEVANT EXISTS.\n- Then one line on the probability scores: do they plausibly rank the causes, yes or no, and which one you would change.\n- After that, list up to [three] material causes the post-mortem missed entirely, each anchored to a verbatim quote or a named gap.\nNo preamble; begin immediately with the table.\nTHE POST-MORTEM:',
       },
       {
         tier: 'core',
@@ -450,17 +524,17 @@ export const MISSIONS = [
         title: 'The 30-second check',
         check: true,
         body:
-          'Pick one CONFIRMED row. Open the PDF. Does the quote exist, and does it mean what the verdict says it means?',
+          'Pick one CONFIRMED cause. Open the PDF. Does its Seed quote exist, word for word, and does it mean what the post-mortem says it means?',
       },
       {
         tier: 'stretch',
         choice: 'A',
         toolChip: 'Gemini',
-        hook: 'Time travel makes the critique commit.',
+        hook: 'The other critique flavour: hunt the tensions head-on.',
         estMinutes: 5,
-        title: 'Post-mortem from 2035',
+        title: "Devil's advocate",
         prompt:
-          'It is [2035]. The university has missed the goals in its [sustainability plan] while its use of generative AI grew tenfold. You are the forensic analyst writing the post-mortem. Both documents, as published back in [2025], are attached.\nOpen with The Incident: two sentences on how the failure unfolded. Then give the top 5 causes. For each one:\n- Root Cause: name it\n- Probability Score: how likely this was the primary killer. The five scores must sum to exactly 100%.\n- The Seed: the exact passage, quoted verbatim from one of the two documents and prefixed "Plan:" or "AI statement:", where the failure was already visible in [2025]. A silence counts as a seed: quote the passage that should have addressed it and name what is missing.\n- The Mechanism: step by step, how that seed grew into the missed goals.\nGeneric causes ("lack of engagement", "insufficient funding") are banned unless tied to a specific quoted passage. No preamble; begin with The Incident.',
+          'You are a hostile, hyper-rational [risk auditor] reviewing the two attached documents together: the university\'s [sustainability plan] and its [position statement on generative AI]. Your target is the space BETWEEN them: hunt for tensions, contradictions and silences where one document commits to something the other undermines or never mentions at all.\nReport your findings only as a table with these columns:\nVerbatim Quote | The Tension | Category | Severity (1-10) | The Fix\nRules:\n- Every row must begin with an exact quote from one of the documents, prefixed "Plan:" or "AI statement:". Where the flaw is that a document says nothing, write GAP: NOT ADDRESSED in that column and name the silent document.\n- Category must be exactly one of: Contradiction / Silence / Unfunded promise / Untestable claim / Governance.\n- Limit yourself to the 7 most severe findings, worst first.\n- Critique only what is written, or missing, in these two documents. No compliments, no preamble: begin immediately with the table.',
       },
       {
         tier: 'stretch',
@@ -470,7 +544,7 @@ export const MISSIONS = [
         estMinutes: 5,
         title: 'Your own pair',
         body:
-          'Chain the same loop over [two documents your own team must reconcile]: a strategy and a budget, a policy and a job description, a plan and its progress report. Critique in one tool, adjudicate in the other, check one quote yourself.',
+          'Chain the same loop over [two documents your own team must reconcile]: a strategy and a budget, a policy and a job description, a plan and its progress report. Post-mortem in one tool, adjudicate in the other, check one quote yourself.',
       },
     ],
     verdict:
@@ -478,8 +552,9 @@ export const MISSIONS = [
   },
 
   {
-    id: 'm5',
-    code: '05',
+    id: 'm6',
+    stage: 'Lead',
+    code: '06',
     level: 3,
     title: 'The Briefing',
     pageTitle: 'The Team Briefing in Notebook Studio and Canvas',
@@ -503,7 +578,7 @@ export const MISSIONS = [
         estMinutes: 3,
         title: 'Load the evidence',
         body:
-          'Create a new notebook and add both documents as sources. Made your own Mission 1 report or Mission 4 critique? Add those too (Export to Docs, or paste as a text source): the deck gets better with every source you feed it.',
+          'Create a new notebook and add both documents as sources. Made your own Mission 1 report or Mission 5 post-mortem? Add those too (Export to Docs, or paste as a text source): the deck gets better with every source you feed it.',
       },
       {
         tier: 'core',
@@ -512,7 +587,7 @@ export const MISSIONS = [
         body:
           'In Studio, choose Slide Deck and paste the prompt below into its customise box before generating. Note: some university accounts do not offer deck generation; if you do not see it, export the notebook Report to Docs and ask Gemini Canvas to build the deck from it.',
         prompt:
-          'Create a ten-slide briefing for [my team in a university professional services department] from these sources only. One message per slide, each backed by a figure or quote traceable to a named source; no invented numbers or commitments. Cover, in order: what the sustainability plan commits the university to, including the four goals, the Demand First hierarchy and net zero Scope 1 and 2; what the AI position statement promises; exactly one honest slide stating plainly the gap between the two documents; then what both documents mean for [our team]\'s everyday work. If a critique table is among the sources, draw the gap slide\'s evidence from it first. Slide ten is titled "Monday: the first three changes": three concrete actions [our team] can start next week, each traceable to a source. If the sources cannot support a slide, say so on that slide rather than padding.',
+          'Create a ten-slide briefing for [my team in a university professional services department] from these sources only. One message per slide, each backed by a figure or quote traceable to a named source; no invented numbers or commitments. Cover, in order: what the sustainability plan commits the university to, including the four goals, the Demand First hierarchy and net zero Scope 1 and 2; what the AI position statement promises; exactly one honest slide stating plainly the gap between the two documents; then what both documents mean for [our team]\'s everyday work. If a post-mortem or critique is among the sources, draw the gap slide\'s evidence from it first. Slide ten is titled "Monday: the first three changes": three concrete actions [our team] can start next week, each traceable to a source. If the sources cannot support a slide, say so on that slide rather than padding.',
       },
       {
         tier: 'core',
@@ -566,10 +641,12 @@ export const MISSIONS = [
       'A briefing grounded in evidence, a quiz it survived, and a tool the team can press. The pack was the easy part. The real mission starts Monday: making this how the team works, not what it did once.',
   },
 
-  {
-    id: 'm6',
-    code: '06',
-    level: 1,
+];
+
+// The take-home prompt library: NOT a mission. Opened from the gallery strip;
+// served at #/prompts via getMission below.
+export const PROMPT_LIBRARY = {
+    id: 'prompts',
     title: 'Useful Prompts (for after the workshop)',
     pageTitle: 'Prompts to Take Back to Work',
     tools: ['Any AI chat'],
@@ -640,6 +717,36 @@ export const MISSIONS = [
         tier: 'stretch',
         collapsed: true,
         toolChip: 'Any AI chat',
+        hook: 'Bottle a style once, reuse it on anything.',
+        estMinutes: 2,
+        title: 'Copy the style of a document you like',
+        prompt:
+          'Analyse the example I have attached (a document or an image). First tell me in one line what you can see in it; if you cannot open it, say so and stop.\nIdentify what makes its style distinctive: tone of voice, vocabulary, sentence structure, formatting and layout.\nWrite a single reusable prompt I can run on new material to reproduce that style. At the bottom of it, add the placeholder [PASTE NEW CONTENT HERE] to mark where my new material will go. That placeholder is for later: I do not fill it in now.\nOutput only the reusable prompt, nothing else.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Gemini',
+        hook: 'Make it compute, not guess.',
+        estMinutes: 2,
+        title: 'Verified spreadsheet analysis',
+        prompt:
+          'Act as a careful data analyst. Summarise this spreadsheet. Use code (Python) for every figure; if something cannot be computed from the file itself, write DATA UNAVAILABLE rather than estimating it. Report, in this order:\n1. Shape: rows, columns and what the data covers.\n2. Key numbers: totals, averages, highest and lowest, each computed by code.\n3. Anomalies: every missing value, outlier or suspect entry, each with its row reference. If there are none, write NONE FOUND rather than staying silent.\n4. Three insights in plain business English, each tied to a number above.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Gemini',
+        hook: 'Audit the file before the file embarrasses you.',
+        estMinutes: 2,
+        title: 'QA an Excel file with code',
+        prompt:
+          'ROLE: You are a meticulous data quality auditor.\nTASK: Audit this spreadsheet using code (Python) for every check; nothing judged by eye.\nFORMAT: one table, columns: Check | Result | Rows affected (row references) | Severity (1-5) | Suggested fix. Run these checks in order:\n1. Structure: row and column counts, column types, header problems (blank, duplicate or merged headers).\n2. Completeness: missing or blank values per column, with counts.\n3. Uniqueness: duplicate rows and duplicate IDs. Flag them, do not delete: similar rows can be legitimate.\n4. Validity: values that break their column\'s rules (dates out of range, negative quantities, text in number columns, categories outside the expected set).\n5. Consistency: mixed formats within one column (date styles, units, spellings, capitalisation).\n6. Outliers: values statistically far from their column\'s norm, each with its row reference.\nCONSTRAINTS: every finding must be computed by code and carry its row reference. If a check finds nothing, write CLEAN in its row rather than staying silent. If a check cannot run on this file, write NOT APPLICABLE and why. Do not invent issues and do not alter the data. Finish with one line: is this file fit for analysis as it stands, YES or NO, and the single most urgent fix.',
+      },
+      {
+        tier: 'stretch',
+        collapsed: true,
+        toolChip: 'Any AI chat',
         hook: 'AI is a better critic than author.',
         estMinutes: 2,
         title: 'Devil\'s advocate',
@@ -699,12 +806,9 @@ export const MISSIONS = [
     ],
     verdict:
       'You are leaving with my prompts in your pocket. Stealing from your new line manager in week one: exactly the initiative this team needs.',
-  },
-
-];
-
-
+};
 
 export function getMission(id) {
+  if (id === 'prompts') return PROMPT_LIBRARY;
   return MISSIONS.find(m => m.id === id) || null;
 }
