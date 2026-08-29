@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
+const BASE = import.meta.env.BASE_URL;
+
 export default function SplashScreen({ onStart }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -59,7 +61,13 @@ export default function SplashScreen({ onStart }) {
           <li className="splash-step">
             <span className="splash-step__num">2</span>
             <span className="splash-step__text">
-              <strong>Pick a mission</strong> and download its materials. Every file is a public document or teaching material, safe to upload.
+              <strong>Download the source files</strong> we will be using:{' '}
+              <a href={`${BASE}placeholders/Sustainable-Futures-en.pdf`} target="_blank" rel="noopener noreferrer" className="splash-link">
+                the sustainability plan
+              </a>{' '}and{' '}
+              <a href={`${BASE}placeholders/AI_Position_Statement.pdf`} target="_blank" rel="noopener noreferrer" className="splash-link">
+                the AI position statement
+              </a>. Both are public documents, safe to upload.
             </span>
           </li>
         </ol>
