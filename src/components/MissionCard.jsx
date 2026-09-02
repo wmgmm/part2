@@ -15,7 +15,7 @@ export default function MissionCard({ mission, completed }) {
       onClick={open}
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.2 }}
-      aria-label={`Open mission ${mission.code}: ${mission.title}${completed ? ' (completed)' : ''}`}
+      aria-label={`Open exercise ${mission.code}: ${mission.title}${completed ? ' (completed)' : ''}`}
     >
       {mission.artifacts?.[0]?.thumb ? (
         <div className="evidence-card__image">
@@ -40,7 +40,7 @@ export default function MissionCard({ mission, completed }) {
       {completed && <div className="mission-card__done-stamp">DONE</div>}
 
       <div className="evidence-card__label mission-card__label">
-        <span className="evidence-card__id">MISSION {mission.code}</span>
+        <span className="evidence-card__id">EXERCISE {mission.code}</span>
         <span className="evidence-card__name">{mission.title}</span>
         <span className="mission-card__meta">{mission.tools.join(' + ')}</span>
       </div>

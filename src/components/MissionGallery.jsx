@@ -19,10 +19,10 @@ export default function MissionGallery({ player, progress }) {
             moved me into the Sustainability Engagement job, and two documents landed on my
             desk in week one: a ten-year sustainability plan and an AI position statement.
             I have volunteered our team to work out what we actually do about them. Your
-            job, over the missions below: build the briefing pack, the bundle we send the
+            job, over the exercises below: build the briefing pack, the bundle we send the
             rest of the team, an infographic that explains the plan, a slide deck, a
             working decision tool, all grounded in the two documents. Remember Responsible
-            AI: this is your work, and AI is your assistant. One mission at a time.
+            AI: this is your work, and AI is your assistant. One exercise at a time.
           </p>
           <span className="directive__sig">— Chris Gravitas, Sustainability Engagement Officer (and your line manager, apparently)</span>
         </div>
@@ -38,11 +38,11 @@ export default function MissionGallery({ player, progress }) {
         {completedCount === MISSIONS.length ? (
           <p className="mission-progress-line mission-progress-line--done">
             All {MISSIONS.length} complete. &ldquo;The briefing pack exists. The real
-            mission is making this how the team works every week.&rdquo; &mdash; C.G.
+            work is making this how the team works every week.&rdquo; &mdash; C.G.
           </p>
         ) : (
           <p className="mission-progress-line">
-            {completedCount} of {MISSIONS.length} missions complete
+            {completedCount} of {MISSIONS.length} exercises complete
           </p>
         )}
       </div>
@@ -63,7 +63,7 @@ export default function MissionGallery({ player, progress }) {
         onClick={() => { window.location.hash = '#/prompts'; }}
       >
         <span className="library-strip__label">USEFUL PROMPTS (FOR AFTER THE WORKSHOP) →</span>
-        <span className="library-strip__line">The mission prompts stripped generic: steal them, swap the [brackets].</span>
+        <span className="library-strip__line">The exercise prompts stripped generic: steal them, swap the [brackets].</span>
       </button>
 
       <div className="governance-callout governance-callout--discreet">

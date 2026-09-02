@@ -131,10 +131,10 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
 
   return (
     <section className="mission-detail">
-      <a href="#/" className="mission-detail__back">← ALL MISSIONS</a>
+      <a href="#/" className="mission-detail__back">← ALL EXERCISES</a>
 
       <header className="mission-detail__header">
-        <p className="eyebrow">{mission.code ? `MISSION ${mission.code}` : 'THE PROMPT LIBRARY'}</p>
+        <p className="eyebrow">{mission.code ? `EXERCISE ${mission.code}` : 'THE PROMPT LIBRARY'}</p>
         <div className="mission-head-row">
           <div className="mission-head-row__text">
             <h2 className="mission-detail__title">{mission.pageTitle || mission.title}</h2>
@@ -153,7 +153,7 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
         <div className="mission-artifact" key={artifact.filename}>
           <div className="mission-artifact__info">
             <span className="mission-artifact__label">
-              {artifact.label || 'MISSION MATERIALS'}
+              {artifact.label || 'EXERCISE MATERIALS'}
             </span>
             <span className="mission-artifact__name">{artifact.filename}</span>
             {artifact.note && (
@@ -225,7 +225,7 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
               onComplete(mission.id, {});
             }}
           >
-            MISSION COMPLETE
+            EXERCISE COMPLETE
           </button>
         )}
         {showVerdict && (
@@ -235,7 +235,7 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
               &ldquo;{mission.verdict}&rdquo;
               <cite>— C. Gravitas</cite>
             </blockquote>
-            <a href="#/" className="mission-verdict__next">NEXT MISSION →</a>
+            <a href="#/" className="mission-verdict__next">NEXT EXERCISE →</a>
           </div>
         )}
       </div>

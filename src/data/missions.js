@@ -16,9 +16,14 @@
 //                                   When Cardiff publishes its own, replace the
 //                                   FILE under the same name and update the
 //                                   aiStatement note below. Nothing else moves.
-//   Policy_Landscape_Report.pdf   - Mission 1's backup: a Deep Research run of
-//                                   the M1 brief, exported to PDF (stand-in
+//   Policy_Landscape_Report.pdf   - Exercise 1's backup: a Deep Research run of
+//                                   the m1 brief, exported to PDF (stand-in
 //                                   until a real run is dropped in).
+//   Document_QA_Skill.txt         - Exercise 7's worked example skill file.
+//
+// NOTE: the site deliberately teaches skills as PLAIN TEXT FILES you attach,
+// not Gems or Copilot agents: Cardiff staff accounts cannot create Gems (a
+// Gems row was removed for that reason in Aug 2026). Do not reintroduce them.
 // Regenerate the generated files with: python3 tools/make_artifacts.py
 //
 // Step fields: tier 'core'|'stretch', estMinutes, check (30-second check),
@@ -158,6 +163,12 @@ const A = {
     downloadPath: `${BASE}placeholders/Policy_Landscape_Report.pdf`,
     note: 'A ready-made copy of the report. Skip it unless your run fails.',
   },
+  qaSkill: {
+    label: 'EXAMPLE SKILL FILE',
+    filename: 'Document_QA_Skill.txt',
+    downloadPath: `${BASE}placeholders/Document_QA_Skill.txt`,
+    note: 'The worked example: plain text, because that is all a skill is.',
+  },
 };
 
 export const MISSIONS = [
@@ -190,7 +201,7 @@ export const MISSIONS = [
           'In Gemini (gemini.google.com), choose Deep Research in the tools menu beneath the prompt box and paste the brief below, or rewrite it for your own topic. A good brief dictates the report\'s sections and tells the tool what to do when data is missing, not just the topic.',
         promptLabel: 'THE BRIEF (EDIT FOR YOUR TOPIC)',
         prompt:
-          'ROLE: You are a policy analyst preparing a briefing for a university team.\nTASK: Research the landscape of [UK university] statements on generative AI and the sustainability and net-zero commitments the same institutions have made, and how they reconcile the two.\nFORMAT: Use exactly these section headings:\n- The AI Statements: what [UK universities] publish about generative AI, and the principles they commit to.\n- The Net-Zero Commitments: the sustainability and net-zero pledges [the same institutions] have made, with target dates.\n- The Collision: how AI\'s energy, water and hardware footprint squares with those pledges, and which institutions acknowledge the tension.\n- Where [Cardiff University] Sits: how its published positions compare with the rest of the sector.\n- Blind Spots: three things I am probably not thinking about.\nCONSTRAINTS: Cite every claim to its source. If a figure, date or policy detail is not in your sources, write DATA UNAVAILABLE rather than estimating it.',
+          'ROLE: You are a policy analyst preparing a briefing for a university team.\nDEFINITION: A "generative AI position" is a university\'s public statement, policy or published guidance on generative AI, whether aimed at staff, students or both. Judge only what is published.\nTASK: Survey the generative AI positions of [UK universities] and build a comparable picture of the whole sector.\nFORMAT: Use exactly these sections:\n- The Landscape Table: one row per university, with columns University | Who It Covers (ALL STAFF / EDUCATION ONLY / STUDENTS ONLY / UNCLEAR) | Main Values (three words maximum) | Stance (PRO / NEUTRAL / AGAINST) | Mentions AI\'s Environmental Footprint (YES / NO) | Source. Cover as many universities as your sources allow, and state how many you covered.\n- The Consensus: what most positions say, in five bullet points.\n- The Differences: the universities doing something genuinely different from the consensus, and what. This section matters most: similarity is the norm, so hunt the outliers.\n- Welsh Universities: the positions of [the Welsh universities], compared with the sector.\n- The Russell Group: how [Russell Group] positions compare with the sector.\n- AI Meets Net Zero: which universities connect their AI position to their sustainability or net-zero commitments, and how; name any that address AI\'s energy, water or hardware footprint directly.\n- Where [Cardiff University] Sits: against the consensus, the outliers, Wales, the Russell Group, and its own published [sustainability commitments].\n- Blind Spots: three things I am probably not thinking about.\nCONSTRAINTS: Cite every claim to its source. If a university has no findable public position, write NOT PUBLISHED rather than guessing; if a table cell cannot be filled from your sources, write DATA UNAVAILABLE rather than estimating.',
       },
       {
         tier: 'core',
@@ -207,7 +218,7 @@ export const MISSIONS = [
         estMinutes: 3,
         title: 'Ideas: other ways in',
         body:
-          'Run Deep Research from INSIDE Gemini Notebook and the report lands there as a source automatically: Mission 2 set up with zero copying. If you ran it in Gemini instead, choose Export to Docs at the end; a Doc adds to any notebook in one click.',
+          'Run Deep Research from INSIDE Gemini Notebook and the report lands there as a source automatically: Exercise 2 set up with zero copying. If you ran it in Gemini instead, choose Export to Docs at the end; a Doc adds to any notebook in one click.',
       },
     ],
     verdict:
@@ -240,7 +251,7 @@ export const MISSIONS = [
         estMinutes: 3,
         title: 'Ground it',
         body:
-          'Create a notebook at notebooklm.google.com (the old links still redirect) and add BOTH documents above as sources. Made your own Mission 1 report? Add it too (Export to Docs in Gemini, then Add sources and pick it from Drive).',
+          'Create a notebook at notebooklm.google.com (the old links still redirect) and add BOTH documents above as sources. Made your own Exercise 1 report? Add it too (Export to Docs in Gemini, then Add sources and pick it from Drive).',
       },
       {
         tier: 'core',
@@ -264,7 +275,7 @@ export const MISSIONS = [
         title: 'The 30-second check',
         check: true,
         body:
-          'Click one citation. Does the passage actually support the claim? Grounded does not mean gospel; it means checkable. So check. And if one of your questions drew an INSUFFICIENT_DATA, remember which: Mission 5 pays it off.',
+          'Click one citation. Does the passage actually support the claim? Grounded does not mean gospel; it means checkable. So check. And if one of your questions drew an INSUFFICIENT_DATA, remember which: Exercise 5 pays it off.',
       },
       {
         tier: 'stretch',
@@ -290,7 +301,7 @@ export const MISSIONS = [
       },
     ],
     verdict:
-      'You asked two policies to explain themselves and one of them went quiet. Write down which question drew the silence. That silence has a mission of its own.',
+      'You asked two policies to explain themselves and one of them went quiet. Write down which question drew the silence. Exercise 5 is built on it.',
   },
 
   {
@@ -320,7 +331,7 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'Generate the data table',
         body:
-          'In your Mission 2 notebook (or a new one with both PDFs added), open the Studio panel, choose Data Table, and paste the prompt below into the describe box. Watch prose become rows.',
+          'In your Exercise 2 notebook (or a new one with both PDFs added), open the Studio panel, choose Data Table, and paste the prompt below into the describe box. Watch prose become rows.',
         promptLabel: 'THE TABLE SPEC',
         prompt:
           'Extract every commitment the university makes in these sources into a data table. A commitment is any sentence saying the university will do something.\nColumns, exactly these:\nCommitment (verbatim quote) | Source document | Goal served (one of: A globally responsible university / A resilient and healthy university / A prosperous and innovative university / An inclusive and connected university / CROSS-CUTTING) | Target date (or NONE STATED) | Measurable (YES only if a number or date is attached, otherwise NO) | Named owner (the team or group responsible, or NONE NAMED)\nRules: one row per commitment; quotes word for word from the source; do not merge or paraphrase; where a cell cannot be filled from the sources, use the stated fallback value rather than inventing one.',
@@ -337,7 +348,7 @@ export const MISSIONS = [
         estMinutes: 5,
         title: 'The accountability audit',
         body:
-          'Upload the .xlsx to Gemini in a NEW chat. The magic words are "use code": computed numbers, not estimated ones.',
+          'Upload the .xlsx to Gemini in a NEW chat. The magic words are "use code": computed numbers, not estimated ones. Keep this prompt: Exercise 7 turns it into a skill file the whole team can attach.',
         prompt:
           'Act as a careful data analyst. Use code (Python) for every figure; if something cannot be computed from the file itself, write DATA UNAVAILABLE rather than estimating it. This file is a register of commitments extracted from [a university sustainability plan and AI position statement]. Report, in this order:\n1. Shape: how many commitments, and whether every row has all six columns filled.\n2. The accountability numbers, each computed by code: the percentage of commitments with a target date, the percentage marked measurable, and the percentage with a named owner.\n3. By goal: a table of commitments per goal, with counts of dated and measurable ones.\n4. One chart: commitments by goal, split into dated versus NONE STATED.\n5. Three insights in plain business English, each tied to a number above.\nIf the register itself looks wrong (duplicate rows, empty cells, quotes that are not quotes), say so in a final DATA HEALTH line with row references; if it is clean, write DATA HEALTH: CLEAN.',
       },
@@ -437,7 +448,7 @@ export const MISSIONS = [
         estMinutes: 6,
         title: 'Make it Cardiff',
         body:
-          'Add the plan to a Gemini Notebook (your Mission 2 one already has it) and generate an Infographic in the Studio panel. Then, instead of accepting the default look, open the revise (pencil) panel, type MODE: INFOGRAPHIC, and paste the Cardiff University design prompt below beneath it. One click makes an infographic; a design prompt makes YOUR infographic.',
+          'Add the plan to a Gemini Notebook (your Exercise 2 one already has it) and generate an Infographic in the Studio panel. Then, instead of accepting the default look, open the revise (pencil) panel, type MODE: INFOGRAPHIC, and paste the Cardiff University design prompt below beneath it. One click makes an infographic; a design prompt makes YOUR infographic.',
         promptLabel: 'CARDIFF DESIGN PROMPT',
         prompt: CARDIFF_DESIGN_PROMPT,
         link: { href: PROMPT_LIBRARY_URL, label: "From The Matts' NotebookLM Prompt Library" },
@@ -578,7 +589,7 @@ export const MISSIONS = [
         estMinutes: 3,
         title: 'Load the evidence',
         body:
-          'Create a new notebook and add both documents as sources. Made your own Mission 1 report or Mission 5 post-mortem? Add those too (Export to Docs, or paste as a text source): the deck gets better with every source you feed it.',
+          'Create a new notebook and add both documents as sources. Made your own Exercise 1 report or Exercise 5 post-mortem? Add those too (Export to Docs, or paste as a text source): the deck gets better with every source you feed it.',
       },
       {
         tier: 'core',
@@ -638,7 +649,98 @@ export const MISSIONS = [
       },
     ],
     verdict:
-      'A briefing grounded in evidence, a quiz it survived, and a tool the team can press. The pack was the easy part. The real mission starts Monday: making this how the team works, not what it did once.',
+      'A briefing grounded in evidence, a quiz it survived, and a tool the team can press. The pack was the easy part. The real work starts Monday: making this how the team works, not what it did once.',
+  },
+
+  {
+    id: 'm7',
+    stage: 'Embed',
+    code: '07',
+    level: 3,
+    title: 'The Skill',
+    pageTitle: 'Turn a Prompt into a Reusable Skill',
+    stretchTitle: 'CHOOSE YOUR NEXT MOVE',
+    stretchIntro: 'Pick ONE path below; come back for another any time.',
+    tools: [TOOLS.copilot, TOOLS.gemini],
+    estMinutesCore: 13,
+    summary: 'Package a prompt as a skill file the whole team can use.',
+    toolInfo: {
+      feature:
+        'Tools: any AI chat that takes file attachments. A skill is a plain text file you attach with your prompt: no licence, no admin, no new tool to learn.',
+      apps: [APPS.copilot, APPS.gemini],
+    },
+    workflow: ['Write the skill file', 'Run it the new way', 'Build a second skill', '30-second check'],
+    brief:
+      'A prompt lives in one person\'s chat history. A skill is a plain text file that lives in the process: anyone attaches it and gets the same answer, the same way, every time. A prompt scales to one person; a skill scales to a process. Plan stage: EMBED.',
+    artifacts: [A.qaSkill, A.susPlan, A.aiStatement],
+    steps: [
+      {
+        tier: 'core',
+        estMinutes: 4,
+        title: 'Write the skill file',
+        body:
+          'Take a prompt you have already used today (the accountability audit from Exercise 3 is the one to beat) and make the AI package it. Paste the prompt below, then paste your chosen prompt underneath the last line. Save what comes back as a plain text file: Document_QA_Skill.txt. The download above is the worked example if you want to compare.',
+        promptLabel: 'PROMPT TO SKILL FILE',
+        prompt:
+          'ROLE: You are a process designer who writes procedures other people can actually follow.\nTASK: Convert the prompt below into a reusable skill file: a plain text file that anyone in [my team] can attach to an AI chat, alongside a document, to get the same result I get.\nFORMAT: plain text only, no markdown formatting. Use exactly these labelled sections, in this order:\nSKILL NAME: a short name someone would search for.\nWHEN TO USE IT: the trigger, as one sentence beginning "Use this when".\nINPUTS: what must be attached or supplied for the skill to work.\nSTEPS: the numbered steps the AI must carry out, in order.\nOUTPUT FORMAT: the exact shape of the answer, naming any table columns.\nFAILURE STATES: what the AI must write instead of guessing when something is missing.\nHUMAN CHECK: the one thing a person must verify before the output is used.\nOWNER AND VERSION: [our team], v1, [today\'s date].\nCONSTRAINTS: write it for someone who has never seen the original prompt and cannot ask me questions. Do not invent steps the prompt does not imply. Do not summarise: the skill file must be complete enough to replace the prompt entirely. If the prompt is too vague to convert, write WHAT IS MISSING and list the questions I must answer first.\nTHE PROMPT:',
+      },
+      {
+        tier: 'core',
+        estMinutes: 3,
+        title: 'Run it the new way',
+        body:
+          'Open a NEW chat in Copilot or Gemini. Attach TWO files: your skill file and a document we already have (the sustainability plan above, or your Exercise 3 commitments spreadsheet). Then send the three lines below. That is the whole point: the long prompt is gone, because the file carries it.',
+        prompt:
+          'Apply the attached skill file to the attached [sustainability plan].\nFollow its STEPS, OUTPUT FORMAT and FAILURE STATES exactly.\nIf the skill asks for something the document does not contain, use the skill\'s own failure state rather than filling the gap yourself; if a step of the skill is unclear, write WHICH STEP IS UNCLEAR instead of guessing.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 4,
+        title: 'Build a second skill: Policy Review',
+        body:
+          'One skill is a trick; two is a pattern. This one is for the job every team has: a policy lands and somebody has to work out what it means for us. Save it as Policy_Review_Skill.txt, then test it by attaching it to the AI position statement.',
+        promptLabel: 'THE POLICY REVIEW SKILL',
+        prompt:
+          'ROLE: You are a process designer who writes procedures other people can actually follow.\nTASK: Write a skill file called Policy Review that [a university professional services team] can attach whenever [a new or updated policy] lands, so that every policy is reviewed the same way by whoever picks it up.\nFORMAT: plain text only, no markdown formatting. Use exactly these labelled sections, in this order: SKILL NAME / WHEN TO USE IT / INPUTS / STEPS / OUTPUT FORMAT / FAILURE STATES / HUMAN CHECK / OWNER AND VERSION.\nThe OUTPUT FORMAT the skill demands must be exactly these headed sections, each carrying a verbatim quote from the policy as its evidence: Key changes; Risks; Staff impact; Equality considerations; Communications required.\nCONSTRAINTS: write it for someone who has never seen this prompt. Every section of the output must be traceable to the policy\'s own text; where the policy is silent, the skill must instruct the AI to write NOT ADDRESSED rather than infer. The HUMAN CHECK must name a judgement a person makes, not another AI step. No filler: begin with SKILL NAME.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 1,
+        title: 'The 30-second check',
+        check: true,
+        body:
+          'Look at what came back. Did it use the skill\'s OUTPUT FORMAT, and did it use the skill\'s FAILURE STATES where the document was silent? A skill the model quietly ignores is a wish, not a skill. If it drifted, tighten that section of the file and run it again: editing the file, not the chat, is the habit worth keeping.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 1,
+        title: 'Give it a home',
+        body:
+          'Last step, and the one that matters. Put the file where the work happens (your team\'s SharePoint or Teams folder, not your desktop), and write one line next to it: which step of which process it belongs to. That is the difference between "have you tried Copilot?" and "at this step, attach this skill". The AI does the repeatable analysis; the human still makes the decision and still owns it.',
+      },
+      {
+        tier: 'stretch',
+        choice: 'A',
+        toolChip: 'Any AI chat',
+        hook: 'For the task you do every week.',
+        estMinutes: 5,
+        title: 'Your own process',
+        body:
+          'Pick a task your team repeats: [checking a funding application], triaging a mailbox, reviewing a business case, drafting the monthly update. Run the step 1 prompt on the prompt you would use for it, and name the step of the process the skill slots into. Two skills and a folder is a start; a team that knows which step each one belongs to is the actual goal.',
+      },
+      {
+        tier: 'stretch',
+        choice: 'B',
+        toolChip: 'Any AI chat',
+        hook: 'The recursive one.',
+        estMinutes: 3,
+        title: 'The skill that writes skills',
+        body:
+          'Save the step 1 prompt itself as Skill_Writer_Skill.txt, in the same eight sections. From then on you attach one file to turn any prompt into a skill, and the format stays identical across everything your team writes. Consistency is the whole product.',
+      },
+    ],
+    verdict:
+      'You wrote it down so the next person does it the same way. My old department called that a procedure, printed it, and watched everyone ignore it. The difference with this one is that it does the work.',
   },
 
 ];
@@ -658,7 +760,7 @@ export const PROMPT_LIBRARY = {
       apps: [APPS.gemini, APPS.notebook, APPS.copilot],
     },
     brief:
-      'A good prompt is a reusable asset, not a one-off. These are the prompts behind the missions with the policies stripped out: steal them, swap the brackets, keep them somewhere you can find on a Tuesday.',
+      'A good prompt is a reusable asset, not a one-off. These are the prompts behind the exercises with the policies stripped out: steal them, swap the brackets, keep them somewhere you can find on a Tuesday.',
     artifacts: [],
     stretchTitle: 'THE PROMPTS',
     stretchIntro: 'Open one, copy it, swap the [brackets].',

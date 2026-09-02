@@ -1,0 +1,42 @@
+SKILL NAME: Document QA
+
+WHEN TO USE IT: Use this when a plan, policy, strategy or report arrives and
+someone has to check what it actually commits us to before it goes further.
+
+INPUTS:
+- The document to check (PDF, Word or text).
+- Optional: a spreadsheet or register of commitments already extracted from it.
+
+STEPS:
+1. Read only the attached document. Use no outside knowledge.
+2. Find every commitment: any sentence saying the organisation will do something.
+3. For each commitment, record the verbatim quote, the goal or section it sits
+   under, its target date, whether it is measurable (a number or a date is
+   attached), and the named owner.
+4. Count them: how many commitments in total, how many dated, how many
+   measurable, how many owned. Use code to calculate the percentages if a
+   spreadsheet is attached; do not estimate them by eye.
+5. Note anything that looks wrong in the document itself: contradictions,
+   figures that do not add up, commitments that repeat.
+
+OUTPUT FORMAT:
+- A table with these columns: Commitment (verbatim quote) | Section or goal |
+  Target date | Measurable (YES/NO) | Named owner
+- Then three lines of accountability numbers: percentage dated, percentage
+  measurable, percentage owned.
+- Then at most three findings in plain English, each tied to one of the numbers.
+- Then one line headed DATA HEALTH.
+
+FAILURE STATES:
+- No target date in the text: write NONE STATED.
+- No owner named in the text: write NONE NAMED.
+- A figure that cannot be computed from what was supplied: write DATA UNAVAILABLE.
+- Nothing wrong found in the document: write DATA HEALTH: CLEAN.
+- Never infer, estimate or fill a gap to be helpful.
+
+HUMAN CHECK: Before the output is used, a person opens the source document and
+confirms one quoted commitment appears there word for word. Every audit
+inherits the errors of the extraction it was built on.
+
+OWNER AND VERSION: [your team], v1, [date]. Change the brackets and this file
+is yours.

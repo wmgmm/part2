@@ -34,7 +34,7 @@ export default function SplashScreen({ onStart }) {
         {/* Headline */}
         <h1 className="splash-headline">AI in the Workplace Part 2</h1>
         <p className="splash-deck">
-          Two Real Policies, Five Missions, Skills You Will Use on Monday
+          Two Real Policies, Seven Exercises, Skills You Will Use on Monday
         </p>
         <p className="splash-byline">
           Your new line manager: <strong>Chris Gravitas</strong>, Sustainability Engagement Officer

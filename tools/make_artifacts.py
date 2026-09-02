@@ -17,9 +17,9 @@ The three anchor artifacts and the swap contract:
                                statement, replace this FILE under the SAME
                                filename and update the artifact `note` string
                                in src/data/missions.js. No other code changes.
-  Policy_Landscape_Report.pdf  Mission 1's backup. Generated below as a
+  Policy_Landscape_Report.pdf  Exercise 1's backup. Generated below as a
                                clearly labelled stand-in; replace with a real
-                               Deep Research export of the Mission 1 brief
+                               Deep Research export of the Exercise 1 brief
                                under the same filename when available.
 
 The old Venture_* files (Welsh cake era) are gone; git history is the archive.
@@ -122,15 +122,15 @@ make_pdf(
 
 
 # ========================================== 2. THE LANDSCAPE REPORT (STAND-IN)
-# Mission 1's backup artifact. This stand-in keeps the site and the ?doctor
-# preflight green until a real Deep Research run of the Mission 1 brief is
+# Exercise 1's backup artifact. This stand-in keeps the site and the ?doctor
+# preflight green until a real Deep Research run of the Exercise 1 brief is
 # exported to PDF and dropped in under the same filename.
 make_pdf(
     OUT / "Policy_Landscape_Report.pdf",
     "Policy Landscape Report (stand-in)",
     [
-        ("p", "This is a stand-in for the Mission 1 backup report. The real version is a "
-              "Gemini Deep Research run of the Mission 1 brief (UK university AI position "
+        ("p", "This is a stand-in for the Exercise 1 backup report. The real version is a "
+              "Gemini Deep Research run of the Exercise 1 brief (UK university AI position "
               "statements and net-zero commitments, and how institutions reconcile the two), "
               "exported to PDF and saved under this filename."),
         ("p", "If you are reading this during a workshop: your own Deep Research run is the "
@@ -141,7 +141,59 @@ make_pdf(
 )
 
 
-# ================================================ 3. CHECK THE SUPPLIED PLAN
+# ============================================ 3. THE EXAMPLE SKILL FILE
+# Exercise 7's worked example. Plain text on purpose: the whole teaching point
+# is that a skill is a file you attach, not a product feature you need a
+# licence for. The eight sections here must match the structure the Exercise 7
+# prompts ask for, or the exercise contradicts its own example.
+SKILL_FILE = """SKILL NAME: Document QA
+
+WHEN TO USE IT: Use this when a plan, policy, strategy or report arrives and
+someone has to check what it actually commits us to before it goes further.
+
+INPUTS:
+- The document to check (PDF, Word or text).
+- Optional: a spreadsheet or register of commitments already extracted from it.
+
+STEPS:
+1. Read only the attached document. Use no outside knowledge.
+2. Find every commitment: any sentence saying the organisation will do something.
+3. For each commitment, record the verbatim quote, the goal or section it sits
+   under, its target date, whether it is measurable (a number or a date is
+   attached), and the named owner.
+4. Count them: how many commitments in total, how many dated, how many
+   measurable, how many owned. Use code to calculate the percentages if a
+   spreadsheet is attached; do not estimate them by eye.
+5. Note anything that looks wrong in the document itself: contradictions,
+   figures that do not add up, commitments that repeat.
+
+OUTPUT FORMAT:
+- A table with these columns: Commitment (verbatim quote) | Section or goal |
+  Target date | Measurable (YES/NO) | Named owner
+- Then three lines of accountability numbers: percentage dated, percentage
+  measurable, percentage owned.
+- Then at most three findings in plain English, each tied to one of the numbers.
+- Then one line headed DATA HEALTH.
+
+FAILURE STATES:
+- No target date in the text: write NONE STATED.
+- No owner named in the text: write NONE NAMED.
+- A figure that cannot be computed from what was supplied: write DATA UNAVAILABLE.
+- Nothing wrong found in the document: write DATA HEALTH: CLEAN.
+- Never infer, estimate or fill a gap to be helpful.
+
+HUMAN CHECK: Before the output is used, a person opens the source document and
+confirms one quoted commitment appears there word for word. Every audit
+inherits the errors of the extraction it was built on.
+
+OWNER AND VERSION: [your team], v1, [date]. Change the brackets and this file
+is yours.
+"""
+
+(OUT / "Document_QA_Skill.txt").write_text(SKILL_FILE, encoding="utf-8")
+
+
+# ================================================ 4. CHECK THE SUPPLIED PLAN
 plan_pdf = OUT / "Sustainable-Futures-en.pdf"
 if not plan_pdf.exists():
     print(f"WARNING: {plan_pdf} is missing. Copy the supplied Sustainable Futures PDF there; "
