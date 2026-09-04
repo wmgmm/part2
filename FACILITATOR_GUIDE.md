@@ -72,6 +72,3 @@ Every prompt on the site follows `docs/PROMPT_GUIDANCE_2026.md` (the expert repo
 
 ## Re-skinning
 The anchor documents are the whole scenario. Swap `AI_Position_Statement.pdf` for Cardiff's own statement (same filename) when it publishes; regenerate generated files with `python3 tools/make_artifacts.py`. Exercise copy lives in `src/data/missions.js`.
-
----
-*The old FACILITATOR_GUIDE.txt/pdf and PARTICIPANT_GUIDE files describe Part 1's escape room, not this workshop.*

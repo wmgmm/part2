@@ -4,16 +4,12 @@ import SplashScreen from './components/SplashScreen.jsx';
 import MissionGallery from './components/MissionGallery.jsx';
 import MissionDetail from './components/MissionDetail.jsx';
 import TaglineBar from './components/TaglineBar.jsx';
-import AdminPanel from './components/AdminPanel.jsx';
-import LeaderboardPage from './components/LeaderboardPage.jsx';
 import DoctorPanel from './components/DoctorPanel.jsx';
 import { getMission } from './data/missions.js';
 import { recordAttendance } from './lib/leaderboard.js';
 import { loadUser, saveUser, clearUser, loadProgress, markComplete } from './lib/progress.js';
 
 const _params = new URLSearchParams(window.location.search);
-const IS_ADMIN = _params.has('admin');
-const IS_LEADERBOARD = _params.has('leaderboard');
 const IS_DOCTOR = _params.has('doctor');
 
 // Hash routing: '#/' is the mission gallery, '#/m3' opens mission m3.
@@ -65,8 +61,6 @@ export default function App() {
     exit: { opacity: 0, y: -24, transition: { duration: 0.3, ease: 'easeIn' } },
   };
 
-  if (IS_ADMIN) return <AdminPanel />;
-  if (IS_LEADERBOARD) return <LeaderboardPage />;
   if (IS_DOCTOR) return <DoctorPanel />;
 
   const mission = player && route ? getMission(route) : null;

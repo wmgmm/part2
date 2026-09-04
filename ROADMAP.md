@@ -86,7 +86,7 @@ Narrative: Christopher Gravitas is back. He sold the Welsh cake stall to the stu
 
 ## Out of scope
 
-Legacy escaperoom images in `public/placeholders/`, Part 1 guide files, leaderboard/check-in rework, Apps Script redeployment (all previously flagged, all awaiting Matt).
+Leaderboard/check-in rework and Apps Script redeployment (still awaiting Matt). The legacy escaperoom images and Part 1 guide files were deleted on 2026-09-04.
 
 ## Log
 

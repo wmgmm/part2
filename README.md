@@ -13,7 +13,7 @@ A hands-on workshop website for Cardiff University staff: seven guided exercises
 
 ## Facilitators
 
-Read `FACILITATOR_GUIDE.md` (session plans, preflight, the real policy gap and the Demand First rungs). Before a session, open https://wmgmm.github.io/part2/?doctor to verify every file responds. Append `?admin` for session data or `?leaderboard` for a projectable board.
+Read `FACILITATOR_GUIDE.md` (session plans, preflight, the real policy gap and the Demand First rungs). Before a session, open https://wmgmm.github.io/part2/?doctor to verify every file responds.
 
 ## Development
 
