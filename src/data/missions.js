@@ -414,8 +414,9 @@ export const MISSIONS = [
           'Swap the subject of the brief for a live question from your role: a supplier comparison, a sector scan, what other universities do.',
       },
     ],
+    verdictBy: 'The Matts',
     verdict:
-      'A report, and a second report proving the first one was half wrong. This is more scrutiny than most things on my desk have ever had. Do not tell the committee.',
+      'A citation is not a check. The habit worth keeping is not trusting one model less, it is making a second one prove the first, then reading the list of what it changed.',
   },
 
   {
@@ -500,8 +501,9 @@ export const MISSIONS = [
           'Paste in a report you admire and ask for the structure that produced it. Always ask for the reusable template version.',
       },
     ],
+    verdictBy: 'The Matts',
     verdict:
-      'Consistent house style across the whole pack, and nobody had to open the brand manual. I am choosing not to examine that too closely.',
+      'Models weight nouns, not negations, so describe what you want rather than banning what you do not. And an image the model cannot describe back to you is one a screen reader user cannot use either.',
   },
 
   {
@@ -580,8 +582,9 @@ export const MISSIONS = [
           'Canvas exports to Docs, Slides and PDF, and gives an app a public link. It works on the desktop site and is not university hosting.',
       },
     ],
+    verdictBy: 'The Matts',
     verdict:
-      'Someone has turned a ten-year strategy into a game about dodging a lasagne. Engagement figures are engagement figures. Ship it.',
+      'Both games came from the same model on the same day. Everything that separates them is in the prompt, which is the whole argument for writing the second kind.',
   },
 
   {
@@ -689,8 +692,9 @@ export const MISSIONS = [
           'You get one generation each, so read the prompt back before you press Generate. The three-dot menu on the slide viewer then gives you PowerPoint or PDF, not Google Slides.',
       },
     ],
+    verdictBy: 'The Matts',
     verdict:
-      'It reads like us and it looks like us, and every line goes back to the document. Marketing will still have opinions.',
+      'Where you put an instruction changes what it does. As a source, the house style becomes the subject of the deck. In the pencil, it becomes the way the deck is made.',
   },
 
   {
@@ -759,8 +763,9 @@ export const MISSIONS = [
           'Act as a front-end developer and data visualisation expert.\n\nBuild a self-contained interactive infographic in ONE HTML file: inline CSS, JavaScript, and Chart.js from a CDN. It must run standalone in Canvas.\n\nSUBJECT: [Cardiff University\'s decarbonisation against campus growth, 2015/16 to 2024/25].\n\nDATA: use only the figures computed above in this chat. Do not invent, round or extend them. Where a number you need was never computed, put NEEDS DATA on the card rather than filling it in.\n\nWORK IN FOUR STAGES, in this order. Do not output any code before stage 3.\n1. SPEC: under 150 words. What the page shows, and who is looking at it.\n2. PLAN: a numbered list of the components you will build.\n3. THE FILE: the complete HTML. No placeholder comments, nothing left as "add logic here".\n4. SELF-CHECK: name what you verified. Every control works, every figure traces to the data above, and nothing is hard-coded that should be computed.\n\nCOMPONENTS:\n- Summary cards carrying the headline figures, each showing the change since 2015/16.\n- One chart with a toggle between absolute emissions and emissions per square metre. Same data, two different stories: make that toggle the point of the page.\n- A year filter, slider or buttons, that redraws the chart.\n- A projection line to 2035 that can be switched on and off.\n\nSTYLE: white background, one accent colour, high contrast, readable at arm\'s length on a projector. Responsive down to a laptop screen. No dark theme.\n\nCONSTRAINTS: UK English. Label every axis with its unit. Wherever the page shows the projection, say on the page that it assumes the last ten years simply continue.',
       },
     ],
+    verdictBy: 'The Matts',
     verdict:
-      'So the line does not get there. I would rather find that out from a spreadsheet in September than from a committee in 2034.',
+      'Ask for the code and the numbers are computed rather than guessed, which is the difference between a finding and a plausible sentence. Two true charts still told two different stories.',
   },
 ];
 

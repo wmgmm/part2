@@ -534,3 +534,19 @@ Two verifications worth keeping. The seven `MH_*` constants were hashed before a
 **Still open, and asked but not answered.** Whether `Fact_Check_Cardiff.md` becomes a take-home on 06; it remains generated and linked from nothing. Whether `src/config.js` keeps its live Apps Script URL and the token `jaja`. What replaces `public/policy_stall.webp`, which still advertises the AI policy documents dropped in the pivot. And whether the Exercise 01 callback, which grep confirms is genuinely absent from 06 since 06 was rebuilt as the data exercise, should be restored or formally dropped.
 
 **Browser-tool note for the next session:** after a hash-only navigation, `get_page_text` returns the previous page's content and screenshots keep the old scroll position, so a short page reads as blank. Load `index.html#/mN` rather than `#/mN`, then press ctrl+Home before believing a screenshot. Nothing was wrong with the site both times it looked broken.
+
+## 2026-09-04 (addendum 25): the completion quotes become learning points
+
+Matt: "make the completed quotes mini learning opportunities."
+
+All six were Chris Gravitas punchlines except 04, which already carried the Jisc quote from The Matts. That one was doing real work, so it became the model for the other five. Each verdict is now the single transferable lesson from its exercise, 29 to 36 words, attributed to The Matts via `verdictBy`.
+
+- **01** a citation is not a check; the value is one model proving another, and reading what changed.
+- **02** models weight nouns, not negations; and an image the model cannot describe back is one a screen reader user cannot use.
+- **03** both games came from the same model on the same day, so everything separating them is in the prompt.
+- **05** where you put an instruction changes what it does: as a source the house style becomes the subject of the deck, in the pencil it becomes the method.
+- **06** ask for the code and the numbers are computed rather than guessed, which is the difference between a finding and a plausible sentence.
+
+The trade is deliberate and worth naming: Chris Gravitas is now out of the verdicts entirely and survives only in the gallery memo and the prompt library. A teaching line in a comic bureaucrat's voice undercuts itself, and 04 had already broken the pattern. Reverting is one field per exercise: drop `verdictBy` and the default attribution comes back.
+
+`CLAUDE.md` updated so the next session does not restore the punchlines.
