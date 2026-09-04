@@ -67,7 +67,7 @@ export const TOOLS = {
 };
 
 // Gallery hero image, shared with the ?doctor preflight so the check cannot drift.
-export const HERO_IMAGE = 'policy_stall.webp';
+export const HERO_IMAGE = 'staff_briefing.webp';
 
 // Click-to-open sign-in cards (google.html copilot-card pattern).
 export const APPS = {

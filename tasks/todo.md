@@ -564,3 +564,17 @@ It renders as two lines, not three, because the directive column is wider than i
 **One knock-on that had to be fixed.** `.intro-row` was `align-items: stretch`, so the black memo box sized itself to the hero image's 280px. At 130 words the text filled it; at 45 it left most of the box empty. Changed to `align-items: center`, which matches the image's existing `align-self: center`, so both now sit centred and the box hugs its content.
 
 Also cleared `workshop_progress_v1:matt@cardiff.ac.uk` from the browser profile, which was test state left by verification clicks earlier in the session and was showing Exercise 04 stamped DONE on the gallery.
+
+## 2026-09-04 (addendum 27): the hero image finally matches the workshop
+
+Matt generated the replacement from the style-block-plus-subject prompt and it landed every element of the brief: striped suit, otherwise empty desk, the Sustainable Futures document, the green hoodie, the dragon pennant, the clock at five to twelve.
+
+It came back in ZX Spectrum 8-bit rather than the red-brick British comic style the block specified. That is a better outcome than the one asked for, because Exercise 03 builds a ZX Spectrum game, so the hero now rhymes with the day rather than merely decorating it. Worth remembering as a teaching point: the style block constrains, it does not guarantee, and the miss was more useful than the hit.
+
+Converted at `-q 88 -resize 960 0`, giving 960x524 and 90 KB, down from the old image's 237 KB. The hero renders at 320px so 960 is 3x for retina. Saved as `public/staff_briefing.webp`; `policy_stall.webp` deleted, since it advertised the AI policy documents dropped in the pivot and nothing now references it.
+
+`HERO_IMAGE` in `missions.js` is the only wiring, and `DoctorPanel` derives from it, so the preflight followed automatically. Alt text in `MissionGallery.jsx` rewritten to describe the actual scene, including the whiteboard text and the clock.
+
+The new aspect ratio is 1.83:1 against the old 1.23:1, so at 320px wide the image is 175px tall rather than 260px. That works only because `.intro-row` was changed to `align-items: center` in addendum 26; under the old `stretch` it would have left a gap. The two changes were independent but the second one saved the first.
+
+`ROADMAP.md` still mentions `policy_stall.webp` in two dated log entries. Those are historical records of what was true then, so they stay.

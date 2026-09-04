@@ -25,7 +25,7 @@ export default function MissionGallery({ player, progress }) {
         <img
           className="intro-row__image"
           src={`${BASE}${HERO_IMAGE}`}
-          alt="Cartoon of The Matts at a campus stall under a dragon canopy, handing university policy documents to a staff member holding a tablet"
+          alt="Cartoon in the style of an 8-bit ZX Spectrum game: a grinning manager in a striped suit holds out a document titled Sustainable Futures across an otherwise empty desk to an alarmed colleague in a green hoodie clutching a laptop. A whiteboard behind them reads STAFF BRIEFING, a Welsh dragon pennant hangs on the desk, and the clock says five to twelve."
         />
       </div>
 
