@@ -34,7 +34,7 @@ export default function SplashScreen({ onStart }) {
         {/* Headline */}
         <h1 className="splash-headline">AI in the Workplace Part 2</h1>
         <p className="splash-deck">
-          Two Real Policies, Seven Exercises, Skills You Will Use on Monday
+          One Real Cardiff Document, Six Exercises, Skills You Will Use on Monday
         </p>
         <p className="splash-byline">
           Your new line manager: <strong>Chris Gravitas</strong>, Sustainability Engagement Officer
@@ -53,7 +53,7 @@ export default function SplashScreen({ onStart }) {
                 Gemini
               </a>{' '}and{' '}
               <a href="https://notebooklm.google.com/" target="_blank" rel="noopener noreferrer" className="splash-link">
-                NotebookLM
+                Gemini Notebook
               </a>{' '}
               <em>(sign in with your work account).</em>
             </span>
@@ -61,13 +61,11 @@ export default function SplashScreen({ onStart }) {
           <li className="splash-step">
             <span className="splash-step__num">2</span>
             <span className="splash-step__text">
-              <strong>Download the source files</strong> we will be using:{' '}
+              <strong>Download the source file</strong> we will be using:{' '}
               <a href={`${BASE}placeholders/Sustainable-Futures-en.pdf`} target="_blank" rel="noopener noreferrer" className="splash-link">
                 the sustainability plan
-              </a>{' '}and{' '}
-              <a href={`${BASE}placeholders/AI_Position_Statement.pdf`} target="_blank" rel="noopener noreferrer" className="splash-link">
-                the AI position statement
-              </a>. Both are public documents, safe to upload.
+              </a>. It is a public document, safe to upload. It is 10.7 MB, so start it now
+              if the wifi is thin.
             </span>
           </li>
         </ol>

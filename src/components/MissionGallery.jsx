@@ -16,25 +16,28 @@ export default function MissionGallery({ player, progress }) {
           </div>
           <p className="directive__text">
             Hey {player.name}, I&rsquo;m Chris, your new line manager. The university has
-            moved me into the Sustainability Engagement job, and two documents landed on my
-            desk in week one: a ten-year sustainability plan and an AI position statement.
-            I have volunteered our team to work out what we actually do about them. Your
-            job, over the exercises below: build the briefing pack, the bundle we send the
-            rest of the team, an infographic that explains the plan, a slide deck, a
-            working decision tool, all grounded in the two documents. Remember Responsible
-            AI: this is your work, and AI is your assistant. One exercise at a time.
+            moved me into the Sustainability Engagement job, and one document landed on my
+            desk in week one: Sustainable Futures, the ten-year environmental sustainability
+            plan. I have volunteered our team to work out what we actually do about it. Your
+            job, over the exercises below: a researched and fact-checked report, images
+            that match, something playable that makes people read the thing, and then the
+            real deliverable, staff training on the plan, written in our voice and checked
+            before it goes anywhere. You will not be writing the method for that from
+            scratch. We are handing you three working skill files and you are going to find
+            out what a good one saves you. Remember Responsible AI: this is your work, and
+            AI is your assistant. One exercise at a time.
           </p>
           <span className="directive__sig">— Chris Gravitas, Sustainability Engagement Officer (and your line manager, apparently)</span>
         </div>
         <img
           className="intro-row__image"
           src={`${BASE}${HERO_IMAGE}`}
-          alt="Cartoon of The Matts at a campus stall under a dragon canopy, handing out AI policy documents (Campus AI Position Statement, AI Use Policy, Ethical AI Guidelines) to a staff member holding a tablet, beside a sign reading Campus AI Policy Documents and Research"
+          alt="Cartoon of The Matts at a campus stall under a dragon canopy, handing university policy documents to a staff member holding a tablet"
         />
       </div>
 
       <div className="evidence-section__header">
-        <h2 className="evidence-section__title">BUILD YOUR TEAM&rsquo;S BRIEFING PACK</h2>
+        <h2 className="evidence-section__title">BUILD THE STAFF TRAINING</h2>
         {completedCount === MISSIONS.length ? (
           <p className="mission-progress-line mission-progress-line--done">
             All {MISSIONS.length} complete. &ldquo;The briefing pack exists. The real
@@ -63,12 +66,13 @@ export default function MissionGallery({ player, progress }) {
         onClick={() => { window.location.hash = '#/prompts'; }}
       >
         <span className="library-strip__label">USEFUL PROMPTS (FOR AFTER THE WORKSHOP) →</span>
-        <span className="library-strip__line">The exercise prompts stripped generic: steal them, swap the [brackets].</span>
+        <span className="library-strip__line">Today&rsquo;s prompts with the sustainability plan stripped out: steal them, swap the [brackets].</span>
       </button>
 
       <div className="governance-callout governance-callout--discreet">
         <p>
-          <strong>✓ At Cardiff University:</strong> Gemini and NotebookLM are approved for
+          <strong>✓ At Cardiff University:</strong> Gemini and Gemini Notebook (until
+          recently NotebookLM) are approved for
           confidential (C1/C2) data, but only when you sign in with your CU account
           (cardiff.ac.uk).
         </p>

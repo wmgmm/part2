@@ -815,7 +815,13 @@ h1, h2, h3 {
   border: 2px solid var(--black);
   cursor: pointer;
   text-decoration: none;
-  display: inline-block;
+  /* All three actions sit in a row, so give them one width and centre the
+     label. COPIED and VIEW IN BROWSER must not resize the row. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 11rem;
+  text-align: center;
 }
 
 .btn-artifact:hover {
@@ -951,13 +957,15 @@ h1, h2, h3 {
 
 .prompt-box__copy {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   background: var(--page);
   color: var(--black);
   border: none;
-  padding: 0.25rem 0.7rem;
+  /* The one control people actually have to find on a prompt. Sized so it
+     reads as a button from across a room, not as part of the label bar. */
+  padding: 0.5rem 1.1rem;
   cursor: pointer;
 }
 
@@ -973,6 +981,10 @@ h1, h2, h3 {
   word-break: break-word;
   margin: 0;
   padding: 0.8rem 0.9rem;
+  /* Matt Hayden's Copilot prompt is 133 lines. Without a cap it pushes the
+     30-second check several screens below the fold. Scroll it instead. */
+  max-height: 22rem;
+  overflow-y: auto;
   background: var(--parchment);
 }
 
@@ -1265,6 +1277,40 @@ a:hover,
 
 .mission-step__link:hover {
   text-decoration: underline;
+}
+
+/* Step figure: the supplied image an exercise works from (Exercise 02). */
+/* Prompt box note: an instruction to you, not text to send. Sits outside the
+   copied region, so it must also look unlike the prompt. */
+.prompt-box__note {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  margin: 0;
+  padding: 0.5rem 0.9rem 0.6rem;
+  border-top: 1px dashed var(--border-soft);
+  opacity: 0.75;
+}
+
+.mission-step__figure {
+  margin: 0.7rem 0 0.2rem;
+}
+
+.mission-step__figure img {
+  display: block;
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-card);
+}
+
+.mission-step__caption {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  margin-top: 0.4rem;
+  opacity: 0.7;
 }
 
 /* ============================================================

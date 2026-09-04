@@ -1,6 +1,8 @@
 # ROADMAP: The Policy Pivot (Gravitas Returns)
 
-Status: **approved 2026-08-29, in progress.** This file is the working plan for the Part 2 pivot; tick items as they land. Also published as a private web page for reading. Log at the bottom.
+Status: **complete, then SUPERSEDED on 2026-09-04.** This file remains the record of the Welsh-cake-to-real-documents pivot; everything in it landed. It was superseded the same week by the single-document pivot, which split the workshop between two presenters, dropped the AI position statement, and cut seven exercises to six. Read this for history, `CLAUDE.md` and `FACILITATOR_GUIDE.md` for what the site does now, and `tasks/todo.md` for the current log.
+
+Two things below are no longer true and are kept only so the reasoning survives: the two-document premise and the deliberate teaching gap between them. Both went with the AI position statement.
 
 ## Why
 
@@ -93,3 +95,4 @@ Leaderboard/check-in rework and Apps Script redeployment (still awaiting Matt). 
 - 2026-08-29: Pivot approved. Roadmap written; Phase 1 begun.
 - 2026-08-29 (later): Phases 1-5 complete in one sitting. Artifacts generated and swapped; missions.js rewritten (six cards, prompts to the expert standard via three subagents, QA pass clean bar one spelling fix); gallery memo, splash, guides and docs updated; Matt supplied the new hero illustration (policy_stall.webp, wired in). Build green; ?doctor all 7 files 200; browser walk of gallery, 01, 04, 05, 06 clean; no console errors. Everything uncommitted, awaiting Matt.
 - 2026-08-30: New Mission 03 The Commitments (Notebook Data Tables + code audit); missions renumbered 04-06; Useful Prompts moved out of the grid to a strip + #/prompts. Also this week: Mission 1 slimmed to two core steps, Mission 5 recentred on the post-mortem method, style-capture prompt added, story made self-contained (Chris, your new line manager), stage words on cards, artifact-card alignment fix.
+- 2026-09-04 (later): **Superseded.** The workshop was split between two presenters and anchored on the sustainability plan alone. The AI position statement and its stand-in landscape report were deleted, taking the deliberate teaching gap with them. Seven exercises became six: 01-03 carry Matt Hayden's verbatim prompts (Deep Research plus a Copilot fact-check, reverse-prompting images, a Canvas game), 04-06 are new (reverse engineering the plan's own design into a style guide then generating a deck; Data Tables audited in Gemini and again in Copilot; the skill file plus the workflow record around it, anchored on the Jisc AI maturity ladder). Tool capabilities were verified against vendor sources first and recorded in `docs/research/2026-09-04-tool-capabilities.md`. See `tasks/todo.md` for the full entry.

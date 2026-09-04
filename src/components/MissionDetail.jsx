@@ -51,6 +51,101 @@ function WorkflowStrip({ workflow }) {
   );
 }
 
+// A downloadable file. Rendered in the strip under the header, and also
+// inside a step, so a skill can sit where it is actually used.
+function ArtifactCard({ artifact }) {
+  const [copied, setCopied] = useState(false);
+  const isText = /\.(md|txt)$/.test(artifact.filename);
+
+  const download = () => {
+    const link = document.createElement('a');
+    link.href = artifact.downloadPath;
+    link.download = artifact.filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // Servers send .md as text/markdown and browsers download that rather than
+  // rendering it, so open a text/plain blob instead. Then VIEW actually views.
+  const view = async () => {
+    try {
+      const res = await fetch(artifact.downloadPath);
+      const url = URL.createObjectURL(new Blob([await res.text()], { type: 'text/plain' }));
+      window.open(url, '_blank', 'noopener,noreferrer');
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+    } catch {
+      window.open(artifact.downloadPath, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  // Skills go two ways: attached as a file in Copilot or Gemini, or pasted
+  // into Gemini Notebook's Studio pencil, which takes text and not files.
+  const copy = async () => {
+    try {
+      const res = await fetch(artifact.downloadPath);
+      await navigator.clipboard.writeText(await res.text());
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      window.open(artifact.downloadPath, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  return (
+    <div className="mission-artifact">
+      <div className="mission-artifact__info">
+        <span className="mission-artifact__label">
+          {artifact.label || 'EXERCISE MATERIALS'}
+        </span>
+        <span className="mission-artifact__name">{artifact.filename}</span>
+        {artifact.note && (
+          <span className="mission-artifact__note">{artifact.note}</span>
+        )}
+      </div>
+      <div className="mission-artifact__actions">
+        <button type="button" className="btn-artifact" onClick={download}>
+          DOWNLOAD
+        </button>
+        {/* COPY is opt-in: only the house style skill needs it, because Studio's
+            pencil takes pasted text and not files. Everything else is attached. */}
+        {isText && artifact.copyable && (
+          <button type="button" className="btn-artifact btn-artifact--ghost" onClick={copy}>
+            {copied ? 'COPIED ✓' : 'COPY'}
+          </button>
+        )}
+        {isText ? (
+          <button type="button" className="btn-artifact btn-artifact--ghost" onClick={view}>
+            VIEW IN BROWSER
+          </button>
+        ) : (
+          <a
+            className="btn-artifact btn-artifact--ghost"
+            href={artifact.downloadPath}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            VIEW IN BROWSER
+          </a>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// A step can carry one picture (Exercise 02 works from a supplied image).
+// src is relative to the site root; BASE keeps it right under /part2/.
+function StepFigure({ image }) {
+  return (
+    <figure className="mission-step__figure">
+      <img src={`${BASE}${image.src}`} alt={image.alt} loading="lazy" />
+      {image.caption && (
+        <figcaption className="mission-step__caption">{image.caption}</figcaption>
+      )}
+    </figure>
+  );
+}
+
 // Collapsed accordion row for a choice path: letter, title, tool chip, hook.
 function ChoiceStep({ step }) {
   return (
@@ -65,7 +160,9 @@ function ChoiceStep({ step }) {
         <div className="path-acc__content">
           {step.hook && <p className="path-acc__hook">{step.hook}</p>}
           {step.body && <p className="mission-step__body">{step.body}</p>}
-          {step.prompt && <PromptBox prompt={step.prompt} label={step.promptLabel} />}
+          {step.image && <StepFigure image={step.image} />}
+          {step.artifact && <ArtifactCard artifact={step.artifact} />}
+          {step.prompt && <PromptBox prompt={step.prompt} label={step.promptLabel} note={step.promptNote} />}
           {step.link && (
             <a
               className="mission-step__link"
@@ -94,12 +191,14 @@ function Step({ step, number, lane }) {
         <span className="mission-step__num">{step.check ? '✓' : badge}</span>
         <h4 className="mission-step__title">{step.title}</h4>
       </div>
-      <p className="mission-step__body">{step.body}</p>
+      {step.body && <p className="mission-step__body">{step.body}</p>}
       {laneNotes.map((note, i) => (
         <p key={i} className="mission-step__lane-note">{note}</p>
       ))}
+      {step.image && <StepFigure image={step.image} />}
+      {step.artifact && <ArtifactCard artifact={step.artifact} />}
       {step.type === 'sort' && <SortGame items={step.items} />}
-      {step.prompt && <PromptBox prompt={step.prompt} label={step.promptLabel} />}
+      {step.prompt && <PromptBox prompt={step.prompt} label={step.promptLabel} note={step.promptNote} />}
       {step.link && (
         <a
           className="mission-step__link"
@@ -120,64 +219,29 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
   const stretch = mission.steps.filter(s => s.tier === 'stretch');
   const showVerdict = completed || justCompleted;
 
-  const handleDownload = artifact => {
-    const link = document.createElement('a');
-    link.href = artifact.downloadPath;
-    link.download = artifact.filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <section className="mission-detail">
       <a href="#/" className="mission-detail__back">← ALL EXERCISES</a>
 
       <header className="mission-detail__header">
-        <p className="eyebrow">{mission.code ? `EXERCISE ${mission.code}` : 'THE PROMPT LIBRARY'}</p>
+        <p className="eyebrow">{mission.code ? `EXERCISE ${mission.code}` : 'USEFUL PROMPTS'}</p>
         <div className="mission-head-row">
           <div className="mission-head-row__text">
             <h2 className="mission-detail__title">{mission.pageTitle || mission.title}</h2>
           </div>
           {mission.toolInfo?.apps && <ToolCards apps={mission.toolInfo.apps} />}
         </div>
+        {/* Goal first, then what the tool is. The brief is what they came for. */}
+        <p className="mission-brief">{mission.brief}</p>
         {mission.toolInfo?.feature && (
           <p className="tool-strap">{mission.toolInfo.feature}</p>
         )}
-        <p className="mission-brief">{mission.brief}</p>
       </header>
 
       {mission.workflow && <WorkflowStrip workflow={mission.workflow} />}
 
       {mission.artifacts?.map(artifact => (
-        <div className="mission-artifact" key={artifact.filename}>
-          <div className="mission-artifact__info">
-            <span className="mission-artifact__label">
-              {artifact.label || 'EXERCISE MATERIALS'}
-            </span>
-            <span className="mission-artifact__name">{artifact.filename}</span>
-            {artifact.note && (
-              <span className="mission-artifact__note">{artifact.note}</span>
-            )}
-          </div>
-          <div className="mission-artifact__actions">
-            <button
-              type="button"
-              className="btn-artifact"
-              onClick={() => handleDownload(artifact)}
-            >
-              DOWNLOAD
-            </button>
-            <a
-              className="btn-artifact btn-artifact--ghost"
-              href={artifact.downloadPath}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              VIEW IN BROWSER
-            </a>
-          </div>
-        </div>
+        <ArtifactCard key={artifact.filename} artifact={artifact} />
       ))}
 
       {core.length > 0 && (
@@ -215,6 +279,8 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
         </>
       )}
 
+      {/* The prompt library has no code, and is not a completable exercise. */}
+      {mission.code && (
       <div className="mission-detail__complete">
         {!showVerdict && (
           <button
@@ -233,12 +299,13 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
             <span className="mission-verdict__stamp">CLEARED</span>
             <blockquote className="mission-verdict__quote">
               &ldquo;{mission.verdict}&rdquo;
-              <cite>— C. Gravitas</cite>
+              <cite>— {mission.verdictBy || 'C. Gravitas'}</cite>
             </blockquote>
-            <a href="#/" className="mission-verdict__next">NEXT EXERCISE →</a>
+            <a href="#/" className="mission-verdict__next">BACK TO ALL EXERCISES →</a>
           </div>
         )}
       </div>
+      )}
     </section>
   );
 }
