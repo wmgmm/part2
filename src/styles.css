@@ -1726,7 +1726,9 @@ a:hover,
 /* Intro row: memo left, stall illustration right */
 .intro-row {
   display: flex;
-  align-items: stretch;
+  /* Centre, not stretch: the memo is short now, and stretching it to the
+     image's height left the box mostly empty. */
+  align-items: center;
   gap: 1rem;
   margin-bottom: 1.2rem;
 }

@@ -550,3 +550,17 @@ All six were Chris Gravitas punchlines except 04, which already carried the Jisc
 The trade is deliberate and worth naming: Chris Gravitas is now out of the verdicts entirely and survives only in the gallery memo and the prompt library. A teaching line in a comic bureaucrat's voice undercuts itself, and 04 had already broken the pattern. Reverting is one field per exercise: drop `verdictBy` and the default attribution comes back.
 
 `CLAUDE.md` updated so the next session does not restore the punchlines.
+
+## 2026-09-04 (addendum 26): the gallery memo cut from 130 words to 45
+
+Matt: "more concise so like 3 lines."
+
+The memo was carrying six jobs and four of them were duplicated further down the page. The section header directly beneath it already says BUILD THE STAFF TRAINING, so it did not need to list the deliverables; 04, 05 and 06 each state the three-working-skills thesis, so it did not need to state it either; and the exercise arc is visible in the grid.
+
+What is left is what only the memo can do: who is asking, why, and the Responsible AI line. Chris introduces himself, the plan lands on his desk, he volunteers the team, and the last sentence is the governance beat that matters more than the joke.
+
+It renders as two lines, not three, because the directive column is wider than it looks in the source.
+
+**One knock-on that had to be fixed.** `.intro-row` was `align-items: stretch`, so the black memo box sized itself to the hero image's 280px. At 130 words the text filled it; at 45 it left most of the box empty. Changed to `align-items: center`, which matches the image's existing `align-self: center`, so both now sit centred and the box hugs its content.
+
+Also cleared `workshop_progress_v1:matt@cardiff.ac.uk` from the browser profile, which was test state left by verification clicks earlier in the session and was showing Exercise 04 stamped DONE on the gallery.

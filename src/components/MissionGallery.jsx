@@ -15,17 +15,10 @@ export default function MissionGallery({ player, progress }) {
             <span className="directive__label">WHY YOU&rsquo;RE HERE</span>
           </div>
           <p className="directive__text">
-            Hey {player.name}, I&rsquo;m Chris, your new line manager. The university has
-            moved me into the Sustainability Engagement job, and one document landed on my
-            desk in week one: Sustainable Futures, the ten-year environmental sustainability
-            plan. I have volunteered our team to work out what we actually do about it. Your
-            job, over the exercises below: a researched and fact-checked report, images
-            that match, something playable that makes people read the thing, and then the
-            real deliverable, staff training on the plan, written in our voice and checked
-            before it goes anywhere. You will not be writing the method for that from
-            scratch. We are handing you three working skill files and you are going to find
-            out what a good one saves you. Remember Responsible AI: this is your work, and
-            AI is your assistant. One exercise at a time.
+            Hey {player.name}, I&rsquo;m Chris, your new line manager. Sustainable Futures
+            landed on my desk in week one, and I have volunteered our team to work out what
+            we actually do about it. Remember Responsible AI: this is your work, and AI is
+            your assistant.
           </p>
           <span className="directive__sig">— Chris Gravitas, Sustainability Engagement Officer (and your line manager, apparently)</span>
         </div>
