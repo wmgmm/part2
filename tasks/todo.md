@@ -1357,3 +1357,47 @@ before step 4, and the fallback of showing a pre-made second deck on the project
 
 MH block sha256 `e4f80823...` unchanged, checked with the anchored form from addendum 54.
 `?doctor` 16 files, all 200, both skills against 05.
+
+## 2026-09-05 (addendum 56): Exercise 05 says the decks are internal
+
+Matt: the deck needs to be marked internal, not public facing, and he wanted a subtle
+tweak because he likes the page. His steer after a brainstorm: the word on the main
+title, "internal" on the skill card, plus a few words like *public facing is a human
+task*.
+
+**Two touches, no new component, no new CSS, no banner.**
+
+- `m5.pageTitle`: "Turn the Training Into **Internal** Slides That Look Like Cardiff".
+  One word. Keeping "That Look Like Cardiff" is what makes it work, because the sentence
+  now carries the tension the exercise actually creates: a deck that looks official and
+  is not.
+- `A.brandSkill.note`: "Builds it in Cardiff's voice and look, **for internal
+  presentations. Public-facing work is a human task.**" Same grey `mission-artifact__note`
+  slot every artifact already uses.
+
+**Only the Cardiff card carries it, not `A.mattsBrandSkill`.** Both decks are internal
+drafts, but saying it twice on one page stops it being subtle, and the Cardiff skill is
+the one whose whole purpose is making the output look approved. The title covers the
+exercise as a whole.
+
+**What a subagent found first, and why it changed the shape of this.** The site already
+has a governance pattern, `governance-callout--discreet`: a quiet green left rule with
+grey 0.78rem text, live on the gallery for the C1/C2 data note. Using it here would have
+meant new JSX and a new mission field, which is a banner by another name. It also found
+that `laneNotes` is a **live renderer with no data**, an unused per-step note slot, and
+that Exercise 03 already has the exact register for this kind of sentence: "It works on
+the desktop site and is not university hosting." A plain factual clause, no ceremony.
+The artifact note turned out to be simpler than any of them.
+
+It also confirmed this **duplicates nothing**: Exercise 06 is the HESA data exercise and
+makes no "check before it goes out" point, and the only such language on the site is in
+`Fact_Check_Cardiff.md`, which no exercise links.
+
+**Verified.** MH block sha256 `e4f80823...` by the anchored check. All three cards on 05
+now report buttons on the same row and a uniform 108px height, checked at 860px and at
+560px with no horizontal overflow, because a longer note broke exactly that layout
+earlier today. Title still wraps to two lines. `?doctor` 16 files, all 200.
+
+**Stale, found while working, not fixed:** `CLAUDE.md:21` still describes Exercise 06 as
+"The Check" running `Fact_Check_Cardiff.md`. 06 has been the data exercise for two days
+and that skill is reachable from nowhere.
