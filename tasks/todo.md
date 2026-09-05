@@ -946,3 +946,26 @@ policy landed on my desk in week one".
 Snapshots of the settled pages (framer-motion fade disabled via injected CSS so the
 capture is not a mid-animation frame) at repo root, untracked: `snapshot-gallery.jpg`,
 `snapshot-m5-top.jpg`, `snapshot-m5-steps.jpg`.
+
+## 2026-09-05 (addendum 44): a cover thumbnail on the policy download card
+
+Matt: put the Sustainable Futures cover on the download card, small, so it is clearer
+what you are downloading.
+
+Rendered from **page 1 of the shipped PDF** with `pdftoppm -r 60`, not from the
+screenshot he sent, so the card shows the real document at a clean source resolution.
+`public/sustainable_futures_cover.webp`, 128x182, 9.6 KB, displayed at 46x65 for about
+2.8x pixel density. Small on purpose: it identifies the file, it is not an illustration.
+
+New optional artifact field **`thumb`**, a site-root relative image path, so any card
+can carry one later. `ArtifactCard` renders it as the first flex child with `alt=""`,
+because it is decorative: the label and filename beside it already say what the file
+is. `DoctorPanel` now HEAD-checks `thumb` on both mission artifacts and step artifacts,
+so a new asset class cannot slip past the preflight. It reports 13 files where it
+reported 12, and the cover shows against 01 / 03 / 04 / 06, which is every exercise
+that hands out the plan.
+
+**Tooling note for next time:** `convert` on this machine is a **metapub** CLI, not
+ImageMagick, and fails with a PMID usage message. ImageMagick is there as
+`convert-im6.q16` / `identify-im6.q16`. `cwebp -resize <w> 0` does the scaling in one
+step and avoids the question entirely.

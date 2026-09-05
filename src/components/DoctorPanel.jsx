@@ -13,12 +13,18 @@ function collectUrls() {
     urls.set(url, labels);
   };
   MISSIONS.forEach(m => {
-    (m.artifacts || []).forEach(a => add(a.downloadPath, `${m.code} · ${a.filename}`));
+    (m.artifacts || []).forEach(a => {
+      add(a.downloadPath, `${m.code} · ${a.filename}`);
+      if (a.thumb) add(`${BASE}${a.thumb}`, `${m.code} · ${a.thumb}`);
+    });
     // Steps can carry their own picture (Exercise 02) or their own download
     // (Exercise 05's brand skill), so the preflight has to look inside them too.
     (m.steps || []).forEach(s => {
       if (s.image) add(`${BASE}${s.image.src}`, `${m.code} · ${s.image.src}`);
-      if (s.artifact) add(s.artifact.downloadPath, `${m.code} · ${s.artifact.filename}`);
+      if (s.artifact) {
+        add(s.artifact.downloadPath, `${m.code} · ${s.artifact.filename}`);
+        if (s.artifact.thumb) add(`${BASE}${s.artifact.thumb}`, `${m.code} · ${s.artifact.thumb}`);
+      }
     });
   });
   add(`${BASE}${HERO_IMAGE}`, 'Gallery · hero illustration');

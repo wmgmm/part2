@@ -97,6 +97,16 @@ function ArtifactCard({ artifact }) {
 
   return (
     <div className="mission-artifact">
+      {/* Decorative: alt is empty because the label and filename beside it
+          already say what the file is. */}
+      {artifact.thumb && (
+        <img
+          className="mission-artifact__thumb"
+          src={`${BASE}${artifact.thumb}`}
+          alt=""
+          loading="lazy"
+        />
+      )}
       <div className="mission-artifact__info">
         <span className="mission-artifact__label">
           {artifact.label || 'EXERCISE MATERIALS'}

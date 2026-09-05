@@ -2038,3 +2038,15 @@ a:hover,
   font-weight: 600;
   letter-spacing: 0.02em;
 }
+
+/* A cover thumbnail on a download card, so people recognise the document
+   before they open it. Small on purpose: it identifies the file, it is not
+   an illustration. Decorative, so the img carries an empty alt. */
+.mission-artifact__thumb {
+  flex: 0 0 auto;
+  align-self: center;
+  width: 46px;
+  height: auto;
+  border-radius: 4px;
+  border: 1px solid var(--border-soft);
+}

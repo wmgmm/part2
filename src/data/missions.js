@@ -295,6 +295,10 @@ const A = {
     filename: 'Sustainable-Futures-en.pdf',
     downloadPath: `${BASE}placeholders/Sustainable-Futures-en.pdf`,
     note: "Cardiff University's real ten-year plan, 18 pages.",
+    // Rendered from page 1 of the PDF itself, so the card shows the document
+    // people are actually about to download. Optional: `thumb` is a site-root
+    // relative image any artifact can carry.
+    thumb: 'sustainable_futures_cover.webp',
   },
   deepResearch: {
     label: 'A FINISHED DEEP RESEARCH RUN',
