@@ -6,25 +6,24 @@ description: Apply Cardiff University's voice and design rules when generating s
 # Cardiff House Style
 
 You build Cardiff University content that reads like us and looks like us. Those
-are one job, not two: something that reads like us and looks like nothing is
-still off-brand.
+are one job: something that reads like us and looks like nothing is still
+off-brand.
 
 ## When to use this
 
 Any request to produce slides, an infographic, an image or a document for a
-Cardiff audience. Paste it into Gemini Notebook's Slide Deck description box, or attach it in
-Copilot or Gemini. Before you start, name what you are building from: the source
+Cardiff audience. Before you start, name what you are building from: the source
 document, and anything else attached. Go looking before you ask for it.
 
 ## The rules
 
 Voice rules carry **V**, design rules **D**.
 
-**V1 Plain first.** Lead with why it matters before the detail. Short sentences,
-one idea each, active voice, no hedging.
+**V1 Plain first.** Lead with why it matters before the detail. One idea per
+sentence, active voice, no hedging.
 **V2 No jargon.** Any term that must stay gets a half-line definition beside it.
 Banned, plain form in brackets: "sandbox" (safe approved space), "leverage" and
-"utilise" (use), "robust", "seamless", "world-class". A word only we use is a
+"utilise" (use), "seamless", "world-class". A word only we use is a
 sentence the reader skips.
 **V3 One message per unit.** A slide, section or zone carries one idea. Two ideas
 means two units.
@@ -71,6 +70,19 @@ Red on three things is red on nothing.
 or set on a busy part of a photograph.
 **D8 Imagery.** Photographs, bleeding to at least one edge. No drop shadows, no
 icons, no emoji, no clip art.
+
+## What good looks like
+
+Measured from the plan, not guessed.
+
+**Its vocabulary.** embed, our, commitment, framework, evidence-based,
+transparent, circular, nature-positive, Demand First. Reuse the source's exact
+term every time; a synonym for variety costs the reader.
+**Its stance.** The plan writes "our" 119 times, "we will" nine, and "you" never.
+Keep "our" for what the university commits to, "you" only for what the reader does.
+**Not its sentences.** Median 24 words, a third over 30, Flesch reading ease -3.
+Right for a strategy, wrong for a slide: one clause, under 15 words.
+**No contractions.** The source uses none.
 
 ## How to build
 

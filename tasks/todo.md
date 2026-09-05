@@ -612,3 +612,27 @@ Spelling: Matt wrote "in practise". Kept as **practice**, the UK noun; practise 
 **Render order swapped in `MissionDetail.jsx`:** prompt now comes before the step's artifact card. Exercise 05 step 2 is the only step in the site carrying both, so nothing else moves, and the prompt now sits directly under the body on every exercise without exception.
 
 `promptNote` rewritten twice. It has to describe the order things go into the Notebook field, which is no longer the order they appear on the page, and that is exactly the kind of sentence that gets read backwards in a room. Settled on "[house style first, then this line underneath it]".
+
+## 2026-09-05 (addendum 30): the house style skill learns what good actually looks like
+
+Matt: "the cardiff house prompt needs some guidence like a few lines on what good looks like for vocab, sentence structure, etc you could use the sustainability doc for this and search web."
+
+V1-V6 told the model what to do but never showed it. "Short sentences, active voice, no hedging" is the kind of instruction every style guide gives and no model can calibrate against. So the new **What good looks like** section is measured out of the sustainability plan rather than asserted, and every number in it is checkable.
+
+What the measurement actually found, from `pdftotext` over the real plan:
+
+- **"our" 119 times, "we will" 9, "we are" 6, and "you" exactly 0.** The plan never once addresses its reader. That is the single most useful voice fact in the document, because a training deck has to break it: the collective "our" is right for what the university commits to, and "you" is right for what the reader does on Monday.
+- **Zero contractions.** No we'll, we're, don't, it's, we've anywhere.
+- **UK spelling is clean:** 24 -ise, 0 -ize, 7 -isation, 0 -ization.
+- **The hype list is already honoured by the source:** world-class 0, leverage 0, utilise 0, seamless 0, cutting-edge 0.
+- **Median sentence 24 words, mean 25.3, a third over 30 words. Flesch reading ease -3. Flesch-Kincaid grade 20, a reading age around 25.**
+
+That last figure is the important one and it reframes the exercise. The plan is close to unreadable by plain-English standards, which is precisely why staff will not read it and precisely why the training exercise exists. So the skill now says in terms: take the plan's vocabulary and stance, do **not** take its sentences. Right for a strategy, wrong for a slide.
+
+**A contradiction the measurement exposed.** V2 banned "robust", and the plan uses it four times, all defensibly: "robust evidence", "robust environmental credentials", "robust, evidence-based pathways". The skill was telling the model to strip a word out of the very document it was applying the rules to. Removed from the ban list. Worth remembering as a pattern: a banned-words list written from instinct will collide with a real source, and the collision is invisible until someone counts.
+
+**Budget.** The file is now 5,999 characters against the 6,000 guideline, so there is one character of headroom and the next edit will breach it. Paid for by cutting the tool-routing sentence, which duplicated what the website step already says, trimming a clause from V1 now that the new section carries the concrete number, and tightening the identity line. If it needs to grow, the honest move is raising the guideline: the Copilot Agent Builder instructions field holds 8,000, and 6,000 was always a safety margin rather than a limit.
+
+First placement put the block between V6 and D1, which silently reparented D1 to D8 under "What good looks like". Moved after D8.
+
+Web research on Cardiff's own published tone-of-voice guidance was commissioned in parallel and had not reported when this landed. If it turns up named voice attributes, they belong in this section.
