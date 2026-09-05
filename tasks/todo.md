@@ -2271,3 +2271,40 @@ second contrast available if anyone clicks in.
 Verified from the clipboard: 5,370 characters, no Bristol anywhere, all eight York lines
 correct including the curly apostrophes in "Cardiff and York's". Facilitator guide updated
 with the crossover and why Bristol was dropped.
+
+## 2026-09-05 (addendum 79): the dashboard prompt grows to 7,382 characters
+
+Matt's third version of the step 4 prompt. **5,370 to 7,382 characters.** Installed
+verbatim, verified from the clipboard: all eleven section headings present, all six special
+characters intact (`÷ × – ’ “ ”`), no stray backslash, no surviving Bristol reference.
+
+**What is new:**
+
+- **VIEWPORT OPTIMISATION**, a whole section, and it is the most useful addition. Zoom to
+  the 5th-95th percentile range, keep most universities in 60-80% of the chart area, fix
+  those axes for the whole animation, never crop Cardiff, York or the median lines. **This
+  is the difference between a chart and a chart you can see**: with 31 universities the
+  outliers would otherwise squash everyone into a corner.
+- **Force-based collision separation, with a guard rail:** "Do not allow collision
+  separation to imply false values: axes and tooltips must continue to show the true
+  values." That is the right instinct. Nudging bubbles apart to make them readable is a
+  visual lie unless the numbers underneath stay honest, and the prompt says so.
+- **A cinematic open**, trail arrows, label collision avoidance, layering, and three named
+  example callouts rather than one.
+- **Rankings and quartiles must come from valid observations for the selected time only**,
+  which quietly handles the missing-data problem: 1% of Buildings and 6% of CarSpaces are
+  blank, so a naive rank would silently move institutions around.
+
+**What is gone, and it needed a documentation fix.** The prompt now says "avoid secondary
+charts, **verification panels**, audit traces and dashboard clutter", and the VERIFICATION
+section is deleted. The facilitator guide claimed the verification panel was "the
+through-line of the whole exercise", which was written two hours ago and is now wrong.
+Rewritten to say **the verification lives in step 3 instead**, which is the better place
+anyway: the check happens before the pretty thing is built rather than inside it.
+
+**Worth naming for the workshop.** This prompt is the longest thing on the site by a wide
+margin, and Exercise 05 spent the day proving a shorter skill beat a longer one. Both are
+true, and the distinction is real: **a design spec competes with the content, a build spec
+is the content.** Every line here is a requirement the code either meets or does not, which
+is the "machine-checkable output" category the addendum 62 research said to hard-constrain.
+Added to the guide so the contradiction is answered rather than noticed.
