@@ -1795,3 +1795,53 @@ within months.
 No change to the verdict: "ask for the code and the numbers are computed rather than
 guessed" is still the lesson, and format handling is a practical note rather than a
 teaching point.
+
+## 2026-09-05 (addendum 65): Matt's new Exercise 06 prompt, with question 3 replaced
+
+Matt supplied a new step 1 prompt: summarise from a Cardiff perspective, insist on Python,
+degrade gracefully if code will not run, then an executive summary, three insights, and a
+target question.
+
+**Question 3 as written was a dud, and checking the data before wiring it in caught it.**
+He asked "is Cardiff on track to reach 50% renewable energy by 2030?" **Cardiff has reported
+100% every year since 2015/16**, so the answer is one line and teaches nothing. The plan
+itself sets no renewables percentage at all: its commitment is "carbon net zero (Scope 1
+and 2)".
+
+Replaced, with Matt's agreement, by the question actually hiding in the data: **Cardiff
+reports 100% renewable through green tariffs AND 21,336 tCO2e, in adjacent columns.** Both
+are true, because a green tariff says where the electricity was bought and not what was
+burnt, and most of what is left is gas on site. It cannot be answered without reading the
+data, and it is the same "two true numbers, two different stories" lesson the exercise
+already turns on.
+
+**Matt asked for one powerful chart instead of a basic summary chart:** box plots across all
+31 universities with Cardiff marked, on three metrics. Checked the distribution first to
+make sure it was worth drawing, and it is:
+
+| 2024/25 | Cardiff | Median | Rank |
+|---|---|---|---|
+| Emissions per m2 | 40.0 kgCO2e | 44.4 | 11 of 31 |
+| Energy per m2 | 222 kWh | 225 | 12 of 31 |
+| Renewables | 100% | 26% | joint top |
+
+**Top of the class at buying green, mid-table at using less.** The chart makes the paradox
+visible, which is why the box plot beats the old two-line-chart pair.
+
+**"the attached file", not "the Excel file".** Matt wrote "Excel file" and then suggested
+"Analyse this excel file". The card hands out a CSV for Gemini and an .xlsx for Copilot and
+step 2 says to try both, so naming either format in the prompt would contradict the page two
+inches above it. "The attached file" is true whichever they attach.
+
+Also fixed his "perspecitive" typo. `promptEmphasis` bolds "Work out every figure by writing
+and running code (Python), not by estimating", matching Exercise 04's treatment of its
+load-bearing line.
+
+**Knock-ons handled:** the workflow chip and step 3 both referred to "both charts", which no
+longer exist. Step 3 is now "Find Cardiff on the chart", and its body points at the gap
+between the three box plots and back at question 3. The verdict's "two true charts" became
+"two true numbers", which now describes the green tariff paradox rather than the old chart
+pair. Answer keys and the Cardiff ranking table added to `FACILITATOR_GUIDE.md`.
+
+Verified: COPY puts the full prompt on the clipboard with no markup, emphasis renders, MH
+block sha256 unchanged, build green.

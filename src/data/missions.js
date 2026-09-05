@@ -792,7 +792,7 @@ export const MISSIONS = [
         'Gemini writes and runs Python on a data file you attach, so the numbers are computed rather than guessed. It takes CSV, not Excel.',
       apps: [APPS.gemini],
     },
-    workflow: ['Paste the prompt', 'Attach the data', 'Read both charts', 'Fit the trend', 'Build the dashboard'],
+    workflow: ['Paste the prompt', 'Attach the data', 'Find Cardiff', 'Fit the trend', 'Build the dashboard'],
     brief:
       'Chart ten years of Cardiff\'s real emissions, then find out where the trend actually lands.',
     artifacts: [A.hesaData, A.susPlan],
@@ -802,11 +802,14 @@ export const MISSIONS = [
         estMinutes: 3,
         title: 'Copy the prompt and paste it',
         body:
-          'Use Gemini. One row per university per year, so the prompt names the columns it wants and goes straight to the analysis.',
+          'Use Gemini. One row per university per year, so it gets straight to the analysis instead of unpicking the file first.',
         promptLabel: 'YOUR PROMPT',
         promptNote: '[attach HESA_Estates_Workshop.csv]',
+        // "the attached file", not "the Excel file": the card hands out a CSV for
+        // Gemini and an .xlsx for Copilot, and step 2 tells them to try both.
+        promptEmphasis: 'Work out every figure by writing and running code (Python), not by estimating.',
         prompt:
-          'Analyse the attached CSV for Cardiff University. Use Python and show me the code.\n\nGive me two charts: Scope12_tCO2e by academic year, and Scope12_tCO2e per square metre of FloorArea_m2 by academic year.\nThen one line on what the second chart says that the first one hides.\n\nDo not estimate anything by eye. If a figure will not compute, say NONE STATED rather than filling it in.',
+          'Analyse the attached file on university estates and energy use, from the perspective of Cardiff University.\n\nWork out every figure by writing and running code (Python), not by estimating. I do not need to see the Python: just use it for the maths.\n\nIf you cannot run code on this file, say so at the top of your answer and label every figure as approximate.\n\nGive me:\n\n1. An executive summary paragraph from a Cardiff University perspective, with specific and actionable information.\n\n2. Three insights worth knowing, one sentence each.\n\n3. Cardiff reports 100% renewable energy through green tariffs and still reports over 21,000 tonnes of Scope 1 and 2 emissions. Explain how both can be true, and say what the renewable figure does not cover.\n\n4. One chart, for the most recent year: box plots across every university in the file for emissions per square metre, energy per square metre, and renewable percentage, with Cardiff marked on each.',
       },
       {
         tier: 'core',
@@ -818,9 +821,9 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 3,
-        title: 'Read both charts',
+        title: 'Find Cardiff on the chart',
         body:
-          'Compare the two charts it returns. Absolute emissions and emissions per square metre tell different stories, and which one you show is an editorial choice.',
+          'Cardiff does not sit in the same place on all three box plots, and the distance between them is the finding. Check it against the answer to question 3.',
       },
       {
         tier: 'core',
@@ -845,7 +848,7 @@ export const MISSIONS = [
     ],
     verdictBy: 'The Matts',
     verdict:
-      'Ask for the code and the numbers are computed rather than guessed, which is the difference between a finding and a plausible sentence. Two true charts still told two different stories.',
+      'Ask for the code and the numbers are computed rather than guessed, which is the difference between a finding and a plausible sentence. Two true numbers still told two different stories.',
   },
 ];
 

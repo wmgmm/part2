@@ -77,6 +77,14 @@ Teaching point: a notebook grounded in ONE source, their own Exercise 04 trainin
 ### 06 The Numbers (Gemini) - Matt Mort
 Teaching point: attach a real spreadsheet, insist on Python, and the numbers are computed rather than guessed. Ask for the code and you can check the working.
 **The data is real and so are the findings.** HESA's Estates Management record, published 9 July 2026 under CC BY 4.0. **We now hand out a cut-down version**, `HESA_Estates_Workshop.csv`: 31 universities (the Russell Group plus every Welsh provider), ten academic years, 307 rows, 25 KB. Every answer key below was recomputed from it and reproduces the raw file exactly.
+**The green tariff paradox is the point of step 1, and it is worth knowing before the room finds it.** Cardiff reports **100% renewable energy through green tariffs, every year since 2015/16**, and still reports **21,336 tCO2e** of Scope 1 and 2. Both are true. A green tariff is a purchasing instrument: it says where the electricity was bought, not what was burnt. Most of what remains is **gas on site**, which no tariff touches. Note also that Cardiff's total energy use went **up 16% across the decade**, from 102 to 118 million kWh, while emissions fell, so the fall is largely the grid decarbonising rather than the university using less. That is the honest reading and it is the argument for Demand First.
+
+**Where Cardiff actually sits, 2024/25, across the 31 universities in the file** (this is what the box plots in step 1 show):
+- Emissions per m2: **40.0 kgCO2e**, rank **11 of 31**, median 44.4. Middling.
+- Energy per m2: **222 kWh**, rank **12 of 31**, median 225. Almost exactly average.
+- Renewable percentage: **100%**, joint top, median 26%. Best in class.
+**Top of the class at buying green, mid-table at using less.** That contrast in one chart is the exercise.
+
 **The answer keys**, computed from the file:
 - Scope 1 and 2 fell from **29,663 to 21,336 tCO2e**, down 28% across the decade.
 - The estate grew from **451,363 to 532,968 m2**, up 18%, so intensity fell from 65.7 to **40.0 kgCO2e/m2**, down 39%. Two true charts, two different stories. Which one you show is an editorial choice, and that is the point of step 3.
