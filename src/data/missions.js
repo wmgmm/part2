@@ -820,7 +820,7 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'Run it again in the other tool',
         body:
-          'Same prompt, same file, in Gemini this time, where the button is a +. Do both put Cardiff in the same place on the box plots, and do the numbers match? Where they differ, one of them is wrong.',
+          'Same prompt, same file, in Gemini this time, where the button is a +. Do both put Cardiff in the same place on the box plots, and do the numbers match?',
         promptLabel: 'THEN GET A CHECK YOU CAN RUN YOURSELF',
         promptNote: '[paste into either chat]',
         prompt:

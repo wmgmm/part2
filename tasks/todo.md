@@ -2139,8 +2139,14 @@ manually", which keeps a human in the loop. Worth saying out loud if anyone trea
 second method as proof.
 
 Label kept as "THEN GET A CHECK YOU CAN RUN YOURSELF", which still describes it accurately
-given the manual-verification clause. Step 3's body still ends "Where they differ, one of
-them is wrong", which is about the two tools and still holds.
+given the manual-verification clause.
+
+**Matt then cut "Where they differ, one of them is wrong" from step 3's body**, so it now
+ends on the question: "Do both put Cardiff in the same place on the box plots, and do the
+numbers match?" Better, and not only shorter: the cut sentence was answering its own
+question a beat after asking it. Leaving the question open is what makes someone actually
+go and look, and it matches the house pattern where the transferable lesson lands in the
+completion quote rather than in the step. 31 words.
 
 Verified: no apostrophes, so the JS string is safe, clipboard clean, no scrollbar, MH block
 sha256 unchanged.
