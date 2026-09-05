@@ -1527,3 +1527,88 @@ facilitator's preflight, which is worse than not checking. The preflight is for 
 host. It still reports 17, all 200.
 
 MH block sha256 unchanged. Card grew to 115px; buttons still on the same row.
+
+## 2026-09-05 (addendum 62): the two decks compared, and the Cardiff skill rebuilt on the evidence
+
+Matt ran both skills through Notebook: `The_Demand_First_Ladder.pdf` (Matts skill) and
+`The_Strict_Filter.pdf` (Cardiff skill). **Same tool, same source, same one-line prompt,
+same day, and only the skill file differed**, so every difference is attributable to the
+skill. That is an unusually clean control and it turned this from a taste argument into a
+diagnosis. Both are image-only exports, so `pdftoppm -r 45` plus `montage` into contact
+sheets is again the way to read one.
+
+**What the Cardiff deck got right, and must not be broken:** Cardiff red, the bilingual
+logo on title and closer only, the architecture cover, huge numerals, left alignment, the
+40-word discipline, and the **Welsh dividers firing correctly** ("Ymarfer / Practice",
+"Gwerthuso / Evaluate"). Matt is right that he could run with it.
+
+**What it got wrong, each traced to a line in the spec:**
+
+| Symptom in the deck | Line that caused it |
+|---|---|
+| 1 photo in 12 slides, no illustration anywhere | "No shadows, icons or emoji" |
+| Grey wash on slides 2, 8, 10; grey boxes instead of diagrams | "light grey #D9D9D9 alternate", "Mid grey #CCCCCC borders" |
+| Slide 11 is 70% empty white | "Negative space is deliberate tension, not leftover emptiness" |
+| **Welsh dividers came out in a serif**, the most off-brand thing in the deck | "Subtitles and section dividers Georgia" |
+| No exercise anywhere; it is a briefing, not training | **all six layout patterns are title compositions** |
+
+**That last row is the real finding.** Holding, holding with image, title on red block,
+title only, full-width title, left image with red bar. Not one is a content or activity
+slide, so the model had no template for teaching. The Matts deck has two TASK slides and
+three worked SCENARIO slides because its skill names "The Task" and "The Comparison" as
+layouts. Nothing about wit or cartoons explains the difference; structure does.
+
+**Why the loose skill won, researched rather than assumed.** Sources and the durable
+version are in `~/.claude/llm-learnings.md`. The load-bearing ones: IFScale
+(arXiv 2507.11538, 15 Jul 2025) on instruction-following degrading with constraint count,
+with a primacy bias and **silent omission** as the dominant failure; MulDimIF (ACL 2026,
+arXiv 2505.07591) measuring **80.8% to 36.8%** as constraints compose; ConInstruct
+(arXiv 2511.14342) finding GPT-4o answered **without acknowledging a present contradiction
+in 97.5% of cases**; DETAIL Matters (arXiv 2512.02246) measuring **+0.47 on maths but
++0.02 on decision-making**. **The persona is not the lever**: EMNLP 2024 Findings
+(arXiv 2311.10054) found 162 personas did not improve performance, so "we gave it a role"
+is the wrong explanation to give a room.
+
+**Deliberately not asserted:** any study comparing goal framing to format framing, and any
+Google statement that the description field truncates. Our own 5,000-character measurement
+from earlier today stands as our observation, not Google's documentation.
+
+**The rewrite.** `CARDIFF_HOUSE_STYLE` in `tools/make_artifacts.py`. **4,730 to 4,684
+characters**, so it got slightly shorter while gaining two teaching layouts.
+
+- **NON-NEGOTIABLE block moved to the top.** Colours, sans-not-serif, logo, Welsh rule, in
+  one short block. Primacy bias says a rule buried mid-list is the most fragile, and these
+  are the rules Matt least wants dropped.
+- **Two passes named** (clarity, then layout), which is the decomposition the Matts skill
+  uses and which DeCRIM-style work supports as a way to cut simultaneous constraint load.
+- **Six title layouts cut to four options**, two of them content patterns: **The
+  comparison** (pass side and fail side) and **The task** (an exercise the reader does
+  with their own work, startable on Monday).
+- **Every content slide** now must name its visual and end with a footer takeaway. Both
+  are lifted straight from what demonstrably works in the Matts deck.
+- **Illustration unbanned**, scoped to Matt's instruction: flat diagrams, line icons and
+  editorial illustration, **never cartoons**, and "there is no photograph of an idea", so
+  photography stays on covers and dividers where it actually works.
+- **Cut:** all point sizes (no evidence Notebook honoured any), Franklin Gothic and
+  Georgia by name (unavailable, and Georgia caused the serif), and the grey palette.
+
+**Verified.** 4,684 chars, 216 spare, 4,768 with the prompt line against Notebook's 5,000.
+Greps confirm the removals landed and every protected phrase survived. **Three of those
+greps first reported FAIL and were line-wrap false alarms**, the same trap as the earlier
+"three words, do not make it six" scare: phrase-grep a hard-wrapped file only after
+`tr '\n' ' '`. `awk 'length > 82'` clean. Build green, `?doctor` 17 files all 200, and the
+COPY button puts all 4,684 characters on the clipboard with NON-NEGOTIABLE ahead of
+DESIGN PHILOSOPHY. MH block sha256 unchanged.
+
+**Still untested**, exactly as the previous version was until today. Only Matt can run it.
+Two things to tell him: Google's three-dot menu has **View custom prompt**, which reads
+back what was actually stored and is the fastest way to see which rules survived; and
+Google documents that **slide revisions create a whole new deck and do not re-consult the
+sources**, which matters for Exercise 05 step 4.
+
+**Snapshots** at repo root: `snapshot-gallery.jpg` and `snapshot-m5-top.jpg` refreshed,
+plus `snapshot-deck-matts.png` and `snapshot-deck-cardiff.png` as the before-state of the
+two real runs. Note for capturing this site: an unfocused tab throttles
+requestAnimationFrame, so framer-motion's fade never completes and every screenshot comes
+out washed out. Inject
+`*{animation:none!important;transition:none!important;opacity:1!important}` first.
