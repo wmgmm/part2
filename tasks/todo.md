@@ -2113,3 +2113,34 @@ prompt now reports `scrollHeight === clientHeight`.
 `promptEmphasis` still matches: "Work out every figure by writing and running code (Python),
 not by estimating" survives verbatim inside the merged opening paragraph, so the bolding is
 unaffected by the reflow.
+
+## 2026-09-05 (addendum 74): step 3's check prompt, Matt's version
+
+Replaced my Excel-formula version with Matt's:
+
+> Pick the single most important number in your summary. Show exactly how you calculated it
+> from the source data so I can verify it manually.
+>
+> Then independently calculate it a second way and confirm both methods give the same
+> result. If they differ, explain why.
+
+**What it does better:** "show exactly how you calculated it from the source data" forces
+the working into the open, which is a stronger ask than a formula, because it exposes which
+rows were filtered and which column was used. That is where these go wrong, not in the
+arithmetic. "If they differ, explain why" is also a good trap: it gives the model somewhere
+to go other than quietly picking one answer, which is exactly the silent-resolution
+behaviour ConInstruct measured (addendum 62).
+
+**What it gives up, worth watching in the room.** My version asked for an Excel formula, so
+the check ran outside both models. Matt's asks the same model to do the sum twice, and two
+methods from one model in one context can be **wrong the same way**: agreement is weaker
+evidence than it looks. What rescues it is the first sentence, "so I can verify it
+manually", which keeps a human in the loop. Worth saying out loud if anyone treats the
+second method as proof.
+
+Label kept as "THEN GET A CHECK YOU CAN RUN YOURSELF", which still describes it accurately
+given the manual-verification clause. Step 3's body still ends "Where they differ, one of
+them is wrong", which is about the two tools and still holds.
+
+Verified: no apostrophes, so the JS string is safe, clipboard clean, no scrollbar, MH block
+sha256 unchanged.

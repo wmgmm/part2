@@ -824,7 +824,7 @@ export const MISSIONS = [
         promptLabel: 'THEN GET A CHECK YOU CAN RUN YOURSELF',
         promptNote: '[paste into either chat]',
         prompt:
-          'Pick the single most important number in your summary.\n\nGive me one Excel formula I can paste into the spreadsheet to check it myself, and say which columns it uses.\n\nThen name one thing that formula still would not catch.',
+          'Pick the single most important number in your summary. Show exactly how you calculated it from the source data so I can verify it manually.\n\nThen independently calculate it a second way and confirm both methods give the same result. If they differ, explain why.',
       },
       {
         tier: 'core',
