@@ -752,3 +752,25 @@ Worth noting for its own sake: the on-screen order now matches the paste order e
 `?doctor` reports twelve files, all 200, with the renamed skill picked up automatically because it derives from `MISSIONS`.
 
 **Left alone and worth a decision:** the workflow chip still says "Paste the house style" and the step title "Paste the house style into Slide Deck", while the file is now `Cardiff_Brand_SKILL.md` and its card reads "SKILL 2: MAKE IT CARDIFF". Three names for one thing. Not changed because that copy has been hand-tuned repeatedly and the rename was the only instruction given.
+
+## 2026-09-05 (addendum 38): Notebook's description box truncates at exactly 5,000 characters
+
+Matt pasted the skill into the Slide Deck description box and it cut off mid-word at "No metaphors or cliches: drive, unlock, deep dive, robust, ke". He trimmed it and it truncated at the same place.
+
+Measured against the shipped file, his paste survives to **exactly 5,001 characters** counting the one-line prompt above it. That is a hard 5,000-character field limit, and the number landing dead on a round figure is what makes it a finding rather than a guess.
+
+**This overturns the constraint the file has been written against all week.** The 6,000 then 7,000 character guideline came from Copilot Agent Builder's 8,000-character instructions field. Notebook's box is far tighter, and Notebook is what Exercise 05 actually uses. The generator's warning threshold is now 4,900 and says what it is protecting.
+
+**It also truncates silently.** No warning, no error, no visual cue: it stops mid-word and generates the deck from whatever fragment survived. A deck built from two thirds of a rule set looks like a deck that ignored its rules, which is a diagnosis nobody would reach unaided. That is now in the facilitator guide.
+
+**Budget:** 5,000 for the field, minus 84 for the prompt line, leaves 4,916. The file is **4,883**, about 30 characters spare. Note the COPY button sends the whole file, front matter included, so the front matter counts against the budget even though Matt's manual paste omitted it.
+
+**1,521 characters cut, all of it duplication or explanation.** Nothing that was stated only once was removed. The largest savings:
+
+- **RULES fell from seven rules to three.** Four of its lines were said earlier in substance: "one message per slide" is in the philosophy, "whitespace is deliberate" is the philosophy's negative-space line, red's placement is already itemised in COLOURS, and gradients are already banned there. What survived is the three things stated nowhere else: left-align, the Welsh line, the photography line.
+- **LAYOUT PATTERNS compressed to one line each.** All six patterns survive; the prose around them went.
+- **DESIGN PHILOSOPHY lost about 300 characters of internal repetition only.** Three consecutive sentences made the same point about asymmetry and negative space, so they became one. The clause after "blade not a blanket" restated the metaphor it followed. Every distinctive line survives, including all the ones worth protecting.
+- **The PowerPoint size note went.** It only mattered for a deck built in PowerPoint, and the exercise is a Notebook exercise, so it was paying rent in the one place where space was scarcest. Worth restoring if anyone ever builds from this in PowerPoint.
+- **Latin abbreviations, the active-voice example, and the "authorized/specialized" catch went.** The last is the one I would restore first if headroom appears: it caught a real bug in Matt's own deck.
+
+**Two false alarms worth recording.** My verification grep reported "three words, do not make it six" as LOST when it was present but wrapped across a line, so the grep pattern spanned a newline. Line-wrapped files need `tr -d '\\n'` before phrase greps, or the check lies. And one of my own edits left a 96-character line in the middle of a hard-wrapped file; an `awk 'length > 82'` pass now catches that, though it correctly flags the front-matter description, which must stay on one line.
