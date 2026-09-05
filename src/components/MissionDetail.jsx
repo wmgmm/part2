@@ -178,7 +178,7 @@ function ChoiceStep({ step }) {
           {step.body && <p className="mission-step__body">{step.body}</p>}
           {step.image && <StepFigure image={step.image} />}
           {step.artifact && <ArtifactCard artifact={step.artifact} />}
-          {step.prompt && <PromptBox prompt={step.prompt} label={step.promptLabel} note={step.promptNote} />}
+          {step.prompt && <PromptBox prompt={step.prompt} label={step.promptLabel} note={step.promptNote} emphasis={step.promptEmphasis} />}
           {step.link && (
             <a
               className="mission-step__link"
@@ -215,7 +215,7 @@ function Step({ step, number, lane }) {
       {step.type === 'sort' && <SortGame items={step.items} />}
       {/* Prompt before the skill card, so the prompt always sits directly under
           the body as it does on every other exercise. */}
-      {step.prompt && <PromptBox prompt={step.prompt} label={step.promptLabel} note={step.promptNote} />}
+      {step.prompt && <PromptBox prompt={step.prompt} label={step.promptLabel} note={step.promptNote} emphasis={step.promptEmphasis} />}
       {step.artifact && <ArtifactCard artifact={step.artifact} />}
       {step.link && (
         <a

@@ -2056,3 +2056,12 @@ a:hover,
 .mission-artifact__thumb[src$=".svg"] {
   border: none;
 }
+
+/* The one line of a skill prompt that never changes. Courier bold alone is too
+   quiet inside a wall of Courier, so it also gets a light accent wash. */
+.prompt-box__em {
+  font-weight: 700;
+  background: rgba(0, 113, 227, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+  border-radius: 2px;
+}

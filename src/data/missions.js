@@ -48,7 +48,10 @@
 // attributed to (defaults to C. Gravitas).
 // artifact (a download card rendered inside the step, for a file used only at
 // that point rather than for the whole exercise),
-// prompt (+ optional promptLabel), promptNote (a line shown under the prompt but
+// prompt (+ optional promptLabel), promptEmphasis (a substring of prompt rendered
+// bold in the box; the COPY button still writes the plain string, so the emphasis
+// never reaches the clipboard),
+// promptNote (a line shown under the prompt but
 // NOT copied by the COPY button: use it for "[attach the ...]", which is an
 // instruction to the reader rather than text to send), link {href, label},
 // image {src, alt, caption}.
@@ -627,8 +630,14 @@ export const MISSIONS = [
           'Use Copilot or Gemini. You still prompt; the skill helps make it follow your best practice.',
         promptLabel: 'YOUR PROMPT, PLUS ONE LINE',
         promptNote: '[attach the sustainability pdf and the skill file]',
+        // The one line that never changes, so it is bolded in the box. "as your
+        // instructions" is the working part: with two attachments, the failure
+        // mode is the model treating the .md as a second document to summarise.
+        // Deliberately NOT "skill.md" -- no attached file has that name, and
+        // naming a file that is not there invites the model to hedge.
+        promptEmphasis: 'Follow the attached skill file as your instructions.',
         prompt:
-          'Build me a half-hour training session on the sustainability pdf.\n\nAudience: professional services staff who have not read it and will not.\nWhat matters most: that they could apply the Demand First ladder to a real purchase on Monday.\n\nFollow the attached skill.',
+          'Build me a half-hour training session on the sustainability pdf.\n\nAudience: professional services staff who have not read it and will not.\nWhat matters most: that they could apply the Demand First ladder to a real purchase on Monday.\n\nFollow the attached skill file as your instructions.',
       },
       {
         tier: 'core',

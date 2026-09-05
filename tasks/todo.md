@@ -1057,3 +1057,49 @@ white.
 `?doctor` reports 14 files, all 200, the icon against 04 (mission artifact) and 05 (step
 artifact). `factCheckSkill` carries the icon too but does not appear in the preflight,
 because it is still linked from no exercise. That remains open.
+
+## 2026-09-05 (addendum 48): the skill line reworded, and bolded in the box
+
+Matt: change "Follow the attached skill." to "skill file" or "skill.md file", think about
+it as prompt engineering, and bold it in the card.
+
+**One occurrence, not several.** Only Exercise 04 carries the line. Exercise 05 pastes the
+skill into the Slide Deck description box rather than attaching it, so its prompt never
+refers to one, and no `MH_*` constant contains the phrase. Checked before editing.
+
+**Settled on "Follow the attached skill file as your instructions."**
+
+- Kept **skill**, because that is the word the whole workshop teaches. Dropping it for
+  something more literal would undercut the lesson.
+- Added **file**, which anchors the noun to an attachment. "Skill" alone is jargon a
+  model has no reason to map onto one of two attachments.
+- Added **as your instructions**, which is the part actually doing work. With a PDF and
+  an `.md` attached, the failure mode is the model treating the `.md` as a second
+  document to summarise rather than as the method. Naming the role removes the ambiguity
+  that "follow" alone leaves open.
+- **Rejected "skill.md"**, which Matt offered. No attached file has that name: it is
+  `Training_Module_Builder.md`. Pointing a model at a filename that is not in the
+  attachment list invites it to hedge or report that it cannot find the file, and buys
+  nothing that "file" does not already buy.
+
+**The bolding, and why it does not touch the clipboard.** New optional step field
+`promptEmphasis`, a substring of `prompt`. `PromptBox` splits the string on it and wraps
+that slice in `<strong className="prompt-box__em">`. `handleCopy` still writes the plain
+`prompt` string, so no markup can reach the clipboard, and the select-text fallback
+selects exactly the same characters. If the substring is ever mistyped, `indexOf` returns
+-1 and the box renders the plain prompt: a data typo degrades to no emphasis rather than
+to lost text.
+
+Styling is bold **plus a light accent wash**, because Courier bold inside a wall of
+Courier is nearly invisible. `box-shadow: 0 0 0 3px` of the same tint pads the highlight
+out beyond the glyphs without changing the line box, so the `<pre>` spacing is untouched.
+
+`emphasis` is passed at **both** `PromptBox` call sites in `MissionDetail.jsx`, the step
+renderer and the collapsed choice renderer, so a stretch path gets it too.
+
+**Verified by intercepting `navigator.clipboard.writeText`:** the copied string is the
+plain prompt ending "Follow the attached skill file as your instructions.", contains no
+tags or entities, and matches `textContent` of the `<pre>` exactly. Note for next time:
+the interception also revealed that `writeText` rejects when the tab is not focused, so
+the select-text fallback fires and leaves the whole prompt highlighted. That grey is the
+browser's selection, not a style bug.
