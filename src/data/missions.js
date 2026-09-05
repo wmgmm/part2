@@ -322,7 +322,7 @@ const A = {
     thumb: 'sustainable_futures_cover.webp',
   },
   deepResearch: {
-    label: 'A FINISHED DEEP RESEARCH RUN',
+    label: 'OPTIONAL: A FINISHED DEEP RESEARCH RUN',
     filename: 'Deep_research_output.pdf',
     downloadPath: `${BASE}placeholders/Deep_research_output.pdf`,
     note: 'The brief already run, so you can compare, or so you can do the Copilot half if your own run is still going.',
@@ -360,6 +360,15 @@ const A = {
     note: "Here's one we made earlier, in case Exercise 04 did not run for you. Upload it to Notebook as a source.",
     thumb: EXAMPLE_ICON,
   },
+  // The picture Exercise 02 works from. Served from the site root rather than
+  // placeholders/, and it is its own thumbnail.
+  studySpace: {
+    label: 'THE PICTURE FOR THIS EXERCISE',
+    filename: 'cardiff_study_space.webp',
+    downloadPath: `${BASE}cardiff_study_space.webp`,
+    note: 'A Cardiff social space. Download it, then attach it to Copilot.',
+    thumb: 'cardiff_study_space.webp',
+  },
   hesaData: {
     label: 'TEN YEARS OF REAL DATA',
     // CSV, not xlsx, and that is the whole fix. Google's code execution tool
@@ -372,7 +381,7 @@ const A = {
     thumb: EXCEL_ICON,
   },
   factCheckSkill: {
-    label: 'SKILL 3: CHECK IT BEFORE IT GOES',
+    label: 'SKILL 4: CHECK IT BEFORE IT GOES',
     filename: 'Fact_Check_Cardiff.md',
     downloadPath: `${BASE}placeholders/Fact_Check_Cardiff.md`,
     note: 'Verifies claims against their sources. It does not rewrite; it tells you what to fix.',
@@ -436,6 +445,10 @@ export const MISSIONS = [
           'Use Copilot. It returns the rebuilt report in the chat, not as a file, so keep the tab open.',
         promptLabel: 'THE FACT-CHECK AND REDRAFT',
         promptNote: '[attach the PDF you saved in step 3]',
+        // Display only, and deliberately so: MH_COPILOT_TOP_AND_TAIL is 133
+        // lines and this is his own heading on line 5. COPY still writes the
+        // constant byte for byte.
+        promptEmphasis: 'CRITICAL SEPARATION RULE',
         prompt: MH_COPILOT_TOP_AND_TAIL,
       },
       {
@@ -482,7 +495,7 @@ export const MISSIONS = [
     workflow: ['Reverse the image', 'Lock the look', 'Try to ban something', 'Audit an image'],
     brief:
       'Turn a picture you like into a prompt you own, then freeze it as a reusable style block.',
-    artifacts: [],
+    artifacts: [A.studySpace],
     stretchTitle: 'CHOOSE YOUR NEXT MOVE',
     stretchIntro: 'Pick ONE path below; come back for another any time.',
     steps: [
@@ -491,7 +504,8 @@ export const MISSIONS = [
         estMinutes: 3,
         title: 'Reverse the image into a prompt',
         body:
-          'Use Copilot. Right-click the picture below, Save image as, attach it with the paperclip, and paste the prompt.',
+          'Use Copilot. Download the picture from the card above, attach it with the paperclip, and paste the prompt.',
+        attach: [A.studySpace],
         image: {
           src: 'cardiff_study_space.webp',
           alt: 'Three students talking around a small round table in a bright Cardiff University social space, red sofas, a laptop and a vase of pink flowers on the table, floor-to-ceiling windows behind.',
@@ -579,6 +593,11 @@ export const MISSIONS = [
         title: 'Run the thin ask with nothing attached',
         body:
           'Use Gemini. Turn Canvas on in the Tools menu, under the box where you type, and run this with nothing attached. Play it for ten seconds.',
+        attachLabel: 'ENABLE',
+        attachExtra: {
+          src: 'canvas_button.webp',
+          alt: 'The Canvas button in Gemini, a small grey chip reading Canvas.',
+        },
         promptLabel: 'THE THIN ASK',
         prompt: MH_CANVAS_THIN,
       },
@@ -589,6 +608,7 @@ export const MISSIONS = [
         body:
           'Start a NEW chat and turn Canvas on before running this. In the same chat Canvas would edit the first game instead of building a second.',
         promptLabel: 'THE ENGINEERED ASK',
+        attach: [A.susPlan],
         promptNote: '[attach Sustainable-Futures-en.pdf]',
         prompt: MH_CANVAS_GAME,
       },

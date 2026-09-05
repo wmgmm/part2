@@ -2461,3 +2461,55 @@ extra ever needs a different verb, that is the moment to add one.
 Verified: step 4 reads "NEW CHAT | HESA_Estates_Workshop.csv | then enable" plus the Canvas
 image, no overflow, and **step 2's strip is untouched** at "ATTACH THIS |
 HESA_Estates_Workshop.csv", which is right since it has no control to enable.
+
+## 2026-09-05 (addendum 86): the 04-06 patterns carried back to 01-03
+
+Matt asked which of today's improvements should come back to the first three exercises,
+with one example: the Deep Research fallback needs the OPTIONAL prefix that 04's backup
+training session has. An audit of all six found five gaps and one latent bug. Thumbnails
+and Matts-attributed verdicts were already consistent across all six.
+
+**1. `A.deepResearch` label gains OPTIONAL.** It already carried the Blue Peter icon and a
+note explaining it is the fallback when a Deep Research quota is spent. Only the label was
+out of step.
+
+**2. Attach strip on 03 step 2.** It already said "[attach Sustainable-Futures-en.pdf]" and
+the plan was already on its card, so this was the identical situation to 04 and 06.
+
+**3. Canvas icon on 03 step 1.** That step says "Turn Canvas on in the Tools menu, under the
+box where you type", word for word what 06 step 4 illustrates. **This needed a real fix
+rather than a copy:** `AttachStrip` assumed a control always followed at least one file, so
+it would have rendered a dangling "then enable" with nothing before it. Now `items` defaults
+to empty, the strip renders when either files or a control are present, and the joiner is
+suppressed when there are no files. 03 step 1 reads **`ENABLE [Canvas]`**, verified with no
+stray "then".
+
+**4. Exercise 02's picture is now a download card.** Step 1 said "Right-click the picture
+below, Save image as", the most awkward instruction on the site. New `A.studySpace` artifact
+pointing at the file already served at the site root, using itself as its thumbnail, plus an
+attach strip. Body is now "Download the picture from the card above, attach it with the
+paperclip, and paste the prompt." **The picture stays in the step at full size**, because
+the exercise works from it. Shows DOWNLOAD only, correctly: it is already on screen, so VIEW
+IN BROWSER would be redundant.
+
+**5. Duplicate SKILL 3 fixed.** `mattsBrandSkill` and `factCheckSkill` were both "SKILL 3".
+The fact-check skill, which is linked from no exercise, is now SKILL 4.
+
+**6. Matt Hayden's Copilot prompt gets one bolded line, and this is the sensitive one.**
+`promptEmphasis: 'CRITICAL SEPARATION RULE'` on 01 step 4. That prompt is 7,085 characters
+over 133 lines and is the only one on the site that still scrolls badly; line 5 is **his own
+all-caps heading**. **Display only, and proved rather than asserted:** intercepting
+`navigator.clipboard.writeText` shows the copied string is **exactly 7,085 characters, no
+markup, and identical to the rendered `textContent`**. The MH block sha256 is unchanged at
+`e4f80823...`, checked by anchor. Nothing he wrote has moved.
+
+**7. The memo gains Chris's job**, at Matt's request: "I got a new job as Sustainability
+Engagement Officer". Repeating the role from the sign-off is the joke rather than a slip.
+
+**8. The Useful Prompts card is removed from the gallery**, also at Matt's request. Removed
+32 lines of `.library-strip` CSS that this orphaned. **Flagged: `PROMPT_LIBRARY` and the
+`#/prompts` route still exist and still work, but nothing on the site links to them any
+more.** That is a whole page of content now reachable only by typing the URL. Not deleted,
+because removing the card is not the same instruction as deleting the library.
+
+`?doctor` reports 18 files all 200, with the Canvas icon now against **03 and 06**.

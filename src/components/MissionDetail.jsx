@@ -166,7 +166,7 @@ function ArtifactCard({ artifact }) {
 // attach step the question in the room is "which two?", and a picture of the
 // two answers it faster than a sentence does. Not a download: the cards above
 // are for that, this is a reminder of what to pick up.
-function AttachStrip({ items, label, extra }) {
+function AttachStrip({ items = [], label, extra }) {
   return (
     <div className="attach-strip">
       <span className="attach-strip__clip" aria-hidden="true">
@@ -191,7 +191,7 @@ function AttachStrip({ items, label, extra }) {
           the same chat, so the strip shows the button they are looking for. */}
       {extra && (
         <>
-          <span className="attach-strip__then">then enable</span>
+          {items.length > 0 && <span className="attach-strip__then">then enable</span>}
           <img className="attach-strip__control" src={`${BASE}${extra.src}`} alt={extra.alt} />
         </>
       )}
@@ -229,7 +229,9 @@ function ChoiceStep({ step }) {
           {step.hook && <p className="path-acc__hook">{step.hook}</p>}
           {step.body && <p className="mission-step__body">{step.body}</p>}
           {step.image && <StepFigure image={step.image} />}
-          {step.attach && <AttachStrip items={step.attach} label={step.attachLabel} extra={step.attachExtra} />}
+          {(step.attach || step.attachExtra) && (
+        <AttachStrip items={step.attach} label={step.attachLabel} extra={step.attachExtra} />
+      )}
           {step.artifact && <ArtifactCard artifact={step.artifact} />}
           {step.prompt && <PromptBox prompt={step.prompt} label={step.promptLabel} note={step.promptNote} emphasis={step.promptEmphasis} />}
           {step.link && (
@@ -265,7 +267,9 @@ function Step({ step, number, lane }) {
         <p key={i} className="mission-step__lane-note">{note}</p>
       ))}
       {step.image && <StepFigure image={step.image} />}
-      {step.attach && <AttachStrip items={step.attach} label={step.attachLabel} extra={step.attachExtra} />}
+      {(step.attach || step.attachExtra) && (
+        <AttachStrip items={step.attach} label={step.attachLabel} extra={step.attachExtra} />
+      )}
       {step.type === 'sort' && <SortGame items={step.items} />}
       {/* Prompt before the skill card, so the prompt always sits directly under
           the body as it does on every other exercise. */}

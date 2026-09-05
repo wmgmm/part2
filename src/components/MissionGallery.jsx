@@ -15,10 +15,10 @@ export default function MissionGallery({ progress }) {
             <span className="directive__label">WHY YOU&rsquo;RE HERE</span>
           </div>
           <p className="directive__text">
-            I&rsquo;m Chris, your new line manager. The Sustainable Futures policy
-            landed on my desk in week one, and I have volunteered our team to work out
-            what we actually do about it. Remember Responsible AI: this is your work, and
-            AI is your assistant.
+            I&rsquo;m Chris, your new line manager. I got a new job as Sustainability
+            Engagement Officer, and the Sustainable Futures policy landed on my desk in
+            week one, so I have volunteered our team to work out what we actually do about
+            it. Remember Responsible AI: this is your work, and AI is your assistant.
           </p>
           <span className="directive__sig">— Chris Gravitas, Sustainability Engagement Officer (and your new line manager, apparently)</span>
         </div>
@@ -52,15 +52,6 @@ export default function MissionGallery({ progress }) {
           />
         ))}
       </div>
-
-      <button
-        type="button"
-        className="library-strip"
-        onClick={() => { window.location.hash = '#/prompts'; }}
-      >
-        <span className="library-strip__label">USEFUL PROMPTS (FOR AFTER THE WORKSHOP) →</span>
-        <span className="library-strip__line">Today&rsquo;s prompts with the sustainability plan stripped out: steal them, swap the [brackets].</span>
-      </button>
 
       <div className="governance-callout governance-callout--discreet">
         <p>

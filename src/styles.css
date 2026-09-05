@@ -1906,38 +1906,6 @@ a:hover,
   flex: 0 0 auto;
 }
 
-/* The Useful Prompts library strip: a non-mission row below the grid */
-.library-strip {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.3rem;
-  margin-top: 1.4rem;
-  padding: 1.1rem 1.4rem;
-  background: var(--white);
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius-card);
-  cursor: pointer;
-  text-align: left;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-.library-strip:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-}
-.library-strip__label {
-  font-family: 'Inter Tight', sans-serif;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: 0.02em;
-}
-.library-strip__line {
-  font-family: 'Inter Tight', sans-serif;
-  font-size: 0.9rem;
-  color: #424245;
-}
-
 /* ============================================================
    STEP BLOCKS: the two the GOOGLE-PAGE SKIN pass missed
    The skin converted .mission-step, .quick-step and the tool cards to 1px
