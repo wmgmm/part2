@@ -2441,3 +2441,23 @@ framing for a room that has spent an hour being impressed.
 
 Apostrophe escaped in the single-quoted string and verified rendering once with no stray
 backslash.
+
+## 2026-09-05 (addendum 85): "then enable" completes the strip sentence
+
+Matt: add the word "enable" before the Canvas icon.
+
+> 📎 **NEW CHAT** [Excel icon] HESA_Estates_Workshop.csv *then enable* [Canvas]
+
+Small change, and it finishes what "then" started in addendum 83. **"then" gave the strip an
+order; "then enable" gives it a verb.** Reading it now produces a complete instruction with
+no inference required: open a new chat, attach this file, then enable that control. Before,
+a reader had to supply the verb themselves from the icon, which is exactly the sort of
+half-step that costs a minute in a room.
+
+Left as a literal in `AttachStrip` rather than made configurable. There is one `extra` on
+the site and it is a control you switch on, so a prop would be speculative. If a second
+extra ever needs a different verb, that is the moment to add one.
+
+Verified: step 4 reads "NEW CHAT | HESA_Estates_Workshop.csv | then enable" plus the Canvas
+image, no overflow, and **step 2's strip is untouched** at "ATTACH THIS |
+HESA_Estates_Workshop.csv", which is right since it has no control to enable.
