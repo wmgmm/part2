@@ -717,3 +717,22 @@ The file is now his spec, his section headings, his wording, with exactly three 
 Also folded in rather than kept as sections: Marr Sans and Darby dropped from FONTS (declared in the template but never rendered, and absent from Studio); the Welsh line in RULES scoped to a one or two word section name; and the failure-state machinery compressed from a section into two sentences at the end, because "never claim a font or a colour you did not set" is the part that earns its place and the rest was ceremony.
 
 5,669 characters, down from 6,795. Under the old 6,000 guideline again, which is the better outcome: the guideline was raised because content was load-bearing, and this proves some of it was not.
+
+## 2026-09-05 (addendum 36): the plain-English skill feeds the slide skill
+
+Matt supplied his separate plain-English writing skill and asked for some of it, not all, plus a WHEN TO USE IT section.
+
+**Taken**, because each earns its place on a slide:
+
+- **Front-load everything.** Conclusion first, in the deck, the section, the slide and the sentence. This is the single most useful rule in his document for a deck, because a slide that buries its point has failed before anyone reads it.
+- **"Open it up, do not dumb it down."** The best line in the whole document and the necessary counterweight to every other rule here. A 40-word cap and a 20-word sentence rule both push towards losing nuance; this says keep the substance and strip only what makes it hard to read.
+- **"Never drop a caveat, a condition or a number to make a line shorter."** The same insurance, stated as a prohibition. Without these two lines the clarity rules are dangerous.
+- Active voice, "you" and "we", the everyday-words list, the cliche list, and no Latin abbreviations. All concrete and checkable, which is what the section needed.
+
+**Left out** as prose-specific and irrelevant to a deck: bullet punctuation, link text, date and time formats, numbered-list conventions, ampersands, the output change-table, FAQs.
+
+**One conflict worth naming.** His cliche list bans "robust", and two days ago I removed "robust" from the banned list precisely because the sustainability plan uses it four times, all defensibly. Both are right, because they govern different things: the rule is about what the model writes, not what it quotes from a source. Nothing to reconcile, but it will look like a contradiction to anyone reading the two skills side by side.
+
+**WHEN TO USE IT restored**, having been cut yesterday as over-complication. It is back because his own document has one and because it carries something the file otherwise lost: the instruction to attach this to a long research run so the report comes back already in the style.
+
+6,999 characters against the 7,000 guideline. One character. The next edit needs the trim planned rather than discovered.

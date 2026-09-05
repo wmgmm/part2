@@ -163,6 +163,13 @@ description: Cardiff University's slide design system. Use whenever you are crea
 You are creating slides for Cardiff University. Follow this design system
 exactly. No deviations.
 
+## WHEN TO USE IT
+
+Any time you are building slides, an infographic or a document for a Cardiff
+audience. If you are briefing a long research run that will end in a deck, attach
+this too, so what comes back is already in the style. Before you start, say in
+one line what you are building from.
+
 ## DESIGN PHILOSOPHY
 
 These slides must do more than comply with a brand. They must command a room.
@@ -238,26 +245,50 @@ Write for someone who has not read the source document and is not going to. This
 is where generated decks fail: the design carries, and the words stay as dense as
 whatever they came from.
 
+**Front-load everything.** The most important point first: in the deck, in each
+section, on each slide, in each sentence. Conclusion first, then the detail, then
+the background.
+
+**Open it up, do not dumb it down.** Keep the substance, the nuance and the
+precision. Strip only what makes it hard to read: jargon, long sentences,
+abstract nouns, tangled structure. A non-specialist and an expert should both get
+it on first read.
+
 Average sentence 20 words or fewer, the GOV.WALES rule. No more than 40 words on
 a slide, labels and captions counted. One idea per line. Prefer the shorter word.
 Nothing should need a second read, and a line that only works for someone who has
 already read the source has failed.
 
-No jargon. Any term that must stay gets a half-line definition beside it. Plain
-form in brackets: "leverage" and "utilise" (use), "seamless", "world-class".
-Spell an acronym out the first time. No figurative language.
+Active voice: "We reviewed the data", not "The data was reviewed". Address the
+reader as "you" and the university as "we".
+
+Everyday words: use not utilise or leverage, help not facilitate, work with not
+engage with, make or provide not deliver, about not in relation to, so not in
+order to, start not commence, buy not purchase, enough not sufficient, effect on
+not impact on. Never impact as a verb.
+
+No metaphors or cliches: drive, unlock, deep dive, robust, key, ring-fence, hub,
+portal, landscape, ecosystem, going forward. No Latin abbreviations: "for
+example" not "eg", "that is" not "ie", "such as" not "etc".
+
+No jargon. Any term that must stay gets a half-line definition beside it, because
+precision is not traded for simplicity. Spell an acronym out the first time.
+
+**Never drop a caveat, a condition or a number to make a line shorter.** Plain
+English that has quietly lost a qualification is worse than the tangled sentence
+it replaced.
 
 Sentence case, never block capitals. UK English: -ise not -ize, -our, -re;
 licence and practice as nouns, license and practise as verbs. "Authorized" and
 "specialized" are the two that slip through.
 
-Every number comes from the source. If it is not in there, leave it out.
+Every number comes from the source. If it is not there, leave it out.
 
 A content slide carrying only a heading is not a slide: give it a point or fold
 it into the next one. Dividers and the closer are the exception.
 
 Every box in a diagram holds words that say something. A labelled empty box is
-decoration pretending to be a point.
+decoration.
 
 ## RULES
 
@@ -269,9 +300,8 @@ invented. Photography is Cardiff University architecture at editorial scale, no
 stock images. No shadows, gradients, icons, emoji, illustrations, or decorative
 lines.
 
-Hand back the deck, then one short note of anything you could not do. If the tool
-will not set a typeface, a hex value or a position, say which and what you used
-instead. Never claim a font or a colour you did not set.
+Hand back the deck, then one short note of anything you could not do. Never claim
+a font or a colour you did not set.
 """
 
 FACT_CHECK_CARDIFF = """---
