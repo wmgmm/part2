@@ -196,7 +196,7 @@ Cover 120pt, section dividers 160-240pt, content headings 72-92pt, body and bull
 ## BULLETS
 
 Solid round bullet in Cardiff Red #E4251B, 130% of text size, black Franklin
-Gothic Book text. No numbered lists, dashes or icon bullets.
+Gothic Book text. No dashes or icon bullets.
 
 ## LOGO
 
