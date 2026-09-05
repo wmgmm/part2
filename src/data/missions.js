@@ -368,11 +368,7 @@ const A = {
     // it nor run code on it. See tools/make_workshop_dataset.py.
     filename: 'HESA_Estates_Workshop.csv',
     downloadPath: `${BASE}placeholders/HESA_Estates_Workshop.csv`,
-    note: '31 UK universities, 2015/16 to 2024/25, one row each per year. Adapted from HESA, www.hesa.ac.uk, CC BY 4.0.',
-    sourceLink: {
-      href: `${BASE}placeholders/HESA_Estates_Workshop.xlsx`,
-      label: 'Also as Excel, with a questions sheet',
-    },
+    note: '31 UK universities, 2015/16 to 2024/25, one row each per year.',
     thumb: EXCEL_ICON,
   },
   factCheckSkill: {

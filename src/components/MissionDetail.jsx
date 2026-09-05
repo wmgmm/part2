@@ -116,7 +116,10 @@ function ArtifactCard({ artifact }) {
           <span className="mission-artifact__note">{artifact.note}</span>
         )}
         {/* Deliberately a text link, not a fourth button: it is the fallback
-            route, and the card keeps one obvious primary action. */}
+            route, and the card keeps one obvious primary action.
+            NOTE: no artifact sets `sourceLink` at present. Kept because it has
+            been wanted twice and is opt-in, so it renders nothing unless a card
+            asks for it. If you add the field back, grep `sourceLink` first. */}
         {artifact.sourceLink && (
           <a
             className="mission-artifact__source"
