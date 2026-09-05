@@ -987,3 +987,39 @@ double blank line my earlier deletion left behind.
 
 Verified all three states in the DOM rather than by eye: splash and picker carry the
 full line, `#/m4` carries the title alone.
+
+## 2026-09-05 (addendum 46): the cover leaked onto the picker cards, via dormant code
+
+Matt: the image is still on the exercise picker cards.
+
+**My fault, and worth recording because the mechanism is not obvious.** `MissionCard`
+carried a branch nobody had run:
+
+```jsx
+{mission.artifacts?.[0]?.thumb ? (
+  <div className="evidence-card__image">
+    <img src={mission.artifacts[0].thumb} alt="" draggable={false} />
+```
+
+Left over from the escaperoom evidence gallery, and dead only because no artifact had
+ever carried a `thumb`. Adding one to `susPlan` in addendum 44 switched it on and
+swapped the big numeral, stage and summary for a cover picture on **four of the six
+cards**, 01, 03, 04 and 06, every exercise whose first artifact is the plan.
+
+The branch is now deleted, so a picker card is always the panel. Two things it was
+doing wrong anyway, had anyone ever triggered it before:
+
+- `src={mission.artifacts[0].thumb}` has no `BASE` prefix, so it would have 404'd on
+  GitHub Pages under `/part2/` and worked only on a dev server at the root.
+- It replaced the summary text as well as the numeral, so a card lost its one line of
+  description.
+
+Also removed `.evidence-card__image` and `.evidence-card__image img`, orphaned by the
+deletion; the branch was their only user.
+
+**The lesson to carry:** adding a new optional data field can wake dead code that reads
+it. Before adding one, grep for the field name across `src/`, not just for the place you
+intend to render it. `grep -rn "thumb" src/` would have shown this in one line.
+
+Verified in the DOM: `.mission-card img` is 0, `.mission-card__panel` is 6, and the only
+image on the picker is the hero.
