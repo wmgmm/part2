@@ -1162,3 +1162,18 @@ per the house standard. Easy to swap for a + if the room finds it confusing.
 controls deliberately. Whenever one changes, grep the whole data file for the old name
 rather than fixing the step in front of you, because the same wrong name will have been
 copied into a step for a different tool.
+
+## 2026-09-05 (addendum 51): 04 step 2 body, Matt's wording
+
+Matt supplied the exact text: "In Gemini the button is a + under the box where you type;
+in Copilot it is a paperclip. Attach both, then send with the prompt above."
+
+Two changes from what was there. "Download both from the cards above" is gone, and
+"then send" became "then send **with the prompt above**", which ties the step back to
+step 1 rather than leaving "send" hanging.
+
+**Worth watching in the room:** no step now says the word *download*. It relies on the
+DOWNLOAD buttons on the two cards a few centimetres up, and on the attach strip naming
+the same two files. That is probably fine, and it is tighter, but if anyone stalls at
+this step in a live session, the missing download instruction is the first thing to
+suspect. 27 words, inside the 45-word cap.

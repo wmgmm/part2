@@ -654,7 +654,7 @@ export const MISSIONS = [
         // instead. At this step the question in the room is "which two?", and
         // showing them is faster than reading them.
         body:
-          'Download both from the cards above. In Gemini the button is a + under the box where you type; in Copilot it is a paperclip. Attach both, then send.',
+          'In Gemini the button is a + under the box where you type; in Copilot it is a paperclip. Attach both, then send with the prompt above.',
         attach: [A.trainingSkill, A.susPlan],
       },
       {
