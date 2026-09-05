@@ -701,3 +701,19 @@ Matt asked whether his spec had actually been tuned. Reviewing the merge against
 Both restored now the guideline is 7,000. File is 6,795. This is the second time in two days that squeezing to 6,000 removed something load-bearing, which is the argument for having raised it.
 
 Still deliberately not restored from his original: "Think like a top art director" (dropped "top" as it adds nothing), "one reaction" from "one slide, one message, one reaction", and "The contrast between text-dense areas and vast white voids creates rhythm across a deck", which restates the negative-space sentence immediately before it. His red-blade line was not cut, it was moved into the Colour section next to the hex values it governs.
+
+## 2026-09-05 (addendum 35): back to Matt's spec, with one section added
+
+Matt: "this was mine, i think you over complicated it a bit and we need a section on reading level no jargon etc as notebook can be confusing."
+
+He was right. The merge had grown a "When to use this" preamble, a three-item failure-state section, a separate "What to hand back", a paragraph on the stock Office theme, and a "Words on the slide" section of eight sub-rules. All of it defensible in isolation, and collectively it buried the thing that made his spec work, which is that it reads like an art director briefing a designer rather than a compliance document.
+
+The file is now his spec, his section headings, his wording, with exactly three interventions:
+
+1. **`#E5251A` corrected to `#E4251B` in BULLETS.** His spec carried both; the template has 56 runs of the first and 14 of the stray.
+2. **Two lines on the point sizes.** Rather than halving his numbers and losing his hierarchy, the sizes stay as written with a note that they are Cardiff's master-file scale on a 26.66in canvas, that the ratio is what matters, and that a standard 13.33in PowerPoint deck needs them halved. His numbers demonstrably work through Studio, which interprets rather than applies them; the correction only bites in PowerPoint. Halving them outright would have been the wrong fix to a real problem.
+3. **A new section, READING LEVEL AND PLAIN ENGLISH**, which is what he asked for and the one thing his spec never had. His spec is entirely about how a slide looks. Both real runs show the design carrying itself while the words stay as dense as whatever they came from, which is exactly his point about Notebook being confusing.
+
+Also folded in rather than kept as sections: Marr Sans and Darby dropped from FONTS (declared in the template but never rendered, and absent from Studio); the Welsh line in RULES scoped to a one or two word section name; and the failure-state machinery compressed from a section into two sentences at the end, because "never claim a font or a colour you did not set" is the part that earns its place and the rest was ceremony.
+
+5,669 characters, down from 6,795. Under the old 6,000 guideline again, which is the better outcome: the guideline was raised because content was load-bearing, and this proves some of it was not.
