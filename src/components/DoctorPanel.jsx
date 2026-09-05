@@ -21,7 +21,7 @@ function collectUrls() {
       if (s.artifact) add(s.artifact.downloadPath, `${m.code} · ${s.artifact.filename}`);
     });
   });
-  add(`${BASE}${HERO_IMAGE}`, 'Gallery · stall illustration');
+  add(`${BASE}${HERO_IMAGE}`, 'Gallery · hero illustration');
   Object.values(APPS).forEach(app => {
     if (app.logo) add(`${BASE}logos/${app.logo}`, `Logo · ${app.logo}`);
   });

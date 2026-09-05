@@ -294,7 +294,7 @@ const A = {
     label: 'THE SUSTAINABILITY PLAN',
     filename: 'Sustainable-Futures-en.pdf',
     downloadPath: `${BASE}placeholders/Sustainable-Futures-en.pdf`,
-    note: "Cardiff University's real ten-year plan, 18 pages. A public document: safe to upload.",
+    note: "Cardiff University's real ten-year plan, 18 pages.",
   },
   deepResearch: {
     label: 'A FINISHED DEEP RESEARCH RUN',
@@ -312,14 +312,14 @@ const A = {
     label: 'SKILL 2: MAKE IT CARDIFF',
     filename: 'Cardiff_House_Style.md',
     downloadPath: `${BASE}placeholders/Cardiff_House_Style.md`,
-    note: 'Builds it in Cardiff\'s voice and look. COPY it for Notebook\'s pencil, or download it to attach in Copilot or Gemini.',
+    note: 'Builds it in Cardiff\'s voice and look. COPY it for the Slide Deck description box, or download it to attach in Copilot or Gemini.',
     copyable: true,
   },
   exampleTraining: {
-    label: 'BACKUP TRAINING SESSION',
+    label: 'OPTIONAL: BACKUP TRAINING SESSION',
     filename: 'Example_Training_Session.pdf',
     downloadPath: `${BASE}placeholders/Example_Training_Session.pdf`,
-    note: 'A real Exercise 04 output, in case you skipped it or lost yours. Upload it to Notebook as a source.',
+    note: "Here's one we made earlier, in case Exercise 04 did not run for you. Upload it to Notebook as a source.",
   },
   hesaData: {
     label: 'TEN YEARS OF REAL DATA',
@@ -652,12 +652,12 @@ export const MISSIONS = [
     level: 2,
     title: 'The House Style',
     pageTitle: 'Turn the Training Into Slides That Look Like Cardiff',
-    summary: 'Two sources in a notebook, the house style in the pencil, one deck out.',
+    summary: 'Two sources in a notebook, the house style in the deck description, one deck out.',
     tools: [TOOLS.notebook],
     estMinutesCore: 12,
     toolInfo: {
       feature:
-        'Gemini Notebook answers only from the sources you give it. Its Studio panel turns those sources into a deck, an infographic, audio and more.',
+        'Gemini Notebook answers only from the sources you give it.',
       apps: [APPS.notebook],
     },
     workflow: ['Add two sources', 'Paste the house style', 'Generate and export'],
@@ -670,15 +670,21 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'Add two sources to a notebook',
         body:
-          'Open notebooklm.google.com, click Create new, and upload Sustainable-Futures-en.pdf. Then Add source again and paste your training session in as text. No training session? Upload the backup PDF above.',
+          'Use Gemini Notebook. Click Create new and upload Sustainable-Futures-en.pdf. Then Add source again and paste in your Exercise 04 training session, or upload the backup PDF above.',
       },
       {
         tier: 'core',
         estMinutes: 4,
-        title: 'Paste the house style in the pencil',
+        title: 'Paste the house style into Slide Deck',
         artifact: A.houseStyleSkill,
         body:
-          'Open Studio, choose Slide Deck, and click the pencil. Press COPY on the card below, paste the style in, then the prompt underneath. Do NOT add it as a source, or the deck becomes about the rules.',
+          'Open Studio and click Slide Deck. Press COPY on the card below, then paste the style and the prompt into the description box. Do NOT add it as a source, or the deck becomes about the rules.',
+        image: {
+          src: 'notebook_slide_deck.webp',
+          ui: true,
+          alt: 'Gemini Notebook\'s Customize Slide Deck dialog. Format offers Detailed Deck, ticked, or Presenter Slides. Below are language, length and sources controls, then a large field labelled Describe the slide deck you want to create, holding the placeholder PASTE CARDIFF UNIVERSITY STYLE INFO HERE.',
+          caption: 'Everything goes in the description box. Leave Detailed Deck and Default length alone.',
+        },
         promptLabel: 'YOUR PROMPT, PLUS ONE LINE',
         promptNote: '[paste the house style skill above this, then this prompt]',
         prompt:
@@ -694,7 +700,7 @@ export const MISSIONS = [
     ],
     verdictBy: 'The Matts',
     verdict:
-      'Where you put an instruction changes what it does. As a source, the house style becomes the subject of the deck. In the pencil, it becomes the way the deck is made.',
+      'Where you put an instruction changes what it does. As a source, the house style becomes the subject of the deck. In the description box, it becomes the way the deck is made.',
   },
 
   {

@@ -12,7 +12,7 @@ still off-brand.
 ## When to use this
 
 Any request to produce slides, an infographic, an image or a document for a
-Cardiff audience. Paste it into Gemini Notebook's Studio pencil, or attach it in
+Cardiff audience. Paste it into Gemini Notebook's Slide Deck description box, or attach it in
 Copilot or Gemini. Before you start, name what you are building from: the source
 document, and anything else attached. Go looking before you ask for it.
 

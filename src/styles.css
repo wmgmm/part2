@@ -1305,6 +1305,12 @@ a:hover,
   border-radius: var(--radius-card);
 }
 
+/* A screenshot of a control someone has to find has to be readable, so it gets
+   the full column rather than the 460px a decorative photo is happy with. */
+.mission-step__figure--ui img {
+  max-width: 100%;
+}
+
 .mission-step__caption {
   font-family: var(--font-mono);
   font-size: 0.7rem;

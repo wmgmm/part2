@@ -578,3 +578,21 @@ Converted at `-q 88 -resize 960 0`, giving 960x524 and 90 KB, down from the old 
 The new aspect ratio is 1.83:1 against the old 1.23:1, so at 320px wide the image is 175px tall rather than 260px. That works only because `.intro-row` was changed to `align-items: center` in addendum 26; under the old `stretch` it would have left a gap. The two changes were independent but the second one saved the first.
 
 `ROADMAP.md` still mentions `policy_stall.webp` in two dated log entries. Those are historical records of what was true then, so they stay.
+
+## 2026-09-05 (addendum 28): Notebook dropped the pencil, and the site had it in nine places
+
+Matt, from the live tool: "its click the slide deck and then you don't need the pencil now - you paste the style prompt in the 'describe what slide deck you want'."
+
+Gemini Notebook has changed since the exercise was written. Clicking Slide Deck now opens a **Customize Slide Deck** dialog carrying Format (Detailed Deck or Presenter Slides), language, length, sources, and a large field labelled **Describe the slide deck you want to create**. That field is where the house style goes. There is no pencil.
+
+This is the failure mode the tool-capabilities research doc exists to prevent, and it still caught us out: the instruction was verified in early September and was wrong by the fifth. Anything naming a control is perishable. `docs/research/2026-09-04-tool-capabilities.md` needs re-checking before every run, not just before the first.
+
+"Pencil" was load-bearing in nine places across five files, which is more than it looked: the artifact note, the exercise summary, the step title, the step body, **the completion verdict**, two source comments in `MissionDetail.jsx`, the header text inside the generated skill file itself, and four separate lines in `FACILITATOR_GUIDE.md` including the trap-to-name-out-loud and the quota note about revisions. The verdict was the easiest to miss, because it is the one place the word carried an argument rather than an instruction: "in the pencil, it becomes the way the deck is made" is now "in the description box".
+
+`Cardiff_House_Style.md` was regenerated and is 5,492 characters, still inside the 6,000 budget.
+
+**Matt's screenshot is now on the step**, which is new for this site outside Exercise 02. It needed a CSS variant: `.mission-step__figure img` caps at 460px, which is right for 02's photograph and useless for a screenshot of a control someone has to find. Added `--ui`, opted into by `image.ui` in the data, which lets it take the full column. It renders at 784px against an 851px source, so near 1:1 and the field labels stay sharp.
+
+`?doctor` picked the screenshot up with no code change, because `DoctorPanel` derives from `MISSIONS` and already collected step images. Twelve files now, all 200. Its hero row label still said "stall illustration" from the old cartoon; fixed to "hero illustration".
+
+**Browser-tool note, third time this session.** After a screenshot timeout the tab served a stale JS bundle and the new `--ui` class was silently absent, so the image looked unchanged and I nearly "fixed" working CSS. `javascript_tool` reading `className` and `getBoundingClientRect()` settled it in one call where a screenshot could not. Check the DOM, not the picture, when a style change appears to do nothing.

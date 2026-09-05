@@ -80,7 +80,7 @@ function ArtifactCard({ artifact }) {
   };
 
   // Skills go two ways: attached as a file in Copilot or Gemini, or pasted
-  // into Gemini Notebook's Studio pencil, which takes text and not files.
+  // into Gemini Notebook's Slide Deck description box, which takes text not files.
   const copy = async () => {
     try {
       const res = await fetch(artifact.downloadPath);
@@ -108,7 +108,7 @@ function ArtifactCard({ artifact }) {
           DOWNLOAD
         </button>
         {/* COPY is opt-in: only the house style skill needs it, because Studio's
-            pencil takes pasted text and not files. Everything else is attached. */}
+            description box takes pasted text, not files. Everything else is attached. */}
         {isText && artifact.copyable && (
           <button type="button" className="btn-artifact btn-artifact--ghost" onClick={copy}>
             {copied ? 'COPIED ✓' : 'COPY'}
@@ -135,9 +135,11 @@ function ArtifactCard({ artifact }) {
 
 // A step can carry one picture (Exercise 02 works from a supplied image).
 // src is relative to the site root; BASE keeps it right under /part2/.
+// image.ui marks a screenshot of a control, which needs the full column width
+// to stay readable rather than the 460px a photo is fine at.
 function StepFigure({ image }) {
   return (
-    <figure className="mission-step__figure">
+    <figure className={`mission-step__figure${image.ui ? ' mission-step__figure--ui' : ''}`}>
       <img src={`${BASE}${image.src}`} alt={image.alt} loading="lazy" />
       {image.caption && (
         <figcaption className="mission-step__caption">{image.caption}</figcaption>
