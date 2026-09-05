@@ -2156,3 +2156,18 @@ a:hover,
   width: auto;
   border-radius: 4px;
 }
+
+/* The strip's sequence joiner. "+" means "and this one too"; "then" means the
+   next thing you do, which is what Exercise 06's Canvas control is. */
+.attach-strip__then {
+  font-size: 0.78rem;
+  color: var(--grey);
+}
+
+/* Prompt notes are the do-this-before-you-send line, not part of the prompt, so
+   they carry weight. Applies to all five: they all do the same job. */
+.prompt-box__note {
+  font-weight: 700;
+  color: var(--black);
+  opacity: 1;
+}

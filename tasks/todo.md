@@ -2389,3 +2389,29 @@ items to seventeen.
 
 Verified from the clipboard: 9,666 characters, thirteen section headings, all seven special
 characters (`÷ × ² – ’ “ ”`) intact, no stray backslash. MH block sha256 unchanged.
+
+## 2026-09-05 (addendum 83): the strip reads as a sequence, and prompt notes go bold
+
+Matt: tune the order to New Chat, then paperclip attach with the HESA icon, then enable
+Canvas. And bold the note at the bottom, shortened to "[Canvas on and attach
+HESA_Estates_Workshop.csv]".
+
+**The strip now reads as three steps rather than a list:**
+
+> 📎 **NEW CHAT** [Excel icon] HESA_Estates_Workshop.csv *then* [Canvas]
+
+Two changes made that work. The label went from "IN THIS CHAT" to **"NEW CHAT"**, which is
+the first action rather than a location. And the joiner before the control went from `+` to
+**"then"**, because they mean different things: `+` on Exercise 04 means "and this one too",
+where two files go in together, while Canvas is the next thing you do. The strip now
+carries an order, which is what Matt asked for and what `+` could not express.
+
+**Prompt notes are now bold and black across the site**, not just this one. They are the
+do-this-before-you-send line rather than part of the prompt, they are already excluded from
+the COPY button, and all eight of them do the same job: attach this, paste that underneath,
+switch this on. Making one bold and leaving seven grey would have been the inconsistency.
+**Flagged in case Matt wants it scoped to Exercise 06 only**, but the site-wide version
+looks right: verified all eight render at weight 700.
+
+The note also lost "new chat" and "again", which the strip and the body now both say. It is
+down from 66 characters to 47.

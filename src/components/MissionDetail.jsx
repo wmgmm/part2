@@ -191,7 +191,7 @@ function AttachStrip({ items, label, extra }) {
           the same chat, so the strip shows the button they are looking for. */}
       {extra && (
         <>
-          <span className="attach-strip__plus" aria-hidden="true">+</span>
+          <span className="attach-strip__then">then</span>
           <img className="attach-strip__control" src={`${BASE}${extra.src}`} alt={extra.alt} />
         </>
       )}
