@@ -1876,3 +1876,39 @@ rather than deleted: it is opt-in, it renders nothing unless a card asks for it,
 has now wanted such a link twice. Commented in `MissionDetail.jsx` as unused with a
 pointer to grep the field name before reintroducing it, which is the addendum 46 lesson
 applied rather than repeated.
+
+## 2026-09-05 (addendum 67): the chart request rewritten against a real output
+
+Matt ran the new prompt and sent the chart back. The **structure worked**: three box plots,
+Cardiff marked, an IQR/median/whisker footnote, and the model correctly reported 29
+universities for renewables against 31 for the two intensity measures, which matches the
+coverage in the file. So the ask was sound; four things in the wording were not.
+
+**1. The legend overlapped the data.** Matt's actual complaint. "Cardiff University" sat
+inside panel 1 at the top, colliding with the whisker. Fixed by removing the need for a
+legend at all: "Mark Cardiff on each as a single point, labelled beside the point with its
+own value. Use no legend, and put nothing inside the plot area that can overlap a box or a
+whisker." **Annotating one point directly beats a legend for one series**, and it also
+answers the question the legend could not, which is what Cardiff's value actually is.
+
+**2. The units made the numbers unreadable.** The emissions axis came back as
+`tCO2e per m2`, running 0.02 to 0.08. Cardiff's 40.0 rendered as **0.04**. The prompt now
+names the unit: **kgCO2e per square metre**, so the axis reads 20 to 80 and the number is
+the one in the facilitator answer keys.
+
+**3. Nothing told the reader which direction is good.** On two panels low is good and on the
+third high is good, and Cardiff is low, low, high. A reader glancing across could take that
+as three consistent results or as Cardiff being poor on the third. The prompt now asks each
+panel to state **whether lower or higher is better**, which is the difference between a
+chart and a chart someone can read without a briefing.
+
+**4. The panel n belongs on the chart, not in the prose.** The model volunteered the 29
+versus 31 in its explanation. Asking for it on the panel means it survives when the chart
+is pasted into a deck without the paragraph underneath.
+
+**"Publication-ready" was left in** because Matt wrote it, but it is doing no work on its
+own: the four concrete requirements are what will produce the result. That is the same
+lesson as addendum 62, where a vague quality adjective loses to a checkable instruction.
+
+Verified: COPY puts all 1,389 characters on the clipboard with no markup, MH block sha256
+unchanged, build green.
