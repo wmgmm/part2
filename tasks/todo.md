@@ -1968,3 +1968,38 @@ apostrophes in new prompt copy rather than escaping them.** Verified there is no
 backslash anywhere in the copied output.
 
 Item 4 is 102 words as rendered, the whole prompt 228. MH block sha256 unchanged.
+
+## 2026-09-05 (addendum 70): Matt's tested prompt replaces mine
+
+Matt: "I have a tested prompt that works well." Applied verbatim. **A tested prompt beats a
+reasoned one**, and several of my refinements are now gone by his choice, which is the right
+outcome: I was theorising from one screenshot, he ran it.
+
+**What changed from the version I had built:**
+
+- **Four items become three.** "Three insights worth knowing, one sentence each" is gone. It
+  was his own earlier item, so this is him editing himself after seeing the output.
+- **The chart moves from 4 to 2**, straight after the executive summary, which puts the
+  visual next to the prose it supports rather than at the end.
+- **His legend fix, not mine.** He keeps a legend and places it outside: "Place any legend
+  outside the plotting area so it does not cover data points, labels or boxplots." I had
+  removed the legend entirely and annotated the point. Both solve the overlap; **his is
+  tested and mine was not**, so his stands.
+- **Dropped from my version:** the kgCO2e unit, the per-panel n, the direction-of-good line,
+  the named title, and the "assume it will be forwarded on its own" framing.
+
+**One observation, recorded rather than argued.** The unit was a real legibility problem in
+his own screenshot: the emissions axis came back as `tCO2e per m2` running 0.02 to 0.08, so
+Cardiff's 40.0 rendered as **0.04**. If his tested run produced a readable axis then the
+point is moot and the shorter prompt is better. If a future run comes back in tonnes again,
+adding "in kgCO2e" to the chart line is a two-word fix. Noted here so the option is not lost.
+
+The **"assume it will be forwarded on its own"** phrase from addendum 68 is no longer in any
+prompt. It is still a good phrase and is recorded here; the same idea survives in Exercise
+04 and in `Cardiff_Brand_SKILL.md`.
+
+**Nothing downstream broke.** The chart is now item 2 but the green tariff is still item 3,
+so step 3's "check it against the answer to question 3" still points at the right thing. The
+workflow chip "Find Cardiff" and the step title "Find Cardiff on the chart" both still hold.
+`promptEmphasis` still matches its line exactly. 170 words, no apostrophes, clipboard clean,
+MH block sha256 unchanged.
