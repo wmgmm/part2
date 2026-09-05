@@ -2206,3 +2206,36 @@ closing double quote in place.
 
 Facilitator guide updated with the bubble chart, the three operational warnings and the
 verification panel.
+
+## 2026-09-05 (addendum 77): the Gapminder dashboard prompt
+
+Matt supplied a much larger step 4 prompt: a Hans Rosling / Gapminder animated bubble
+chart, one HTML file, autoplaying and looping, Cardiff against the sector with Bristol as
+the default comparator. **5,394 characters**, up from 2,047. Then two refinements: 1.8
+seconds per year became 2.5, then the whole line became "~2.5 seconds per academic year
+transition with linear fractional time interpolation", which pairs properly with the
+"2020.1, 2020.2, 2020.3" requirement above it.
+
+**Checked against the data before installing it, because the prompt hard-codes three column
+names and an institution.** All three columns exist exactly as written: `Energy_kWh`,
+`FloorArea_m2`, `Scope12_tCO2e`. **"University of Bristol" matches exactly**, and only
+because the generator strips HESA's leading "The": the raw record calls it "The University
+of Bristol", so without that rule the default comparator would have silently found nothing.
+Bristol has all ten years.
+
+**Bristol is a better comparator than Matt may realise.** 2024/25: Bristol 21,670 tCO2e on
+536,730 m2 against Cardiff 21,336 on 532,968. **Near-identical estates and near-identical
+emissions**, so the bubbles start on top of each other and any divergence over the decade is
+real rather than a size artefact. And Bristol buys **13.6% renewable against Cardiff 100%**,
+which sets up the green tariff paradox from step 1 without the prompt having to mention it.
+
+**Escaping: zero needed, and that was a decision.** My first pass rephrased Matt's
+possessives to dodge the single-quote trap, which changed his words for no good reason. His
+originals use the **curly** apostrophe, which needs no escaping inside a single-quoted JS
+string, so restoring his exact text was both more faithful and safer than my rewrite.
+Verified from the clipboard: 5,394 characters, `÷ × “ ” ’` all intact, no stray backslash,
+all eleven section headings present.
+
+**Body carries the model tip:** "It works on Flash but Pro handles it better." 41 words,
+inside the house cap. That phrasing is deliberate: it does not block anyone stuck on Flash,
+which is what "use Pro" alone would have implied.
