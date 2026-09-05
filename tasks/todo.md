@@ -2167,3 +2167,42 @@ exercise rather than a property of the file.
 Worth noting the four step bodies now read as a clean sequence with no repetition between
 them: start in Copilot, attach and read it, run it again in Gemini and compare, then build
 the dashboard in Gemini. Nothing explains the file, and nothing needs to.
+
+## 2026-09-05 (addendum 76): step 4 becomes a new chat, and a much bigger dashboard prompt
+
+Matt: step 4 needs a **new chat** with the data uploaded and Canvas clicked, it can take a
+while or crash the first time, and just try again. Plus a wholly new build prompt.
+
+**The new-chat detail resolved a contradiction I would otherwise have shipped.** The old
+prompt said "DATA: use only the figures computed above in this chat", which is meaningless
+in a fresh chat where nothing has been computed. Matt's replacement says "Use only figures
+provided or calculated in this chat", which works either way, because in a new chat the
+attached CSV **is** the provided figures. Had only the body changed, the prompt would have
+told the model to use figures that did not exist and the NEEDS DATA rule would have fired
+on everything.
+
+**The prompt is far more ambitious than what it replaced**, and the data supports it. The
+centrepiece is an animated bubble chart: one bubble per university, energy intensity against
+emissions intensity, sized by floor area, playing 2015/16 to 2024/25 with Cardiff
+highlighted and a trail. That needs per-university per-year floor area, energy and emissions
+for all 31 institutions across ten years, which is **exactly the 307-row shape** the
+workshop dataset was built into. The old two-line-chart version used a fraction of it.
+
+It also keeps the verification idea that has been circling this exercise all day, and puts
+it **inside the artefact**: a panel showing source values, formula, arithmetic, result, an
+Excel formula and one limitation for the single most important number. The Excel formula
+from my step 3 draft survives here, which is a better home for it.
+
+**Body rewritten:** new chat, attach the CSV again, Tools menu, Canvas, "the first build
+often takes a while or falls over. If it does, just send it again." New `promptNote`:
+"[new chat, Canvas on, and attach HESA_Estates_Workshop.csv again]".
+
+**Escaping, since this prompt is full of traps.** Four apostrophes (Cardiff University's,
+Cardiff's x2, and one in the closing question), plus `kWh/m²` and `kgCO₂e/m²` carrying a
+superscript two and a **subscript two**. Built the JS string programmatically rather than by
+hand and verified from the clipboard: **2,047 characters, four apostrophes rendering, no
+stray backslash, both special characters intact**, all four stage headings present, and the
+closing double quote in place.
+
+Facilitator guide updated with the bubble chart, the three operational warnings and the
+verification panel.
