@@ -2359,3 +2359,33 @@ both honest, and it is now the facilitator's line rather than a step.
 
 Worth noting the intensity finding survives in the data even though no step asks for it. If
 the room wants it, it is one prompt away, and the guide now carries the numbers.
+
+## 2026-09-05 (addendum 82): the dashboard prompt gains a size key and named bubbles
+
+Third revision of step 4. **7,382 to 9,666 characters.** Two new sections, both fixing the
+same weakness: a Gapminder chart where you cannot tell what the bubbles mean or who they
+are.
+
+- **BUBBLE SIZE KEY.** A legend saying "Bubble size = total floor area", three example
+  bubbles at representative m² values, and a **square-root radius scale**, which is the
+  correct one: area, not radius, must be proportional to the value, or a university twice
+  the size looks four times bigger. The previous version asked for "bubble area, not
+  radius" but never said how, and never asked for a key at all.
+- **UNIVERSITY IDENTITIES.** Grey bubbles must stay recognisable: short labels, a JavaScript
+  abbreviation map, full names in tooltips, leader lines, a white halo, and a stated
+  priority order when labels cannot all fit. This is the fix for the obvious failure mode of
+  the previous version, 29 anonymous grey circles.
+
+**Checked the ten named abbreviations against the data before installing.** All ten resolve
+to real institutions in the CSV. Worth recording that **"Imperial College London" only
+exists because the generator renames it**: HESA calls it "Imperial College of Science,
+Technology and Medicine". Same class of dependency as the leading-"The" strip that
+"University of Bristol" and "University of York" rely on. **If anyone edits
+`tools/make_workshop_dataset.py`, three things in this prompt break silently.**
+
+Also new: labels and leader lines interpolate at the same frame rate as the bubbles, Follow
+Cardiff keeps enough contrast to read neighbours, and the self-check grows from twelve
+items to seventeen.
+
+Verified from the clipboard: 9,666 characters, thirteen section headings, all seven special
+characters (`÷ × ² – ’ “ ”`) intact, no stray backslash. MH block sha256 unchanged.
