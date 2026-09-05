@@ -1490,3 +1490,40 @@ from the call site in `App.jsx`. `player.name` is still used in `App.jsx` for th
 "Signed in as ..." footer, which is untouched, and `loadUser` still drives routing, so
 nothing else is affected. Verified on the page: the footer still reads "Signed in as
 Matt. Not you?"
+
+## 2026-09-05 (addendum 61): a backup link to HESA on the dataset card
+
+Matt: could the HESA file also link to the dataset on the HESA site, as a backup.
+
+**The URL came out of the file itself, not a guess.** Row 5 of
+`HESA_Estates_Management.xlsx` is a **"Data file canonical link"** written by HESA:
+`https://www.hesa.ac.uk/data-and-analysis/estates/data.zip`. That is the same target as
+"Download source data (zip)" on their site, which settles where our copy came from.
+
+**A finding that matters more than the link.** HESA publish **no .xlsx**. The page offers
+only a zip of the whole release and per-table CSVs. So the backup cannot be a like-for-like
+swap of our file. What saves it: rows 1-10 of our file are HESA's own metadata block
+(Title, Location, Academic years, Data source, canonical link, Licence, Code page, blank,
+Last updated, blank) with the real header on row 11. That block is HESA's standard
+open-data layout and is in their CSV too, so Exercise 06's prompt line "The header row is
+row 11, so skip the ten rows above it" **still holds on a file fetched from HESA**. Had our
+copy been re-cut rather than converted, the backup would have silently broken the prompt.
+
+**Matt chose the page over the canonical zip**, and it is the better call for a live room:
+nothing downloads unexpectedly, the licence and year range are visible, and a single-table
+CSV is far easier to attach to Gemini than a zip somebody has to extract first. Verified
+live in the browser: `hesa.ac.uk/data-and-analysis/estates/environmental`, titled "HE
+Provider Data: Estates Management", covering **2015/16 to 2024/25**, exactly our range.
+`WebFetch` gets a 403 from HESA, so the browser was the only way to confirm it.
+
+**Implementation.** New optional artifact field `sourceLink: { href, label }`, rendered by
+`ArtifactCard` as a small accent-blue text link under the note. **Deliberately not a fourth
+button**: it is a fallback, and the card keeps one obvious primary action. `target="_blank"`
+with `rel="noopener noreferrer"`.
+
+**`DoctorPanel` deliberately does not check it.** A `fetch(..., {method:'HEAD'})` at
+hesa.ac.uk from the site would be blocked by CORS and reported as a **false failure** on the
+facilitator's preflight, which is worse than not checking. The preflight is for files we
+host. It still reports 17, all 200.
+
+MH block sha256 unchanged. Card grew to 115px; buttons still on the same row.

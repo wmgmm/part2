@@ -115,6 +115,18 @@ function ArtifactCard({ artifact }) {
         {artifact.note && (
           <span className="mission-artifact__note">{artifact.note}</span>
         )}
+        {/* Deliberately a text link, not a fourth button: it is the fallback
+            route, and the card keeps one obvious primary action. */}
+        {artifact.sourceLink && (
+          <a
+            className="mission-artifact__source"
+            href={artifact.sourceLink.href}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {artifact.sourceLink.label} ↗
+          </a>
+        )}
       </div>
       <div className="mission-artifact__actions">
         <button type="button" className="btn-artifact" onClick={download}>

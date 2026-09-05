@@ -366,6 +366,16 @@ const A = {
     downloadPath: `${BASE}placeholders/HESA_Estates_Management.xlsx`,
     note: 'Every UK university, 2015/16 to 2024/25. HESA, www.hesa.ac.uk.',
     thumb: EXCEL_ICON,
+    // A backup route if the hosted copy will not download in the room. HESA
+    // publish no .xlsx, so this is the page rather than a file: it offers the
+    // whole release as a zip or a single table as CSV, and carries the licence.
+    // The file cites its own canonical source as .../estates/data.zip, which is
+    // what our copy was converted from, so the ten metadata rows and the header
+    // on row 11 that the prompt relies on are HESA's own and survive either way.
+    sourceLink: {
+      href: 'https://www.hesa.ac.uk/data-and-analysis/estates/environmental',
+      label: 'Backup: get it from HESA',
+    },
   },
   factCheckSkill: {
     label: 'SKILL 3: CHECK IT BEFORE IT GOES',

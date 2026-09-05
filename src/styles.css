@@ -2129,3 +2129,17 @@ a:hover,
   color: var(--grey);
   font-weight: 700;
 }
+
+/* Fallback route on a download card: quiet blue text, not a fourth button, so
+   the card keeps one obvious primary action. */
+.mission-artifact__source {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  margin-top: 0.15rem;
+}
+
+.mission-artifact__source:hover {
+  text-decoration: underline;
+}
