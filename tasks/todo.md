@@ -802,3 +802,11 @@ Matt's two observations behind it are worth keeping as reasoning, not just as a 
 **One tension it creates, worth watching.** BULLETS says "no numbered lists", and a numbered ladder is exactly the visual the Demand First material wants. If a run comes back refusing to number the four steps, that rule is the cause.
 
 **Paid for by 264 characters of trimming**, mostly things the earlier cuts had already orphaned: "the ratio matters more than the number" in SIZES lost its point when the PowerPoint note went, and "a non-specialist and an expert should both get it on first read" was the third sentence making the same case in one paragraph. 4,878 characters, 38 spare.
+
+## 2026-09-05 (addendum 41): front matter removed from the brand skill
+
+Matt asked for the YAML block to go. It was costing 152 characters of a 5,000-character budget and nothing was reading it: the file is pasted into Notebook's description box or attached to a chat, and neither parses front matter. It was formal correctness with no reader.
+
+This does make the brand skill the odd one out. `Training_Module_Builder.md` and `Fact_Check_Cardiff.md` both keep their `name` and `description`, and the anatomy in `docs/research/2026-09-04-skill-authoring-patterns.md` describes front matter as part of the pattern. The difference is defensible: those two are attached as files, where a description helps a tool decide whether to use them, and neither is squeezed against a hard field limit. This one is pasted into a box that truncates.
+
+4,730 characters, 186 spare, which is the most headroom the file has had since the limit was discovered.

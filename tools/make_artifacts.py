@@ -153,12 +153,7 @@ thing in the document, because it tells whoever owns the policy what their polic
 does not yet say.
 """
 
-CARDIFF_HOUSE_STYLE = """---
-name: cardiff-brand-skill
-description: Cardiff University's slide design system, for slides, an infographic or a document.
----
-
-# Cardiff University Slide Design Spec
+CARDIFF_HOUSE_STYLE = """# Cardiff University Slide Design Spec
 
 You are creating slides for Cardiff University.
 

@@ -1,8 +1,3 @@
----
-name: cardiff-brand-skill
-description: Cardiff University's slide design system, for slides, an infographic or a document.
----
-
 # Cardiff University Slide Design Spec
 
 You are creating slides for Cardiff University.
