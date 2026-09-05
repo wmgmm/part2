@@ -962,8 +962,11 @@ h1, h2, h3 {
   margin: 0;
   padding: 0.8rem 0.9rem;
   /* Matt Hayden's Copilot prompt is 133 lines. Without a cap it pushes the
-     30-second check several screens below the fold. Scroll it instead. */
-  max-height: 22rem;
+     rest of the page several screens below the fold. Scroll it instead.
+     24rem, not 22: Exercise 06's first prompt lands at 360px, so 22rem
+     (352px) made it scroll by 8 pixels for no reason. Raising the cap only
+     ever shows more before scrolling, so nothing else is affected. */
+  max-height: 24rem;
   overflow-y: auto;
   background: var(--parchment);
 }

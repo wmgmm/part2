@@ -2090,3 +2090,26 @@ it stopped being when 06 became the data exercise. Day total 80 to **77**.
 
 Verified: four steps, no reference to a projection or a trend anywhere in `missions.js`,
 build green.
+
+## 2026-09-05 (addendum 73): prompt 1 reflowed, and the scroll cap raised 8px short
+
+Matt reflowed Exercise 06's first prompt to kill the vertical scrollbar: the three opening
+paragraphs merge into one, and "Give me:" becomes "Output:", with item 1 tight under it.
+
+**It nearly worked and would have been easy to call done.** Measured in the browser rather
+than assumed: the reflow took the box to **360px against a 352px cap**, so it still
+scrolled, **by eight pixels**. The text change alone did not achieve what he asked for.
+
+Raised `.prompt-box__text` `max-height` from **22rem to 24rem**. Safe, because the cap
+exists only to stop Matt Hayden's 133-line Copilot prompt pushing the rest of the page
+below the fold, and raising it only ever shows more before scrolling. Nothing can lose
+content this way. Comment updated to record the 360px reason so nobody trims it back.
+
+**Result, measured across all 21 step prompts:** only two still scroll, and both should.
+Exercise 06's dashboard build prompt is ~616px and Exercise 03's process-designer prompt
+~394px; both are genuinely long and scrolling is the right behaviour. Exercise 06's first
+prompt now reports `scrollHeight === clientHeight`.
+
+`promptEmphasis` still matches: "Work out every figure by writing and running code (Python),
+not by estimating" survives verbatim inside the merged opening paragraph, so the bolding is
+unaffected by the reflow.
