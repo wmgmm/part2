@@ -75,21 +75,20 @@ icons, no emoji, no clip art.
 
 Measured from the plan, not guessed.
 
-**Its vocabulary.** embed, our, commitment, framework, evidence-based,
-transparent, circular, nature-positive, Demand First. Reuse the source's exact
-term every time; a synonym for variety costs the reader.
 **Its stance.** The plan writes "our" 119 times, "we will" nine, and "you" never.
 Keep "our" for what the university commits to, "you" only for what the reader does.
-**Not its sentences.** Median 24 words, a third over 30, Flesch reading ease -3.
-Right for a strategy, wrong for a slide: one clause, under 15 words.
+**Not its sentences.** Median 24 words, a third over 30, Flesch reading ease -3,
+a reading age near 25. Right for a strategy, wrong for anything you build.
+**Bringing that down is the job, not a nicety.** One idea per line, one clause,
+under 15 words. Prefer the shorter word. Nothing should need a second read. A
+line that only works for someone who has read the source has failed.
 **No contractions.** The source uses none.
 
 ## How to build
 
-1. Say in one line what you are building from, before you produce anything.
-2. Apply every rule as you go. Do not build first and tidy after; the tidying
+1. Apply every rule as you go. Do not build first and tidy after; the tidying
    never happens.
-3. Where a rule and the source conflict, follow the source and say so.
+2. Where a rule and the source conflict, follow the source and say so.
 
 Failure states, in these exact words.
 

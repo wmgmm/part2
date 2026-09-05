@@ -636,3 +636,15 @@ That last figure is the important one and it reframes the exercise. The plan is 
 First placement put the block between V6 and D1, which silently reparented D1 to D8 under "What good looks like". Moved after D8.
 
 Web research on Cardiff's own published tone-of-voice guidance was commissioned in parallel and had not reported when this landed. If it turns up named voice attributes, they belong in this section.
+
+## 2026-09-05 (addendum 31): the vocabulary list was wrong, and readability is now the stated job
+
+Matt: "I don't want vocab too specific to the document that don't make sense and also I want the cardiff slide deck to reduce the reading age the Flesh thing... clear and easy consise, jargon free bake that in to the style."
+
+**The vocabulary list is gone, and he was right.** Listing "circular, nature-positive, Demand First" as words to reuse was a category error: `Cardiff_House_Style.md` is a general skill for any Cardiff deck, infographic or document, and it was seeding one document's jargon into all of them. Someone building a deck about research funding would have been told to reach for "nature-positive". Worse, it pushed *towards* jargon in a skill whose V2 rule bans it. The measurement was sound; the conclusion drawn from it was not.
+
+What replaces it is the point the measurement actually supports. The plan scores Flesch reading ease -3 at a reading age near 25, so the skill now states that bringing that down **is the job, not a nicety**, and gives a test that can be applied line by line: *a line that only works for someone who has already read the source has failed*. That is checkable in a way "be concise" never is.
+
+**Budget, resolved by deletion rather than more slicing.** The addition took the file to 6,065, then 6,025 after tightening. Rather than keep shaving good sentences, removed step 1 of "How to build" ("Say in one line what you are building from"), which restated what "When to use this" already says two paragraphs earlier. One statement of the context contract is enough. The file is 5,949 characters, and for once there is real headroom rather than one character of it.
+
+Standing note for next time: if this file needs to grow again, raise the guideline rather than cut content. The Copilot Agent Builder instructions field holds 8,000; 6,000 was always a safety margin.
