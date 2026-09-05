@@ -736,3 +736,19 @@ Matt supplied his separate plain-English writing skill and asked for some of it,
 **WHEN TO USE IT restored**, having been cut yesterday as over-complication. It is back because his own document has one and because it carries something the file otherwise lost: the instruction to attach this to a long research run so the report comes back already in the style.
 
 6,999 characters against the 7,000 guideline. One character. The next edit needs the trim planned rather than discovered.
+
+## 2026-09-05 (addendum 37): renamed to Cardiff_Brand_SKILL.md, and the paste order flipped
+
+Matt sent a new screenshot of the Slide Deck dialog and asked for the skill to be called `Cardiff_Brand_SKILL.md`.
+
+Renamed across `tools/make_artifacts.py`, `tools/make_example_pdf.py`, `src/data/missions.js`, `CLAUDE.md` and `FACILITATOR_GUIDE.md`, with the old file deleted. The Python constant keeps its old name deliberately: only the artefact Matt hands out was renamed, and churning the constant too would have made the diff harder to read for no gain.
+
+**The screenshot carried a change he did not mention, and it reversed an instruction.** His new capture shows the description box holding the prompt on the first line and `[PASTE CARDIFF BRAND SKILL HERE]` beneath it. Every instruction on the page said the opposite: the old note read "[house style first, then this line underneath it]" and the body said "paste the style and the prompt into the description box", in that order. Anyone following the page would have pasted them the wrong way round.
+
+Fixed in four places, since the order was baked into more of the step than expected: the step body, the `promptNote`, the image `alt`, and the caption. The caption now reads "Prompt first, skill underneath, both in the description box."
+
+Worth noting for its own sake: the on-screen order now matches the paste order exactly. The prompt box sits above the skill card because Matt asked for that a few edits ago, and the description box wants them in that same sequence. That was luck rather than design, but it is worth not breaking.
+
+`?doctor` reports twelve files, all 200, with the renamed skill picked up automatically because it derives from `MISSIONS`.
+
+**Left alone and worth a decision:** the workflow chip still says "Paste the house style" and the step title "Paste the house style into Slide Deck", while the file is now `Cardiff_Brand_SKILL.md` and its card reads "SKILL 2: MAKE IT CARDIFF". Three names for one thing. Not changed because that copy has been hand-tuned repeatedly and the rename was the only instruction given.

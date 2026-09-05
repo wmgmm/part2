@@ -8,7 +8,7 @@ Output:  public/placeholders/Example_Training_Session.pdf
 The source is a real output of Training_Module_Builder.md run on the sustainability
 plan, lightly copy-edited to UK English. Edit the markdown, not the PDF.
 
-Styled to Cardiff_House_Style.md: Cardiff Red #E4251B on headings, black text on
+Styled to Cardiff_Brand_SKILL.md: Cardiff Red #E4251B on headings, black text on
 white, #CCCCCC rules, #D9D9D9 panels. Franklin Gothic and Georgia are named first
 and fall back to what the machine has, since neither is installed here.
 """

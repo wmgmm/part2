@@ -166,9 +166,7 @@ exactly. No deviations.
 ## WHEN TO USE IT
 
 Any time you are building slides, an infographic or a document for a Cardiff
-audience. If you are briefing a long research run that will end in a deck, attach
-this too, so what comes back is already in the style. Before you start, say in
-one line what you are building from.
+audience.
 
 ## DESIGN PHILOSOPHY
 
@@ -299,9 +297,6 @@ closers, Welsh first: a one or two word section name, never Welsh body text you
 invented. Photography is Cardiff University architecture at editorial scale, no
 stock images. No shadows, gradients, icons, emoji, illustrations, or decorative
 lines.
-
-Hand back the deck, then one short note of anything you could not do. Never claim
-a font or a colour you did not set.
 """
 
 FACT_CHECK_CARDIFF = """---
@@ -385,7 +380,7 @@ accountable for anything published.*
 
 SKILLS = {
     "Training_Module_Builder.md": TRAINING_MODULE_BUILDER,
-    "Cardiff_House_Style.md": CARDIFF_HOUSE_STYLE,
+    "Cardiff_Brand_SKILL.md": CARDIFF_HOUSE_STYLE,
     "Fact_Check_Cardiff.md": FACT_CHECK_CARDIFF,
 }
 
