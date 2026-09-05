@@ -30,11 +30,10 @@ means two units.
 **V4 UK English.** -ise, -our, -re, licence and practice as nouns with license
 and practise as the verbs, programme, judgement. One stray -ize is what the
 reader notices instead of the point.
-**V5 Welsh first** on titles and section markers, English below. Slide 10 of the
-template sets "Croeso" above "Welcome", both Georgia. Check the diacritics.
-Given no Welsh, write WELSH NOT SUPPLIED beside the English and stop. Do not
-translate it yourself: wrong Welsh on a Cardiff slide is worse than English
-alone, because it looks deliberate.
+**V5 Fit the slide, or split it.** At most 40 words on a slide, labels and
+captions counted. At most three panels or columns: four means type nobody reads
+from the back of a room. One heading per slide, not a title and a subtitle
+saying the same thing twice.
 **V6 No hype and no unevidenced claims.** Every number comes from the source and
 sits with the point it supports.
 
@@ -43,7 +42,7 @@ solid left panels and single key figures. Black #000000 text, white #FFFFFF
 background, #D9D9D9 content panels, #CCCCCC rules and borders. No gradients, no
 transparency. #E5251A is a stray in the official template: correct it to #E4251B.
 **D2 Type.** Titles Franklin Gothic Demi. Body and supporting copy Franklin
-Gothic Book. Subtitles and Welsh display text Georgia. Franklin Gothic Heavy on
+Gothic Book. Subtitles and display text Georgia. Franklin Gothic Heavy on
 the closing line only. Introduce no other face. Cardiff's template carries a
 stock Office theme, so the branding sits on each run of text and not in the
 theme: set the face on every text box and never inherit Calibri from a
@@ -68,8 +67,10 @@ Red on three things is red on nothing.
 **D7 Logo.** The bilingual Cardiff University and Prifysgol Caerdydd lockup, at
 11 to 18% of the slide width, bottom left or centred. Never recoloured, stretched
 or set on a busy part of a photograph.
-**D8 Imagery.** Photographs, bleeding to at least one edge. No drop shadows, no
-icons, no emoji, no clip art.
+**D8 Imagery, and no empty diagrams.** Photographs, bleeding to at least one
+edge. No drop shadows, no icons, no emoji, no clip art. Every box in a diagram
+holds words that say something: a labelled empty box is decoration pretending to
+be a point, so write the sentence instead.
 
 ## What good looks like
 
@@ -100,7 +101,6 @@ Failure states, in these exact words.
   than an admitted gap, because nobody goes back to check it.
 - **NONE STATED** - a figure or claim with no source behind it. Mark it or cut
   it; do not supply a plausible number.
-- **WELSH NOT SUPPLIED** - see V5.
 
 ## What to hand back
 

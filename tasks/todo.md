@@ -648,3 +648,20 @@ What replaces it is the point the measurement actually supports. The plan scores
 **Budget, resolved by deletion rather than more slicing.** The addition took the file to 6,065, then 6,025 after tightening. Rather than keep shaving good sentences, removed step 1 of "How to build" ("Say in one line what you are building from"), which restated what "When to use this" already says two paragraphs earlier. One statement of the context contract is enough. The file is 5,949 characters, and for once there is real headroom rather than one character of it.
 
 Standing note for next time: if this file needs to grow again, raise the guideline rather than cut content. The Copilot Agent Builder instructions field holds 8,000; 6,000 was always a safety margin.
+
+## 2026-09-05 (addendum 32): the first real run of the skill, and what it exposed
+
+Matt ran the house style skill for real and sent back `Demand_First_Purchasing.pdf`, fourteen slides out of Notebook. It is an image-only export, so `pdftotext` returns nothing; rendering with `pdftoppm` and tiling into contact sheets is how to read one of these.
+
+**V5 was actively harmful and is gone.** It demanded Welsh first on every title, with WELSH NOT SUPPLIED as the failure state when no Welsh was given. The source had no Welsh, so the model did exactly as instructed and stamped **WELSH NOT SUPPLIED across all fourteen slide titles**. Every slide. It is the first thing you see on the cover and it never stops. A rule whose failure state fires on every unit is worse than no rule, because the honest failure state is louder than the content it is protecting.
+
+The wider lesson, worth carrying into any skill: a failure state should be rare by construction. If the common case triggers it, the rule is wrong, not the source. Welsh belongs in the room, where a person supplies it, not in an unattended generation. Note Matt's own teaching slide still lists "Welsh first" as part of the Cardiff brand answer, which is correct for the brand and wrong to delegate; the facilitator guide now says so explicitly.
+
+**Two real clarity failures in the output**, both now ruled against:
+
+- **Slide 8, "Elimination Beats Substitution", was two empty rectangles** labelled Step 1: Avoidance and Step 2: Substitution. A diagram containing nothing. D8 now says every box in a diagram holds words that say something, and that a labelled empty box is decoration pretending to be a point.
+- **Slide 9 packed five narrow columns of small text**, and the two "Check Your Understanding" slides carried ninety-odd words each. V5's slot was free, so it became the density rule: at most 40 words a slide including labels, at most three panels or columns, one heading rather than a title and a subtitle saying the same thing twice.
+
+**What the run got right**, worth not breaking: red used once per slide, the ladder motif repeated down the deck with the current step highlighted, and slide 4 landing on "The most sustainable purchase is the one you do not make." That is the deck's best line and it came out of the skill working as intended.
+
+The file is 5,991 characters. Dropping V5's Welsh paragraph paid for both new rules almost exactly.

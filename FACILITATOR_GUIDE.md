@@ -65,6 +65,8 @@ Costs no Studio generations. All text, both tools, so nobody is blocked.
 
 ### 05 The House Style (Gemini Notebook) - Matt Mort
 Teaching point: a notebook grounded in two sources, and a house style applied at generation rather than after the fact.
+**Note on Welsh.** V5 used to demand Welsh first on every title. Run against a source with no Welsh in it, the skill did exactly as told and stamped WELSH NOT SUPPLIED across all fourteen slide titles, which is worse than having no rule. The rule is gone. If your own slides still say "Welsh first" as part of the Cardiff brand answer, that is right for the brand and wrong for an unattended generation: say it in the room, do not ask the model to do it.
+
 **The trap to name out loud:** the house style skill goes in the Slide Deck **description box**, not in the source list. The download strip has a **COPY** button on it for exactly this: it puts the whole file on the clipboard, ready to paste in. They can still download it as a .md when they want to attach it in Copilot or Gemini. Add it as a source and the deck comes back partly about the style rules, because Studio generates from whatever you gave it. That is a genuinely confusing failure and it looks like the tool misbehaving.
 **Nobody gets stranded.** `Example_Training_Session.md` ships as a backup for anyone who skipped 04 or lost what they made. It is a real output of the training skill, gap note and all, so it also doubles as a worked example if you want to show one on the projector.
 Costs ONE Studio generation. Say so before they start, and note that regenerating spends another.
