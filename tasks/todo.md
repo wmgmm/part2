@@ -1941,3 +1941,30 @@ rather than thirty variations of it. It also removes a small, pointless decision
 model's plate.
 
 Verified: quotes survive the copy intact, no markup on the clipboard, build green.
+
+## 2026-09-05 (addendum 69): item 4 cut by a third
+
+Matt: shorter and more concise, still effective. **140 words to 95** in the source, and
+nothing that was doing work was lost. What went, and why each cut was safe:
+
+- **"publication-ready"** and **"side by side"**. Vague quality adjectives that the four
+  specifics below already deliver. Addendum 62's lesson applied to my own writing.
+- **"Give each panel its own y-axis"**. The three metrics have three different units, so
+  separate axes are forced. The model did it unprompted in the real run. This is the
+  "anything the goal already implies" cut.
+- **"everything needed to read it sits on the chart"**. A restatement of "assume it will be
+  forwarded on its own, without the words around it". One sentence, said once.
+- **"Mark Cardiff on each as a single point, labelled beside the point with its own value"**
+  becomes "Label the Cardiff point on each with its value". Same instruction, half the words.
+- **"a box or a whisker"** becomes "the data". Broader and shorter, and it covers the median
+  line too, which the longer version accidentally did not.
+
+**A build break worth recording.** Writing "Label Cardiff's point" put an apostrophe inside
+a single-quoted JS string and esbuild failed with `Expected "}" but found "s"`. First fix
+attempt over-escaped and produced a literal backslash in the copied prompt. Settled on
+**"the Cardiff point"**, which needs no apostrophe, is shorter, and cannot break again.
+**The general rule: prompt text lives in single-quoted strings in `missions.js`, so avoid
+apostrophes in new prompt copy rather than escaping them.** Verified there is no stray
+backslash anywhere in the copied output.
+
+Item 4 is 102 words as rendered, the whole prompt 228. MH block sha256 unchanged.
