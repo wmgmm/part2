@@ -2043,8 +2043,16 @@ a:hover,
 .mission-artifact__thumb {
   flex: 0 0 auto;
   align-self: center;
-  width: 46px;
+  max-width: 52px;
+  max-height: 62px;
+  width: auto;
   height: auto;
   border-radius: 4px;
   border: 1px solid var(--border-soft);
+}
+
+/* The drawn icons carry their own page outline, so the card's border would
+   frame them twice. Photographic covers still need one to sit on white. */
+.mission-artifact__thumb[src$=".svg"] {
+  border: none;
 }

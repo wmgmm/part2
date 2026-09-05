@@ -1023,3 +1023,37 @@ intend to render it. `grep -rn "thumb" src/` would have shown this in one line.
 
 Verified in the DOM: `.mission-card img` is 0, `.mission-card__panel` is 6, and the only
 image on the picker is the hero.
+
+## 2026-09-05 (addendum 47): a file-type icon on the three skill cards
+
+Matt: same treatment for the `.md` skills. He sent an orange folder first, then corrected
+it to a blue document icon with a folded corner, a header band, "SKILL.MD" and ruled
+bullet lines.
+
+**Drawn as SVG, not converted from the image.** The corrected icon was pasted from the
+clipboard, so there was no file on disk to convert, and `find ~ -newermt "-45 minutes"`
+turned up nothing. Redrawing it was the better answer anyway: the source was 1408px wide
+with large white margins, and at the 46-52px the card renders, a downscale would have
+turned the bullet lines to mush. `public/skill_md_icon.svg` is 1.5 KB and stays sharp at
+any size. If Matt wants his exact raster, he only has to save it and it can be swapped
+in; the `thumb` field takes any path.
+
+`SKILL_ICON` is a single constant applied to all three skills, because that is what the
+icon is: a generic "this is a skill you attach" marker, not a picture of a particular
+document. The plan keeps its real cover, so the card set now reads as two classes,
+document and skill.
+
+**Two shapes meant the fixed width had to go.** `width: 46px` was fine for a portrait
+cover but left the first, landscape icon looking lost. Replaced with
+`max-width: 52px; max-height: 62px; width: auto; height: auto`, so each image picks
+whichever constraint binds: the cover comes out 44x62, the icon 52x43 when it was
+landscape and about 49x62 now it is a portrait document. No per-artifact class needed.
+
+**Double border.** The drawn icon carries its own page outline, so the card's
+`1px solid var(--border-soft)` framed it twice. Scoped that border off with
+`.mission-artifact__thumb[src$=".svg"]`; photographic covers still need it to sit on
+white.
+
+`?doctor` reports 14 files, all 200, the icon against 04 (mission artifact) and 05 (step
+artifact). `factCheckSkill` carries the icon too but does not appear in the preflight,
+because it is still linked from no exercise. That remains open.

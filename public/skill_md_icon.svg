@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 120" width="96" height="120" role="img">
+  <!-- Markdown skill file: a page with a folded corner, a blue header band and
+       ruled content. Drawn rather than photographed so it stays sharp at the
+       46-52px the artifact card renders it at. -->
+  <defs>
+    <clipPath id="page">
+      <path d="M12 6 H68 L90 28 V108 Q90 114 84 114 H12 Q6 114 6 108 V12 Q6 6 12 6 Z"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#page)">
+    <rect x="0" y="0" width="96" height="120" fill="#fdfdfe"/>
+    <rect x="0" y="0" width="96" height="34" fill="#c3d9f2"/>
+  </g>
+
+  <!-- the fold flap, drawn over the band -->
+  <path d="M68 6 L90 28 H68 Z" fill="#4f8fd6"/>
+
+  <path d="M12 6 H68 L90 28 V108 Q90 114 84 114 H12 Q6 114 6 108 V12 Q6 6 12 6 Z"
+        fill="none" stroke="#b3b9c0" stroke-width="2.5" stroke-linejoin="round"/>
+
+  <text x="48" y="57" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="15" font-weight="700" fill="#2f6fb3" letter-spacing="-0.3">SKILL.MD</text>
+
+  <g fill="#4f8fd6">
+    <circle cx="21" cy="72" r="2.6"/>
+    <circle cx="21" cy="84" r="2.6"/>
+    <circle cx="21" cy="96" r="2.6"/>
+  </g>
+  <g fill="#c4c9ce">
+    <rect x="29" y="70.6" width="49" height="2.8" rx="1.4"/>
+    <rect x="29" y="82.6" width="49" height="2.8" rx="1.4"/>
+    <rect x="29" y="94.6" width="49" height="2.8" rx="1.4"/>
+    <rect x="18" y="104" width="60" height="2.8" rx="1.4"/>
+  </g>
+</svg>

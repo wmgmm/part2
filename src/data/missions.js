@@ -289,6 +289,11 @@ const MH_CANVAS_THIN = `Generate a functional mini-game reminiscent of classic Z
 const MH_CANVAS_GAME = `Please review the attached 'Sustainable Futures' document. I would like you to create a playable 8-bit web game in a single HTML file using JavaScript and CSS. The visual style must mimic a vintage ZX Spectrum game with a black background and bright, blocky neon colours. The player controls a pixelated character who must cross a busy university dining hall. The goal is to collect low-impact foods to score points, while dodging high-carbon items moving rapidly across the screen. If you hit a high-carbon item, you lose a life. Crucially, use specific terminology, quotes, or policy goals directly from the attached document for the game's title, the introductory screen text, and the 'game over' messages. For example, you could name the game after one of the core goals or reference the 'Demand First' principle in the instructions. Please make it fully playable with keyboard arrow keys.`;
 
 
+// The three skills share one file-type icon, because that is what it is: a
+// generic marker for "this is a skill you attach", not a picture of a document.
+// The plan gets its real cover instead.
+const SKILL_ICON = 'skill_md_icon.svg';
+
 const A = {
   susPlan: {
     label: 'THE SUSTAINABILITY PLAN',
@@ -311,6 +316,7 @@ const A = {
     filename: 'Training_Module_Builder.md',
     downloadPath: `${BASE}placeholders/Training_Module_Builder.md`,
     note: 'Turns documents into training materials.',
+    thumb: SKILL_ICON,
   },
   brandSkill: {
     label: 'SKILL 2: MAKE IT CARDIFF',
@@ -318,6 +324,7 @@ const A = {
     downloadPath: `${BASE}placeholders/Cardiff_Brand_SKILL.md`,
     note: 'Builds it in Cardiff\'s voice and look.',
     copyable: true,
+    thumb: SKILL_ICON,
   },
   exampleTraining: {
     label: 'OPTIONAL: BACKUP TRAINING SESSION',
@@ -336,6 +343,7 @@ const A = {
     filename: 'Fact_Check_Cardiff.md',
     downloadPath: `${BASE}placeholders/Fact_Check_Cardiff.md`,
     note: 'Verifies claims against their sources. It does not rewrite; it tells you what to fix.',
+    thumb: SKILL_ICON,
   },
 };
 
