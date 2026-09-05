@@ -1885,9 +1885,16 @@ a:hover,
   color: var(--accent);
 }
 
-/* Artifact cards: the info column absorbs the width and wraps its own text;
-   the actions stay inline on the right until there is no room, then wrap.
-   The phone media query above still stacks them. */
+/* Artifact cards: identical layout on every card, whatever the note length.
+   The info column absorbs the width and wraps its own text; the actions stay
+   inline on the right. Wrapping was tried on 2026-09-05 once the buttons got
+   smaller, and it made a card with a long note put its buttons on a second row
+   while a card with a short note kept them on the right, so the same component
+   looked like two different components down one page. The 650px media query
+   above still stacks them for phones. */
+.mission-artifact {
+  flex-wrap: nowrap;
+}
 .mission-artifact__info {
   flex: 1 1 auto;
   min-width: 0;
@@ -2051,9 +2058,11 @@ a:hover,
   border: 1px solid var(--border-soft);
 }
 
-/* The drawn icons carry their own page outline, so the card's border would
-   frame them twice. Photographic covers still need one to sit on white. */
-.mission-artifact__thumb[src$=".svg"] {
+/* Drawn icons carry their own page outline, so the card's border frames them
+   twice and reads as a stray box around the artwork. Photographic covers still
+   need one to sit on white. Matched on the file-naming convention rather than
+   the extension: an icon is `*_icon.*`, a real document cover is `*_cover.*`. */
+.mission-artifact__thumb[src*="_icon."] {
   border: none;
 }
 

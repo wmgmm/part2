@@ -1206,3 +1206,42 @@ intended only the one he named.
 The card set now has three visual classes: the real document (its own cover), the skill
 you attach (drawn `.md` icon), and the safety net (Blue Peter). `?doctor` reports 15
 files, all 200, the badge against 01 and 05.
+
+## 2026-09-05 (addendum 53): two regressions on the artifact card, both mine
+
+**1. Buttons moved, and the cards stopped matching each other.** Matt: "it looks
+different than exercise 3, icons and buttons moved". Correct, and I caused it. Addendum
+44 deleted `flex-wrap: nowrap` on the reasoning that the buttons were now small enough to
+wrap safely. What that actually produced: a card with a **long** note pushed its buttons
+onto a second row, left-aligned under the thumbnail, while a card with a **short** note
+kept them on the right. So the same component looked like two different components down
+one page, and Exercise 05's backup card looked nothing like Exercise 03's.
+
+`nowrap` is back, with a comment recording the experiment so nobody repeats it. The info
+column still has `flex: 1 1 auto; min-width: 0`, so a long note wraps to two lines inside
+its own column rather than pushing anything. The 650px media query still stacks the card
+for phones. Verified: every card on 01 and 05 now reports buttons on the same row as the
+info block and to its right.
+
+**2. A stray box around the Blue Peter icon.** Two causes, both fixed.
+
+- **The crop.** `-fuzz 8% -trim` left **85 rows of pure white below the document**, which
+  `-trim` had not removed. Measured it properly with PIL rather than guessing: content
+  ran rows 0-573 of a 659-tall image. A first attempt at `-shave 6x6` was worse, clipping
+  the document's own rounded corners. Final crop is `444x574+0+0`, then resize to 128
+  wide: 128x166, 3.8 KB, and the ratio now sits between the skill icon and the plan cover.
+- **The CSS.** The card draws `1px solid var(--border-soft)` around a thumbnail. That is
+  right for a photographic cover, which would otherwise float on white, and wrong for a
+  drawn icon that already has its own page outline: it frames the artwork in a second,
+  offset rectangle. The rule had been scoped off for `.svg` only, so the SVG skill icon
+  escaped it and the Blue Peter `.webp` did not.
+
+  Now matched on a **file-naming convention** rather than an extension:
+  `[src*="_icon."]` gets no border, `*_cover.*` keeps one. Extension-matching was the
+  wrong axis, since whether artwork needs a frame has nothing to do with its format.
+  Keep the convention: drawn icons are `*_icon.*`, real document covers are `*_cover.*`.
+
+**The lesson from both:** a component that renders variable-length content needs checking
+against its *longest* case and its *shortest* in the same pass. I verified the new
+thumbnail on Exercise 04, where both notes are short, and never looked at Exercise 05,
+where the note is 100 characters and pushed the layout apart.
