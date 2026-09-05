@@ -779,18 +779,18 @@ export const MISSIONS = [
     code: '06',
     level: 3,
     title: 'The Numbers',
-    pageTitle: 'Ten Years of Real Emissions Data, and Where the Trend Lands',
-    summary: 'Chart the real data, find out if the plan gets there, then build it into a dashboard.',
+    pageTitle: 'Ten Years of Real Data, Run Twice and Checked',
+    summary: 'Run the real numbers in one tool, check them in another, then build a dashboard.',
     tools: [TOOLS.copilot, TOOLS.gemini, TOOLS.canvas],
-    estMinutesCore: 20,
+    estMinutesCore: 17,
     toolInfo: {
       feature:
         'Copilot and Gemini both write and run Python on a data file you attach, so the numbers are computed rather than guessed. Both prefer CSV, not Excel.',
       apps: [APPS.copilot, APPS.gemini],
     },
-    workflow: ['Paste the prompt', 'Run it twice', 'Find Cardiff', 'Fit the trend', 'Build the dashboard'],
+    workflow: ['Paste the prompt', 'Run it in Copilot', 'Repeat in Gemini', 'Build the dashboard'],
     brief:
-      'Chart ten years of Cardiff\'s real emissions, then find out where the trend actually lands.',
+      'Analyse ten years of Cardiff\'s real emissions, then check the answer in a second tool before you trust it.',
     artifacts: [A.hesaData],
     steps: [
       {
@@ -812,35 +812,29 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'Attach the data and run it',
         body:
-          'Download the CSV from the card above. In Copilot, attach it with the paperclip and send. Then run the whole thing again in Gemini, where the button is a +. Comparing the two answers is the point.',
+          'Download the CSV from the card above. In Copilot, attach it with the paperclip and send, then read what comes back before you go anywhere near the second tool.',
         attach: [A.hesaData],
       },
       {
         tier: 'core',
-        estMinutes: 3,
-        title: 'Find Cardiff on the chart',
-        body:
-          'Cardiff does not sit in the same place on all three box plots, and the distance between them is the finding. Check it against the answer to question 3.',
-      },
-      {
-        tier: 'core',
         estMinutes: 4,
-        title: 'Fit the trend to 2035',
+        title: 'Run it again in the other tool',
         body:
-          'Paste this into the same chat. It fits a straight line to the ten years and projects it, so you find out whether the trend reaches zero inside the plan window.',
-        promptLabel: 'THE SECOND PROMPT',
+          'Same prompt, same file, in Gemini this time, where the button is a +. Do both put Cardiff in the same place on the box plots, and do the numbers match? Where they differ, one of them is wrong.',
+        promptLabel: 'THEN GET A CHECK YOU CAN RUN YOURSELF',
+        promptNote: '[paste into either chat]',
         prompt:
-          'Now fit a straight line to Cardiff\'s ten years of emissions. Use Python and show me the code.\n\nReport the slope in tonnes per year.\nProject the line to 2029/30 and to 2034/35, and say which year it reaches zero.\nThen answer in one sentence: on this trend, does Cardiff reach net zero inside the plan\'s 2025 to 2035 window?\n\nState the assumption you are making by fitting a straight line, and one reason it might be wrong.',
+          'Pick the single most important number in your summary.\n\nGive me one Excel formula I can paste into the spreadsheet to check it myself, and say which columns it uses.\n\nThen name one thing that formula still would not catch.',
       },
       {
         tier: 'core',
         estMinutes: 6,
         title: 'Build the dashboard in Canvas',
         body:
-          'Back in Gemini, turn Canvas on in that same chat, in the Tools menu under the box where you type, so it can see the numbers you just computed. Then paste this.',
+          'Use Gemini for this one. In the chat where you ran the analysis, open the Tools menu under the box where you type and select Canvas, so it can see the numbers you just computed. Then paste this.',
         promptLabel: 'THE BUILD PROMPT',
         prompt:
-          'Act as a front-end developer and data visualisation expert.\n\nBuild a self-contained interactive infographic in ONE HTML file: inline CSS, JavaScript, and Chart.js from a CDN. It must run standalone in Canvas.\n\nSUBJECT: [Cardiff University\'s decarbonisation against campus growth, 2015/16 to 2024/25].\n\nDATA: use only the figures computed above in this chat. Do not invent, round or extend them. Where a number you need was never computed, put NEEDS DATA on the card rather than filling it in.\n\nWORK IN FOUR STAGES, in this order. Do not output any code before stage 3.\n1. SPEC: under 150 words. What the page shows, and who is looking at it.\n2. PLAN: a numbered list of the components you will build.\n3. THE FILE: the complete HTML. No placeholder comments, nothing left as "add logic here".\n4. SELF-CHECK: name what you verified. Every control works, every figure traces to the data above, and nothing is hard-coded that should be computed.\n\nCOMPONENTS:\n- Summary cards carrying the headline figures, each showing the change since 2015/16.\n- One chart with a toggle between absolute emissions and emissions per square metre. Same data, two different stories: make that toggle the point of the page.\n- A year filter, slider or buttons, that redraws the chart.\n- A projection line to 2035 that can be switched on and off.\n\nSTYLE: white background, one accent colour, high contrast, readable at arm\'s length on a projector. Responsive down to a laptop screen. No dark theme.\n\nCONSTRAINTS: UK English. Label every axis with its unit. Wherever the page shows the projection, say on the page that it assumes the last ten years simply continue.',
+          'Act as a front-end developer and data visualisation expert.\n\nBuild a self-contained interactive infographic in ONE HTML file: inline CSS, JavaScript, and Chart.js from a CDN. It must run standalone in Canvas.\n\nSUBJECT: [Cardiff University\'s emissions and energy against the rest of the sector, 2015/16 to 2024/25].\n\nDATA: use only the figures computed above in this chat. Do not invent, round or extend them. Where a number you need was never computed, put NEEDS DATA on the card rather than filling it in.\n\nWORK IN FOUR STAGES, in this order. Do not output any code before stage 3.\n1. SPEC: under 150 words. What the page shows, and who is looking at it.\n2. PLAN: a numbered list of the components you will build.\n3. THE FILE: the complete HTML. No placeholder comments, nothing left as "add logic here".\n4. SELF-CHECK: name what you verified. Every control works, every figure traces to the data above, and nothing is hard-coded that should be computed.\n\nCOMPONENTS:\n- Summary cards carrying the headline figures, each showing the change since 2015/16.\n- One chart with a toggle between absolute emissions and emissions per square metre. Same data, two different stories: make that toggle the point of the page.\n- A year filter, slider or buttons, that redraws the chart.\n- A short note naming the one number on the page you would check by hand first.\n\nSTYLE: white background, one accent colour, high contrast, readable at arm\'s length on a projector. Responsive down to a laptop screen. No dark theme.\n\nCONSTRAINTS: UK English. Label every axis with its unit.',
       },
     ],
     verdictBy: 'The Matts',

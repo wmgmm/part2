@@ -2040,3 +2040,53 @@ Matt then asked to remove "Start in Gemini: CSV is what its code tool takes ... 
 both", which change 3 had already replaced. Confirmed gone by grep rather than assumed.
 
 Step 2 is 37 words. All 17 files still 200. MH block sha256 unchanged.
+
+## 2026-09-05 (addendum 72): Exercise 06 becomes a cross-check exercise, and loses the trend
+
+Two instructions from Matt, and the second one had a bigger blast radius than it looked.
+
+**Step 3 is now the cross-check.** Was "Find Cardiff on the chart", which I had written.
+Now "Run it again in the other tool": same prompt, same file, in Gemini, where the button
+is a +. **The chart reading survives inside it**, because comparing two tools' charts IS
+comparing where each puts Cardiff, so nothing was lost by the swap: "Do both put Cardiff in
+the same place on the box plots, and do the numbers match? Where they differ, one of them
+is wrong."
+
+It also gains a second prompt, from Matt's "how else could you check, e.g. macro or formula
+AI to generate":
+
+> Pick the single most important number in your summary. Give me one Excel formula I can
+> paste into the spreadsheet to check it myself, and say which columns it uses. Then name
+> one thing that formula still would not catch.
+
+**That third clause is the point.** Two AI runs agreeing is weak evidence, since they can
+be wrong the same way. A formula is an independent check that depends on neither model, and
+asking what it would still miss stops the check being mistaken for proof. Step 2 was doing
+two jobs and now just runs Copilot.
+
+**Step 4, "Fit the trend to 2035", is dropped.** It fed more than itself:
+
+- **The dashboard prompt asked for "a projection line to 2035 that can be switched on and
+  off"** and simultaneously forbids inventing figures, so with no trend computed it would
+  have rendered a NEEDS DATA card or invented a line. Replaced with "a short note naming
+  the one number on the page you would check by hand first", which fits the new
+  verification theme. The matching constraint about saying the projection assumes ten years
+  continue also went.
+- **The page title promised it:** "Ten Years of Real Emissions Data, and Where the Trend
+  Lands". Now "Ten Years of Real Data, Run Twice and Checked". Brief and summary followed.
+- The dashboard SUBJECT line said "decarbonisation against campus growth", which was the
+  trend framing; now "emissions and energy against the rest of the sector".
+- Chip removed, 20 minutes down to **17**.
+
+**The trend findings are kept in the facilitator guide**, marked as dropped from the
+exercise, because they are still true and still the sharpest thing in the data: -804 tCO2e
+a year, 13,300 by 2034/35, zero around **2051**, against a plan that runs to 2035. Worth
+saying from the front if the room has time. Deleting them would have thrown away real
+analysis for no reason.
+
+**Two stale things fixed while in the guide:** the 90 and 60 minute plans both said "01, 04
+and 06 is 42 minutes", which is now **39**, and described 06 as "verify with a skill", which
+it stopped being when 06 became the data exercise. Day total 80 to **77**.
+
+Verified: four steps, no reference to a projection or a trend anywhere in `missions.js`,
+build green.
