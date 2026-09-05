@@ -1693,3 +1693,79 @@ predicted effect:
   `sysctl fs.inotify.max_user_watches=524288`.
 - Verify `MH_*` by anchor, never by line range:
   `e4f8082373927ce38d7d8b59c1352c51f4f77aab05e0c9e5636b1818fa26fabf`.
+
+## 2026-09-05 (addendum 63): Exercise 06 was broken, and why
+
+Matt ran Exercise 06 and Gemini refused: *"I cannot run code on this file. Additionally, I
+cannot see the contents of HESA_Estates_Management.xlsx ... Could you please copy and paste
+the relevant data directly into our chat"*. The exercise's premise is "Gemini writes and
+runs Python on a spreadsheet you attach", so this was the exercise not working, not a
+cosmetic fault.
+
+**Researched rather than guessed, and the popular answer is wrong. The 13 MB was never the
+problem.**
+
+1. **346,050 rows fit no context window.** Google publishes **32k tokens with no AI plan,
+   128k on AI Plus, 1M on Pro/Ultra**
+   (support.google.com/gemini/answer/16275805). A long-format table that size is tens of
+   millions of tokens. "I cannot see the contents" was literally true.
+2. **Google's code execution tool does not list .xlsx.** The API docs say "Code execution
+   works best with text and CSV files" and the Vertex file-input MIME list is
+   `.cpp .csv .java .jpeg .js .png .py .ts .xml`
+   (ai.google.dev/gemini-api/docs/code-execution). **Google's own Gemini Notebook accepts
+   csv and refuses xlsx.** So the upload succeeded and the only tool that could have done
+   the work would not take the file. Both doors shut, which is exactly what the error said.
+3. **Size was irrelevant:** the documented upload limit is **100 MB**.
+4. **Copilot is different.** Microsoft explicitly lists `.xlsx` for data analysis
+   (support.microsoft.com/en-us/microsoft-365-copilot/file-formats-supported-by-microsoft-365-copilot),
+   which is why the Excel version is still offered rather than dropped.
+
+**A workshop hazard worth knowing:** a Cardiff staff account on Gemini for Education is
+likely on a 1M-token window while a personal Google account with no AI plan is on **32k**,
+about fifty times smaller, and nothing on screen tells either person which they are on.
+
+**The fix: `tools/make_workshop_dataset.py`.** Pivots the source long to wide once, so the
+workshop is about analysis rather than schema archaeology. **346,050 rows and 13 MB become
+307 rows and 25 KB**, a 500-fold cut.
+
+- 31 institutions: the Russell Group plus every Welsh provider, Cardiff counted once.
+  Matched on **exact names**, because "Cardiff" also catches Cardiff Metropolitan.
+- Ten years, 2015/16 to 2024/25, not the six the brief asked for. Six would have broken the
+  answer keys, which start at 2015/16.
+- Nine columns, Matt's seven plus `Institution`/`AcademicYear` and **`Scope12_tCO2e`**,
+  added because the exercise is about emissions and the brief had no carbon column.
+- Both `.csv` (what Exercise 06 hands out) and `.xlsx` (two sheets, for Excel and Copilot).
+
+**Two corrections to the brief, both material.** Energy uses HESA's published
+`Total energy consumption (kWh)`: summing the components would **double count**, because
+they include both `Natural gas used as input for a CHP unit` and `Electricity consumed from
+onsite CHP`. And `RenewablesPct` was never missing, it is text like `100.0%` and reads as 0%
+complete under a naive numeric test.
+
+**Every answer key reproduces exactly**, which is the check that mattered:
+
+| Key | Guide | Rebuilt file |
+|---|---|---|
+| Scope 1+2 2015/16 to 2024/25 | 29,663 to 21,336 tCO2e, -28% | identical |
+| Estate | 451,363 to 532,968 m2, +18% | identical |
+| Intensity | 65.7 to 40.0 kgCO2e/m2, -39% | identical |
+| Linear trend | -804 tCO2e/yr, ~13,300 by 2034/35, zero ~2051 | -804, 13,345, 2051 |
+
+**Exercise 06 rewritten around it.** The prompt loses four lines of schema archaeology (the
+row-11 header, the text coercion, the category filter) and simply names the columns.
+Step 1's "the prompt already handles the buried header row" is gone, step 2's "13 MB ... 163
+universities, give it a moment" becomes "25 KB, so it goes up instantly", and the HESA
+website link Matt asked to remove is gone, its slot reused for the Excel version.
+
+**Left alone:** `HESA_Estates_Management.xlsx` stays in `public/placeholders/` as the
+generator's input and is no longer linked from any exercise. It is 13 MB of Matt's source
+data and nobody asked for it to be deleted, but it could be dropped from the deploy later.
+
+**Licence changed status.** The workbook is now a **derivative**, so CC BY 4.0's "indicate
+if changes were made" applies where it did not when we hosted the file unmodified. Both the
+card note and the guide now say adapted, and the `Workshop_Questions` sheet carries the
+attribution.
+
+Verified: `?doctor` 17 files all 200 with the CSV under 06 and the old file gone from the
+listing, build green, MH block sha256 unchanged, CSV served with 307 rows and Cardiff's
+2024/25 row reading `21336.4`.

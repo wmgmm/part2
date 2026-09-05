@@ -362,20 +362,18 @@ const A = {
   },
   hesaData: {
     label: 'TEN YEARS OF REAL DATA',
-    filename: 'HESA_Estates_Management.xlsx',
-    downloadPath: `${BASE}placeholders/HESA_Estates_Management.xlsx`,
-    note: 'Every UK university, 2015/16 to 2024/25. HESA, www.hesa.ac.uk.',
-    thumb: EXCEL_ICON,
-    // A backup route if the hosted copy will not download in the room. HESA
-    // publish no .xlsx, so this is the page rather than a file: it offers the
-    // whole release as a zip or a single table as CSV, and carries the licence.
-    // The file cites its own canonical source as .../estates/data.zip, which is
-    // what our copy was converted from, so the ten metadata rows and the header
-    // on row 11 that the prompt relies on are HESA's own and survive either way.
+    // CSV, not xlsx, and that is the whole fix. Google's code execution tool
+    // documents CSV and text and does not list xlsx, so on 2026-09-05 Gemini
+    // uploaded the old 346,050-row workbook and then said it could neither read
+    // it nor run code on it. See tools/make_workshop_dataset.py.
+    filename: 'HESA_Estates_Workshop.csv',
+    downloadPath: `${BASE}placeholders/HESA_Estates_Workshop.csv`,
+    note: '31 UK universities, 2015/16 to 2024/25, one row each per year. Adapted from HESA, www.hesa.ac.uk, CC BY 4.0.',
     sourceLink: {
-      href: 'https://www.hesa.ac.uk/data-and-analysis/estates/environmental',
-      label: 'Backup: get it from HESA',
+      href: `${BASE}placeholders/HESA_Estates_Workshop.xlsx`,
+      label: 'Also as Excel, with a questions sheet',
     },
+    thumb: EXCEL_ICON,
   },
   factCheckSkill: {
     label: 'SKILL 3: CHECK IT BEFORE IT GOES',
@@ -791,7 +789,7 @@ export const MISSIONS = [
     estMinutesCore: 20,
     toolInfo: {
       feature:
-        'Gemini writes and runs Python on a spreadsheet you attach, so the numbers are computed rather than guessed. You write none of it.',
+        'Gemini writes and runs Python on a data file you attach, so the numbers are computed rather than guessed. You write none of it.',
       apps: [APPS.gemini],
     },
     workflow: ['Paste the prompt', 'Attach the data', 'Read both charts', 'Fit the trend', 'Build the dashboard'],
@@ -804,18 +802,18 @@ export const MISSIONS = [
         estMinutes: 3,
         title: 'Copy the prompt and paste it',
         body:
-          'Use Gemini. The prompt already handles the buried header row and the text-formatted Value column for you.',
+          'Use Gemini. One row per university per year, so the prompt names the columns it wants and goes straight to the analysis.',
         promptLabel: 'YOUR PROMPT',
-        promptNote: '[attach HESA_Estates_Management.xlsx]',
+        promptNote: '[attach HESA_Estates_Workshop.csv]',
         prompt:
-          'Analyse the attached spreadsheet for Cardiff University. Use Python and show me the code.\n\nThe header row is row 11, so skip the ten rows above it. The Value column is text: convert it to numbers and drop whatever will not convert.\nFilter to the categories "Total scope 1 and 2 carbon emissions (Kg CO2e)" and "Total gross internal area (m2)".\n\nGive me two charts: emissions in tonnes by academic year, and emissions per square metre by academic year.\nThen one line on what the second chart says that the first one hides.\n\nDo not estimate anything by eye. If a figure will not compute, say NONE STATED rather than filling it in.',
+          'Analyse the attached CSV for Cardiff University. Use Python and show me the code.\n\nGive me two charts: Scope12_tCO2e by academic year, and Scope12_tCO2e per square metre of FloorArea_m2 by academic year.\nThen one line on what the second chart says that the first one hides.\n\nDo not estimate anything by eye. If a figure will not compute, say NONE STATED rather than filling it in.',
       },
       {
         tier: 'core',
         estMinutes: 4,
         title: 'Attach the data and run it',
         body:
-          'Download HESA_Estates_Management.xlsx from the links above and attach it with the + under the box where you type. It is 13 MB of real data, 163 universities over ten years, so give it a moment.',
+          'Download HESA_Estates_Workshop.csv from the card above and attach it with the + under the box where you type. It is 25 KB, so it goes up instantly.',
       },
       {
         tier: 'core',
