@@ -2415,3 +2415,29 @@ looks right: verified all eight render at weight 700.
 
 The note also lost "new chat" and "again", which the strip and the body now both say. It is
 down from 66 characters to 47.
+
+## 2026-09-05 (addendum 84): step 3 says why, in four words
+
+Matt: drop ", where the button is a +" and end on "do Gemini and Copilots numbers match? AI
+does make mistakes."
+
+> Same prompt, same file, in Gemini this time. Do Gemini and Copilot's numbers match?
+> **AI does make mistakes.**
+
+**18 words, down from 31.** Two things went, both rightly:
+
+- **The + control.** Step 2 already names the paperclip for Copilot, and by step 3 someone
+  has attached a file once and does not need the button pointed at again. It was there from
+  when step 2 covered both tools.
+- **The box plot comparison.** "Do both put Cardiff in the same place on the box plots" was
+  my line, and it asked for a visual comparison when the actual test is numeric. "Do the
+  numbers match" is the same check, stated plainly.
+
+**"AI does make mistakes" is the addition that matters**, and it is the first time the site
+says it outright. Everything else on these pages teaches verification by making people do
+it: attach the source, ask for the code, run it twice, show the working. This names the
+reason in four words, at the moment someone is looking at two answers. It is also the honest
+framing for a room that has spent an hour being impressed.
+
+Apostrophe escaped in the single-quoted string and verified rendering once with no stray
+backslash.
