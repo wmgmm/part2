@@ -1612,3 +1612,84 @@ two real runs. Note for capturing this site: an unfocused tab throttles
 requestAnimationFrame, so framer-motion's fade never completes and every screenshot comes
 out washed out. Inject
 `*{animation:none!important;transition:none!important;opacity:1!important}` first.
+
+---
+
+# OPEN: compare the new Cardiff brand skill's output (next session)
+
+**Status: waiting on Matt.** The skill was rewritten on 2026-09-05 (addendum 62) and has
+**never been run**. Matt will paste it into Notebook and generate, then bring the PDF
+back. Nothing else should be changed in `Cardiff_Brand_SKILL.md` until that output exists,
+because the last version was rewritten several times without evidence and this one is
+finally a controlled test.
+
+## What to compare against
+
+| File | What it is |
+|---|---|
+| `~/Downloads/The_Strict_Filter.pdf` | The **old** Cardiff skill's output. The baseline. |
+| `~/Downloads/The_Demand_First_Ladder.pdf` | The Matts skill's output. The target for usefulness, **not** for style. |
+| `snapshot-deck-cardiff.png`, `snapshot-deck-matts.png` (repo root, untracked) | Contact sheets of both, already rendered. |
+
+Both are image-only PDFs, so `pdftotext` returns nothing. Read them with
+`pdftoppm -r 45 -png` then `montage-im6.q16 <pages> -tile 2x3 -geometry +4+4`.
+Note `convert` on this machine is a metapub CLI; ImageMagick is `convert-im6.q16`.
+
+## The specific claims to test, each tied to a change
+
+Score the new deck on these, not on general impressions. Each was a deliberate edit with a
+predicted effect:
+
+1. **Illustration appears.** Old deck: 1 photo in 12 slides, nothing else. Did unbanning
+   flat diagrams, icons and editorial illustration actually produce pictures on content
+   slides? **And are they free of cartoons?** Matt was emphatic: "never cartoons, this must
+   carry the Cardiff style".
+2. **The grey is gone.** Old deck had a grey wash on slides 2, 8 and 10 and grey boxes
+   standing in for diagrams. White ground and hairline rules only now.
+3. **No empty slides.** Old slide 11 was 70% white. The new floor is "a content slide more
+   than half empty has failed".
+4. **Dividers are sans, not serif.** The Georgia rule is gone. This was the most off-brand
+   thing in the old deck.
+5. **The Welsh dividers still fire.** They worked before ("Ymarfer / Practice",
+   "Gwerthuso / Evaluate"). This is a regression check, not an improvement check.
+6. **A task slide exists.** The single most important test. The old deck had no exercise
+   at all; "The task" is now a named layout. If this does not appear, the layout-pattern
+   theory is wrong and that is worth knowing.
+7. **Comparison slides appear** with a pass side and a fail side.
+8. **Every content slide has a footer takeaway.** None did before.
+9. **The brand still holds:** Cardiff red, bilingual logo on title and closer only, left
+   alignment, 40-word discipline. The non-negotiable block moved to the top specifically
+   to protect these; if any of them regressed, the move backfired.
+
+## How to decide what happens next
+
+- **If most of 1-8 landed:** the skill is done. Say so and stop editing it.
+- **If the task slide is missing but the visuals improved:** the layout list is being read
+  as styling, not as structure. Next lever is to state the deck's *shape* (how many
+  teaching slides, in what order) rather than adding more layout names.
+- **If nothing changed:** suspect the constraint count is still too high. The evidence in
+  addendum 62 says the fix is fewer rules, not better ones. Cut the reading-level section
+  to a third of its length before touching anything else.
+- **Resist adding rules.** Every symptom in the old deck was caused by a rule, not by a
+  missing one.
+
+## Two things to tell Matt when he runs it
+
+- Google's three-dot menu on the deck has **View custom prompt**. It reads back what was
+  actually stored, which is the fastest way to see which rules survived the paste.
+- Google documents that **slide revisions create an entirely new deck and do not
+  re-consult the sources**. So do content checks before any styling revision, and expect
+  a revision to spend another generation.
+
+## Current state at handoff
+
+- `Cardiff_Brand_SKILL.md` **4,684 chars**, 216 spare against the 4,900 warning, 4,768
+  with the prompt line against Notebook's measured 5,000 limit.
+- Site green: `npm run build` clean, `?doctor` 17 files all 200.
+- **39 commits unpushed.** `main` is ahead of `origin/main`; the live site still shows a
+  much older version. Do not push unless Matt asks in that message.
+- `npm run dev` is broken with `ENOSPC: System limit for number of file watchers reached`.
+  Use `npm run preview` (serves `dist/`, no watchers). The real fix needs sudo:
+  `sysctl fs.inotify.max_user_watches=524288`.
+- Verify `MH_*` by anchor, never by line range:
+  `e4f8082373927ce38d7d8b59c1352c51f4f77aab05e0c9e5636b1818fa26fabf`.
