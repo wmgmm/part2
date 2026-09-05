@@ -15,7 +15,7 @@ function collectUrls() {
   MISSIONS.forEach(m => {
     (m.artifacts || []).forEach(a => add(a.downloadPath, `${m.code} · ${a.filename}`));
     // Steps can carry their own picture (Exercise 02) or their own download
-    // (Exercise 05's house style), so the preflight has to look inside them too.
+    // (Exercise 05's brand skill), so the preflight has to look inside them too.
     (m.steps || []).forEach(s => {
       if (s.image) add(`${BASE}${s.image.src}`, `${m.code} · ${s.image.src}`);
       if (s.artifact) add(s.artifact.downloadPath, `${m.code} · ${s.artifact.filename}`);

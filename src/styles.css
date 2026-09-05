@@ -791,7 +791,7 @@ h1, h2, h3 {
 
 .mission-artifact__name {
   font-weight: 700;
-  word-break: break-all;
+  overflow-wrap: anywhere;
 }
 
 .mission-artifact__note {
@@ -815,12 +815,9 @@ h1, h2, h3 {
   border: 2px solid var(--black);
   cursor: pointer;
   text-decoration: none;
-  /* All three actions sit in a row, so give them one width and centre the
-     label. COPIED and VIEW IN BROWSER must not resize the row. */
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 11rem;
   text-align: center;
 }
 
@@ -1905,12 +1902,9 @@ a:hover,
   color: var(--accent);
 }
 
-/* Artifact cards: identical layout regardless of note length. The info column
-   absorbs the width and wraps its own text; DOWNLOAD / VIEW IN BROWSER stay
-   inline on the right. The phone media query above still stacks them. */
-.mission-artifact {
-  flex-wrap: nowrap;
-}
+/* Artifact cards: the info column absorbs the width and wraps its own text;
+   the actions stay inline on the right until there is no room, then wrap.
+   The phone media query above still stacks them. */
 .mission-artifact__info {
   flex: 1 1 auto;
   min-width: 0;
@@ -1949,4 +1943,113 @@ a:hover,
   font-family: 'Inter Tight', sans-serif;
   font-size: 0.9rem;
   color: #424245;
+}
+
+/* ============================================================
+   STEP BLOCKS: the two the GOOGLE-PAGE SKIN pass missed
+   The skin converted .mission-step, .quick-step and the tool cards to 1px
+   hairlines with a soft shadow, but only ever patched a border-radius onto
+   .mission-artifact and .prompt-box. Rounding a tabloid device does not
+   convert it: a 3px black stroke on a 14px radius is a rounded tabloid box,
+   and it was three times heavier than the .mission-step it nests inside.
+   Reference is The Matts' Part 1 page, which uses no black strokes anywhere
+   and never sets a UI label in monospace.
+   ============================================================ */
+
+.mission-artifact,
+.prompt-box {
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-card);
+}
+
+.mission-artifact {
+  background: var(--white);
+  padding: 1.1rem 1.3rem;
+}
+
+/* Caps labels stay, Courier does not. The Part 1 page sets its wide-tracked
+   caps in Inter Tight grey and keeps mono for prompt text only. Grey rather
+   than the blue of .eyebrow, so the label does not compete with the accent
+   step number sitting a few pixels to its left. */
+.mission-artifact__label {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--grey);
+}
+
+.mission-artifact__note {
+  font-style: normal;
+  font-size: 0.82rem;
+  color: var(--grey);
+}
+
+/* One primary action per card. DOWNLOAD becomes the same blue pill as
+   .btn-start, so the site has one primary-button language instead of two.
+   COPY and VIEW step back to hairline ghosts: before this they inherited the
+   base hover and flipped to solid blue, which made the secondary actions
+   shout louder than the button they sit beside. */
+.btn-artifact {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  padding: 0.5rem 1.15rem;
+  background: var(--accent);
+  color: var(--white);
+  border: 1px solid var(--accent);
+  box-shadow: 0 2px 6px rgba(0, 113, 227, 0.22);
+}
+
+.btn-artifact:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: var(--white);
+}
+
+.btn-artifact--ghost {
+  background: transparent;
+  color: var(--grey);
+  border-color: var(--border-soft);
+  box-shadow: none;
+}
+
+.btn-artifact--ghost:hover {
+  background: transparent;
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Monospace is for prompt CONTENT only, which is the rule the Part 1 page
+   follows: mono appears there in the prompt box and nowhere else, while every
+   label and caption is Inter Tight. These three were the last mono UI text
+   inside a step. .prompt-box__text keeps Courier, because that really is a
+   prompt and the fixed pitch is what makes a long one scannable. */
+.prompt-box__label,
+.prompt-box__note,
+.mission-step__caption {
+  font-family: 'Inter Tight', sans-serif;
+}
+
+.prompt-box__label {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+}
+
+.prompt-box__note,
+.mission-step__caption {
+  font-size: 0.78rem;
+  letter-spacing: 0;
+  color: var(--grey);
+  opacity: 1;
+}
+
+/* COPY PROMPT is a button, not prompt content, and it sits a few pixels from
+   the artifact card's DOWNLOAD. Two typefaces on two buttons in one step is
+   the drift this whole section exists to close. Size and padding are Matt's,
+   set deliberately so it reads as a button from across a room. */
+.prompt-box__copy {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }

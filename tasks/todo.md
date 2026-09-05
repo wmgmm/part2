@@ -810,3 +810,108 @@ Matt asked for the YAML block to go. It was costing 152 characters of a 5,000-ch
 This does make the brand skill the odd one out. `Training_Module_Builder.md` and `Fact_Check_Cardiff.md` both keep their `name` and `description`, and the anatomy in `docs/research/2026-09-04-skill-authoring-patterns.md` describes front matter as part of the pattern. The difference is defensible: those two are attached as files, where a description helps a tool decide whether to use them, and neither is squeezed against a hard field limit. This one is pasted into a box that truncates.
 
 4,730 characters, 186 spare, which is the most headroom the file has had since the limit was discovered.
+
+## 2026-09-05 (addendum 42): Exercise 05 down to one source, and the two blocks the skin missed
+
+Matt: Exercise 05 needs only one source, the training session from 04; say "brand
+skill" rather than "house style"; the skill card "looks cluttered and cheap"; and the
+pages should carry more of the vibe of the Part 1 workshop page. Chosen scope, on
+asking: rename everything to Brand, and restyle everything **inside a step**, leaving
+the page header, tool cards and gallery alone.
+
+**One source, not two.** `Sustainable-Futures-en.pdf` came off Exercise 05. It was
+redundant: the training session was generated from the plan in Exercise 04, so the
+content is already in the source they paste. It also removes an 11 MB upload from a
+room on conference wifi. The exercise is now: paste your training session in, paste the
+brand skill into the Slide Deck description box, generate, export. Notebook's own
+"Sources: 1 source" in the step screenshot now matches the instruction, which it did
+not before. The trade-off, taken deliberately: nobody can pull a figure straight out of
+the plan during 05 any more.
+
+**Three names became one.** `title` The House Style -> The Brand, workflow chip ->
+"Paste the brand skill", step 2 title, the verdict, the `A` map key
+`houseStyleSkill` -> `brandSkill`, and the comments in `MissionDetail.jsx` and
+`DoctorPanel.jsx`. Only the artifact card label "SKILL 2: MAKE IT CARDIFF" survives as
+a different form of words, and that one is deliberate: it says what the skill does
+rather than what it is called. Addendum 41 flagged this; it is now closed.
+
+Also cut `A.brandSkill.note` to "Builds it in Cardiff's voice and look." The rest of it
+("COPY it into the Slide Deck description box, or download it to attach in Copilot or
+Gemini") repeated the step body above it and the two buttons below it. The skill card
+was saying the same instruction four times: label, filename, note, buttons.
+
+**Why the card looked cheap, which turned out to be mechanical rather than a matter of
+taste.** `styles.css` is three archaeological layers. The GOOGLE-PAGE SKIN pass (line
+1141 on) converted `.mission-step`, `.quick-step`, the tool cards and the gallery to
+1px hairlines with a soft shadow. It never revisited `.mission-artifact` or
+`.prompt-box`: it only patched a `border-radius` onto them, and rounding a tabloid
+device does not convert it. So inside a `.mission-step` that is a 1px soft-bordered
+white card, we were rendering a **3px pure-black box, three times heavier than its own
+parent**, and it was the only panel on the page excluded from the shadow rule at 1194.
+
+Five specific defects behind the verdict, four of them found by a subagent review
+against the Part 1 page:
+
+- `min-width: 11rem` on `.btn-artifact` was 176px per button. Three buttons plus gaps
+  was about 544px of solid pill in an 860px column, over half the width given to one
+  file. `flex-wrap: nowrap` then forbade them from wrapping, so they crushed the
+  filename instead. Both deleted; DOWNLOAD is now 111px and VIEW 149px.
+- Two primary-button languages on one screen: `.btn-start` was already the blue pill
+  from the reference page, `.btn-artifact` was a black Courier-caps pill carrying a
+  redundant 2px black border on a black fill. DOWNLOAD is now the same blue pill.
+- Hover was incoherent: line 827 sent hover light, 1221 overrode it to solid blue, and
+  `.btn-artifact--ghost` inherited the base rule, so the two **secondary** buttons went
+  solid blue and shouted louder than the primary. Ghosts are now transparent with a
+  hairline, hovering to accent text and accent border.
+- **A real bug, not just clutter.** `isText` is `/\.(md|txt)$/`, so
+  `HESA_Estates_Management.xlsx` took the plain-anchor branch of VIEW IN BROWSER. No
+  browser renders an xlsx: it downloads. That card carried two 176px buttons doing the
+  identical thing under different names. VIEW is now gated on `canView`
+  (`.md`, `.txt`, `.pdf`) and the HESA card shows DOWNLOAD only.
+- Courier New bold caps on every label, where the Part 1 page never sets a UI label in
+  monospace. It uses Inter Tight caps in grey and keeps mono for prompt text alone.
+
+**What I got wrong and corrected mid-task.** I claimed `.prompt-box__copy` was light
+grey on a light grey bar. It is not: the skin already overrides it to accent blue at
+line 1201, after the `var(--page)` declaration at 963, so blue wins. No fix was needed
+and none was made. Reading a declaration without checking what overrides it is the same
+mistake as trusting a screenshot over the DOM.
+
+**What changed, all appended as a closing "STEP BLOCKS" section rather than edited into
+the old blocks**, per the rule in `CLAUDE.md`. Deleted in place only where deleting was
+clearer than overriding: `min-width: 11rem`, `flex-wrap: nowrap`, and
+`word-break: break-all` (which shattered `Cardiff_Brand_SKILL.md` mid-token; now
+`overflow-wrap: anywhere`).
+
+- `.mission-artifact` and `.prompt-box`: 1px `--border-soft`, `--shadow-card`. They now
+  read as siblings inside the step, which is what they are.
+- `.mission-artifact__label`: Inter Tight caps in `--grey`, not Courier in black. Grey
+  rather than the blue of `.eyebrow`, so it does not compete with the accent step
+  number sitting a few pixels to its left.
+- `.mission-artifact__note`: roman grey, not italic black. A 130-character italic
+  paragraph inside a bordered box was most of the "cluttered".
+- `.prompt-box__label`, `.prompt-box__note`, `.mission-step__caption` and
+  `.prompt-box__copy`: off Courier onto Inter Tight. `.prompt-box__text` **keeps**
+  Courier, because that really is a prompt and fixed pitch is what makes a long one
+  scannable. COPY PROMPT had been the last button in a different typeface from the
+  DOWNLOAD sitting beside it. Its size and padding are Matt's and were left alone.
+
+**Deliberately not done.** `--radius-card` is 14px where the Part 1 page uses 22px for
+cards and 14px only for medium panels, so every panel on the site sits one step tighter
+than the target. Changing it moves the gallery and the page header, which are outside
+the agreed scope. Same for `.mission-detail__section` (the INSTRUCTIONS heading), which
+still carries `border-bottom: 4px solid var(--black)` from the tabloid layer and is now
+the heaviest thing on an exercise page.
+
+**Verified.** MH block sha256 `f037880d...` identical before and after. `npm run build`
+green. `?doctor` reports all 12 files 200, with `Sustainable-Futures-en.pdf` now
+attributed to 01/03/04/06 and no longer 05. Computed styles read out of the live DOM
+rather than judged from a screenshot: card border `1px solid rgb(229,229,234)` matching
+`.mission-step` exactly, both carrying `--shadow-card`; label Inter Tight
+`rgb(110,110,115)`; DOWNLOAD `rgb(0,113,227)`; ghosts `rgba(0,0,0,0)` with a hairline.
+The HESA card on `#/m6` renders one button.
+
+Note for anyone running the dev server: `npm run dev` currently dies with
+`ENOSPC: System limit for number of file watchers reached`. `npm run preview` serves
+`dist/` with no watchers and was used instead. The real fix needs sudo:
+`sysctl fs.inotify.max_user_watches=524288`.

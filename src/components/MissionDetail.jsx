@@ -56,6 +56,9 @@ function WorkflowStrip({ workflow }) {
 function ArtifactCard({ artifact }) {
   const [copied, setCopied] = useState(false);
   const isText = /\.(md|txt)$/.test(artifact.filename);
+  // A browser renders text and PDFs; it downloads everything else. On an .xlsx a
+  // VIEW button just repeats DOWNLOAD under a different name, so it is hidden.
+  const canView = isText || /\.pdf$/.test(artifact.filename);
 
   const download = () => {
     const link = document.createElement('a');
@@ -107,18 +110,19 @@ function ArtifactCard({ artifact }) {
         <button type="button" className="btn-artifact" onClick={download}>
           DOWNLOAD
         </button>
-        {/* COPY is opt-in: only the house style skill needs it, because Studio's
+        {/* COPY is opt-in: only the brand skill needs it, because Studio's
             description box takes pasted text, not files. Everything else is attached. */}
         {isText && artifact.copyable && (
           <button type="button" className="btn-artifact btn-artifact--ghost" onClick={copy}>
             {copied ? 'COPIED ✓' : 'COPY'}
           </button>
         )}
-        {isText ? (
+        {isText && (
           <button type="button" className="btn-artifact btn-artifact--ghost" onClick={view}>
             VIEW IN BROWSER
           </button>
-        ) : (
+        )}
+        {canView && !isText && (
           <a
             className="btn-artifact btn-artifact--ghost"
             href={artifact.downloadPath}

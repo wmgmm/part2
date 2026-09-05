@@ -308,11 +308,11 @@ const A = {
     downloadPath: `${BASE}placeholders/Training_Module_Builder.md`,
     note: 'Turns documents into training materials.',
   },
-  houseStyleSkill: {
+  brandSkill: {
     label: 'SKILL 2: MAKE IT CARDIFF',
     filename: 'Cardiff_Brand_SKILL.md',
     downloadPath: `${BASE}placeholders/Cardiff_Brand_SKILL.md`,
-    note: 'Builds it in Cardiff\'s voice and look. COPY it into the Slide Deck description box, or download it to attach in Copilot or Gemini.',
+    note: 'Builds it in Cardiff\'s voice and look.',
     copyable: true,
   },
   exampleTraining: {
@@ -650,9 +650,9 @@ export const MISSIONS = [
     stage: 'Shape',
     code: '05',
     level: 2,
-    title: 'The House Style',
+    title: 'The Brand',
     pageTitle: 'Turn the Training Into Slides That Look Like Cardiff',
-    summary: 'Two sources in a notebook, the house style in the deck description, one deck out.',
+    summary: 'One source in a notebook, the brand skill in the deck description, one deck out.',
     tools: [TOOLS.notebook],
     estMinutesCore: 12,
     toolInfo: {
@@ -660,23 +660,23 @@ export const MISSIONS = [
         'Gemini Notebook answers only from the sources you give it.',
       apps: [APPS.notebook],
     },
-    workflow: ['Add two sources', 'Paste the house style', 'Generate and export'],
+    workflow: ['Add your training', 'Paste the brand skill', 'Generate and export'],
     brief:
       'Turn your training session into a slide deck that looks like it came from this university.',
-    artifacts: [A.susPlan, A.exampleTraining],
+    artifacts: [A.exampleTraining],
     steps: [
       {
         tier: 'core',
         estMinutes: 4,
-        title: 'Add two sources to a notebook',
+        title: 'Add your training session to a notebook',
         body:
-          'Use Gemini Notebook. Click Create new and upload Sustainable-Futures-en.pdf. Then Add source again and paste in your Exercise 04 training session, or upload the backup PDF above.',
+          'Use Gemini Notebook. Click Create new, then paste your Exercise 04 training session in as a source. If 04 did not run for you, upload the backup PDF above instead.',
       },
       {
         tier: 'core',
         estMinutes: 4,
-        title: 'Paste the house style into Slide Deck',
-        artifact: A.houseStyleSkill,
+        title: 'Paste the brand skill into Slide Deck',
+        artifact: A.brandSkill,
         body:
           'In the Studio pane, click Slide Deck. Paste the prompt into the description box, then COPY the skill below and paste it underneath. Do NOT add it as a source, or the deck becomes about the rules.',
         image: {
@@ -700,7 +700,7 @@ export const MISSIONS = [
     ],
     verdictBy: 'The Matts',
     verdict:
-      'Where you put an instruction changes what it does. As a source, the house style becomes the subject of the deck. In the description box, it becomes the way the deck is made.',
+      'Where you put an instruction changes what it does. As a source, the brand skill becomes the subject of the deck. In the description box, it becomes the way the deck is made.',
   },
 
   {
