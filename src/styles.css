@@ -2065,3 +2065,58 @@ a:hover,
   box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
   border-radius: 2px;
 }
+
+/* The attach strip: a paperclip, then the files that go in the chat box, shown
+   as themselves. Deliberately quieter than an artifact card, because it is a
+   reminder rather than an action; nothing in it is clickable. */
+.attach-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 0.7rem;
+  padding: 0.6rem 0.85rem;
+  background: var(--parchment);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-card);
+}
+
+.attach-strip__clip {
+  display: flex;
+  color: var(--grey);
+}
+
+.attach-strip__label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--grey);
+  margin-right: 0.15rem;
+}
+
+.attach-strip__item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+/* Same max-box trick as the artifact thumbnails, so a portrait cover and a
+   drawn icon come out the same visual weight. */
+.attach-strip__item img {
+  display: block;
+  max-width: 26px;
+  max-height: 34px;
+  width: auto;
+  height: auto;
+}
+
+.attach-strip__name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.attach-strip__plus {
+  color: var(--grey);
+  font-weight: 700;
+}

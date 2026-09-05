@@ -44,10 +44,14 @@
 // Regenerate the generated files with: python3 tools/make_artifacts.py
 //
 // Step fields: tier 'core'|'stretch', estMinutes, check (30-second check),
-// Mission fields worth knowing: verdictBy overrides who the completion quote is
+// Mission fields worth knowing: toolsJoin sets how the card joins its tool
+// names, default '+' for tools used in sequence, 'or' where either will do.
+// verdictBy overrides who the completion quote is
 // attributed to (defaults to C. Gravitas).
 // artifact (a download card rendered inside the step, for a file used only at
 // that point rather than for the whole exercise),
+// attach (an array of artifacts shown as a paperclip strip of thumbnails and
+// filenames: what goes in the chat box, not another download),
 // prompt (+ optional promptLabel), promptEmphasis (a substring of prompt rendered
 // bold in the box; the COPY button still writes the plain string, so the emphasis
 // never reaches the clipboard),
@@ -610,7 +614,10 @@ export const MISSIONS = [
     title: 'The Module',
     pageTitle: 'Build the Staff Training With a Skill',
     summary: 'Run a working skill on the plan and get a training session out of it.',
+    // "or", not "+": 01 and 06 use both of their tools in sequence, this one
+    // works in either. The card was telling people they needed both.
     tools: [TOOLS.gemini, TOOLS.copilot],
+    toolsJoin: 'or',
     estMinutesCore: 12,
     toolInfo: {
       feature:
@@ -643,8 +650,12 @@ export const MISSIONS = [
         tier: 'core',
         estMinutes: 4,
         title: 'Attach both files',
+        // The strip below names the two files, so the body names the CONTROL
+        // instead. At this step the question in the room is "which two?", and
+        // showing them is faster than reading them.
         body:
-          'Download Training_Module_Builder.md and Sustainable-Futures-en.pdf from the links above, attach both, and send.',
+          'Download both from the cards above. In Gemini or Copilot, use the paperclip under the box where you type, attach both, and send.',
+        attach: [A.trainingSkill, A.susPlan],
       },
       {
         tier: 'core',

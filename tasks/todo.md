@@ -1103,3 +1103,41 @@ tags or entities, and matches `textContent` of the `<pre>` exactly. Note for nex
 the interception also revealed that `writeText` rejects when the tab is not focused, so
 the select-text fallback fires and leaves the whole prompt highlighted. That grey is the
 browser's selection, not a style bug.
+
+## 2026-09-05 (addendum 49): an attach strip on 04's step 2, and "or" not "+"
+
+**The attach strip.** Matt: put a paperclip and the two file images in Exercise 04's
+attach step. New optional step field `attach`, an array of artifacts, rendered by a new
+`AttachStrip` component as a paperclip, an ATTACH BOTH label, then each file as its
+thumbnail plus filename joined by a `+`.
+
+The user-centric argument for it: at step 2 the question in the room is "which two?",
+and a picture answers that faster than a sentence. So the strip carries the *what* and
+the body was rewritten to carry the *how*, naming the control the way the house standard
+requires: "use the paperclip under the box where you type". Before, the body was doing
+both jobs and doing neither well.
+
+Deliberately quieter than an artifact card, and nothing in it is clickable: the cards
+above are for downloading, this is a reminder of what to pick up. The paperclip is an
+inline stroked SVG rather than the 📎 emoji, so it takes `currentColor` and does not
+render as a colour emoji in the middle of a monochrome UI. Thumbnails reuse the same
+max-box trick as the artifact cards (`max-width: 26px; max-height: 34px`), so the drawn
+icon and the photographic cover come out the same visual weight.
+
+Wired into both `PromptBox`-adjacent render sites, the step renderer and the collapsed
+choice renderer, so a stretch path can use the field too.
+
+**"Gemini or Copilot", not "+".** Matt spotted that the picker card for 04 read
+"Gemini + Copilot", which says you need both. You need either. Checked the other two
+multi-tool exercises before changing anything: 01 runs Deep Research **then** Copilot,
+and 06 analyses in Gemini **then** builds in Canvas, so both genuinely use two tools in
+sequence and keep the `+`. Only 04 is either/or.
+
+So this is a per-exercise fact, not a global one. New optional mission field `toolsJoin`,
+defaulting to `+`; `MissionCard` joins on it. Verified across all six cards: 01
+"Gemini Deep Research + Copilot", 04 "Gemini or Copilot", 06 "Gemini + Gemini Canvas",
+the three single-tool cards unchanged.
+
+Checked the strip wraps rather than overflowing: at a 420px body it is 121px tall with
+`scrollWidth === clientWidth` and no horizontal page scroll. `?doctor` still 14 files,
+all 200.

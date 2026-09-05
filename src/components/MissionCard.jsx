@@ -41,7 +41,9 @@ export default function MissionCard({ mission, completed }) {
       <div className="evidence-card__label mission-card__label">
         <span className="evidence-card__id">EXERCISE {mission.code}</span>
         <span className="evidence-card__name">{mission.title}</span>
-        <span className="mission-card__meta">{mission.tools.join(' + ')}</span>
+        <span className="mission-card__meta">
+          {mission.tools.join(` ${mission.toolsJoin || '+'} `)}
+        </span>
       </div>
     </motion.button>
   );

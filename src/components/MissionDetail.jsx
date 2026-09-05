@@ -147,6 +147,33 @@ function ArtifactCard({ artifact }) {
   );
 }
 
+// The files that go in the chat box, shown as themselves. At Exercise 04's
+// attach step the question in the room is "which two?", and a picture of the
+// two answers it faster than a sentence does. Not a download: the cards above
+// are for that, this is a reminder of what to pick up.
+function AttachStrip({ items }) {
+  return (
+    <div className="attach-strip">
+      <span className="attach-strip__clip" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+             strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+        </svg>
+      </span>
+      <span className="attach-strip__label">ATTACH BOTH</span>
+      {items.map((a, i) => (
+        <React.Fragment key={a.filename}>
+          {i > 0 && <span className="attach-strip__plus" aria-hidden="true">+</span>}
+          <span className="attach-strip__item">
+            {a.thumb && <img src={`${BASE}${a.thumb}`} alt="" loading="lazy" />}
+            <span className="attach-strip__name">{a.filename}</span>
+          </span>
+        </React.Fragment>
+      ))}
+    </div>
+  );
+}
+
 // A step can carry one picture (Exercise 02 works from a supplied image).
 // src is relative to the site root; BASE keeps it right under /part2/.
 // image.ui marks a screenshot of a control, which needs the full column width
@@ -177,6 +204,7 @@ function ChoiceStep({ step }) {
           {step.hook && <p className="path-acc__hook">{step.hook}</p>}
           {step.body && <p className="mission-step__body">{step.body}</p>}
           {step.image && <StepFigure image={step.image} />}
+          {step.attach && <AttachStrip items={step.attach} />}
           {step.artifact && <ArtifactCard artifact={step.artifact} />}
           {step.prompt && <PromptBox prompt={step.prompt} label={step.promptLabel} note={step.promptNote} emphasis={step.promptEmphasis} />}
           {step.link && (
@@ -212,6 +240,7 @@ function Step({ step, number, lane }) {
         <p key={i} className="mission-step__lane-note">{note}</p>
       ))}
       {step.image && <StepFigure image={step.image} />}
+      {step.attach && <AttachStrip items={step.attach} />}
       {step.type === 'sort' && <SortGame items={step.items} />}
       {/* Prompt before the skill card, so the prompt always sits directly under
           the body as it does on every other exercise. */}
