@@ -1442,3 +1442,27 @@ change was needed, which is what a convention is for.
 Exercise 06's two cards now sit at a uniform 99px with buttons on the same row. The
 dataset card still shows DOWNLOAD only, from the `canView` gate. `?doctor` 17 files, all
 200. MH block sha256 unchanged.
+
+## 2026-09-05 (addendum 59): the HESA card note trimmed
+
+Matt: remove ", CC BY 4.0, unmodified. 13 MB." The card now reads "Every UK university,
+2015/16 to 2024/25. HESA, www.hesa.ac.uk." (The card lives on Exercise **06**, not 05.)
+
+**Checked what the removal costs before making it**, since both clauses were doing a job:
+
+- **The 13 MB warning survives** where it actually matters. Exercise 06's step 2 body
+  still says "It is 13 MB of real data, 163 universities over ten years, so give it a
+  moment", and `FACILITATOR_GUIDE.md:87` tells the facilitator to start people
+  downloading early. Nothing lost.
+- **The attribution survives in part.** The card still credits HESA by name and URL,
+  which is the substance of CC BY. What has gone from the **published site** is the
+  licence name and the statement that the file is unmodified. The full line is still in
+  `FACILITATOR_GUIDE.md:86`, but that is a facilitator document, not something a
+  participant or a passer-by sees.
+
+**Worth a decision at some point:** CC BY 4.0 asks for the licence to be identified
+wherever the work is distributed, and the site distributes the file. If that matters,
+the natural home is the discreet governance footnote on the gallery, next to the C1/C2
+note, rather than back on the card. Not doing it unasked; flagged here so it is not lost.
+
+Card still 99px with buttons on the same row. MH block unchanged.

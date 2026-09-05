@@ -364,7 +364,7 @@ const A = {
     label: 'TEN YEARS OF REAL DATA',
     filename: 'HESA_Estates_Management.xlsx',
     downloadPath: `${BASE}placeholders/HESA_Estates_Management.xlsx`,
-    note: 'Every UK university, 2015/16 to 2024/25. HESA, www.hesa.ac.uk, CC BY 4.0, unmodified. 13 MB.',
+    note: 'Every UK university, 2015/16 to 2024/25. HESA, www.hesa.ac.uk.',
     thumb: EXCEL_ICON,
   },
   factCheckSkill: {
