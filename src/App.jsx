@@ -68,7 +68,7 @@ export default function App() {
   return (
     <>
       <a href="#main-content" className="skip-link">Skip to main content</a>
-      <TaglineBar compact={Boolean(mission)} />
+      <TaglineBar compact={Boolean(player)} />
       <main id="main-content">
       <AnimatePresence mode="wait">
         {!player && (
@@ -79,7 +79,7 @@ export default function App() {
 
         {player && !mission && (
           <motion.div key="home" {...pageVariants} className="active-layout">
-            <MissionGallery player={player} progress={progress} />
+            <MissionGallery progress={progress} />
             <p className="session-footer">
               Signed in as {player.name}.{' '}
               <button type="button" className="session-footer__signout" onClick={handleSignOut}>

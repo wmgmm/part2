@@ -1466,3 +1466,27 @@ the natural home is the discreet governance footnote on the gallery, next to the
 note, rather than back on the card. Not doing it unasked; flagged here so it is not lost.
 
 Card still 99px with buttons on the same row. MH block unchanged.
+
+## 2026-09-05 (addendum 60): strapline off the picker, and the memo opens on Chris
+
+Two on the picker screen.
+
+**The strapline now belongs to the arrival screen only.** `App.jsx` passes
+`compact={Boolean(player)}` instead of `Boolean(mission)`, so the full line survives on
+the splash, where someone landing cold has a reason to read it, and the bar is the title
+alone everywhere behind the sign-in: picker and exercise pages both. This is the third
+setting for this bar in one session, so for the record the sequence was: off everywhere
+(addendum 43), back on the picker and splash (45), now splash only. **The splash still
+carries it** and that is deliberate, not an oversight; say if it should go too.
+
+**The memo opens on Chris.** "Hey {player.name}, I'm Chris, your new line manager"
+becomes "I'm Chris, your new line manager". The joke was never the greeting, and dropping
+the name means the first thing a reader sees is the character rather than their own name
+echoed back at them.
+
+**That orphaned a prop, so it went too.** `player` was passed into `MissionGallery` for
+exactly one purpose, the name in that greeting. Removed from the component signature and
+from the call site in `App.jsx`. `player.name` is still used in `App.jsx` for the
+"Signed in as ..." footer, which is untouched, and `loadUser` still drives routing, so
+nothing else is affected. Verified on the page: the footer still reads "Signed in as
+Matt. Not you?"

@@ -4,7 +4,7 @@ import { MISSIONS, HERO_IMAGE } from '../data/missions.js';
 
 const BASE = import.meta.env.BASE_URL;
 
-export default function MissionGallery({ player, progress }) {
+export default function MissionGallery({ progress }) {
   const completedCount = MISSIONS.filter(m => progress[m.id]).length;
 
   return (
@@ -15,10 +15,10 @@ export default function MissionGallery({ player, progress }) {
             <span className="directive__label">WHY YOU&rsquo;RE HERE</span>
           </div>
           <p className="directive__text">
-            Hey {player.name}, I&rsquo;m Chris, your new line manager. The Sustainable
-            Futures policy landed on my desk in week one, and I have volunteered our team
-            to work out what we actually do about it. Remember Responsible AI: this is
-            your work, and AI is your assistant.
+            I&rsquo;m Chris, your new line manager. The Sustainable Futures policy
+            landed on my desk in week one, and I have volunteered our team to work out
+            what we actually do about it. Remember Responsible AI: this is your work, and
+            AI is your assistant.
           </p>
           <span className="directive__sig">— Chris Gravitas, Sustainability Engagement Officer (and your line manager, apparently)</span>
         </div>
