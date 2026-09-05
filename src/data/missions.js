@@ -829,7 +829,7 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 6,
-        title: 'Build the dashboard in Canvas',
+        title: 'Build the dashboard in Gemini\'s Canvas',
         body:
           'Use Gemini for this one. In the chat where you ran the analysis, open the Tools menu under the box where you type and select Canvas, so it can see the numbers you just computed. Then paste this.',
         promptLabel: 'THE BUILD PROMPT',
