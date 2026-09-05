@@ -1177,3 +1177,32 @@ DOWNLOAD buttons on the two cards a few centimetres up, and on the attach strip 
 the same two files. That is probably fine, and it is tighter, but if anyone stalls at
 this step in a live session, the missing download instruction is the first thing to
 suspect. 27 words, inside the 45-word cap.
+
+## 2026-09-05 (addendum 52): a Blue Peter badge for the "one we made earlier" files
+
+Matt supplied a document icon carrying the Blue Peter shield, for optional files, naming
+`Example_Training_Session.pdf` as the example. The joke lands because that file's note
+already reads "Here's one we made earlier", which is where the whole idea started
+several addenda ago.
+
+**Converted properly this time**, because the file was on disk rather than on the
+clipboard: `convert-im6.q16 -fuzz 8% -trim +repage` cropped 1407x768 down to the 444x659
+document, then `cwebp -q 86 -resize 128 0`. 128x190, 3.5 KB. The crop matters: two
+thirds of the supplied image was white margin, which at 46px would have rendered a
+postage stamp inside a lot of nothing. It shares the folded-corner shape with the drawn
+`skill_md_icon.svg`, so the two read as a set rather than as two unrelated pictures.
+
+**Applied to two artifacts, not one.** `EXAMPLE_ICON` now marks:
+
+- `exampleTraining`, the one Matt named. "OPTIONAL: BACKUP TRAINING SESSION".
+- `deepResearch`, which is the same class of thing: "The brief already run, so you can
+  compare, or so you can do the Copilot half if your own run is still going." A finished
+  run supplied so nobody is stranded is exactly one we made earlier.
+
+Matt said "for optional files, e.g.", which reads as a class rather than a single file,
+and `deepResearch` is the only other member. **Flagged for him to reverse** if he
+intended only the one he named.
+
+The card set now has three visual classes: the real document (its own cover), the skill
+you attach (drawn `.md` icon), and the safety net (Blue Peter). `?doctor` reports 15
+files, all 200, the badge against 01 and 05.

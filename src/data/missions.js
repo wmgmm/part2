@@ -301,6 +301,11 @@ const MH_CANVAS_GAME = `Please review the attached 'Sustainable Futures' documen
 // The plan gets its real cover instead.
 const SKILL_ICON = 'skill_md_icon.svg';
 
+// "Here's one we made earlier": the marker for a file that exists only so
+// nobody is stranded when their own run fails or their quota is spent. Same
+// folded-corner document shape as the skill icon, so the two read as a set.
+const EXAMPLE_ICON = 'blue_peter_icon.webp';
+
 const A = {
   susPlan: {
     label: 'THE SUSTAINABILITY PLAN',
@@ -317,6 +322,7 @@ const A = {
     filename: 'Deep_research_output.pdf',
     downloadPath: `${BASE}placeholders/Deep_research_output.pdf`,
     note: 'The brief already run, so you can compare, or so you can do the Copilot half if your own run is still going.',
+    thumb: EXAMPLE_ICON,
   },
   trainingSkill: {
     label: 'SKILL 1: BUILD THE TRAINING',
@@ -338,6 +344,7 @@ const A = {
     filename: 'Example_Training_Session.pdf',
     downloadPath: `${BASE}placeholders/Example_Training_Session.pdf`,
     note: "Here's one we made earlier, in case Exercise 04 did not run for you. Upload it to Notebook as a source.",
+    thumb: EXAMPLE_ICON,
   },
   hesaData: {
     label: 'TEN YEARS OF REAL DATA',
