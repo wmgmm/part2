@@ -786,3 +786,19 @@ The illustration ban had a second problem: the site's own hero is an illustratio
 What survives is what a generator can actually control: no shadows, icons or emoji. "Photography is Cardiff architecture at editorial scale" stays as direction rather than prohibition.
 
 4,854 characters, 62 spare against the box. Not quite enough to restore the "authorized/specialized" catch, which needs 58 and would leave four.
+
+## 2026-09-05 (addendum 40): naming the visual, and photography demoted to a preference
+
+Matt: "make this Photography is Cardiff architecture at editorial scale a preference not a rule, plus we need to add in something to make slides useful for visual learners, this is just text on a slide."
+
+**Photography is now "Prefer Cardiff architecture photography at editorial scale."** Same steer, no longer a rule the tool cannot verify. It sits alongside the stock-image ban removed in addendum 39 for the same reason: Notebook cannot confirm a photograph is of Cardiff, so stating it as law only invites either silent failure or a false claim of compliance. As direction it demonstrably works, since every photograph in the Information Classification deck came back as architecture.
+
+**The real gap he identified is bigger than photography.** Both real runs produced decks that are text on slides. Well-set text, properly ranked, but text. The skill described how a slide should *look* and never once told the tool what kind of object to draw. So:
+
+> **Name the visual, or you get bullets.** Ask for a matrix, a funnel, a three-column card grid, a horizontal timeline. Naming the form makes the tool reach for a graphic template; leaving it unnamed gets a paragraph with dots in front. A hard word cap does the same work.
+
+Matt's two observations behind it are worth keeping as reasoning, not just as a rule. Naming a form ("matrix", "funnel", "timeline") makes these tools select a graphic template rather than a text container. And a tight word budget forces the same outcome from the other direction: the fewer words allowed, the more the tool has to draw. That reframes the 40-word cap, which until now read as a limit on density and is really a lever on layout.
+
+**One tension it creates, worth watching.** BULLETS says "no numbered lists", and a numbered ladder is exactly the visual the Demand First material wants. If a run comes back refusing to number the four steps, that rule is the cause.
+
+**Paid for by 264 characters of trimming**, mostly things the earlier cuts had already orphaned: "the ratio matters more than the number" in SIZES lost its point when the PowerPoint note went, and "a non-specialist and an expert should both get it on first read" was the third sentence making the same case in one paragraph. 4,878 characters, 38 spare.

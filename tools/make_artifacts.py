@@ -190,20 +190,18 @@ dividers Georgia. Introduce no other face.
 
 ## SIZES AND HIERARCHY
 
-Cover 120pt, section dividers 160-240pt, content headings 72-92pt, supporting
-text 50pt, body and bullets 32-48pt. The heading-to-body jump is extreme, 2:1 to
-3:1, and the ratio matters more than the number. Headings dominate. Never shrink
-one to fit more text; cut the text.
+Cover 120pt, section dividers 160-240pt, content headings 72-92pt, body and bullets 32-48pt. The heading-to-body jump is extreme, 2:1 to
+3:1. Headings dominate. Never shrink one to fit; cut the text.
 
 ## BULLETS
 
-Solid round bullet in Cardiff Red #E4251B at 130% of text size, black Franklin
+Solid round bullet in Cardiff Red #E4251B, 130% of text size, black Franklin
 Gothic Book text. No numbered lists, dashes or icon bullets.
 
 ## LOGO
 
 Bilingual Cardiff University / Prifysgol Caerdydd logo on title and closing
-slides only, top-left or centre-left. Never resize or recolour.
+slides only, top-left or centre-left.
 
 ## LAYOUT PATTERNS
 
@@ -212,11 +210,16 @@ slides only, top-left or centre-left. Never resize or recolour.
 3. **Title on red block:** photo right 60%, white left, red block behind a white
    upper-left title, logo top-left outside the block.
 4. **Title only:** black Demi title upper-left, Georgia subtitle below, right side
-   intentional negative space.
+   negative space.
 5. **Full-width title:** title across the right two-thirds, supporting text below.
    For long titles.
 6. **Left image, red bar:** photo left 40-50%, title on white right, red bar
    between.
+
+**Name the visual, or you get bullets.** Ask for a matrix, a funnel, a
+three-column card grid, a horizontal timeline. Naming the form makes the tool
+reach for a graphic template; leaving it unnamed gets a paragraph with dots in
+front. A hard word cap does the same work.
 
 ## READING LEVEL AND PLAIN ENGLISH
 
@@ -226,8 +229,7 @@ Write for someone who has not read the source document and is not going to.
 section, on each slide, in each sentence.
 
 **Open it up, do not dumb it down.** Keep the substance, the nuance and the
-precision. Strip only what makes it hard to read. A non-specialist and an expert
-should both get it on first read.
+precision. Strip only what makes it hard to read.
 
 Average sentence 20 words or fewer (GOV.WALES). No more than 40 words on
 a slide, labels and captions counted. One idea per line. Nothing should need a
@@ -254,8 +256,6 @@ it replaced.
 Sentence case, never block capitals. UK English: -ise not -ize, -our, -re;
 licence and practice as nouns, license and practise as verbs.
 
-Every number comes from the source. If it is not there, leave it out.
-
 A content slide carrying only a heading is not a slide: give it a point or fold
 it into the next. Dividers and the closer excepted.
 
@@ -265,7 +265,7 @@ Every box in a diagram holds words. An empty labelled box is decoration.
 
 Left-align text, centre only on dividers and closers. Welsh and English bilingual
 on dividers and closers, Welsh first: a one or two word section name, never Welsh
-body text you invented. Photography is Cardiff architecture at editorial
+body text you invented. Prefer Cardiff architecture photography at editorial
 scale. No shadows, icons or emoji.
 """
 
