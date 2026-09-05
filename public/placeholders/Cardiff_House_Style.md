@@ -15,15 +15,17 @@ you ask for it.
 
 ## Design philosophy
 
-These slides must command a room, not merely comply with a brand. Every slide is
-one frame that has to land in under three seconds. Treat headlines as graphic
+These slides must command a room, not merely comply with a brand. Think like an
+art director at a smartphone-first media brand: every slide is one frame that has
+to land in under three seconds. Treat headlines as graphic
 objects, not sentences: the jump from heading to body is 2:1 or wider, so the
 hierarchy hits before anyone reads a word. Negative space is deliberate tension,
 not leftover room. Layout is asymmetric on purpose, never centred-and-safe:
 anchor the punchline hard to one edge, or isolate it so the eye has nowhere else
 to go. One slide, one message. If a heading works in three words, do not write
 six. Subtitles provoke, they do not describe. If an image does not earn its
-space, cut it and let the type carry the slide.
+space, cut it and let the type carry the slide. The goal is a deck that feels
+like a high-end publication, not a compliance exercise.
 
 ## Colour
 

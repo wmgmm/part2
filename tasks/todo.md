@@ -690,3 +690,14 @@ That second deck is markedly better than the one the old skill produced. Headlin
 **The 6,000 character guideline is now 7,000.** I defended 6,000 across four edits, twice by cutting content that was doing work, and it was never the constraint: Copilot Agent Builder's instructions field holds 8,000. The file is 6,647. Recorded in `CLAUDE.md` with the reason, so the next session does not re-litigate it.
 
 **Also new from the research:** an authoritative sentence-length number to replace my inferred one. GOV.WALES style guide, last updated 3 September 2026: "Keep average sentence length 20 words or fewer." Cardiff staff are in scope, and the plan's median of 24 sits just above it. Cardiff itself publishes no reading-age or readability target at all, which is a verified negative worth knowing: do not invent one, and do not cite "reading age 9", which is GOV.UK and could not be verified.
+
+## 2026-09-05 (addendum 34): two lines of Matt's philosophy restored
+
+Matt asked whether his spec had actually been tuned. Reviewing the merge against his original, two of its strongest lines had been cut for length rather than for cause, back when the file was being squeezed under 6,000:
+
+- "Think like an art director at a smartphone-first media brand" - a persona anchor, and the only line in the spec that tells the model whose taste to borrow. Rules constrain; a persona gives it a target to aim at.
+- "The goal is a deck that feels like a high-end publication, not a compliance exercise." - the closing frame, and the line that most clearly separates his spec from a brand checklist.
+
+Both restored now the guideline is 7,000. File is 6,795. This is the second time in two days that squeezing to 6,000 removed something load-bearing, which is the argument for having raised it.
+
+Still deliberately not restored from his original: "Think like a top art director" (dropped "top" as it adds nothing), "one reaction" from "one slide, one message, one reaction", and "The contrast between text-dense areas and vast white voids creates rhythm across a deck", which restates the negative-space sentence immediately before it. His red-blade line was not cut, it was moved into the Colour section next to the hex values it governs.
