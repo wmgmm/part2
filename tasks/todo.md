@@ -596,3 +596,19 @@ This is the failure mode the tool-capabilities research doc exists to prevent, a
 `?doctor` picked the screenshot up with no code change, because `DoctorPanel` derives from `MISSIONS` and already collected step images. Twelve files now, all 200. Its hero row label still said "stall illustration" from the old cartoon; fixed to "hero illustration".
 
 **Browser-tool note, third time this session.** After a screenshot timeout the tab served a stale JS bundle and the new `--ui` class was silently absent, so the image looked unchanged and I nearly "fixed" working CSS. `javascript_tool` reading `className` and `getBoundingClientRect()` settled it in one call where a screenshot could not. Check the DOM, not the picture, when a style change appears to do nothing.
+
+## 2026-09-05 (addendum 29): Exercise 05's prompt shrinks to one line, and moves above the skill card
+
+Matt: "the prompt here is just Training Slide deck on the Demand First ladder, so staff can apply it in practise, plus prompt should be above the skills so it matches."
+
+The old prompt was four lines telling Notebook to follow the training session section by section, one message per slide, every figure from the sources, then "Follow the attached skill." All of that was written for a chat box. The Slide Deck dialog is not a chat box: it is a field called "Describe the slide deck you want to create", and the house style pasted above it already carries the rules. So the prompt is now one line and the rest was duplication:
+
+> Training slide deck on the Demand First ladder, so staff can apply it in practice.
+
+`promptLabel` changed from 'YOUR PROMPT, PLUS ONE LINE' to 'THE DECK DESCRIPTION'. The old label named the "Follow the attached skill" line that no longer exists, so it would have been a small lie left on the page.
+
+Spelling: Matt wrote "in practise". Kept as **practice**, the UK noun; practise is the verb.
+
+**Render order swapped in `MissionDetail.jsx`:** prompt now comes before the step's artifact card. Exercise 05 step 2 is the only step in the site carrying both, so nothing else moves, and the prompt now sits directly under the body on every exercise without exception.
+
+`promptNote` rewritten twice. It has to describe the order things go into the Notebook field, which is no longer the order they appear on the page, and that is exactly the kind of sentence that gets read backwards in a room. Settled on "[house style first, then this line underneath it]".

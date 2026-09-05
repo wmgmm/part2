@@ -198,9 +198,11 @@ function Step({ step, number, lane }) {
         <p key={i} className="mission-step__lane-note">{note}</p>
       ))}
       {step.image && <StepFigure image={step.image} />}
-      {step.artifact && <ArtifactCard artifact={step.artifact} />}
       {step.type === 'sort' && <SortGame items={step.items} />}
+      {/* Prompt before the skill card, so the prompt always sits directly under
+          the body as it does on every other exercise. */}
       {step.prompt && <PromptBox prompt={step.prompt} label={step.promptLabel} note={step.promptNote} />}
+      {step.artifact && <ArtifactCard artifact={step.artifact} />}
       {step.link && (
         <a
           className="mission-step__link"

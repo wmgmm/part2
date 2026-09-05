@@ -678,17 +678,17 @@ export const MISSIONS = [
         title: 'Paste the house style into Slide Deck',
         artifact: A.houseStyleSkill,
         body:
-          'Open Studio and click Slide Deck. Press COPY on the card below, then paste the style and the prompt into the description box. Do NOT add it as a source, or the deck becomes about the rules.',
+          'In the Studio pane, click Slide Deck. Press COPY on the card below, then paste the style and the prompt into the description box. Do NOT add it as a source, or the deck becomes about the rules.',
         image: {
           src: 'notebook_slide_deck.webp',
           ui: true,
           alt: 'Gemini Notebook\'s Customize Slide Deck dialog. Format offers Detailed Deck, ticked, or Presenter Slides. Below are language, length and sources controls, then a large field labelled Describe the slide deck you want to create, holding the placeholder PASTE CARDIFF UNIVERSITY STYLE INFO HERE.',
           caption: 'Everything goes in the description box. Leave Detailed Deck and Default length alone.',
         },
-        promptLabel: 'YOUR PROMPT, PLUS ONE LINE',
-        promptNote: '[paste the house style skill above this, then this prompt]',
+        promptLabel: 'THE DECK DESCRIPTION',
+        promptNote: '[house style first, then this line underneath it]',
         prompt:
-          'Ten slides for staff who have not read the plan.\n\nFollow my training session section by section. Add nothing that is not in it.\nOne message per slide. Every figure and quoted phrase comes from the sources.\n\nFollow the attached skill.',
+          'Training slide deck on the Demand First ladder, so staff can apply it in practice.',
       },
       {
         tier: 'core',
