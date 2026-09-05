@@ -20,7 +20,7 @@ export default function MissionGallery({ progress }) {
             what we actually do about it. Remember Responsible AI: this is your work, and
             AI is your assistant.
           </p>
-          <span className="directive__sig">— Chris Gravitas, Sustainability Engagement Officer (and your line manager, apparently)</span>
+          <span className="directive__sig">— Chris Gravitas, Sustainability Engagement Officer (and your new line manager, apparently)</span>
         </div>
         <img
           className="intro-row__image"
