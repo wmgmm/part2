@@ -1245,3 +1245,51 @@ info block and to its right.
 against its *longest* case and its *shortest* in the same pass. I verified the new
 thumbnail on Exercise 04, where both notes are short, and never looked at Exercise 05,
 where the note is 100 characters and pushed the layout apart.
+
+## 2026-09-05 (addendum 54): Exercise 05 moves to Matt's own slide skill, four steps
+
+Matt supplied `TheMattsBrandSkill.md` verbatim, emojis included, and asked for Exercise
+05 to be a simple four steps using it, same deck-description prompt as before.
+
+**The skill, stored verbatim.** Added to `tools/make_artifacts.py` so there is still one
+source of truth and one length check, but with no processing: his wording, capitalisation
+and both emojis are untouched. The two emojis are written in the generator as
+`\N{UNAMUSED FACE}` and `\N{SMILING FACE WITH SMILING EYES}` escapes, so the Python source
+stays ASCII and no editor, terminal or copy-paste can silently mangle them; the written
+file carries the real characters. Verified by reading the served file back over HTTP and
+listing every codepoint above U+2100: exactly the two emojis, nothing else.
+
+**1,751 characters.** With the 84-character prompt line that is 1,837 against Notebook's
+5,000. **For the first time in days that box is not the binding constraint**, with over
+3,000 characters of headroom instead of 186. If this skill is the direction, the whole
+character-budget discipline that shaped `Cardiff_Brand_SKILL.md` stops mattering here.
+
+**Four steps**, splitting the old dense step 2 into "open the dialog" and "fill the box":
+
+1. Add your training session to a notebook (3 min)
+2. In the Studio pane, click Slide Deck (2) - carries the Detailed Deck / Default note
+3. Paste the prompt, then the skill underneath (4) - carries the screenshot, the prompt
+   and the skill card
+4. Generate the deck, then export (3)
+
+Still 12 minutes. The old step 2 was doing three jobs in one sentence.
+
+**Copy that had to change, because the new skill contradicts it.** The skill says nothing
+about Cardiff red, the logo or Welsh: it is about clarity, layout and wit. So
+`pageTitle` "Turn the Training Into Slides That Look Like Cardiff" would have been simply
+untrue, and became "Turn the Training Into a Deck People Will Watch"; the brief follows.
+The **verdict is unchanged in substance** and still the right lesson: where you put an
+instruction changes what it does.
+
+**Two things left for Matt to decide.**
+
+- **The screenshot is now wrong in one detail.** His capture of the Customize Slide Deck
+  dialog shows the placeholder line `[PASTE CARDIFF BRAND SKILL HERE]`, and the file is
+  now `TheMattsBrandSkill.md`. The `alt` still describes the image accurately, and the
+  caption now says so out loud, but a re-capture would be cleaner.
+- **`Cardiff_Brand_SKILL.md` is now linked from no exercise.** Still generated, still
+  downloadable, `A.brandSkill` still defined and commented as unlinked. Same status as
+  `Fact_Check_Cardiff.md`, which means the repo now carries two orphaned skills. Not
+  deleted, because days of work went into it and nobody asked.
+
+`MH_*` block sha256 unchanged. `?doctor` 15 files, all 200.

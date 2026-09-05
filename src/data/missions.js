@@ -331,6 +331,18 @@ const A = {
     note: 'Turns documents into training materials.',
     thumb: SKILL_ICON,
   },
+  // Matt's own slide skill, supplied verbatim 2026-09-05. 1,751 characters, so
+  // for the first time the Notebook 5,000-char box is not the binding constraint.
+  mattsBrandSkill: {
+    label: 'SKILL 2: MAKE IT WATCHABLE',
+    filename: 'TheMattsBrandSkill.md',
+    downloadPath: `${BASE}placeholders/TheMattsBrandSkill.md`,
+    note: 'Rewrites it into plain language, then lays it out as slides.',
+    copyable: true,
+    thumb: SKILL_ICON,
+  },
+  // Still generated, currently linked from no exercise: Exercise 05 moved to
+  // TheMattsBrandSkill on 2026-09-05. Same status as factCheckSkill.
   brandSkill: {
     label: 'SKILL 2: MAKE IT CARDIFF',
     filename: 'Cardiff_Brand_SKILL.md',
@@ -690,8 +702,8 @@ export const MISSIONS = [
     code: '05',
     level: 2,
     title: 'The Brand',
-    pageTitle: 'Turn the Training Into Slides That Look Like Cardiff',
-    summary: 'One source in a notebook, the brand skill in the deck description, one deck out.',
+    pageTitle: 'Turn the Training Into a Deck People Will Watch',
+    summary: 'One source in a notebook, one slide skill in the deck description, one deck out.',
     tools: [TOOLS.notebook],
     estMinutesCore: 12,
     toolInfo: {
@@ -699,33 +711,40 @@ export const MISSIONS = [
         'Gemini Notebook answers only from the sources you give it.',
       apps: [APPS.notebook],
     },
-    workflow: ['Add your training', 'Paste the brand skill', 'Generate and export'],
+    workflow: ['Add your training', 'Open Slide Deck', 'Paste both', 'Generate and export'],
     brief:
-      'Turn your training session into a slide deck that looks like it came from this university.',
+      'Turn your training session into a slide deck that is visual, witty and worth sitting through.',
     artifacts: [A.exampleTraining],
     steps: [
       {
         tier: 'core',
-        estMinutes: 4,
+        estMinutes: 3,
         title: 'Add your training session to a notebook',
         body:
           'Use Gemini Notebook. Click Create new, then paste your Exercise 04 training session in as a source. If 04 did not run for you, upload the backup PDF above instead.',
       },
       {
         tier: 'core',
-        estMinutes: 4,
-        title: 'Paste the brand skill into Slide Deck',
-        artifact: A.brandSkill,
+        estMinutes: 2,
+        title: 'In the Studio pane, click Slide Deck',
         body:
-          'In the Studio pane, click Slide Deck. Paste the prompt into the description box, then COPY the skill below and paste it underneath. Do NOT add it as a source, or the deck becomes about the rules.',
+          'A Customize Slide Deck box opens. Leave Detailed Deck and Default length alone; everything you need to change is the description field at the bottom.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 4,
+        title: 'Paste the prompt, then the skill underneath',
+        artifact: A.mattsBrandSkill,
+        body:
+          'Both go in the description box, in that order. COPY the skill below and paste it under the prompt. Do NOT add it as a source, or the deck becomes about the rules.',
         image: {
           src: 'notebook_slide_deck.webp',
           ui: true,
           alt: 'Gemini Notebook\'s Customize Slide Deck dialog. Format offers Detailed Deck, ticked, or Presenter Slides. Below are language, length and sources controls, then a large field labelled Describe the slide deck you want to create, holding the prompt on the first line and the placeholder PASTE CARDIFF BRAND SKILL HERE beneath it.',
-          caption: 'Prompt first, skill underneath, both in the description box. Leave Detailed Deck and Default length alone.',
+          caption: 'Prompt first, skill underneath, both in the description box. The placeholder in this capture says Cardiff brand skill; the file is now TheMattsBrandSkill.md.',
         },
         promptLabel: 'THE DECK DESCRIPTION',
-        promptNote: '[then paste the Cardiff brand skill underneath this]',
+        promptNote: '[then paste TheMattsBrandSkill.md underneath this]',
         prompt:
           'Training slide deck on the Demand First ladder, so staff can apply it in practice.',
       },
@@ -739,7 +758,7 @@ export const MISSIONS = [
     ],
     verdictBy: 'The Matts',
     verdict:
-      'Where you put an instruction changes what it does. As a source, the brand skill becomes the subject of the deck. In the description box, it becomes the way the deck is made.',
+      'Where you put an instruction changes what it does. As a source, the slide skill becomes the subject of the deck. In the description box, it becomes the way the deck is made.',
   },
 
   {
