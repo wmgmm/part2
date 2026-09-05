@@ -25,6 +25,13 @@ function collectUrls() {
         add(s.artifact.downloadPath, `${m.code} · ${s.artifact.filename}`);
         if (s.artifact.thumb) add(`${BASE}${s.artifact.thumb}`, `${m.code} · ${s.artifact.thumb}`);
       }
+      // The attach strip: its files are usually also in mission.artifacts, but
+      // nothing enforces that, and attachExtra is an image nothing else points at.
+      (s.attach || []).forEach(a => {
+        add(a.downloadPath, `${m.code} · ${a.filename}`);
+        if (a.thumb) add(`${BASE}${a.thumb}`, `${m.code} · ${a.thumb}`);
+      });
+      if (s.attachExtra) add(`${BASE}${s.attachExtra.src}`, `${m.code} · ${s.attachExtra.src}`);
     });
   });
   add(`${BASE}${HERO_IMAGE}`, 'Gallery · hero illustration');

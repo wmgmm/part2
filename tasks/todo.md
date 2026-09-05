@@ -2308,3 +2308,32 @@ true, and the distinction is real: **a design spec competes with the content, a 
 is the content.** Every line here is a requirement the code either meets or does not, which
 is the "machine-checkable output" category the addendum 62 research said to hard-constrain.
 Added to the guide so the contradiction is answered rather than noticed.
+
+## 2026-09-05 (addendum 80): the Canvas button joins the attach strip
+
+Matt: use the paperclip strip on step 4 too, with the HESA icon, plus a Canvas button icon
+he captured. Step 4 opens a new chat, so it genuinely is a second attach.
+
+`AttachStrip` gains two optional props rather than a second component:
+
+- **`label`**, because the count-derived label was wrong here. "ATTACH THIS" then a Canvas
+  chip reads as though you attach Canvas, which you do not. Step 4 sets **"IN THIS CHAT"**,
+  which covers a file and a control in one phrase.
+- **`extra`**, a trailing control image after a `+`. So the strip reads: paperclip, IN THIS
+  CHAT, the Excel icon, `HESA_Estates_Workshop.csv`, +, the Canvas button.
+
+`public/canvas_button.webp` is his screenshot at **91x26, 384 bytes**, saved lossless and
+rendered at its captured size. Deliberately not scaled up: at 1:1 it looks like the thing
+they are hunting for on screen rather than an illustration of it.
+
+**A real trap caught by running the preflight rather than trusting it.** `?doctor` came back
+"All 17 files respond" with the Canvas image **not in the list at all**. `attachExtra` was a
+new asset class `DoctorPanel` knew nothing about, so a missing file would have passed the
+five-minute preflight and 404d in front of a room. Now covered, along with the `attach`
+array itself: those files are usually also in `mission.artifacts`, but **nothing enforces
+that**, so a step that attached something not on the card would have been invisible too.
+17 files becomes **18**.
+
+That is the second time this exact shape of bug has appeared, after the `thumb` field in
+addendum 44. **The standing rule now: any new field naming a file or an image must be added
+to `collectUrls` in the same commit.**

@@ -2146,3 +2146,13 @@ a:hover,
 .mission-artifact__source:hover {
   text-decoration: underline;
 }
+
+/* A control in the attach strip, not a file: the Canvas button on Exercise 06.
+   Rendered at its captured size, so it looks like the thing they are hunting
+   for on screen rather than an illustration of it. */
+.attach-strip__control {
+  display: block;
+  height: 26px;
+  width: auto;
+  border-radius: 4px;
+}
