@@ -1313,3 +1313,47 @@ extraction from commit `d95d404`. **Use the anchored form from now on.** A hardc
 range is exactly the wrong check for the one thing in this repo that must never change,
 because it fails loudly when nothing is wrong and would pass quietly if someone edited a
 constant while adding lines above it.
+
+## 2026-09-05 (addendum 55): I misread addendum 54. The Matts skill is a fourth step, not a replacement
+
+Matt: "no! revert, it was not a replacement, what we had before was perfect. It was for
+after they had saved the first deck from ex5, new rerun with the Matts."
+
+**What I got wrong.** He wrote "exercise 5 now has a simple 4 step, same prompt but use
+TheMattsBrandSkill.md". I read "use X" as *instead of* the Cardiff skill and rebuilt the
+exercise around it, restructuring three steps into four in the process. He meant the
+opposite: keep all three steps exactly as they were and **add a fourth**, so the same
+notebook and the same one-line prompt run twice with two different skill files. "Simple 4
+step" was 3 + 1, not a redesign. The clue I had and did not use: he said "same prompt",
+which only means anything if there is a first run to be the same as.
+
+**Reverted** with `git checkout 25989fb -- src/data/missions.js`, so the title, brief,
+summary, verdict wording, the three original steps, the Cardiff skill card, the prompt
+note and the screenshot caption are all back to the exact bytes he approved. Then the
+addition on top:
+
+- `A.mattsBrandSkill`, "SKILL 3: NOW MAKE IT WATCHABLE". `A.brandSkill` is **not**
+  orphaned after all; both are live in Exercise 05.
+- Step 4, "Now run it again with a different skill": open Slide Deck again, same source,
+  same prompt, this skill underneath instead.
+- A fourth workflow chip, "Run it again".
+- Step 3 gains "Save it before the next step", and **loses "You get one generation each"**,
+  which step 4 now contradicts.
+- The verdict changes, because the exercise now proves something better than it did.
+  Was: where you put an instruction changes what it does. Now: "Two decks, one source,
+  one prompt. Everything that differs between them came from the skill file, which is the
+  clearest evidence you will get today that a skill is worth writing down."
+
+**The constraint this breaks, deliberately.** `CLAUDE.md` said: "the design budgets one
+[Studio generation] of each per participant, so do not add a step that regenerates."
+Step 4 regenerates on purpose. I have rewritten that rule rather than quietly violating
+it, recording it as **the one sanctioned exception** and noting that if the quota bites in
+a live session, the second run is what gets dropped. Left as it was, the next session
+would have read the rule and "fixed" the new step.
+
+**Timing: 05 goes 12 to 15 minutes**, the day 77 to 80. `FACILITATOR_GUIDE.md` updated,
+including the two-generation cost, the instruction to make people save the first deck
+before step 4, and the fallback of showing a pre-made second deck on the projector.
+
+MH block sha256 `e4f80823...` unchanged, checked with the anchored form from addendum 54.
+`?doctor` 16 files, all 200, both skills against 05.
