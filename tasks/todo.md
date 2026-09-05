@@ -2337,3 +2337,25 @@ that**, so a step that attached something not on the card would have been invisi
 That is the second time this exact shape of bug has appeared, after the `thumb` field in
 addendum 44. **The standing rule now: any new field naming a file or an image must be added
 to `collectUrls` in the same commit.**
+
+## 2026-09-05 (addendum 81): Exercise 06's verdict follows the exercise
+
+Matt: "Two true numbers still told two different stories" becomes "Transforming numbers into
+a story can be engaging."
+
+Right call, and not only a wording preference. **The old line described an exercise that no
+longer exists.** It came from the version with two static charts, absolute against
+intensity, where step 3 asked you to compare them. Step 3 became the cross-check in addendum
+72 and step 4 became a Gapminder animation, so the closing line was pointing at a comparison
+the page had stopped making. The new one describes what the exercise now actually does: turn
+a spreadsheet into something you watch.
+
+**A stale reference fell out of the change.** `FACILITATOR_GUIDE.md` still read "Two true
+charts, two different stories. Which one you show is an editorial choice, and that is the
+point of step 3." Step 3 is now the cross-check, so that sentence sent a facilitator looking
+for a beat that is not there. Rewritten to say the point directly and to flag that **the
+exercise no longer makes it for you**: absolute emissions fell 28% while intensity fell 39%,
+both honest, and it is now the facilitator's line rather than a step.
+
+Worth noting the intensity finding survives in the data even though no step asks for it. If
+the room wants it, it is one prompt away, and the guide now carries the numbers.

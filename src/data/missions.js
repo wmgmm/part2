@@ -846,7 +846,7 @@ export const MISSIONS = [
     ],
     verdictBy: 'The Matts',
     verdict:
-      'Ask for the code and the numbers are computed rather than guessed, which is the difference between a finding and a plausible sentence. Two true numbers still told two different stories.',
+      'Ask for the code and the numbers are computed rather than guessed, which is the difference between a finding and a plausible sentence. Transforming numbers into a story can be engaging.',
   },
 ];
 
