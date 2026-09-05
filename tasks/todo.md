@@ -774,3 +774,15 @@ Measured against the shipped file, his paste survives to **exactly 5,001 charact
 - **Latin abbreviations, the active-voice example, and the "authorized/specialized" catch went.** The last is the one I would restore first if headroom appears: it caught a real bug in Matt's own deck.
 
 **Two false alarms worth recording.** My verification grep reported "three words, do not make it six" as LOST when it was present but wrapped across a line, so the grep pattern spanned a newline. Line-wrapped files need `tr -d '\\n'` before phrase greps, or the check lies. And one of my own edits left a 96-character line in the middle of a hard-wrapped file; an `awk 'length > 82'` pass now catches that, though it correctly flags the front-matter description, which must stay on one line.
+
+## 2026-09-05 (addendum 39): the stock-image and illustration bans removed
+
+Matt: "remove that no illustractions and maybe the no stock images."
+
+Removed both, and the "maybe" resolves cleanly once you ask whether the tool can obey. **Notebook has no access to Cardiff's photo library**, so "no stock images" was a rule it could only ever fail: whatever it puts on a slide is stock by definition. That is the same class of error as the old Welsh rule, a requirement the tool cannot satisfy, and the cost is that the model either ignores it or apologises for it.
+
+The illustration ban had a second problem: the site's own hero is an illustration, and Exercise 03 builds an 8-bit game. Banning illustrations outright contradicted the workshop around it.
+
+What survives is what a generator can actually control: no shadows, icons or emoji. "Photography is Cardiff architecture at editorial scale" stays as direction rather than prohibition.
+
+4,854 characters, 62 spare against the box. Not quite enough to restore the "authorized/specialized" catch, which needs 58 and would leave four.

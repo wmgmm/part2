@@ -111,4 +111,4 @@ Every box in a diagram holds words. An empty labelled box is decoration.
 Left-align text, centre only on dividers and closers. Welsh and English bilingual
 on dividers and closers, Welsh first: a one or two word section name, never Welsh
 body text you invented. Photography is Cardiff architecture at editorial
-scale, no stock images, shadows, icons, emoji or illustrations.
+scale. No shadows, icons or emoji.
