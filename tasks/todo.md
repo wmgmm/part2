@@ -2239,3 +2239,35 @@ all eleven section headings present.
 **Body carries the model tip:** "It works on Flash but Pro handles it better." 41 words,
 inside the house cap. That phrasing is deliberate: it does not block anyone stuck on Flash,
 which is what "use Pro" alone would have implied.
+
+## 2026-09-05 (addendum 78): comparator changed from Bristol to York
+
+Matt gave one line, the default-comparator line. **Eight references needed changing**, not
+one: the opening frame, the trails during the hold, the comet trails, the end-of-loop
+journeys, the compact comparison, the data-integrity check and the self-check all named
+Bristol. Changing only the line Matt quoted would have left the prompt telling the model to
+select York and then to verify Bristol.
+
+**Verified York exists first.** All ten years, and it matches as "University of York" only
+because the generator strips HESA's leading "The", same as Bristol did.
+
+**York is a materially better comparator, and the numbers say why:**
+
+| Emissions intensity kgCO2e/m2 | 2015/16 | 2024/25 | Change |
+|---|---|---|---|
+| Cardiff | 65.7 | 40.0 | **-39%** |
+| York | 60.7 | 55.5 | -9% |
+| Bristol | 85.5 | 40.4 | -53% |
+
+**York starts better than Cardiff and ends worse, so the two bubbles cross over.** That is
+a story you can watch happen, which is the entire point of a Gapminder chart. Bristol
+converged on almost exactly Cardiff's endpoint, 40.4 against 40.0, so the two would have
+finished sitting on top of each other with nothing to see. The swap improves the artefact
+rather than just changing a name.
+
+York also reports **no green tariff figure at all** against Cardiff's 100%, which is a
+second contrast available if anyone clicks in.
+
+Verified from the clipboard: 5,370 characters, no Bristol anywhere, all eight York lines
+correct including the curly apostrophes in "Cardiff and York's". Facilitator guide updated
+with the crossover and why Bristol was dropped.
