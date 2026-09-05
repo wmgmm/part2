@@ -102,14 +102,6 @@ h1, h2, h3 {
   white-space: nowrap;
 }
 
-.tagline-bar__sep {
-  opacity: 0.4;
-}
-
-.tagline-bar__text {
-  opacity: 0.75;
-  text-transform: uppercase;
-}
 
 /* ---- Active Layout ---- */
 .active-layout {
@@ -1618,13 +1610,6 @@ a:hover,
 /* Tagline bar: keep the band, make the words readable */
 .tagline-bar__title {
   font-size: 0.85rem;
-}
-
-.tagline-bar__text,
-.tagline-bar__sep {
-  font-size: 0.8rem;
-  color: #ffffff;
-  opacity: 0.92;
 }
 
 /* Accents designed for dark cards: make them read on white */

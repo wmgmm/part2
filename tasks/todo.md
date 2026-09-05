@@ -915,3 +915,34 @@ Note for anyone running the dev server: `npm run dev` currently dies with
 `ENOSPC: System limit for number of file watchers reached`. `npm run preview` serves
 `dist/` with no watchers and was used instead. The real fix needs sudo:
 `sysctl fs.inotify.max_user_watches=524288`.
+
+## 2026-09-05 (addendum 43): tagline stripped, and the pack is a briefing
+
+Three small ones after the look-and-feel sign-off.
+
+**Tagline bar cut to the title.** `AI IN THE WORKPLACE PART 2` alone; the em dash and
+"Hands-on training with Copilot, Gemini and Gemini Notebook" are gone. Removed the two
+CSS rules my change orphaned (`.tagline-bar__sep`, `.tagline-bar__text`, in both the
+base block and the legibility pass).
+
+**The gallery heading is now BUILD THE STAFF BRIEFING PACK.** The decision, after
+brainstorming whether "training" should become "briefing" throughout: **keep training
+for the artefact, make briefing the frame.** The reason to keep it is that the skill
+genuinely emits Walkthrough, Practice and Check your understanding, with a practice
+activity and two scenario questions. That is a training session, and calling it a
+briefing would have written a cheque the output does not cash. But the *pack* is a
+briefing, which the project already believed: the header comment in `missions.js` says
+"team briefing pack", the completion line says "The briefing pack exists", the hero
+image is `staff_briefing.webp`, and the whiteboard inside that image reads STAFF
+BRIEFING. The heading was the only thing still calling the whole day training.
+
+Exercise 04's `pageTitle` deliberately stays "Build the Staff Training With a Skill".
+I changed it first, then reverted: Matt's "main title" meant the gallery `<h2>`, not the
+exercise page. The two now say different things on purpose, the pack and the piece.
+
+**Memo tweak.** "Sustainable Futures landed on my desk" -> "The Sustainable Futures
+policy landed on my desk in week one".
+
+Snapshots of the settled pages (framer-motion fade disabled via injected CSS so the
+capture is not a mid-animation frame) at repo root, untracked: `snapshot-gallery.jpg`,
+`snapshot-m5-top.jpg`, `snapshot-m5-steps.jpg`.

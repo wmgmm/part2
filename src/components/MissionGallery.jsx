@@ -15,10 +15,10 @@ export default function MissionGallery({ player, progress }) {
             <span className="directive__label">WHY YOU&rsquo;RE HERE</span>
           </div>
           <p className="directive__text">
-            Hey {player.name}, I&rsquo;m Chris, your new line manager. Sustainable Futures
-            landed on my desk in week one, and I have volunteered our team to work out what
-            we actually do about it. Remember Responsible AI: this is your work, and AI is
-            your assistant.
+            Hey {player.name}, I&rsquo;m Chris, your new line manager. The Sustainable
+            Futures policy landed on my desk in week one, and I have volunteered our team
+            to work out what we actually do about it. Remember Responsible AI: this is
+            your work, and AI is your assistant.
           </p>
           <span className="directive__sig">— Chris Gravitas, Sustainability Engagement Officer (and your line manager, apparently)</span>
         </div>
@@ -30,7 +30,7 @@ export default function MissionGallery({ player, progress }) {
       </div>
 
       <div className="evidence-section__header">
-        <h2 className="evidence-section__title">BUILD THE STAFF TRAINING</h2>
+        <h2 className="evidence-section__title">BUILD THE STAFF BRIEFING PACK</h2>
         {completedCount === MISSIONS.length ? (
           <p className="mission-progress-line mission-progress-line--done">
             All {MISSIONS.length} complete. &ldquo;The briefing pack exists. The real
