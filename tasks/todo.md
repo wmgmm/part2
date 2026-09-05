@@ -1401,3 +1401,13 @@ earlier today. Title still wraps to two lines. `?doctor` 16 files, all 200.
 **Stale, found while working, not fixed:** `CLAUDE.md:21` still describes Exercise 06 as
 "The Check" running `Fact_Check_Cardiff.md`. 06 has been the data exercise for two days
 and that skill is reachable from nowhere.
+
+## 2026-09-05 (addendum 57): the Detailed Deck sentence removed
+
+Matt: remove "Leave Detailed Deck and Default length alone."
+
+It was the second half of the step 2 image caption, which now reads "Prompt first, skill
+underneath, both in the description box." Grepped `src/`, `FACILITATOR_GUIDE.md` and
+`CLAUDE.md` first: one occurrence only, so nothing else refers to those two controls and
+nothing is left dangling. Verified in the DOM that the phrase appears nowhere on the
+rendered page. MH block sha256 unchanged.

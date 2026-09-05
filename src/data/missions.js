@@ -732,7 +732,7 @@ export const MISSIONS = [
           src: 'notebook_slide_deck.webp',
           ui: true,
           alt: 'Gemini Notebook\'s Customize Slide Deck dialog. Format offers Detailed Deck, ticked, or Presenter Slides. Below are language, length and sources controls, then a large field labelled Describe the slide deck you want to create, holding the prompt on the first line and the placeholder PASTE CARDIFF BRAND SKILL HERE beneath it.',
-          caption: 'Prompt first, skill underneath, both in the description box. Leave Detailed Deck and Default length alone.',
+          caption: 'Prompt first, skill underneath, both in the description box.',
         },
         promptLabel: 'THE DECK DESCRIPTION',
         promptNote: '[then paste the Cardiff brand skill underneath this]',
