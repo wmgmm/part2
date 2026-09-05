@@ -969,3 +969,21 @@ that hands out the plan.
 ImageMagick, and fails with a PMID usage message. ImageMagick is there as
 `convert-im6.q16` / `identify-im6.q16`. `cwebp -resize <w> 0` does the scaling in one
 step and avoids the question entirely.
+
+## 2026-09-05 (addendum 45): the strapline comes back, on the picker only
+
+Matt: the stripped tagline was meant for the exercise pages only, not the picker.
+
+`TaglineBar` takes a `compact` prop. `App.jsx` passes `Boolean(mission)`, which is
+truthy only on an exercise page, so the picker and the splash keep
+"AI IN THE WORKPLACE PART 2 — Hands-on training with Copilot, Gemini and Gemini
+Notebook" and an exercise page shows the title alone. The reasoning is the same one
+that made stripping it right in the first place: the strapline is orientation for
+someone arriving, and it is redundant chrome above work someone is already doing.
+
+Restored the `.tagline-bar__sep` and `.tagline-bar__text` rules I had deleted as
+orphans in addendum 43, in both the base block and the legibility pass, and tidied the
+double blank line my earlier deletion left behind.
+
+Verified all three states in the DOM rather than by eye: splash and picker carry the
+full line, `#/m4` carries the title alone.

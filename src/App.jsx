@@ -68,7 +68,7 @@ export default function App() {
   return (
     <>
       <a href="#main-content" className="skip-link">Skip to main content</a>
-      <TaglineBar />
+      <TaglineBar compact={Boolean(mission)} />
       <main id="main-content">
       <AnimatePresence mode="wait">
         {!player && (
