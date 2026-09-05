@@ -1912,3 +1912,32 @@ lesson as addendum 62, where a vague quality adjective loses to a checkable inst
 
 Verified: COPY puts all 1,389 characters on the clipboard with no markup, MH block sha256
 unchanged, build green.
+
+## 2026-09-05 (addendum 68): a phrase for the principle, and a named chart title
+
+Matt asked for a phrase capturing "user centric, clear without knowing the background",
+then for the chart title to be named in the prompt rather than left to the model.
+
+**The phrase: "Assume the chart will be forwarded on its own, without the words around
+it: everything needed to read it sits on the chart."**
+
+It works because it is literally what happens to charts. They get pasted into a deck or an
+email, stripped of the paragraph that explained them, and then read by someone who was not
+in the room. Stating that turns the four mechanical requirements underneath it (no legend,
+units named, n per panel, direction of good) from arbitrary rules into obvious
+consequences, which is the goal-plus-non-negotiables pattern the research in addendum 62
+recommends: state the outcome, then the checkable specifics.
+
+It also matches the house voice. Exercise 04's prompt says "professional services staff who
+have not read it and will not"; `Cardiff_Brand_SKILL.md` says "write for someone who has not
+read the source document and is not going to". **Same idea, three places.** Worth reusing
+verbatim if the phrase proves itself.
+
+**The title is now named in the prompt:** `Title it "University estates and energy
+benchmarks, 2024/25"`. Taken from the model's own output, which chose it unprompted and
+chose well. Naming it makes every participant's chart come back with the same heading,
+which matters in a room where the facilitator wants to talk about one thing on a screen
+rather than thirty variations of it. It also removes a small, pointless decision from the
+model's plate.
+
+Verified: quotes survive the copy intact, no markup on the clipboard, build green.
