@@ -2150,3 +2150,20 @@ completion quote rather than in the step. 31 words.
 
 Verified: no apostrophes, so the JS string is safe, clipboard clean, no scrollbar, MH block
 sha256 unchanged.
+
+## 2026-09-05 (addendum 75): step 1 body cut to one line
+
+Matt: step 1 becomes "Start in Copilot and analyse the data (you will repeat this in
+Gemini)." **13 words, down from 22.**
+
+The line it replaced explained the file's shape ("one row per university per year, so it
+gets straight to the analysis instead of unpicking the file first"), which was a leftover
+from when the file was 346,050 long-format rows and that fact mattered. It stopped
+mattering the moment the workshop dataset shipped: nobody now needs to know what the file
+avoided being. **The parenthetical does more work than the sentence it replaced**, because
+it tells someone at step 1 that there is a second run coming, which is the shape of the
+exercise rather than a property of the file.
+
+Worth noting the four step bodies now read as a clean sequence with no repetition between
+them: start in Copilot, attach and read it, run it again in Gemini and compare, then build
+the dashboard in Gemini. Nothing explains the file, and nothing needs to.

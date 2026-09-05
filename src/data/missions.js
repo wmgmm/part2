@@ -798,7 +798,7 @@ export const MISSIONS = [
         estMinutes: 3,
         title: 'Copy the prompt and paste it',
         body:
-          'Start in Copilot. One row per university per year, so it gets straight to the analysis instead of unpicking the file first.',
+          'Start in Copilot and analyse the data (you will repeat this in Gemini).',
         promptLabel: 'YOUR PROMPT',
         promptNote: '[attach HESA_Estates_Workshop.csv]',
         // "the attached file", not "the Excel file": the card hands out a CSV for
