@@ -175,7 +175,9 @@ function AttachStrip({ items }) {
           <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
         </svg>
       </span>
-      <span className="attach-strip__label">ATTACH BOTH</span>
+      <span className="attach-strip__label">
+        {items.length === 1 ? 'ATTACH THIS' : items.length === 2 ? 'ATTACH BOTH' : 'ATTACH ALL'}
+      </span>
       {items.map((a, i) => (
         <React.Fragment key={a.filename}>
           {i > 0 && <span className="attach-strip__plus" aria-hidden="true">+</span>}

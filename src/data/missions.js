@@ -781,24 +781,24 @@ export const MISSIONS = [
     title: 'The Numbers',
     pageTitle: 'Ten Years of Real Emissions Data, and Where the Trend Lands',
     summary: 'Chart the real data, find out if the plan gets there, then build it into a dashboard.',
-    tools: [TOOLS.gemini, TOOLS.canvas],
+    tools: [TOOLS.copilot, TOOLS.gemini, TOOLS.canvas],
     estMinutesCore: 20,
     toolInfo: {
       feature:
-        'Gemini writes and runs Python on a data file you attach, so the numbers are computed rather than guessed. It takes CSV, not Excel.',
-      apps: [APPS.gemini],
+        'Copilot and Gemini both write and run Python on a data file you attach, so the numbers are computed rather than guessed. Both prefer CSV, not Excel.',
+      apps: [APPS.copilot, APPS.gemini],
     },
-    workflow: ['Paste the prompt', 'Attach the data', 'Find Cardiff', 'Fit the trend', 'Build the dashboard'],
+    workflow: ['Paste the prompt', 'Run it twice', 'Find Cardiff', 'Fit the trend', 'Build the dashboard'],
     brief:
       'Chart ten years of Cardiff\'s real emissions, then find out where the trend actually lands.',
-    artifacts: [A.hesaData, A.susPlan],
+    artifacts: [A.hesaData],
     steps: [
       {
         tier: 'core',
         estMinutes: 3,
         title: 'Copy the prompt and paste it',
         body:
-          'Use Gemini. One row per university per year, so it gets straight to the analysis instead of unpicking the file first.',
+          'Start in Copilot. One row per university per year, so it gets straight to the analysis instead of unpicking the file first.',
         promptLabel: 'YOUR PROMPT',
         promptNote: '[attach HESA_Estates_Workshop.csv]',
         // "the attached file", not "the Excel file": the card hands out a CSV for
@@ -812,7 +812,8 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'Attach the data and run it',
         body:
-          'Download the CSV from the card above and attach it with the + under the box where you type. Start in Gemini: CSV is what its code tool takes, so convert spreadsheets first. Copilot reads Excel too. This changes fast, so try both.',
+          'Download the CSV from the card above. In Copilot, attach it with the paperclip and send. Then run the whole thing again in Gemini, where the button is a +. Comparing the two answers is the point.',
+        attach: [A.hesaData],
       },
       {
         tier: 'core',
@@ -836,7 +837,7 @@ export const MISSIONS = [
         estMinutes: 6,
         title: 'Build the dashboard in Canvas',
         body:
-          'Turn Canvas on in the same chat, in the Tools menu, under the box where you type, so it can see the numbers you just computed. Then paste this.',
+          'Back in Gemini, turn Canvas on in that same chat, in the Tools menu under the box where you type, so it can see the numbers you just computed. Then paste this.',
         promptLabel: 'THE BUILD PROMPT',
         prompt:
           'Act as a front-end developer and data visualisation expert.\n\nBuild a self-contained interactive infographic in ONE HTML file: inline CSS, JavaScript, and Chart.js from a CDN. It must run standalone in Canvas.\n\nSUBJECT: [Cardiff University\'s decarbonisation against campus growth, 2015/16 to 2024/25].\n\nDATA: use only the figures computed above in this chat. Do not invent, round or extend them. Where a number you need was never computed, put NEEDS DATA on the card rather than filling it in.\n\nWORK IN FOUR STAGES, in this order. Do not output any code before stage 3.\n1. SPEC: under 150 words. What the page shows, and who is looking at it.\n2. PLAN: a numbered list of the components you will build.\n3. THE FILE: the complete HTML. No placeholder comments, nothing left as "add logic here".\n4. SELF-CHECK: name what you verified. Every control works, every figure traces to the data above, and nothing is hard-coded that should be computed.\n\nCOMPONENTS:\n- Summary cards carrying the headline figures, each showing the change since 2015/16.\n- One chart with a toggle between absolute emissions and emissions per square metre. Same data, two different stories: make that toggle the point of the page.\n- A year filter, slider or buttons, that redraws the chart.\n- A projection line to 2035 that can be switched on and off.\n\nSTYLE: white background, one accent colour, high contrast, readable at arm\'s length on a projector. Responsive down to a laptop screen. No dark theme.\n\nCONSTRAINTS: UK English. Label every axis with its unit. Wherever the page shows the projection, say on the page that it assumes the last ten years simply continue.',

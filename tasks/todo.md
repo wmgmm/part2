@@ -2003,3 +2003,40 @@ so step 3's "check it against the answer to question 3" still points at the righ
 workflow chip "Find Cardiff" and the step title "Find Cardiff on the chart" both still hold.
 `promptEmphasis` still matches its line exactly. 170 words, no apostrophes, clipboard clean,
 MH block sha256 unchanged.
+
+## 2026-09-05 (addendum 71): Exercise 06 runs Copilot first, and the attach strip arrives
+
+Four changes from Matt in quick succession, all on 06.
+
+**1. The attach strip, as on Exercise 04.** New `attach: [A.hesaData]` on step 2. **The
+strip's label was hardcoded "ATTACH BOTH"**, which is wrong for one file, so `AttachStrip`
+now picks from the count: **1 gives ATTACH THIS, 2 gives ATTACH BOTH, 3 or more gives ATTACH
+ALL.** Checked Exercise 04 afterwards: still says ATTACH BOTH. The sustainability plan is
+deliberately not in 06's strip, because it is reference material and never gets attached to
+the model.
+
+**2. "takes" becomes "prefers".** Matt is right and it is not pedantry: Copilot does accept
+xlsx, the Gemini forum shows CSV sometimes failing too, and the whole area moves. "Prefers"
+is the claim the evidence supports; "takes" would be wrong within months.
+
+**3. Copilot first, then repeat in Gemini.** This reorders the exercise, so several things
+moved together rather than just the one sentence:
+- The strap now covers both tools: "Copilot and Gemini both write and run Python on a data
+  file you attach ... Both prefer CSV, not Excel." Matt's phrase was "It prefers", but "It"
+  no longer has one referent once the sentence names two tools.
+- `tools` gains Copilot, so the picker card reads Copilot + Gemini + Gemini Canvas, and
+  `apps` gains it so both sign-in cards show at the top.
+- Step 1 opens "Start in Copilot".
+- Step 2 names the right control for each: **paperclip in Copilot, + in Gemini**, which is
+  the distinction fixed back in addendum 50.
+- **Step 5 now says "Back in Gemini"**, because Canvas is Gemini's and "the same chat" would
+  otherwise mean the Copilot one. That was the only real trap in the reorder.
+- Workflow chip 2 becomes "Run it twice".
+
+**4. The sustainability plan card comes off 06.** `artifacts` is now just the dataset.
+`?doctor` confirms the plan is still checked, under 01, 03 and 04.
+
+Matt then asked to remove "Start in Gemini: CSV is what its code tool takes ... so try
+both", which change 3 had already replaced. Confirmed gone by grep rather than assumed.
+
+Step 2 is 37 words. All 17 files still 200. MH block sha256 unchanged.
