@@ -1293,3 +1293,23 @@ instruction changes what it does.
   deleted, because days of work went into it and nobody asked.
 
 `MH_*` block sha256 unchanged. `?doctor` 15 files, all 200.
+
+**Correction to the MH check in addendum 54.** The `sed -n '111,291p' | sha256sum` guard
+reported a mismatch, and for a moment it looked as though a verbatim constant had been
+touched. It had not. The **line range** had drifted: comment lines added to the step-field
+documentation at the top of the file over addenda 47-49 pushed the MH block from 111-289
+down to 118-296, so a fixed range was hashing different lines.
+
+Re-checked by anchoring on the constant names instead of line numbers:
+
+```bash
+start=$(grep -n "^const MH_DEEP_RESEARCH" src/data/missions.js | cut -d: -f1)
+end=$(grep -n "^const MH_CANVAS_GAME" src/data/missions.js | cut -d: -f1)
+sed -n "${start},${end}p" src/data/missions.js | sha256sum
+```
+
+`e4f8082373927ce38d7d8b59c1352c51f4f77aab05e0c9e5636b1818fa26fabf`, identical to the same
+extraction from commit `d95d404`. **Use the anchored form from now on.** A hardcoded line
+range is exactly the wrong check for the one thing in this repo that must never change,
+because it fails loudly when nothing is wrong and would pass quietly if someone edited a
+constant while adding lines above it.
