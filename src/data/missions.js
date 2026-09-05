@@ -306,6 +306,10 @@ const SKILL_ICON = 'skill_md_icon.svg';
 // folded-corner document shape as the skill icon, so the two read as a set.
 const EXAMPLE_ICON = 'blue_peter_icon.webp';
 
+// The spreadsheet you attach in Exercise 06. Same folded-corner document shape
+// as the other two, so the set reads as one family.
+const EXCEL_ICON = 'excel_icon.webp';
+
 const A = {
   susPlan: {
     label: 'THE SUSTAINABILITY PLAN',
@@ -361,6 +365,7 @@ const A = {
     filename: 'HESA_Estates_Management.xlsx',
     downloadPath: `${BASE}placeholders/HESA_Estates_Management.xlsx`,
     note: 'Every UK university, 2015/16 to 2024/25. HESA, www.hesa.ac.uk, CC BY 4.0, unmodified. 13 MB.',
+    thumb: EXCEL_ICON,
   },
   factCheckSkill: {
     label: 'SKILL 3: CHECK IT BEFORE IT GOES',

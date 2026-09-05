@@ -1411,3 +1411,34 @@ underneath, both in the description box." Grepped `src/`, `FACILITATOR_GUIDE.md`
 `CLAUDE.md` first: one occurrence only, so nothing else refers to those two controls and
 nothing is left dangling. Verified in the DOM that the phrase appears nowhere on the
 rendered page. MH block sha256 unchanged.
+
+## 2026-09-05 (addendum 58): an Excel icon on the HESA dataset card
+
+Matt supplied a green spreadsheet document icon for Exercise 06's dataset.
+`public/excel_icon.webp`, 128x160, 4.3 KB, on `A.hesaData` via a new `EXCEL_ICON`
+constant.
+
+**Cropping it needed a third technique.** The trim tricks that worked for the two earlier
+icons both failed here:
+
+- `-fuzz -trim` and a plain "is this pixel non-white" scan both returned the **full 1407
+  width**, because a faint JPEG edge artefact runs down the last column at rgb(243,241,242).
+- Requiring a run of eight consecutive non-white pixels helped but still caught it.
+
+What worked was locating the artwork **by hue rather than by darkness**: the document is
+strongly green, so scanning for `g > r + 25 and g > b + 20` found it immediately at
+`451x561+478+104`, with 6px of padding kept so the soft shadow survives. Ratio 0.804,
+which matches `skill_md_icon.svg` exactly and sits beside the Blue Peter icon's 0.773.
+
+**Generalise this:** for a generated icon on a white field, find the subject by its colour,
+not by thresholding the background. JPEG noise makes background thresholds unreliable at
+exactly the edges you care about.
+
+**The naming convention paid off.** `excel_icon.webp` matched the
+`.mission-artifact__thumb[src*="_icon."]` rule added in addendum 53 and got
+`border: none` automatically, while the plan's cover next to it keeps its border. No CSS
+change was needed, which is what a convention is for.
+
+Exercise 06's two cards now sit at a uniform 99px with buttons on the same row. The
+dataset card still shows DOWNLOAD only, from the `canView` gate. `?doctor` 17 files, all
+200. MH block sha256 unchanged.
