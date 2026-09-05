@@ -1769,3 +1769,29 @@ attribution.
 Verified: `?doctor` 17 files all 200 with the CSV under 06 and the old file gone from the
 listing, build green, MH block sha256 unchanged, CSV served with 307 rows and Cardiff's
 2024/25 row reading `21336.4`.
+
+## 2026-09-05 (addendum 64): say the CSV lesson on the page, not just in the guide
+
+Matt: mention the CSV point on the website, frame it as try CSV in both Copilot and
+Gemini, start with Gemini, and note that this changes fast.
+
+Split across two existing slots so neither has to carry the whole thing:
+
+- **The tool strap**, the grey line under 06's brief, states the fact: "Gemini writes and
+  runs Python on a data file you attach, so the numbers are computed rather than guessed.
+  **It takes CSV, not Excel.**" That is where the page already says what the tool is, and
+  it now says the one thing that would otherwise waste ten minutes of a session.
+- **Step 2** carries the practical advice: "Start in Gemini: CSV is what its code tool
+  takes, so convert spreadsheets first. Copilot reads Excel too. This changes fast, so try
+  both." 43 words, inside the 45-word house cap.
+
+The hedge is deliberate and matches the evidence rather than softening it. Google's docs
+list CSV and text for code execution and omit xlsx; Microsoft's list Excel for data
+analysis. Both are vendor documentation as of 2026-09-05, and the developer forum shows a
+backend fault where even CSV sometimes fails, so "try both" is the honest instruction, not
+a fudge. Telling a room "Gemini cannot read Excel" as a permanent fact would be wrong
+within months.
+
+No change to the verdict: "ask for the code and the numbers are computed rather than
+guessed" is still the lesson, and format handling is a practical note rather than a
+teaching point.

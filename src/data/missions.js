@@ -789,7 +789,7 @@ export const MISSIONS = [
     estMinutesCore: 20,
     toolInfo: {
       feature:
-        'Gemini writes and runs Python on a data file you attach, so the numbers are computed rather than guessed. You write none of it.',
+        'Gemini writes and runs Python on a data file you attach, so the numbers are computed rather than guessed. It takes CSV, not Excel.',
       apps: [APPS.gemini],
     },
     workflow: ['Paste the prompt', 'Attach the data', 'Read both charts', 'Fit the trend', 'Build the dashboard'],
@@ -813,7 +813,7 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'Attach the data and run it',
         body:
-          'Download HESA_Estates_Workshop.csv from the card above and attach it with the + under the box where you type. It is 25 KB, so it goes up instantly.',
+          'Download the CSV from the card above and attach it with the + under the box where you type. Start in Gemini: CSV is what its code tool takes, so convert spreadsheets first. Copilot reads Excel too. This changes fast, so try both.',
       },
       {
         tier: 'core',
