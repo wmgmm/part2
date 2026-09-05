@@ -665,3 +665,28 @@ The wider lesson, worth carrying into any skill: a failure state should be rare 
 **What the run got right**, worth not breaking: red used once per slide, the ladder motif repeated down the deck with the current step highlighted, and slide 4 landing on "The most sustainable purchase is the one you do not make." That is the deck's best line and it came out of the skill working as intended.
 
 The file is 5,991 characters. Dropping V5's Welsh paragraph paid for both new rules almost exactly.
+
+## 2026-09-05 (addendum 33): Matt's own design spec becomes the skill
+
+Matt: "I have a prompt that I used before I think sometimes less is more with the studio... review and run with this with maybe a tweak", plus a second real deck, `Information_Classification_Architecture.pdf`, produced by that spec.
+
+That second deck is markedly better than the one the old skill produced. Headlines that are statements rather than labels ("Security is not just an IT problem", "Three tiers of classification. One standard of care"), Demi over Georgia for contrast, red used once a slide, architecture photography at full bleed, and a classification matrix slide that says more in nine words than the old deck's five-column monster said in ninety. So the skill is now built on his spec rather than the other way round.
+
+**Three bugs in the spec, fixed rather than shipped.**
+
+1. **It contained both hex values.** COLOURS said `#E4251B`, BULLETS said `#E5251A`. The template analysis has 56 runs of the first and 14 of the second, and the second is a stray one digit off. Ported the correction into the rewrite.
+2. **Every point size in it is the 26.66in master's raw number.** Cover 120, dividers 160-240, headings 72-92, body 32-48, supporting 50: those are exactly the figures in the research doc's table, measured off the double-width canvas. On a standard 13.33in deck they must be halved, or a heading arrives at twice the intended size. This is the single most consequential fix.
+3. **Marr Sans and Darby Serif are specified but unfounded.** The research doc records Marr Sans as declared on 19 and 16 slides yet never the effective run font, and Darby as appearing twice, "not enough to state a rule". They also will not exist in Studio. Named only as declared-but-not-rendered, so the model stops reaching for them.
+
+**What the spec had that the skill did not, and now does:** a design philosophy paragraph. Rules tell a model what to avoid; that paragraph gives it something to aim at, and the difference between the two decks is largely the difference between having one and not.
+
+**Welsh is back, and the earlier removal was right for the wrong reason.** Matt's spec scopes it to dividers and closers, and at that scope it works: the real run produced "Dosbarthu Data" and "Gweithredu", both correct. The failure was never Welsh, it was demanding it on every title so the failure state fired on every unit. Research confirms the scoping is also the defensible one: Cardiff's Welsh-first requirement (Service Delivery Policy 10.1, v4, 21 May 2024) covers signs and notices, and Operational Standards 8.1, 8.2 and 14.2 put a staff training deck outside the strict obligation.
+
+**Two things the real deck exposed:**
+
+- **US spellings got through**: "authorized" and "specialized". The UK English rule now names those two, since they are the ones that slip.
+- **Sparse slides.** A 40-word ceiling with no floor gave a closing slide that was two words and no logo. Added a floor: a content slide carrying only a heading is not a slide.
+
+**The 6,000 character guideline is now 7,000.** I defended 6,000 across four edits, twice by cutting content that was doing work, and it was never the constraint: Copilot Agent Builder's instructions field holds 8,000. The file is 6,647. Recorded in `CLAUDE.md` with the reason, so the next session does not re-litigate it.
+
+**Also new from the research:** an authoritative sentence-length number to replace my inferred one. GOV.WALES style guide, last updated 3 September 2026: "Keep average sentence length 20 words or fewer." Cardiff staff are in scope, and the plan's median of 24 sits just above it. Cardiff itself publishes no reading-age or readability target at all, which is a verified negative worth knowing: do not invent one, and do not cite "reading age 9", which is GOV.UK and could not be verified.
