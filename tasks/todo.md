@@ -1141,3 +1141,24 @@ the three single-tool cards unchanged.
 Checked the strip wraps rather than overflowing: at a 420px body it is 121px tall with
 `scrollWidth === clientWidth` and no horizontal page scroll. `?doctor` still 14 files,
 all 200.
+
+## 2026-09-05 (addendum 50): the attach control is a + in Gemini, a paperclip in Copilot
+
+Matt: in Gemini the attach control is a **+**, not a paperclip.
+
+Fixed 04's step 2, and **grepping for the word turned up a second, unrelated error**:
+
+- **04 step 2** used one control name for two tools. Now: "In Gemini the button is a +
+  under the box where you type; in Copilot it is a paperclip."
+- **06 step 2** said "attach it with the paperclip" on a **Gemini-only** step, so it was
+  naming Copilot's control in a Gemini exercise. Nobody had reported it. Now the +.
+- **02 step 1** keeps "paperclip" and is correct: that step is Copilot only.
+
+The strip's icon stays a paperclip. It is the universal glyph for "attachment" and the
+strip's label is tool-neutral ATTACH BOTH; the body is where exact control names belong,
+per the house standard. Easy to swap for a + if the room finds it confusing.
+
+**The transferable point:** a control name is a per-tool fact, and this site names
+controls deliberately. Whenever one changes, grep the whole data file for the old name
+rather than fixing the step in front of you, because the same wrong name will have been
+copied into a step for a different tool.

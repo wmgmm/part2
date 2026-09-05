@@ -50,7 +50,7 @@
 // attributed to (defaults to C. Gravitas).
 // artifact (a download card rendered inside the step, for a file used only at
 // that point rather than for the whole exercise),
-// attach (an array of artifacts shown as a paperclip strip of thumbnails and
+// attach (an array of artifacts shown as an attachment strip of thumbnails and
 // filenames: what goes in the chat box, not another download),
 // prompt (+ optional promptLabel), promptEmphasis (a substring of prompt rendered
 // bold in the box; the COPY button still writes the plain string, so the emphasis
@@ -654,7 +654,7 @@ export const MISSIONS = [
         // instead. At this step the question in the room is "which two?", and
         // showing them is faster than reading them.
         body:
-          'Download both from the cards above. In Gemini or Copilot, use the paperclip under the box where you type, attach both, and send.',
+          'Download both from the cards above. In Gemini the button is a + under the box where you type; in Copilot it is a paperclip. Attach both, then send.',
         attach: [A.trainingSkill, A.susPlan],
       },
       {
@@ -771,7 +771,7 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'Attach the data and run it',
         body:
-          'Download HESA_Estates_Management.xlsx from the links above and attach it with the paperclip. It is 13 MB of real data, 163 universities over ten years, so give it a moment.',
+          'Download HESA_Estates_Management.xlsx from the links above and attach it with the + under the box where you type. It is 13 MB of real data, 163 universities over ten years, so give it a moment.',
       },
       {
         tier: 'core',
