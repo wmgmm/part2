@@ -2633,3 +2633,25 @@ another untested guess.
 - Skills must stay **under 4,900 characters**: Gemini Notebook's Slide Deck box truncates
   silently at 5,000, prompt included.
 - **UK English, no emdashes.**
+
+---
+
+# Traps, moved from CLAUDE.md
+
+Moved here 2026-09-06 to bring `CLAUDE.md` back under the 200-line house limit. These
+are the ones that have actually cost time in this repo, so read them before anything
+fiddly.
+
+- **Prompt text lives in single-quoted JS strings**, so an apostrophe breaks the build.
+  Matt's own text usually uses curly apostrophes, which need no escaping: paste his wording
+  verbatim rather than rephrasing it. Build long prompts programmatically, verify by copying.
+- **A new optional field can wake dead code that reads it.** Adding `thumb` lit a dormant
+  branch in `MissionCard` and replaced the numerals on four gallery cards. Grep first.
+- **Phrase-grep a hard-wrapped file only after `tr '\n' ' '`.**
+- **Check a component at its longest and shortest content together.** A long note wrapped the
+  artifact card's buttons onto a second row on one exercise only.
+- **Screenshots come out washed out**: an unfocused tab throttles requestAnimationFrame so
+  framer-motion never settles. Inject
+  `*{animation:none!important;transition:none!important;opacity:1!important}` first.
+- **`convert` here is metapub, not ImageMagick.** Use `convert-im6.q16`. For icons on white,
+  find the artwork by hue rather than thresholding the background.

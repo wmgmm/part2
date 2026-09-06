@@ -1,8 +1,9 @@
 # CLAUDE.md
 
 Guidance for Claude Code working in this repository. Rules and current truth only.
-The day-by-day build log is `tasks/todo.md`; its final **HANDOVER** block is the fastest
-way in.
+The build log is `tasks/todo.md`: its final **HANDOVER** block is the fastest way in, and
+**"Traps, moved from CLAUDE.md"** lists the mistakes that have actually cost time here.
+Read those before anything fiddly.
 
 ## Commands
 
@@ -14,8 +15,8 @@ npm run dev       # BROKEN: ENOSPC, system limit for file watchers. Use preview.
 
 `npm run dev` fails with `ENOSPC: System limit for number of file watchers reached`. Verify
 against `npm run preview`, which serves `dist/` with no watchers. The real fix needs sudo
-(`sysctl fs.inotify.max_user_watches=524288`), so ask Matt rather than routing around it. No
-linter or test runner is configured.
+(`sysctl fs.inotify.max_user_watches=524288`): ask Matt, do not route around it. No linter or
+test runner.
 
 ## What this is
 
@@ -61,18 +62,17 @@ mid-word at exactly 5,001). That box binds, not Copilot Agent Builder's 8,000, b
 Exercise 05 pastes rather than attaches. The generator warns above 4,900.
 
 - `Training_Module_Builder.md` (04)
-- `Cardiff_Brand_SKILL.md` (05, first run). Rebuilt 2026-09-05 on evidence from two real
-  decks. **Untested.** Do not edit further until its output has been compared.
-- `TheMattsBrandSkill.md` (05, second run). **Matt's own text stored verbatim**: wording,
+- `Cardiff_Brand_SKILL.md` (05, first run). Rebuilt 2026-09-05 on evidence from two real decks.
+  **Untested: do not edit further until its output has been compared.**
+- `TheMattsBrandSkill.md` (05, second run). **Matt's own text verbatim**: wording,
   capitalisation and its two emojis are not to be edited.
-- `Fact_Check_Cardiff.md` — generated but **linked from no exercise**.
+- `Fact_Check_Cardiff.md`, generated but **linked from no exercise**.
 
 **Studio generations are the binding quota** and Google publishes no number; the design
 budgets one per participant. **Exercise 05 deliberately spends two**, the one sanctioned
 exception, because two decks differing only by the skill file are the day's clearest evidence
 that a skill is worth writing down. Do not add others; if the quota bites live, the second run
 is what gets dropped. See `docs/research/2026-09-04-tool-capabilities.md`.
-
 **Gems are deliberately avoided:** Cardiff staff accounts cannot create them (re-confirmed
 2026-09-04). Copilot Agent Builder and Gemini Skills in Chrome are gated stretch paths only.
 
@@ -114,7 +114,6 @@ Single-page React app (Vite, framer-motion), no router library. `App.jsx` render
 until a user exists, then the gallery or an exercise by hash routing (`#/m1` … `#/m6`, via a
 `hashchange` listener that ignores plain anchors like `#main-content`; unknown routes fall
 back to the gallery). `?doctor` is the facilitator preflight.
-
 **`#/prompts` still routes to `PROMPT_LIBRARY`, but nothing links to it** since the gallery
 card was removed on 2026-09-05. Relink or delete properly; do not leave it half-alive.
 
@@ -190,22 +189,6 @@ blocks**.
 content only. Drawn icons (`*_icon.*`) carry their own outline and get no card border;
 photographic covers (`*_cover.*`) keep one. The escaperoom and leaderboard components were
 deleted 2026-09-04; git has them, do not reintroduce them.
-
-## Traps that have cost real time
-
-- **Prompt text lives in single-quoted JS strings**, so an apostrophe breaks the build.
-  Matt's own text usually uses curly apostrophes, which need no escaping: paste his wording
-  verbatim rather than rephrasing it. Build long prompts programmatically, verify by copying.
-- **A new optional field can wake dead code that reads it.** Adding `thumb` lit a dormant
-  branch in `MissionCard` and replaced the numerals on four gallery cards. Grep first.
-- **Phrase-grep a hard-wrapped file only after `tr '\n' ' '`.**
-- **Check a component at its longest and shortest content together.** A long note wrapped the
-  artifact card's buttons onto a second row on one exercise only.
-- **Screenshots come out washed out**: an unfocused tab throttles requestAnimationFrame so
-  framer-motion never settles. Inject
-  `*{animation:none!important;transition:none!important;opacity:1!important}` first.
-- **`convert` here is metapub, not ImageMagick.** Use `convert-im6.q16`. For icons on white,
-  find the artwork by hue rather than thresholding the background.
 
 ## Deployment
 
