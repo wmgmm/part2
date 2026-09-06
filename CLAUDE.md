@@ -62,8 +62,8 @@ mid-word at exactly 5,001). That box binds, not Copilot Agent Builder's 8,000, b
 Exercise 05 pastes rather than attaches. The generator warns above 4,900.
 
 - `Training_Module_Builder.md` (04)
-- `Cardiff_Brand_SKILL.md` (05, first run). Rebuilt 2026-09-05 on evidence from two real decks.
-  **Untested: do not edit further until its output has been compared.**
+- `Cardiff_Brand_SKILL.md` (05, first run). Rebuilt on two real decks, then validated
+  2026-09-06 against a third: all nine predicted effects landed. **Settled: do not edit.**
 - `TheMattsBrandSkill.md` (05, second run). **Matt's own text verbatim**: wording,
   capitalisation and its two emojis are not to be edited.
 - `Fact_Check_Cardiff.md`, generated but **linked from no exercise**.

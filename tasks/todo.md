@@ -1615,9 +1615,14 @@ out washed out. Inject
 
 ---
 
-# OPEN: compare the new Cardiff brand skill's output (next session)
+# CLOSED 2026-09-06: compare the new Cardiff brand skill's output
 
-**Status: waiting on Matt.** The skill was rewritten on 2026-09-05 (addendum 62) and has
+**Resolved. All nine claims below landed; see addendum 87 for the scoring.** The skill
+is settled and must not be edited without a new controlled run. The original brief is
+kept as written because the value of it is that the criteria were fixed before the
+test, not after.
+
+**Status when written: waiting on Matt.** The skill was rewritten on 2026-09-05 (addendum 62) and has
 **never been run**. Matt will paste it into Notebook and generate, then bring the PDF
 back. Nothing else should be changed in `Cardiff_Brand_SKILL.md` until that output exists,
 because the last version was rewritten several times without evidence and this one is
@@ -2516,6 +2521,57 @@ because removing the card is not the same instruction as deleting the library.
 
 ---
 
+## 2026-09-06 (addendum 87): the Cardiff brand skill tested, and settled
+
+Matt ran the rebuilt skill in Gemini Notebook with the same one-line description Exercise 05
+ships ("Training slide deck on the Demand First ladder, so staff can apply it in practice.")
+and dropped the output back: `~/Downloads/Demand_First_Purchasing (1).pdf`, 13 slides,
+1376x768, image-only like the earlier two. His verdict first: "it was amazing".
+
+**The identity check, before reading a single slide.** The spec text he pasted into the chat
+is **byte-identical** to `public/placeholders/Cardiff_Brand_SKILL.md`, 4,684 characters, and
+re-running `tools/make_artifacts.py` reproduces that file exactly. So this deck is the output
+of the file the site actually hands out, not of a variant edited on the way. Exercise 05
+step 2 already carries that description line verbatim as its `prompt`, and step 4 repeats it
+for the Matts run, which is what keeps the two decks a controlled comparison.
+
+**All nine claims from addendum 62 landed.**
+
+| # | Claim | Result |
+|---|---|---|
+| 1 | Illustration appears, no cartoons | **Pass.** Six illustrated slides: a stepped ladder, a decision flow, a three-card icon grid, a circular lifecycle, a timeline, a scored table. Line icons only. |
+| 2 | The grey is gone | **Pass.** White ground throughout, black hairline rules, red as an accent. No grey wash, no grey boxes standing in for diagrams. |
+| 3 | No empty content slides | **Pass.** Every content slide carries a diagram or a table plus its footer. |
+| 4 | Dividers are sans, not serif | **Pass.** The one divider is bold sans, white on Cardiff red. |
+| 5 | Welsh dividers still fire | **Pass.** "Ymarfer / Practice", Welsh above English, one word each. Regression check clean. |
+| 6 | **A task slide exists** | **Pass, and this was the load-bearing one.** Slide 10, "Test your next purchase", a red-ruled panel with an 8-minute limit and ruled writing lines, asking for one item they plan to order this month. |
+| 7 | Comparison slides with a pass and a fail side | **Pass.** Slide 7 splits Pass and Fail with red on the fail; slide 4's flow has a red No to Stop branch; slide 11 scores four real scenarios Pass or Fail. |
+| 8 | Every content slide ends with a footer takeaway | **Pass.** Ten of ten. |
+| 9 | The brand still holds | **Pass.** Bilingual logo on the title slide, architecture cover, Cardiff red used sparingly, left aligned, inside 40 words. Moving the non-negotiables to the top did not cost anything. |
+
+**The layout-pattern theory is confirmed.** Naming two content layouts, rather than writing
+better prose about quality, is what turned a briefing into training. The old Cardiff deck had
+no exercise in it at all; this one has an exercise, a worked scenario table and a decision
+flow, and it did that while getting *shorter*. That is the addendum 62 lesson holding up
+under test: structure beats adjectives, and fewer rules beat more.
+
+**Two cosmetic notes, neither worth a rule change.**
+
+- Slide 7 reads "you **must** must justify it and offset it locally". A duplicated word from
+  the generator, not from any line in the spec. Worth fixing in the exported file if Matt
+  presents this deck; nothing to fix here.
+- The closing slide sets "Prifysgol Caerdydd / Cardiff University" as centred text rather
+  than the logo lockup. The Welsh-above-English rule fired, the logo did not. One slide, and
+  chasing it would mean adding a rule.
+
+**Decision, taken against the criterion written before the test rather than after it.**
+Addendum 62 said: if most of 1-8 land, the skill is done, say so and stop editing it. All
+nine landed. `Cardiff_Brand_SKILL.md` is **settled**. Do not edit it, and treat any future
+request to "improve" it as needing a new controlled run first. `CLAUDE.md` updated from
+"untested" to match.
+
+---
+
 # HANDOVER, end of 2026-09-05
 
 Read this first. It supersedes the earlier "OPEN" block, which is folded in below.
@@ -2562,14 +2618,11 @@ back into the chat. Do not attempt either from this side, and do not edit the fi
 concern in the meantime: the whole point is that the next change is evidence-led rather than
 another untested guess.
 
-1. **BLOCKED ON MATT: compare the new Cardiff brand skill's output.** It has never been run.
-   **Waiting on Matt to paste the skill into Gemini Notebook, generate, and drop the deck
-   (PDF) plus his own feedback into the chat.** Compare against `~/Downloads/The_Strict_Filter.pdf`
-   (old Cardiff output) and `~/Downloads/The_Demand_First_Ladder.pdf` (the Matts output, the
-   target for usefulness, **not** for style). The nine specific claims to test are listed in
-   addendum 62; the load-bearing one is **whether a task slide appears at all**. If it does
-   not, the layout-pattern theory is wrong. **Resist adding rules:** every symptom in the old
-   deck was caused by a rule, not a missing one.
+1. ~~**BLOCKED ON MATT: compare the new Cardiff brand skill's output.**~~ **DONE 2026-09-06.**
+   Matt ran it and brought back `Demand_First_Purchasing (1).pdf`. All nine claims from
+   addendum 62 landed, including the load-bearing one: a task slide appears. The
+   layout-pattern theory is confirmed and `Cardiff_Brand_SKILL.md` is **settled**. Scoring in
+   addendum 87. **Resist adding rules** still stands if anyone reopens it.
 2. **BLOCKED ON MATT: run the new Exercise 06 end to end.** The dataset fix is verified
    locally, but nobody has attached the CSV to Gemini or Copilot and confirmed code execution
    actually works now. The 9,666-character bubble chart prompt has never been run either.
