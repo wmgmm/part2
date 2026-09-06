@@ -2513,3 +2513,116 @@ more.** That is a whole page of content now reachable only by typing the URL. No
 because removing the card is not the same instruction as deleting the library.
 
 `?doctor` reports 18 files all 200, with the Canvas icon now against **03 and 06**.
+
+---
+
+# HANDOVER, end of 2026-09-05
+
+Read this first. It supersedes the earlier "OPEN" block, which is folded in below.
+
+## Where the site is
+
+Six exercises, **77 minutes** of core steps (10 / 12 / 11 / 12 / 15 / 17). Build green,
+`?doctor` reports **18 files all 200**. `main` is **66 commits ahead of `origin/main`**, so
+the live GitHub Pages site is badly out of date: it still shows the old hero, the old
+tagline, the pre-rewrite skills and the old HESA file. **Do not push. Matt asks explicitly,
+in that message, or it does not happen.**
+
+Working tree is clean apart from two untracked contact sheets, `snapshot-deck-cardiff.png`
+and `snapshot-deck-matts.png`, left out of git deliberately because they are 5 MB of binary.
+
+## What changed today, in one paragraph each
+
+**Exercise 05** dropped to one source, its own Exercise 04 output, and gained a fourth step
+that re-runs the same prompt with `TheMattsBrandSkill.md` so the room sees two decks from
+one source. It is marked internal ("Turn the Training Into **Internal** Slides That Look
+Like Cardiff") because a deck that looks like Cardiff is not a deck Cardiff approved.
+
+**Exercise 06 was rebuilt entirely.** It failed in a real run: Gemini refused the 13 MB,
+346,050-row HESA workbook. Researched, not guessed: no context window fits that many rows,
+and **Google's code execution tool documents CSV and text and does not list xlsx**. New
+`tools/make_workshop_dataset.py` pivots it to **307 rows, 25 KB, 31 universities, ten
+years**, and every facilitator answer key reproduces exactly. The exercise now runs Copilot
+first, repeats in Gemini to cross-check, and ends with a 9,666-character Gapminder animated
+bubble chart prompt in Canvas.
+
+**The Cardiff brand skill was rebuilt on evidence** from two real decks Matt ran. Its six
+layout patterns were all title compositions, so the model had no template for a teaching
+slide and produced a briefing. Now 4,684 characters with two content patterns, a required
+visual per slide and a footer takeaway.
+
+**The whole site got a design pass**: the artifact card and prompt box finally got the skin
+they had been missing, every download card carries a thumbnail, attach strips show what goes
+in the chat box, and the prompt box gained a bolded key line.
+
+## Open, in priority order
+
+1. **Compare the new Cardiff brand skill's output.** It has never been run. Matt will paste
+   it into Notebook and bring back a PDF. Compare against `~/Downloads/The_Strict_Filter.pdf`
+   (old Cardiff output) and `~/Downloads/The_Demand_First_Ladder.pdf` (the Matts output, the
+   target for usefulness, **not** for style). The nine specific claims to test are listed in
+   addendum 62; the load-bearing one is **whether a task slide appears at all**. If it does
+   not, the layout-pattern theory is wrong. **Resist adding rules:** every symptom in the old
+   deck was caused by a rule, not a missing one.
+2. **Run the new Exercise 06 end to end.** The dataset fix is verified locally but nobody has
+   attached the CSV to Gemini or Copilot and confirmed code execution works. Same for the
+   9,666-character bubble chart prompt, which has never been run.
+3. **`PROMPT_LIBRARY` is now unreachable.** The Useful Prompts card came off the gallery on
+   request, but the data and the `#/prompts` route still exist. A whole page of content is
+   reachable only by typing the URL. Decide: relink, or delete properly.
+4. **`Fact_Check_Cardiff.md` is still generated and linked from no exercise.** Open since
+   06 became the data exercise.
+5. **CC BY attribution is nowhere on the site.** The HESA workbook is now a derivative we
+   filtered and reshaped, and the licence asks for attribution and an indication of changes
+   wherever it is distributed. It survives only in the facilitator guide and inside the
+   `.xlsx`. The gallery's discreet governance footnote is the natural home if it matters.
+6. **The 13 MB `HESA_Estates_Management.xlsx` is still in `public/placeholders/`**, unlinked,
+   as the generator's input. It could come out of the deploy.
+7. **`HESA_Estates_Workshop.xlsx` is also unreachable**, since the Excel link came off the
+   card. Still generated.
+
+## Rules and traps learned today. These cost real time.
+
+- **Verify `MH_*` by anchor, never by line range.** A hardcoded `sed -n '111,291p'` drifted
+  as comments were added above and cried wolf. Use:
+  `start=$(grep -n "^const MH_DEEP_RESEARCH" src/data/missions.js | cut -d: -f1)` and
+  `end=$(grep -n "^const MH_CANVAS_GAME" ...)`. Expect
+  `e4f8082373927ce38d7d8b59c1352c51f4f77aab05e0c9e5636b1818fa26fabf`.
+- **Prompt text lives in single-quoted JS strings.** An apostrophe breaks the build with
+  `Expected "}" but found "s"`. Matt's own text usually uses **curly** apostrophes, which
+  need no escaping, so paste his wording verbatim rather than rephrasing it. Build long
+  prompts programmatically and verify from the clipboard, not by eye.
+- **A new field naming a file or image must be added to `collectUrls` in `DoctorPanel.jsx`
+  in the same commit.** This bit twice: `thumb` and then `attachExtra` both passed a green
+  preflight while being invisible to it.
+- **A new optional data field can wake dead code that reads it.** Adding `thumb` lit up a
+  dormant branch in `MissionCard` and replaced the numerals on four gallery cards. `grep -rn
+  "<field>" src/` before adding one.
+- **Phrase-grep a hard-wrapped file only after `tr '\n' ' '`.** Three "FAIL missing" reports
+  today were line wraps, not deletions.
+- **Check a component at its longest and shortest content in the same pass.** A long note
+  wrapped the artifact card's buttons onto a second row, which only showed on one exercise.
+- **`npm run dev` is broken** with `ENOSPC: System limit for number of file watchers
+  reached`. Use `npm run preview` (serves `dist/`, no watchers). The real fix needs sudo:
+  `sysctl fs.inotify.max_user_watches=524288`, so ask Matt rather than working around it.
+- **Screenshots of this site come out washed out** because an unfocused tab throttles
+  requestAnimationFrame and framer-motion's fade never completes. Inject
+  `*{animation:none!important;transition:none!important;opacity:1!important}` first.
+- **`convert` on this machine is a metapub CLI, not ImageMagick.** Use `convert-im6.q16`.
+  For icons on a white field, find the artwork **by hue**, not by thresholding the
+  background: JPEG noise makes background thresholds unreliable at exactly the edges that
+  matter.
+- **`tools/make_workshop_dataset.py` is load-bearing for Exercise 06's prompts.** They
+  hard-code `Energy_kWh`, `FloorArea_m2`, `Scope12_tCO2e`, "University of York" and
+  "Imperial College London". The last two only match because the generator strips HESA's
+  leading "The" and renames Imperial. Editing that script breaks the prompts silently.
+
+## Standing constraints
+
+- **Never `git push`** unless Matt asks in that same message.
+- **`MH_*` constants are verbatim from Matt Hayden's deck.** Do not reword, retitle or
+  reformat. `promptEmphasis` is display-only and was cleared for use, proved by clipboard
+  interception showing 7,085 characters unchanged.
+- Skills must stay **under 4,900 characters**: Gemini Notebook's Slide Deck box truncates
+  silently at 5,000, prompt included.
+- **UK English, no emdashes.**
