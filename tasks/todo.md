@@ -2557,16 +2557,23 @@ in the chat box, and the prompt box gained a bolded key line.
 
 ## Open, in priority order
 
-1. **Compare the new Cardiff brand skill's output.** It has never been run. Matt will paste
-   it into Notebook and bring back a PDF. Compare against `~/Downloads/The_Strict_Filter.pdf`
+**Items 1 and 2 are BLOCKED ON MATT.** Both need him to run something and drop the output
+back into the chat. Do not attempt either from this side, and do not edit the files they
+concern in the meantime: the whole point is that the next change is evidence-led rather than
+another untested guess.
+
+1. **BLOCKED ON MATT: compare the new Cardiff brand skill's output.** It has never been run.
+   **Waiting on Matt to paste the skill into Gemini Notebook, generate, and drop the deck
+   (PDF) plus his own feedback into the chat.** Compare against `~/Downloads/The_Strict_Filter.pdf`
    (old Cardiff output) and `~/Downloads/The_Demand_First_Ladder.pdf` (the Matts output, the
    target for usefulness, **not** for style). The nine specific claims to test are listed in
    addendum 62; the load-bearing one is **whether a task slide appears at all**. If it does
    not, the layout-pattern theory is wrong. **Resist adding rules:** every symptom in the old
    deck was caused by a rule, not a missing one.
-2. **Run the new Exercise 06 end to end.** The dataset fix is verified locally but nobody has
-   attached the CSV to Gemini or Copilot and confirmed code execution works. Same for the
-   9,666-character bubble chart prompt, which has never been run.
+2. **BLOCKED ON MATT: run the new Exercise 06 end to end.** The dataset fix is verified
+   locally, but nobody has attached the CSV to Gemini or Copilot and confirmed code execution
+   actually works now. The 9,666-character bubble chart prompt has never been run either.
+   **Waiting on Matt to run both and drop the results back.**
 3. **`PROMPT_LIBRARY` is now unreachable.** The Useful Prompts card came off the gallery on
    request, but the data and the `#/prompts` route still exist. A whole page of content is
    reachable only by typing the URL. Decide: relink, or delete properly.
