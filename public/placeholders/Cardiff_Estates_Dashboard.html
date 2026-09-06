@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UK HE Sector Estates Evolution (2015/16 - 2024/25) | Cardiff University Focus</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- D3.js v7 CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #0f172a;
+      color: #f8fafc;
+      overflow-x: hidden;
+    }
+
+    /* Custom scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #1e293b; }
+    ::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
+
+    /* Subtle glow filters */
+    .glow-cardiff { filter: drop-shadow(0 0 10px rgba(225, 29, 72, 0.7)); }
+    .glow-york { filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.7)); }
+
+    /* Text halos for chart labels */
+    .label-halo {
+      paint-order: stroke fill;
+      stroke: #0f172a;
+      stroke-width: 3px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Range slider styling */
+    input[type=range] { accent-color: #e11d48; }
+
+    /* Pulse animation (Cardiff halo ring) */
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.3); opacity: 0.2; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .pulse-effect {
+      animation: pulse-ring 2s infinite ease-in-out;
+      transform-origin: center;
+      transform-box: fill-box;
+    }
+
+    /* Chart fade used by the opening reveal and the end-of-decade reset */
+    #chartSvg { transition: opacity 0.4s ease; cursor: grab; }
+    #chartSvg:active { cursor: grabbing; }
+
+    /* Axis text colour (d3 axes set fill on text) */
+    .axis text { fill: #94a3b8; font-size: 11px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .pulse-effect, .animate-ping { animation: none !important; }
+      #chartSvg, #endStateOverlay, .transition-all { transition: none !important; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-3 md:p-6 text-slate-100 selection:bg-rose-500 selection:text-white">
+
+  <!-- TOP HEADER & CONTROLS BANNER -->
+  <header class="max-w-7xl mx-auto w-full mb-4">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-slate-800 pb-4">
+      <div>
+        <div class="flex items-center gap-3">
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/30">
+            HESA Estates Storyteller
+          </span>
+          <span id="liveYearBadge" class="text-xs font-mono bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">
+            2015/16
+          </span>
+        </div>
+        <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-white mt-1">
+          Cardiff University Decarbonisation Trajectory
+        </h1>
+        <p class="text-xs md:text-sm text-slate-400 mt-0.5 max-w-3xl">
+          Tracking energy and emissions intensity across UK Higher Education (2015/16 to 2024/25). Baseline comparator: <span id="compNameHeader" class="text-sky-400 font-medium">University of York</span>.
+        </p>
+      </div>
+
+      <!-- Quick Action Controls & File Replacement -->
+      <div class="flex flex-wrap items-center gap-2">
+        <button id="btnFollowCardiff" class="px-3 py-1.5 rounded-lg text-xs font-medium border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-200 transition-all flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-rose-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
+          <span id="followText">Focus Cardiff</span>
+        </button>
+
+        <label for="csvFileInput" class="px-3 py-1.5 rounded-lg text-xs font-medium border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-slate-200 transition-all cursor-pointer">
+          Replace CSV
+          <input type="file" id="csvFileInput" accept=".csv" class="hidden">
+        </label>
+      </div>
+    </div>
+
+    <!-- CARDIFF KPI SUMMARY BAR & LIVE NARRATIVE -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-4">
+      <!-- KPI 1 -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3 flex flex-col justify-between">
+        <span class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Cardiff Energy Intensity</span>
+        <div class="flex items-baseline justify-between mt-1">
+          <span id="kpiEnergy" class="text-xl font-bold text-slate-100">-- <span class="text-xs font-normal text-slate-400">kWh/m²</span></span>
+          <span id="kpiEnergyMedian" class="text-[10px] text-slate-400">vs sector median</span>
+        </div>
+      </div>
+
+      <!-- KPI 2 -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3 flex flex-col justify-between">
+        <span class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Cardiff Scope 1&2 Intensity</span>
+        <div class="flex items-baseline justify-between mt-1">
+          <span id="kpiEmissions" class="text-xl font-bold text-rose-400">-- <span class="text-xs font-normal text-slate-400">kgCO₂e/m²</span></span>
+          <span class="text-[10px] text-slate-400 text-right leading-tight"><span id="kpiEmissionsMedian">vs sector median</span><br><span id="kpiEmissionsTotal" class="text-slate-300">-- tCO₂e total</span></span>
+        </div>
+      </div>
+
+      <!-- KPI 3 -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3 flex flex-col justify-between">
+        <span class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Cardiff Total Estate Area</span>
+        <div class="flex items-baseline justify-between mt-1">
+          <span id="kpiFloorArea" class="text-xl font-bold text-slate-100">-- <span class="text-xs font-normal text-slate-400">m²</span></span>
+          <span class="text-[10px] text-slate-400">Rank: <span id="kpiRank" class="font-semibold text-slate-200">--</span></span>
+        </div>
+      </div>
+
+      <!-- CARDIFF VS COMPARATOR CHIP -->
+      <div class="bg-slate-900/90 border border-rose-950/50 rounded-xl p-3 flex flex-col justify-between bg-gradient-to-r from-slate-900 via-slate-900 to-rose-950/20">
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] font-medium text-slate-300 uppercase tracking-wider">Cardiff vs <span id="compNameLabel">York</span></span>
+          <span id="compEmissionsDiff" class="text-xs font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-200">--</span>
+        </div>
+        <div id="compDetail" class="text-xs text-slate-300 mt-1 truncate">
+          Calculated dynamically frame by frame
+        </div>
+      </div>
+    </div>
+
+    <!-- EVENT NARRATIVE CALLOUT BANNER -->
+    <div id="narrativeBanner" class="mt-3 bg-slate-900/80 border border-slate-800/80 rounded-lg px-4 py-2 flex items-center gap-3 transition-all">
+      <div class="w-2 h-2 rounded-full bg-rose-500 animate-ping flex-shrink-0"></div>
+      <p id="narrativeText" class="text-xs md:text-sm text-slate-300 font-medium italic">
+        Initialising sector view...
+      </p>
+    </div>
+  </header>
+
+  <!-- MAIN HERO CHART CONTAINER -->
+  <main class="max-w-7xl mx-auto w-full flex-1 relative flex flex-col bg-slate-900/60 border border-slate-800 rounded-2xl p-3 md:p-5 shadow-2xl overflow-hidden backdrop-blur-sm">
+
+    <!-- CHART CANVAS & OVERLAYS -->
+    <div id="chartContainer" class="relative w-full flex-1 min-h-[480px] md:min-h-[560px]">
+
+      <!-- Translucent Year Background -->
+      <div id="watermarkYear" class="absolute inset-0 flex items-center justify-center pointer-events-none select-none text-[12vw] font-black text-slate-800/25 tracking-tighter transition-all">
+        2015/16
+      </div>
+
+      <!-- Floating D3 SVG -->
+      <svg id="chartSvg" class="w-full h-full block relative z-10"></svg>
+
+      <!-- ZOOM CONTROLS (sit in the top margin, above the plot area, so they never cover data) -->
+      <div id="zoomControls" class="absolute top-0 right-0 z-20 flex items-center gap-1 text-[11px]">
+        <span class="hidden md:inline text-slate-500 mr-1">Drag to pan · Ctrl + scroll or pinch to zoom</span>
+        <span id="offViewNote" class="hidden text-amber-300/90 mr-1"></span>
+        <button id="btnZoomIn" title="Zoom in" class="w-7 h-7 rounded border border-slate-700 bg-slate-800/90 hover:bg-slate-700 text-slate-200 font-bold">+</button>
+        <button id="btnZoomOut" title="Zoom out" class="w-7 h-7 rounded border border-slate-700 bg-slate-800/90 hover:bg-slate-700 text-slate-200 font-bold">&minus;</button>
+        <button id="btnZoomReset" title="Return to the focus view (5th to 95th percentile of the sector)" class="h-7 px-2 rounded border border-slate-700 bg-slate-800/90 hover:bg-slate-700 text-slate-200 font-medium">Reset view</button>
+        <button id="btnZoomFull" title="Show the full data range, including outliers" class="h-7 px-2 rounded border border-slate-700 bg-slate-800/90 hover:bg-slate-700 text-slate-300 font-medium">Full range</button>
+      </div>
+
+      <!-- END STATE HOLD COMPARISON MODAL OVERLAY -->
+      <div id="endStateOverlay" class="absolute inset-x-4 top-1/2 -translate-y-1/2 max-w-xl mx-auto bg-slate-900/95 border border-rose-500/40 rounded-2xl p-5 shadow-2xl z-30 opacity-0 pointer-events-none transition-all duration-500 backdrop-blur-md">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+            <h3 class="font-bold text-base text-white">Decade Summary (2015/16 to 2024/25)</h3>
+          </div>
+          <span class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded">Holding 3s</span>
+        </div>
+        <div id="endStateSummaryContent" class="space-y-2 text-xs md:text-sm text-slate-200">
+          <!-- Filled dynamically in JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- EXTERNAL BUBBLE SIZE LEGEND & SELECTOR BAR -->
+    <div class="mt-3 pt-3 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+
+      <!-- Bubble Area Legend -->
+      <div class="flex items-center gap-4">
+        <span class="font-semibold text-slate-300">Bubble area = total floor area:</span>
+        <div id="bubbleSizeLegend" class="flex items-center gap-4">
+          <!-- Dynamic legend circles generated by JS -->
+        </div>
+      </div>
+
+      <!-- Comparator Dropdown Selection -->
+      <div class="flex items-center gap-2">
+        <label for="comparatorSelect" class="font-medium text-slate-300 whitespace-nowrap">Comparator:</label>
+        <select id="comparatorSelect" class="bg-slate-800 text-slate-200 border border-slate-700 rounded px-2.5 py-1 text-xs focus:outline-none focus:border-rose-500">
+          <!-- Populated in JS -->
+        </select>
+      </div>
+    </div>
+
+    <!-- DATA PROVENANCE LINE -->
+    <p id="dataStatus" class="mt-2 text-[11px] text-slate-500">Loading embedded HESA dataset...</p>
+  </main>
+
+  <!-- CONTROLS & TIMELINE FOOTER -->
+  <footer class="max-w-7xl mx-auto w-full mt-4 bg-slate-900/80 border border-slate-800 rounded-xl p-3 flex flex-col md:flex-row items-center gap-4">
+
+    <!-- Play/Pause/Replay Controls -->
+    <div class="flex items-center gap-2">
+      <button id="btnPlayPause" title="Play or pause" class="p-2.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white transition-all shadow-lg shadow-rose-600/30">
+        <svg id="iconPlay" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6V4z"/></svg>
+        <svg id="iconPause" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+      </button>
+
+      <button id="btnReplay" title="Replay from 2015/16" class="p-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/></svg>
+      </button>
+
+      <!-- Speed Selector Buttons -->
+      <div class="flex items-center bg-slate-800 p-1 rounded-lg border border-slate-700 text-xs font-medium text-slate-400">
+        <button data-speed="0.5" class="btn-speed px-2 py-0.5 rounded hover:text-white">0.5x</button>
+        <button data-speed="1.0" class="btn-speed px-2 py-0.5 rounded bg-slate-700 text-white font-bold">1x</button>
+        <button data-speed="1.5" class="btn-speed px-2 py-0.5 rounded hover:text-white">1.5x</button>
+        <button data-speed="2.0" class="btn-speed px-2 py-0.5 rounded hover:text-white">2x</button>
+      </div>
+    </div>
+
+    <!-- Timeline Scrubber -->
+    <div class="flex-1 w-full flex items-center gap-3">
+      <span class="text-xs font-mono text-slate-400">2015/16</span>
+      <input type="range" id="timeScrubber" min="0" max="9" step="0.001" value="0" aria-label="Academic year timeline" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+      <span class="text-xs font-mono text-slate-400">2024/25</span>
+    </div>
+  </footer>
+
+  <!-- TOOLTIP OVERLAY -->
+  <div id="chartTooltip" class="fixed pointer-events-none opacity-0 bg-slate-900/95 border border-slate-700 rounded-lg p-3 shadow-2xl text-xs text-slate-200 z-50 transition-opacity duration-150 backdrop-blur-md max-w-xs">
+  </div>
+
+  <!-- EMBEDDED COMPLETE DATASET: HESA_Estates_Workshop.csv, byte for byte (307 rows plus header) -->
+  <script id="hesa-data-csv" type="text/csv">Institution,AcademicYear,Buildings,FloorArea_m2,Energy_kWh,Water_m3,CarSpaces,CycleSpaces,RenewablesPct,Scope12_tCO2e
+Aberystwyth University,2015/16,152,210351.0,43066612,205811,2525,342,0.2,12697.5
+Aberystwyth University,2016/17,152,219625,40529384,159903,2525,342,0.5,10801.0
+Aberystwyth University,2017/18,152,219625,44262254.2,188898,2930,342,0.4,10103.0
+Aberystwyth University,2018/19,688,263320.9,44414640,254265,2930,362,0.4,9823.7
+Aberystwyth University,2019/20,688,260123.4,39779682.3,223912,2329,362,0.4,8322.0
+Aberystwyth University,2020/21,688,260123.4,42021875,194583,2529,362,0.4,8336.3
+Aberystwyth University,2021/22,688,260123.4,42374991.0,257117.6,2354,362,0.4,8135.3
+Aberystwyth University,2022/23,688,260123.4,37876982.0,279141,2408,362,100,7298.3
+Aberystwyth University,2023/24,688,260123.4,35699042,364580.0,2408,362,100,6688.3
+Aberystwyth University,2024/25,688,260123.4,34145133,255027,2408,362,100,6019.5
+Bangor University,2015/16,168,214005,38550858,153403,1951,685,0,11190.1
+Bangor University,2016/17,168,217655,36993083.3,156762.6,1951,685,0,9686.6
+Bangor University,2017/18,171,222679,35409226.9,141169.0,1951,685,0,8202.2
+Bangor University,2018/19,172,230234.8,34206745.5,152108.5,1814,685,,7589.8
+Bangor University,2019/20,168,234102.2,33056205.6,118212,1819,685,42.5,6886.0
+Bangor University,2020/21,168,234102.2,33973409.4,83718.5,1819,685,38.1,6707.3
+Bangor University,2021/22,168,234102.2,34776598.8,120034.6,1819,685,27,6602.2
+Bangor University,2022/23,168,234102.2,32600032.5,129867.3,1819,685,0,6401.4
+Bangor University,2023/24,168,234102.2,31863352.0,110999.7,1819,685,0,6243.3
+Bangor University,2024/25,171,237324.2,29910378.7,115696.2,1819,685,0,5459.7
+Cardiff Metropolitan University,2015/16,50,93408,15909605,62287,1605,530,0,4463.3
+Cardiff Metropolitan University,2016/17,51,95648,16352882,66361,1605,530,0,4139.6
+Cardiff Metropolitan University,2017/18,52,95694,17416309,67233,1605,530,39.2,3894.6
+Cardiff Metropolitan University,2018/19,53,97041,15952682,65394,1605,530,41.3,3419.6
+Cardiff Metropolitan University,2019/20,53,97041,13979894,63611,1640,530,40.1,2847.9
+Cardiff Metropolitan University,2020/21,53,97041,12671270,46474,1640,530,38.7,2457.4
+Cardiff Metropolitan University,2021/22,53,97041,14814158,73687,1640,530,54,2758.2
+Cardiff Metropolitan University,2022/23,53,97041,15980647,81235,1640,530,37.6,3063.3
+Cardiff Metropolitan University,2023/24,53,97041,14474222,86582,1640,530,50.7,2793.8
+Cardiff Metropolitan University,2024/25,53,97041,12465219,76613,1640,530,30.4,2244.3
+Cardiff University,2015/16,288,451363,102125646.0,366089,1843,3151,100,29662.9
+Cardiff University,2016/17,291,452325,113464935.0,366438,1953,3305,100,29372.9
+Cardiff University,2017/18,293,457642,118715071.9,323210,1990,3554,100,26963.4
+Cardiff University,2018/19,290,462583,116383275.9,367477.5,2078,3554,100,24705.5
+Cardiff University,2019/20,288,492229,113871037.6,380883.2,1970,3554,100,23230.3
+Cardiff University,2020/21,288,489094,118410011.8,324115.4,1732,3554,100,23037.0
+Cardiff University,2021/22,301,545578,129597910.8,307887.7,1873,4090,100,24230.9
+Cardiff University,2022/23,301,545578,123162392.9,323723,1873,4090,100,23843.4
+Cardiff University,2023/24,298,542938,122026236.0,240133,1873,4090,100,23595.2
+Cardiff University,2024/25,256,532968,118339564.7,341751.9,2063,4090,100,21336.4
+Imperial College London,2015/16,118,520148,259269125,819500,893,2224,0,75745.7
+Imperial College London,2016/17,105,531156,235777468,673872,893,2224,0,75787.1
+Imperial College London,2017/18,113,534196,248142427,625438,1276,2610,0,58539.0
+Imperial College London,2018/19,123,558847,209932547.3,676100,1408,2713,0,55268.5
+Imperial College London,2019/20,117,570967,208643944,760939.0,1408,2713,100,55590.5
+Imperial College London,2020/21,105,592605,223678630.4,451599,735,3143,100,57972.2
+Imperial College London,2021/22,115,588084,238054054,402125.2,735,3143,100,55259.2
+Imperial College London,2022/23,119,591541,228663780.0,377532,735,3143,100,50941.5
+Imperial College London,2023/24,114,596683,217875091,363545.7,402,3045,100,42411.4
+Imperial College London,2024/25,114,582134,212273953,360014.0,402,3141,100,45669.7
+King's College London,2015/16,88,420639.9,127972473,329409,,667,0,39012.8
+King's College London,2016/17,91,444578.3,132939408.3,338627.3,,1000,0,36532.0
+King's College London,2017/18,89,449526.8,139646881,407367,151,989,54,32663.7
+King's College London,2018/19,92,452105.5,138724947.7,332289.5,151,1208,61,30616.9
+King's College London,2019/20,88,434646.7,116982533.3,646705,151,1171,58,24506.5
+King's College London,2020/21,80,436349.3,131536236,340453,79,1179,59,25908.8
+King's College London,2021/22,78,430955.4,130692081.8,305992,79,1157,45,24559.2
+King's College London,2022/23,78,443606.8,135747156.2,378408,154,1247,9,26616.2
+King's College London,2023/24,79,445351.5,131839075.8,409234,154,1248,8,25968.5
+King's College London,2024/25,80,446184.7,129984987.5,326205,154,1279,13,23485.6
+London School of Economics and Political Science,2015/16,43,187079.6,36536115,211535,56,484,94.6,10948.6
+London School of Economics and Political Science,2016/17,43,186934.6,36226210,216110,56,476,98.4,9700.2
+London School of Economics and Political Science,2017/18,43,186966,37998072,196997,56,492,98.4,8718.5
+London School of Economics and Political Science,2018/19,44,203005.9,37244400,199335,56,538,100,8089.5
+London School of Economics and Political Science,2019/20,44,201884.1,34105771,153957,56,667,99.9,7003.6
+London School of Economics and Political Science,2020/21,41,196783.5,37696715,143511,60,715,99.8,7320.3
+London School of Economics and Political Science,2021/22,42,214376.2,42136548,177184,60,999,99.1,7877.2
+London School of Economics and Political Science,2022/23,42,213208.7,38263359,178154,58,1007,99.5,7422.1
+London School of Economics and Political Science,2023/24,43,213339.2,36525993,197587,58,993,100,7098.7
+London School of Economics and Political Science,2024/25,44,225262.8,36144642,187359.7,58,993,100,6486.0
+Newcastle University,2015/16,263,429723.8,123451073.0,400526.0,881,2056,0,35427.6
+Newcastle University,2016/17,252,426280.5,119570237,335297,676,2073,0,31600.2
+Newcastle University,2017/18,239,454819.0,115734123,331254,728,2040,76.1,26665.1
+Newcastle University,2018/19,244,486754.7,124112915.1,311883,830,2029,70.6,26774.6
+Newcastle University,2019/20,236,497529.2,111593502.0,290524.5,1124,2150,36,22808.3
+Newcastle University,2020/21,230,501720.5,110328300.2,226976,903,2103,38.7,21572.1
+Newcastle University,2021/22,230,490051.8,116524430.0,286268,935,2103,33.8,21858.6
+Newcastle University,2022/23,220,487550.3,110082796.5,294287.1,997,1997,42.3,21546.1
+Newcastle University,2023/24,209,496852.7,108700150.9,308836,989,2466,41.2,21166.0
+Newcastle University,2024/25,179,462027.3,96275737.3,245146,859,2295,14.9,17301.7
+Queen Mary University of London,2015/16,77,228749,73828832.6,254679,218,1018,0,22325.0
+Queen Mary University of London,2016/17,85,238010,69051422,167001.5,255,910,0,18722.0
+Queen Mary University of London,2017/18,85,238677.9,70590032,254679,220,895,0,16810.1
+Queen Mary University of London,2018/19,88,256775.6,67938033,339247,220,1043,,15203.3
+Queen Mary University of London,2019/20,89,257147.0,66771592,340846,220,963,,13925.3
+Queen Mary University of London,2020/21,91,265324.8,66194988,208033,220,963,,13124.2
+Queen Mary University of London,2021/22,91,264929.6,60787821,468493.0,235,1013,,11549.5
+Queen Mary University of London,2022/23,92,265448.3,60401992.6,238826.2,235,1013,,11840.8
+Queen Mary University of London,2023/24,92,267829.2,61999974.5,366249.3,226,881,,12182.8
+Queen Mary University of London,2024/25,93,270239.6,60709055.7,257692.8,226,881,,10903.9
+Queen's University Belfast,2015/16,230,329237,97593065,299439,1402,990,,24752.3
+Queen's University Belfast,2016/17,232,345312,90972806,257734,1376,1006,,22950.1
+Queen's University Belfast,2017/18,234,345795,95226950,263623,1270,1074,,21882.8
+Queen's University Belfast,2018/19,237,397670,96491304,315655,1290,1426,,22419.8
+Queen's University Belfast,2019/20,237,397670,113497540,188651,1290,1426,,21061.8
+Queen's University Belfast,2020/21,237,397670,105292168,600977,1290,1426,,22501.8
+Queen's University Belfast,2021/22,237,397670,99621645,334090,1290,1530,,21117.0
+Queen's University Belfast,2022/23,268,425595,96842418,228326,1290,1554,100,20154.8
+Queen's University Belfast,2023/24,268,426394,94813729,171939,1282,1594,100,20773.8
+Queen's University Belfast,2024/25,268,425167,92955630.5,163967.7,1282,1594,100,18441.3
+Swansea University,2015/16,152,250355.4,60269433,279613,1725,980,65,17602.5
+Swansea University,2016/17,142,247121.5,65988288,284461,1700,980,100,18270.2
+Swansea University,2017/18,137,251679,69432490,289002,1640,1020,100,16151.8
+Swansea University,2018/19,150,266798.7,70647391,249106,1630,1020,100,15170.1
+Swansea University,2019/20,103,264266.8,62804613,239816,1630,1020,100,12866.4
+Swansea University,2020/21,104,256013.7,66517711,199076,1630,1020,100,13246.9
+Swansea University,2021/22,101,255212.2,62832326,221705,1630,1020,67,11685.1
+Swansea University,2022/23,101,261217.5,63195485,251720,1776,1020,0,12142.1
+Swansea University,2023/24,85,248334.6,56345527.1,347572.6,1776,1030,0,10763.1
+Swansea University,2024/25,83,245733.8,54181867.1,193985,1776,1030,0.5,9516.8
+University College London,2015/16,223,561241,222626370.8,510170,,742,0,66780.5
+University College London,2016/17,216,561128,228906545.2,518375.8,,1584,0,62065.4
+University College London,2017/18,249,627839.5,242937730.1,542383.6,,1694,0,58098.9
+University College London,2018/19,253,645451.8,241572061.7,573408.5,,1694,0,54580.6
+University College London,2019/20,252,669493.7,229483264.1,697451,,1694,39.5,49821.6
+University College London,2020/21,244,671939.4,230626691.2,662114.9,,1854,39.7,47943.3
+University College London,2021/22,244,677158.8,234193323.9,345245,,2457,44.3,45673.5
+University College London,2022/23,240,694356.1,242863937.5,336244,,2457,47.6,48081.1
+University College London,2023/24,249,713426.1,244959378.4,421892,,2457,48.3,49176.1
+University College London,2024/25,237,738433.4,240851755.0,517044.7,,2457,49.3,44199.9
+University of Birmingham,2015/16,194,531782.8,188255783,546734,3591,,0,46941.6
+University of Birmingham,2016/17,192,538052.1,183605142,514775,3591,1446,0,45901.4
+University of Birmingham,2017/18,199,542830.2,196537338,452841,3591,1500,0,48165.4
+University of Birmingham,2021/22,295,550271.5,201996694,406232,3563,1805,100,42967.8
+University of Birmingham,2022/23,287,569829.5,181925928,579891,3770,1805,0,40149.8
+University of Birmingham,2023/24,281,662672.9,201605039,530924,3824,1805,0,43562.4
+University of Birmingham,2024/25,244,598027,198634238,633314,3577,2642,0,40272.6
+University of Bristol,2015/16,322,519042.5,146299317.4,378218,1738,3152,0,44402.7
+University of Bristol,2016/17,327,522616.1,147845436,354088,1705,3316,29,39484.3
+University of Bristol,2017/18,338,532986.9,145646765,387771,1826,3487,96.1,34367.4
+University of Bristol,2018/19,338,534626.6,143786698,374342,1932,3443,99.5,32125.4
+University of Bristol,2019/20,337,525594.2,134637393,283489,1835,3525,100,28477.8
+University of Bristol,2020/21,329,532324.0,146924413,350011,1913,2734,44.7,29455.1
+University of Bristol,2021/22,314,531502.8,135204996,336060,1962,3966,34,25674.6
+University of Bristol,2022/23,313,540044.5,128578986.6,412455.1,1973,4008,9.6,25200.7
+University of Bristol,2023/24,314,540462.6,113076306.4,370294.4,1982,4108,10.4,22153.2
+University of Bristol,2024/25,315,536729.9,120745667.4,415608.1,1967,4108,13.6,21669.9
+University of Cambridge,2015/16,344,644272.2,221326292.6,338656.4,3700,9000,9,68270.4
+University of Cambridge,2016/17,345,660256.1,230727155,332580,3580,9000,8.8,65393.0
+University of Cambridge,2017/18,369,685259.2,275334595,466002,3500,11000,11.7,65322.6
+University of Cambridge,2018/19,372,723229.6,255974754,461578,3560,11120,0,57556.8
+University of Cambridge,2019/20,378,743872.9,255757794,426953,3560,11120,4.8,53923.6
+University of Cambridge,2020/21,383,725738.7,278229773,424785,3560,11120,8.8,55098.1
+University of Cambridge,2021/22,389,738889.8,260058915,367600,3526,11200,0,49118.6
+University of Cambridge,2022/23,379,736892.5,257272970,366717,3406,11200,0,50682.0
+University of Cambridge,2023/24,375,771471.1,258580920,448158.1,3406,11400,0,51055.8
+University of Cambridge,2024/25,372,771772.1,263887898,418409.2,3406,11400,0,47539.2
+University of Durham,2015/16,313,362951.9,114153428,467377,3181,1562,0,30009.2
+University of Durham,2016/17,312,356789.3,113078399,475893,3157,1562,0,27782.1
+University of Durham,2017/18,314,369097.7,119678651,396530,3171,1523,0,26330.0
+University of Durham,2018/19,379,382350.6,112549136,435748,2833,1523,35,23773.0
+University of Durham,2019/20,389,388205.1,105135503,288260,3015,1846,33,21299.1
+University of Durham,2020/21,386,424582,119277206,285659,3278,2061,31,23041.2
+University of Durham,2021/22,393,421646.6,108498912.2,356219.4,3217,2061,24,20388.3
+University of Durham,2022/23,329,408005.6,107041220,387765,3257,2066,0,20681.2
+University of Durham,2023/24,427,378797.0,106110972,382539,3022,2086,0,20419.9
+University of Durham,2024/25,431,398657.1,99431226,340829,3088,2424,9.7,17975.5
+University of Edinburgh,2015/16,395,778617,243777807.2,562447,2901,4568,40,73365.3
+University of Edinburgh,2016/17,399,785043,244235067.8,581265,2862,4995,26.6,68453.2
+University of Edinburgh,2017/18,408,880930,255132568.5,508419.3,2803,5354,25.4,65718.1
+University of Edinburgh,2018/19,434,877384,240910447,573025,2929,5678,36.7,61825.5
+University of Edinburgh,2019/20,458,887032,259237062,441226,2535,5914,33.8,63016.5
+University of Edinburgh,2020/21,458,919724,283752985.3,347297,2585,7582,30.5,64525.8
+University of Edinburgh,2021/22,458,929082,282159945,381250,2495,7604,30.3,65070.0
+University of Edinburgh,2022/23,480,931987,281200502,478925,2508,7942,28,62115.4
+University of Edinburgh,2023/24,481,929985,284905537.0,369796,2508,8515,11.8,61200.1
+University of Edinburgh,2024/25,476,931222,279883302,353682,2508,9089,9.1,56898.5
+University of Exeter,2015/16,214,269752.4,61104727,266386.6,1991,,0,18521.2
+University of Exeter,2016/17,213,279225.7,67381596.6,242980,1991,1610,0,18300.5
+University of Exeter,2017/18,211,276090.9,67634939,234457,1986,1659,47.2,15956.7
+University of Exeter,2018/19,213,279045.5,66050408.5,288298.6,1942,1689,47.6,14940.7
+University of Exeter,2019/20,220,283550.4,62958093,328768.4,1936,1689,6.9,13494.9
+University of Exeter,2020/21,221,284226.0,69024674.4,283289.2,1930,1689,41.4,13714.0
+University of Exeter,2021/22,222,284257.4,74565775.1,406031.1,1846,1689,41.1,14168.1
+University of Exeter,2022/23,247,304124.7,64575860.6,315385.5,1832,1912,49.1,12671.9
+University of Exeter,2023/24,253,305299.7,69613087.3,439863.1,1815,3927,46.1,13584.7
+University of Exeter,2024/25,253,299600.8,67037493.1,395540.8,1815,3927,25,11977.5
+University of Glasgow,2015/16,297,387364.3,155245325.8,343969,2014,943,0,
+University of Glasgow,2016/17,324,478853.1,145547667.1,293793,1797,959,0,39079.9
+University of Glasgow,2017/18,323,487541.6,144946500,294272,1575,939,0,34843.9
+University of Glasgow,2018/19,324,478584.6,129285173.2,256231,1632,985,0,29938.3
+University of Glasgow,2019/20,319,473358.2,141348251.4,303238,1628,992,0,31050.1
+University of Glasgow,2020/21,319,472725.2,138362992.2,232607.3,1483,1501,0,28859.9
+University of Glasgow,2021/22,322,518509.1,141624710.9,269576,1598,1754,0,27666.5
+University of Glasgow,2022/23,322,513238.6,143450931.1,296273,1535,1883,0,29005.5
+University of Glasgow,2023/24,319,530601.9,125681328.3,283342,1513,2064,0,24402.6
+University of Glasgow,2024/25,319,529193.2,158106494.9,223746,1511,2071,0,28762.6
+University of Leeds,2015/16,319,569873,152417732,697754,2201,2346,0,45523.0
+University of Leeds,2016/17,318,566464.1,161479380.0,758873.2,1991,2194,0,48478.5
+University of Leeds,2017/18,301,555111.4,160097366.5,702015.6,1891,2214,0,45888.8
+University of Leeds,2018/19,306,560962.1,175675909.4,701498.8,1893,2473,0,42411.5
+University of Leeds,2019/20,359,576503.1,182113109.5,635172.9,1877,2612,0,43660.6
+University of Leeds,2020/21,365,586550.6,183691562.1,630164.7,1881,2912,0,43565.3
+University of Leeds,2021/22,366,619659.8,186200234.2,757973.8,2068,2912,41,43501.5
+University of Leeds,2022/23,364,614739.6,173348203.2,803296.7,2068,2926,41,44412.7
+University of Leeds,2023/24,347,619292.3,177150372.2,721483,2068,2926,41,44351.1
+University of Leeds,2024/25,346,619010.8,168205342.4,641602,1983,2912,26,38046.9
+University of Liverpool,2015/16,219,465605,198991964,320565,1870,713,100,40956.9
+University of Liverpool,2016/17,213,474206,236895642,320914,1867,713,98,46212.2
+University of Liverpool,2017/18,217,490206,206178530.3,321627.9,1900,745,7.6,43024.3
+University of Liverpool,2018/19,216,488867,223189858.4,319348.0,1890,755,10.8,40803.7
+University of Liverpool,2019/20,217,497985,153661827.8,294056,1890,755,8.8,39272.2
+University of Liverpool,2020/21,216,489852,168708779,265681,1890,755,8.6,39147.8
+University of Liverpool,2021/22,204,498076,205031871.2,316040.8,2741,755,8.8,38939.2
+University of Liverpool,2022/23,204,498462,197532402.8,328241.6,2412,755,20.6,35073.0
+University of Liverpool,2023/24,259,515464.2,192742692.5,317646.5,1791,755,18.3,34343.9
+University of Liverpool,2024/25,234,514530,191948521.2,323194,1791,755,12.3,35941.1
+University of Manchester,2015/16,228,876621,239372452.6,754314.5,3782,3000,0,67596.6
+University of Manchester,2016/17,222,887985.2,233912862,807247.5,3767,3000,0,60233.3
+University of Manchester,2017/18,219,878432.1,237358941.8,1125438.3,3669,3000,0,53838.8
+University of Manchester,2018/19,211,884087.7,235523770.8,753244.9,3597,3000,0,50673.7
+University of Manchester,2019/20,213,933790.9,241059625.7,670587.4,3597,3000,0,49377.1
+University of Manchester,2020/21,217,940458.9,269289286.9,603511.0,3682,3000,0,52215.9
+University of Manchester,2021/22,211,997957.0,256588606.6,690607.7,3674,3000,0,50197.5
+University of Manchester,2022/23,202,889095.2,251904449.2,753082.8,3662,3000,0,53373.3
+University of Manchester,2023/24,191,873719.4,221788306.5,651604.6,3662,3000,35.5,46852.3
+University of Manchester,2024/25,190,868247.1,227916971.1,685990.9,3132,3000,35,45009.9
+University of Nottingham,2015/16,363,646812.3,197970222.3,859124,4867,4907,0,55293.0
+University of Nottingham,2016/17,353,646562,199062833,805338,4867,4951,0,50726.9
+University of Nottingham,2017/18,364,667199.9,203767584,717542,4815,5097,0,46826.1
+University of Nottingham,2018/19,367,673071.4,194315252.9,656375,5001,5157,0,42094.9
+University of Nottingham,2019/20,418,678664.5,185363975,512636,5079,5162,0,38907.1
+University of Nottingham,2020/21,455,682709.3,183259376,604552,4955,5162,0,37671.4
+University of Nottingham,2021/22,454,689840.0,176302705,602996,4691,5162,0,34131.5
+University of Nottingham,2022/23,461,717601.1,179045801,598786,4591,5131,0,34517.8
+University of Nottingham,2023/24,465,716650.6,172124013.6,615933,4591,5189,0,33277.3
+University of Nottingham,2024/25,379,727832.7,171845219,787713,4137,5189,0,30888.9
+University of Oxford,2015/16,282,661663.7,205508249,440804,1861,4000,99,62717.1
+University of Oxford,2016/17,236,608634,193620918.6,259901,1742,4238,100,53771.8
+University of Oxford,2017/18,243,628321,221931727.5,326459.8,1721,4364,100,53079.4
+University of Oxford,2018/19,248,643260,218529883,440350,983,4669,100,48970.7
+University of Oxford,2019/20,248,643857,211853073,351421,2045,4670,100,44948.9
+University of Oxford,2020/21,252,657720,239767886,484545,2045,4670,100,47676.9
+University of Oxford,2021/22,255,666881,223307611.7,301691,1845,4820,100,42362.1
+University of Oxford,2022/23,257,676125.1,228782142.7,298396,1845,4820,100,45006.6
+University of Oxford,2023/24,258,670399.0,204819372,389695,1845,4820,100,40610.9
+University of Oxford,2024/25,256,663397.1,217430395,389695,1845,5320,100,39462.7
+University of Sheffield,2015/16,338,535460.5,133810332,488964.4,,,13.2,40350.3
+University of Sheffield,2016/17,351,539404.8,131770558,464574.3,2035,2291,0,35549.4
+University of Sheffield,2017/18,345,539787.4,137640547.7,482209.7,2200,2200,0,31945.4
+University of Sheffield,2018/19,349,541966.0,134824740,433739,2340,2609,46.9,26266.0
+University of Sheffield,2019/20,347,540037.3,122426529,399151,2391,2609,46.3,22530.9
+University of Sheffield,2020/21,321,541216.0,125469287.5,372808.1,2388,2609,33.5,24529.4
+University of Sheffield,2021/22,272,516433.6,131731800.9,418894.7,2341,2683,34.7,27971.1
+University of Sheffield,2022/23,243,524719.7,134237463,453861,2556,2946,36.7,28700.1
+University of Sheffield,2023/24,290,557232.2,130587397,488283,2528,2972,38,28339.6
+University of Sheffield,2024/25,260,557663.2,124062906,374478,2459,2934,39,25566.7
+University of South Wales,2015/16,128,215761.7,40055703.3,134666.3,3246,497,0,11573.8
+University of South Wales,2016/17,130,220636.9,35520884.9,128841,3246,497,0,9439.8
+University of South Wales,2017/18,129,192641.2,36523797.8,122892,3371,497,100,8408.9
+University of South Wales,2018/19,129,220412.7,34957931.7,115624,3371,260,100,7527.4
+University of South Wales,2019/20,84,208753.8,30320612.7,95912,2568,260,100,6298.9
+University of South Wales,2020/21,91,184072.5,27751660.5,70226,2568,213,53.3,5382.6
+University of South Wales,2021/22,91,184072.5,29932866.6,88940,2568,213,46,5556.3
+University of South Wales,2022/23,85,180587.0,28852383.9,115466,2736,229,48,5361.8
+University of South Wales,2023/24,84,182022.0,29894847.2,135355,2736,229,45,5597.4
+University of South Wales,2024/25,83,159169.6,30184237,112814,2736,229,48,5344.5
+University of Southampton,2015/16,399,437719.8,112507192,498012.9,3158,4130,,31655.8
+University of Southampton,2016/17,414,438712,111501319.5,502985.8,3114,4154,,29465.7
+University of Southampton,2017/18,402,431576.2,108891973.8,468074.1,2996,4154,,26861.7
+University of Southampton,2018/19,403,443048.3,120585460.8,402333.6,3094,4364,,23952.1
+University of Southampton,2019/20,,435475.9,95068449.0,351607.2,,,,22478.2
+University of Southampton,2020/21,,441231.8,91961289,288587,,,,22131.7
+University of Southampton,2021/22,,451840.3,98152919.1,400873,,,,22584.3
+University of Southampton,2022/23,406,474677.6,100343899.6,373053.6,3253,6026,20.7,22609.4
+University of Southampton,2023/24,365,475416.5,98385869.7,391395.5,2756,5986,23.8,21863.4
+University of Southampton,2024/25,351,461473.4,99631755.8,365892.5,2658,6118,29.6,20489.6
+University of Wales Trinity Saint David,2015/16,119,127947,25755469,54640,,,0,6693.1
+University of Wales Trinity Saint David,2016/17,118,127845,25628134,63604,,,0,6143.8
+University of Wales Trinity Saint David,2017/18,127,132237,25247111.7,50703,,,100,5531.4
+University of Wales Trinity Saint David,2018/19,155,222745.9,24808391.6,36027.0,1415,170,100,5220.3
+University of Wales Trinity Saint David,2019/20,119,141278.4,17786704.6,15599.7,1411,170,100,3512.6
+University of Wales Trinity Saint David,2020/21,117,148919.3,19103513.0,23917.1,1435,182,100,3647.6
+University of Wales Trinity Saint David,2021/22,117,143459.0,19184022.5,38710.3,1362,184,100,3593.5
+University of Wales Trinity Saint David,2022/23,115,146762.2,18561974.4,34635.6,1362,184,0,3621.9
+University of Wales Trinity Saint David,2023/24,111,146392.0,15948906.1,42261,1434,198,0,3095.9
+University of Wales Trinity Saint David,2024/25,108,142673,14773831,62284,1427,198,0,2620.7
+University of Warwick,2015/16,422,545497.8,149770083.1,565022.4,4245,2500,0,41019.6
+University of Warwick,2016/17,423,493973.6,156889866.1,563182.4,5230,3000,0,39828.2
+University of Warwick,2017/18,451,540256.0,171127190.2,589033.9,4980,3067,0,40790.9
+University of Warwick,2018/19,455,571806.6,176765593.1,611511.8,5395,3185,0,40495.9
+University of Warwick,2019/20,467,562786.8,163801649.2,527791.2,6315,3500,50,37795.2
+University of Warwick,2020/21,432,565512.4,166473432.7,490188.2,6659,3600,50,38199.1
+University of Warwick,2021/22,434,584629.9,168134829.0,538453.0,6640,3610,50,37949.5
+University of Warwick,2022/23,418,579302.6,159854693.7,520835.2,6466,3700,0,37190.2
+University of Warwick,2023/24,437,594795.9,158342429.2,525899.3,6169,3700,25.9,34196.6
+University of Warwick,2024/25,436,589777.6,168405564.0,551666.4,6166,3650,30.1,33585.4
+University of York,2015/16,242,364796,87154364.7,284584,2807,2996,,22139.2
+University of York,2016/17,245,380912,89471475.2,301434.8,2449,3008,,22176.1
+University of York,2017/18,301,419010,89532704.0,276060.8,2478,5348,,21622.6
+University of York,2018/19,313,419010,89043801.1,286690,2366,5494,,20120.6
+University of York,2019/20,328,419464.3,81252983.0,215143.8,2337,5555,,17429.4
+University of York,2020/21,436,395054.2,91990053.2,206206.2,2492,6005,,19962.3
+University of York,2021/22,436,384456.5,102506936.0,316742.7,1962,5555,,21371.2
+University of York,2022/23,436,385148.1,99994102.9,326368,2191,5555,,21312.7
+University of York,2023/24,434,378617.0,95091277.6,326119.5,2196,5555,,21240.2
+University of York,2024/25,436,383658.0,86476146.9,326191.3,2196,5575,,21277.5
+Wrexham University,2015/16,30,56629,12058887,24724,1368,72,60,3391.1
+Wrexham University,2016/17,30,58204,11413156,34252,1368,72,60,2906.5
+Wrexham University,2017/18,30,54763,12139515,17064,1368,72,50,2722.1
+Wrexham University,2018/19,30,63554,11586662,29792,1368,72,36,2505.0
+Wrexham University,2019/20,30,63554,10824149,25424,1368,72,36,2193.6
+Wrexham University,2020/21,29,58593,10875985,17214,1384,72,33.4,2102.3
+Wrexham University,2021/22,29,58593,10407853,23043,1340,72,38.8,1954.1
+Wrexham University,2022/23,29,58593,10931637.7,21614,1340,72,38.6,2088.3
+Wrexham University,2023/24,28,58073,10769830,26140,1340,72,38.8,2058.0
+Wrexham University,2024/25,28,59974,10330513,21716,1340,72,40.7,1848.0
+</script>
+
+  <!-- JAVASCRIPT LOGIC ENGINE -->
+  <script>
+    // --- 1. ABBREVIATIONS, YEARS, COLOURS ---
+    const ABBREVIATIONS = {
+      "Cardiff University": "Cardiff",
+      "University of York": "York",
+      "University College London": "UCL",
+      "Imperial College London": "Imperial",
+      "King's College London": "KCL",
+      "Queen Mary University of London": "QMUL",
+      "University of Bristol": "Bristol",
+      "University of Cambridge": "Cambridge",
+      "University of Oxford": "Oxford",
+      "University of Edinburgh": "Edinburgh",
+      "University of Leeds": "Leeds",
+      "University of Manchester": "Manchester",
+      "University of Nottingham": "Nottingham",
+      "University of Sheffield": "Sheffield",
+      "Swansea University": "Swansea",
+      "Aberystwyth University": "Aberystwyth",
+      "Bangor University": "Bangor",
+      "Cardiff Metropolitan University": "Cardiff Met",
+      "University of Birmingham": "Birmingham",
+      "University of Durham": "Durham",
+      "University of Exeter": "Exeter",
+      "University of Glasgow": "Glasgow",
+      "University of Liverpool": "Liverpool",
+      "London School of Economics and Political Science": "LSE",
+      "Newcastle University": "Newcastle",
+      "Queen's University Belfast": "Queen's Belfast",
+      "University of Southampton": "Southampton",
+      "University of Warwick": "Warwick",
+      "University of South Wales": "South Wales",
+      "University of Wales Trinity Saint David": "Trinity Saint David",
+      "Wrexham University": "Wrexham"
+    };
+
+    // Labels that win a place before the rest when space is tight (Welsh peers first, then the largest estates).
+    const PRIORITY_LABEL_INSTITUTIONS = [
+      "Cardiff University",
+      "University of York",
+      "Swansea University",
+      "Aberystwyth University",
+      "Bangor University",
+      "Cardiff Metropolitan University",
+      "University of South Wales",
+      "University of Wales Trinity Saint David",
+      "Wrexham University",
+      "University College London",
+      "Imperial College London",
+      "University of Manchester",
+      "University of Edinburgh",
+      "University of Oxford",
+      "University of Cambridge"
+    ];
+
+    const ACADEMIC_YEARS = [
+      "2015/16", "2016/17", "2017/18", "2018/19", "2019/20",
+      "2020/21", "2021/22", "2022/23", "2023/24", "2024/25"
+    ];
+    const LAST_YEAR = ACADEMIC_YEARS.length - 1;
+    const SUBJECT = "Cardiff University";
+    const DEFAULT_COMPARATOR = "University of York";
+
+    const COLOR_CARDIFF = "#e11d48"; // Vivid crimson
+    const COLOR_COMP = "#0284c7";    // Vivid sky blue (comparator)
+    const COLOR_DEFAULT = "#64748b"; // Neutral slate grey
+
+    const SECONDS_PER_YEAR = 2.5;
+    const END_HOLD_MS = 3000;
+    const RESET_FADE_MS = 450;
+    const NEEDS_DATA = "NEEDS DATA";
+
+    const REDUCED_MOTION = (typeof window !== "undefined" && window.matchMedia)
+      ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      : false;
+
+    // --- 2. GLOBAL STATE ---
+    let model = null;                 // built by buildModel()
+    let selectedComparator = DEFAULT_COMPARATOR;
+    let isFollowCardiff = false;
+
+    // Playback
+    let isPlaying = false;
+    let currentProgress = 0;          // 0.0 to 9.0
+    let playSpeed = 1.0;
+    let lastTimestamp = null;
+    let animFrameId = null;
+    let loopToken = 0;                // every start increments; stale frames exit
+    let holdTimer = null;
+    let fadeTimer = null;
+    let openingTimer = null;
+    let isHoldingEnd = false;
+
+    // Chart geometry
+    let svg, chartGroup, trailGroup, medianGroup, tetherGroup, bubbleGroup, labelGroup, xAxisGroup, yAxisGroup;
+    let width = 0, height = 0;
+    const margin = { top: 40, right: 30, bottom: 50, left: 60 };
+    let xBase, yBase, radiusScale;    // base scales cover the full data range; zoom transforms sit on top
+    let zoomBehaviour = null;
+    let currentTransform = null;      // d3.zoomIdentity when showing the full range
+    let lastFrame = [];               // most recent frame, for tooltips
+
+    // --- 3. PURE DATA MODEL (no DOM; also exercised by the headless verifier) ---
+    function numOrNull(v) {
+      if (v === undefined || v === null) return null;
+      const s = String(v).trim();
+      if (s === "") return null;
+      const n = Number(s);
+      return Number.isFinite(n) ? n : null;
+    }
+
+    function buildModel(rows) {
+      const institutions = Array.from(new Set(rows.map(r => r.Institution))).sort();
+      const byInst = {};
+      institutions.forEach(inst => { byInst[inst] = new Array(ACADEMIC_YEARS.length).fill(null); });
+
+      const allX = [], allY = [], allArea = [];
+      const blankCounts = {};
+      const columns = rows.columns || Object.keys(rows[0] || {});
+      columns.forEach(c => { blankCounts[c] = 0; });
+      let rowCount = 0;
+
+      rows.forEach(row => {
+        const yearIdx = ACADEMIC_YEARS.indexOf(row.AcademicYear);
+        if (yearIdx === -1) return;
+        rowCount++;
+        columns.forEach(c => { if (String(row[c] ?? "").trim() === "") blankCounts[c]++; });
+
+        const floorArea = numOrNull(row.FloorArea_m2);
+        const energy = numOrNull(row.Energy_kWh);
+        const emissions = numOrNull(row.Scope12_tCO2e);
+
+        const rec = {
+          institution: row.Institution,
+          yearIndex: yearIdx,
+          yearLabel: row.AcademicYear,
+          floorArea, energy, emissions,
+          buildings: numOrNull(row.Buildings),
+          water: numOrNull(row.Water_m3),
+          carSpaces: numOrNull(row.CarSpaces),
+          cycleSpaces: numOrNull(row.CycleSpaces),
+          renewablesPct: numOrNull(row.RenewablesPct),
+          energyIntensity: null,
+          emissionsIntensity: null,
+          positioned: false
+        };
+        if (floorArea !== null && floorArea > 0) {
+          if (energy !== null) rec.energyIntensity = energy / floorArea;                 // kWh per m2
+          if (emissions !== null) rec.emissionsIntensity = (emissions * 1000) / floorArea; // kgCO2e per m2
+        }
+        rec.positioned = rec.energyIntensity !== null && rec.emissionsIntensity !== null;
+
+        byInst[row.Institution][yearIdx] = rec;
+        if (rec.positioned) {
+          allX.push(rec.energyIntensity);
+          allY.push(rec.emissionsIntensity);
+          allArea.push(floorArea);
+        }
+      });
+
+      allX.sort((a, b) => a - b);
+      allY.sort((a, b) => a - b);
+
+      const padFull = (lo, hi) => {
+        const span = Math.max(hi - lo, 1e-9);
+        return [Math.max(0, lo - span * 0.08), hi + span * 0.08];
+      };
+
+      return {
+        institutions,
+        byInst,
+        rowCount,
+        blankCounts,
+        fullX: padFull(allX[0], allX[allX.length - 1]),
+        fullY: padFull(allY[0], allY[allY.length - 1]),
+        maxArea: Math.max(...allArea),
+        allX, allY
+      };
+    }
+
+    // Focus box: 5th to 95th percentile across all years, widened so the subject and the comparator are never cropped.
+    function focusBox(m, comparator) {
+      let x0 = d3.quantile(m.allX, 0.05), x1 = d3.quantile(m.allX, 0.95);
+      let y0 = d3.quantile(m.allY, 0.05), y1 = d3.quantile(m.allY, 0.95);
+      [SUBJECT, comparator].forEach(inst => {
+        (m.byInst[inst] || []).forEach(rec => {
+          if (!rec || !rec.positioned) return;
+          x0 = Math.min(x0, rec.energyIntensity); x1 = Math.max(x1, rec.energyIntensity);
+          y0 = Math.min(y0, rec.emissionsIntensity); y1 = Math.max(y1, rec.emissionsIntensity);
+        });
+      });
+      const px = (x1 - x0) * 0.12, py = (y1 - y0) * 0.12;
+      return {
+        x: [Math.max(m.fullX[0], x0 - px), Math.min(m.fullX[1], x1 + px)],
+        y: [Math.max(m.fullY[0], y0 - py), Math.min(m.fullY[1], y1 + py)]
+      };
+    }
+
+    // One animation frame's worth of bubbles at fractional progress. True positions only; separation is applied afterwards.
+    function computeFrame(m, progress, comparator, sx, sy, sr) {
+      const yearIdx = Math.min(LAST_YEAR, Math.floor(progress));
+      const fraction = progress - yearIdx;
+      const nextIdx = Math.min(LAST_YEAR, yearIdx + 1);
+      const out = [];
+
+      m.institutions.forEach(inst => {
+        const d1 = m.byInst[inst][yearIdx];
+        const d2 = m.byInst[inst][nextIdx];
+        const p1 = !!(d1 && d1.positioned);
+        const p2 = !!(d2 && d2.positioned);
+        if (!p1 && !p2) return;
+
+        let opacity = 1, xv, yv, area, energy, emissions;
+        if (p1 && p2) {
+          xv = d1.energyIntensity + (d2.energyIntensity - d1.energyIntensity) * fraction;
+          yv = d1.emissionsIntensity + (d2.emissionsIntensity - d1.emissionsIntensity) * fraction;
+          area = d1.floorArea + (d2.floorArea - d1.floorArea) * fraction;
+          energy = d1.energy + (d2.energy - d1.energy) * fraction;
+          emissions = d1.emissions + (d2.emissions - d1.emissions) * fraction;
+        } else if (p1) {
+          // Next year cannot be positioned: hold this year's values and fade out. No bridging across the gap.
+          xv = d1.energyIntensity; yv = d1.emissionsIntensity; area = d1.floorArea; energy = d1.energy; emissions = d1.emissions;
+          opacity = 1 - fraction;
+        } else {
+          // This year cannot be positioned: fade in towards next year's values.
+          xv = d2.energyIntensity; yv = d2.emissionsIntensity; area = d2.floorArea; energy = d2.energy; emissions = d2.emissions;
+          opacity = fraction;
+        }
+        if (opacity <= 0.001) return;
+
+        out.push({
+          institution: inst,
+          energyIntensity: xv,
+          emissionsIntensity: yv,
+          floorArea: area,
+          energy, emissions,
+          opacity,
+          counted: opacity >= 0.5,   // membership of medians and rankings follows the nearest whole year
+          x: sx(xv), y: sy(yv), r: sr(area),
+          isCardiff: inst === SUBJECT,
+          isComparator: inst === comparator
+        });
+      });
+      return out;
+    }
+
+    // Cosmetic collision separation. Writes rx, ry only; x, y (truth) are untouched and every number shown comes from x, y.
+    function separateBubbles(allNodes, box) {
+      allNodes.forEach(n => { n.rx = n.x; n.ry = n.y; n.shift = 0; });
+      const nodes = allNodes.filter(n => !n.offView); // bubbles outside the viewport are clipped, not dragged in
+      const anchored = n => n.isCardiff || n.isComparator;
+      const maxShift = n => n.r * 1.2 + 10;
+
+      for (let iter = 0; iter < 30; iter++) {
+        let moved = false;
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const a = nodes[i], b = nodes[j];
+            let dx = b.rx - a.rx, dy = b.ry - a.ry;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+            const minDist = a.r + b.r + 2;
+            if (dist >= minDist) continue;
+            if (dist < 1e-6) { const ang = (i * 7 + j * 13) % 360 * Math.PI / 180; dx = Math.cos(ang); dy = Math.sin(ang); dist = 1; }
+            const overlap = (minDist - dist) * 0.5; // relax half the overlap per pass
+            const nx = dx / dist, ny = dy / dist;
+            const ma = a.r * a.r, mb = b.r * b.r;
+            let wa = mb / (ma + mb), wb = ma / (ma + mb); // lighter bubble moves further
+            if (anchored(a) && anchored(b)) continue;
+            if (anchored(a)) { wa = 0; wb = 1; }
+            if (anchored(b)) { wb = 0; wa = 1; }
+            a.rx -= nx * overlap * wa; a.ry -= ny * overlap * wa;
+            b.rx += nx * overlap * wb; b.ry += ny * overlap * wb;
+            moved = true;
+          }
+        }
+        // Cap displacement and keep bubbles inside the plot.
+        nodes.forEach(n => {
+          const ox = n.rx - n.x, oy = n.ry - n.y;
+          const d = Math.sqrt(ox * ox + oy * oy), cap = maxShift(n);
+          if (d > cap) { n.rx = n.x + ox / d * cap; n.ry = n.y + oy / d * cap; }
+          n.rx = Math.min(box.x1 - n.r, Math.max(box.x0 + n.r, n.rx));
+          n.ry = Math.min(box.y1 - n.r, Math.max(box.y0 + n.r, n.ry));
+        });
+        if (!moved) break;
+      }
+      nodes.forEach(n => { n.shift = Math.hypot(n.rx - n.x, n.ry - n.y); });
+    }
+
+    function estimateTextWidth(text, fontSize) {
+      // Inter, mixed case: about 0.58em per character on average.
+      return text.length * fontSize * 0.58 + 2;
+    }
+
+    function rectsIntersect(a, b) {
+      return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+    }
+    function rectHitsCircle(rect, c) {
+      const cx = Math.max(rect.x, Math.min(c.x, rect.x + rect.w));
+      const cy = Math.max(rect.y, Math.min(c.y, rect.y + rect.h));
+      return Math.hypot(c.x - cx, c.y - cy) < c.r;
+    }
+
+    // Greedy label placement: essential labels first, then priority names, then by bubble size. Labels never overlap
+    // one another; a label that cannot find a free slot is hidden (never for Cardiff or the comparator).
+    function placeLabels(nodes, box) {
+      const rank = n => n.isCardiff ? 0 : n.isComparator ? 1 : PRIORITY_LABEL_INSTITUTIONS.includes(n.institution) ? 2 : 3;
+      const order = [...nodes].sort((a, b) => rank(a) - rank(b) || b.r - a.r || a.institution.localeCompare(b.institution));
+      const blockers = nodes.filter(n => n.isCardiff || n.isComparator).map(n => ({ x: n.rx, y: n.ry, r: n.r, id: n.institution }));
+      const placed = [];
+      const labels = [];
+
+      order.forEach(n => {
+        if (n.opacity < 0.35) return;
+        const essential = n.isCardiff || n.isComparator;
+        const priority = rank(n) === 2;
+        const fs = n.isCardiff ? 13 : n.isComparator ? 12 : priority ? 10 : 9.5;
+        const text = ABBREVIATIONS[n.institution] || n.institution;
+        const w = estimateTextWidth(text, fs), h = fs + 1;
+        const gap = 3;
+        const cands = [];
+        if (w <= n.r * 2 - 6 && n.r * 2 >= h + 4) cands.push({ x: n.rx - w / 2, y: n.ry - h / 2, kind: "inside" });
+        cands.push({ x: n.rx + n.r + gap, y: n.ry - h / 2, kind: "right" });
+        cands.push({ x: n.rx - n.r - gap - w, y: n.ry - h / 2, kind: "left" });
+        cands.push({ x: n.rx - w / 2, y: n.ry - n.r - gap - h, kind: "above" });
+        cands.push({ x: n.rx - w / 2, y: n.ry + n.r + gap, kind: "below" });
+        const R = n.r + 16;
+        [40, 140, 320, 220, 70, 110, 250, 290].forEach(deg => {
+          const a = deg * Math.PI / 180;
+          const ax = n.rx + Math.cos(a) * R, ay = n.ry - Math.sin(a) * R;
+          const x = Math.cos(a) >= 0 ? ax : ax - w;
+          const ex = n.rx + Math.cos(a) * n.r, ey = n.ry - Math.sin(a) * n.r;
+          cands.push({ x, y: ay - h / 2, kind: "leader", leader: { x1: ex, y1: ey, x2: ax, y2: ay } });
+        });
+
+        let chosen = null;
+        for (const c of cands) {
+          const rect = { x: c.x, y: c.y, w, h };
+          if (rect.x < box.x0 || rect.y < box.y0 || rect.x + w > box.x1 || rect.y + h > box.y1) continue;
+          if (placed.some(p => rectsIntersect(rect, p))) continue;
+          if (c.kind !== "inside" && blockers.some(bl => bl.id !== n.institution && rectHitsCircle(rect, bl))) continue;
+          chosen = c; break;
+        }
+        if (!chosen) {
+          if (!essential) { labels.push({ institution: n.institution, hidden: true }); return; }
+          chosen = cands[0]; // essential labels are always drawn, even if crowded
+        }
+        const rect = { x: chosen.x, y: chosen.y, w, h };
+        placed.push(rect);
+        labels.push({
+          institution: n.institution, text, fs, kind: chosen.kind, leader: chosen.leader || null,
+          x: rect.x, y: rect.y, w, h, hidden: false,
+          isCardiff: n.isCardiff, isComparator: n.isComparator, priority, opacity: n.opacity
+        });
+      });
+      return labels;
+    }
+
+    // --- 4. INITIALISATION ---
+    if (typeof window !== "undefined" && typeof document !== "undefined" && document.getElementById) {
+      window.addEventListener("DOMContentLoaded", () => {
+        const csvContent = document.getElementById("hesa-data-csv").textContent.trim();
+        initAll(csvContent);
+      });
+      window.addEventListener("resize", () => {
+        if (!model) return;
+        initChartDimensions();
+        applyFocusView(false);
+        renderFrame(currentProgress);
+      });
+    }
+
+    function initAll(csvText) {
+      try {
+        cancelPendingTimers();
+        cancelFrame();
+        isPlaying = false;
+        currentProgress = 0;
+
+        const parsed = d3.csvParse(csvText);
+        if (!parsed || parsed.length === 0) throw new Error("Parsed dataset is empty.");
+        model = buildModel(parsed);
+        if (!model.byInst[selectedComparator]) selectedComparator = model.institutions.find(i => i !== SUBJECT) || SUBJECT;
+
+        initUIControls();
+        initChartDimensions();
+        applyFocusView(false);
+        updateDataStatus();
+        triggerCinematicOpening();
+      } catch (err) {
+        console.error("Error parsing HESA dataset:", err);
+        document.getElementById("narrativeText").textContent = "Error loading CSV data. Please check the input file.";
+      }
+    }
+
+    function updateDataStatus() {
+      const blanks = Object.entries(model.blankCounts).filter(([, n]) => n > 0).map(([c, n]) => `${c} ${n}`).join(", ");
+      document.getElementById("dataStatus").textContent =
+        `${model.institutions.length} institutions, ${model.rowCount} rows, ${ACADEMIC_YEARS[0]} to ${ACADEMIC_YEARS[LAST_YEAR]}, from HESA Estates Management. ` +
+        `Blank cells in the source: ${blanks || "none"}. Blanks are shown as ${NEEDS_DATA}, never filled in or interpolated; ` +
+        `a bubble with no floor area or no Scope 1&2 figure fades out for that year.`;
+    }
+
+    let controlsBound = false;
+    function initUIControls() {
+      const select = document.getElementById("comparatorSelect");
+      select.innerHTML = "";
+      model.institutions.forEach(inst => {
+        if (inst === SUBJECT) return;
+        const opt = document.createElement("option");
+        opt.value = inst;
+        opt.textContent = inst;
+        if (inst === selectedComparator) opt.selected = true;
+        select.appendChild(opt);
+      });
+      setComparatorLabels();
+
+      if (controlsBound) return; // listeners survive a CSV replacement; only the options are rebuilt
+      controlsBound = true;
+
+      select.addEventListener("change", (e) => setComparator(e.target.value));
+
+      document.getElementById("csvFileInput").addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (evt) => initAll(evt.target.result);
+        reader.readAsText(file);
+      });
+
+      const btnFollow = document.getElementById("btnFollowCardiff");
+      btnFollow.addEventListener("click", () => {
+        isFollowCardiff = !isFollowCardiff;
+        btnFollow.classList.toggle("bg-rose-600", isFollowCardiff);
+        btnFollow.classList.toggle("border-rose-500", isFollowCardiff);
+        document.getElementById("followText").textContent = isFollowCardiff ? "Following Cardiff" : "Focus Cardiff";
+        renderFrame(currentProgress);
+      });
+
+      document.getElementById("btnPlayPause").addEventListener("click", togglePlayPause);
+      document.getElementById("btnReplay").addEventListener("click", restartAnimation);
+
+      document.querySelectorAll(".btn-speed").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          document.querySelectorAll(".btn-speed").forEach(b => {
+            b.classList.remove("bg-slate-700", "text-white", "font-bold");
+            b.classList.add("text-slate-400");
+          });
+          e.currentTarget.classList.add("bg-slate-700", "text-white", "font-bold");
+          e.currentTarget.classList.remove("text-slate-400");
+          playSpeed = parseFloat(e.currentTarget.getAttribute("data-speed"));
+        });
+      });
+
+      const scrubber = document.getElementById("timeScrubber");
+      scrubber.addEventListener("input", (e) => {
+        cancelPendingTimers();
+        stopAnimationLoop();
+        currentProgress = parseFloat(e.target.value);
+        renderFrame(currentProgress);
+      });
+
+      document.getElementById("btnZoomIn").addEventListener("click", () => zoomBy(1.6));
+      document.getElementById("btnZoomOut").addEventListener("click", () => zoomBy(1 / 1.6));
+      document.getElementById("btnZoomReset").addEventListener("click", () => applyFocusView(true));
+      document.getElementById("btnZoomFull").addEventListener("click", () => applyTransform(d3.zoomIdentity, true));
+    }
+
+    function setComparator(inst) {
+      if (!model.byInst[inst] || inst === SUBJECT) return;
+      selectedComparator = inst;
+      document.getElementById("comparatorSelect").value = inst;
+      setComparatorLabels();
+      applyFocusView(true); // the focus box widens if the new comparator sits outside it
+      renderFrame(currentProgress);
+    }
+
+    function setComparatorLabels() {
+      document.getElementById("compNameLabel").textContent = ABBREVIATIONS[selectedComparator] || selectedComparator;
+      document.getElementById("compNameHeader").textContent = selectedComparator;
+    }
+
+    function plotBox() {
+      return { x0: margin.left, y0: margin.top, x1: width - margin.right, y1: height - margin.bottom };
+    }
+
+    function initChartDimensions() {
+      const container = document.getElementById("chartContainer");
+      width = container.clientWidth;
+      height = container.clientHeight;
+
+      svg = d3.select("#chartSvg").attr("width", width).attr("height", height).attr("viewBox", `0 0 ${width} ${height}`);
+      svg.selectAll("*").remove();
+      const box = plotBox();
+
+      xBase = d3.scaleLinear().domain(model.fullX).range([box.x0, box.x1]);
+      yBase = d3.scaleLinear().domain(model.fullY).range([box.y1, box.y0]);
+      // Area proportional to floor area: sqrt radius scale anchored at zero.
+      radiusScale = d3.scaleSqrt().domain([0, model.maxArea]).range([0, width > 768 ? 34 : 24]);
+
+      svg.append("defs").append("clipPath").attr("id", "plotClip")
+        .append("rect").attr("x", box.x0).attr("y", box.y0).attr("width", box.x1 - box.x0).attr("height", box.y1 - box.y0);
+
+      // Invisible capture surface so drag-to-pan works on empty plot space.
+      svg.append("rect").attr("class", "zoom-surface").attr("x", box.x0).attr("y", box.y0)
+        .attr("width", box.x1 - box.x0).attr("height", box.y1 - box.y0).attr("fill", "transparent");
+
+      xAxisGroup = svg.append("g").attr("class", "axis x-axis").attr("transform", `translate(0, ${box.y1})`);
+      yAxisGroup = svg.append("g").attr("class", "axis y-axis").attr("transform", `translate(${box.x0}, 0)`);
+      renderAxisLabels(box);
+
+      chartGroup = svg.append("g").attr("class", "chart-main").attr("clip-path", "url(#plotClip)");
+      medianGroup = chartGroup.append("g").attr("class", "median-crosshairs");
+      trailGroup = chartGroup.append("g").attr("class", "comet-trails");
+      tetherGroup = chartGroup.append("g").attr("class", "tethers");
+      bubbleGroup = chartGroup.append("g").attr("class", "bubbles");
+      labelGroup = chartGroup.append("g").attr("class", "labels");
+
+      zoomBehaviour = d3.zoom()
+        .filter(ev => ev.type === "wheel" ? (ev.ctrlKey || ev.metaKey) : !ev.button)
+        .scaleExtent([1, 12])
+        .extent([[box.x0, box.y0], [box.x1, box.y1]])
+        .translateExtent([[box.x0, box.y0], [box.x1, box.y1]])
+        .on("zoom", (event) => {
+          currentTransform = event.transform;
+          updateAxes();
+          renderFrame(currentProgress);
+        });
+      svg.call(zoomBehaviour);
+      currentTransform = d3.zoomIdentity;
+      updateAxes();
+
+      renderExternalLegend();
+    }
+
+    function currentScales() {
+      const t = currentTransform || d3.zoomIdentity;
+      return { sx: t.rescaleX(xBase), sy: t.rescaleY(yBase), sr: radiusScale };
+    }
+
+    function updateAxes() {
+      const { sx, sy } = currentScales();
+      const xAxis = d3.axisBottom(sx).ticks(width > 640 ? 8 : 5).tickFormat(d => d3.format(",.0f")(d));
+      const yAxis = d3.axisLeft(sy).ticks(6).tickFormat(d => d3.format(",.0f")(d));
+      xAxisGroup.call(xAxis)
+        .call(g => g.select(".domain").attr("stroke", "#334155"))
+        .call(g => g.selectAll(".tick line").attr("stroke", "#334155").attr("stroke-dasharray", "2,2"));
+      yAxisGroup.call(yAxis)
+        .call(g => g.select(".domain").attr("stroke", "#334155"))
+        .call(g => g.selectAll(".tick line").attr("stroke", "#334155").attr("stroke-dasharray", "2,2"));
+      updateZoomUI();
+    }
+
+    function renderAxisLabels(box) {
+      svg.append("text")
+        .attr("x", box.x1).attr("y", height - 12)
+        .attr("text-anchor", "end").attr("fill", "#94a3b8")
+        .attr("font-size", "11px").attr("font-weight", "600")
+        .text("Energy intensity, kWh per m² (Energy_kWh ÷ FloorArea_m2) →");
+
+      svg.append("text")
+        .attr("x", box.x0).attr("y", box.y0 - 12)
+        .attr("text-anchor", "start").attr("fill", "#94a3b8")
+        .attr("font-size", "11px").attr("font-weight", "600")
+        .text("↑ Emissions intensity, kgCO₂e per m² (Scope12_tCO2e × 1,000 ÷ FloorArea_m2)");
+
+      // Target-zone hint lives in the bottom margin so it never covers data.
+      svg.append("text")
+        .attr("x", box.x0).attr("y", height - 12)
+        .attr("text-anchor", "start").attr("fill", "#34d399")
+        .attr("font-size", "11px").attr("font-weight", "600")
+        .text("↙ Lower energy, lower emissions (target zone)");
+    }
+
+    function renderExternalLegend() {
+      const container = d3.select("#bubbleSizeLegend");
+      container.selectAll("*").remove();
+      [100000, 400000, 900000].forEach(area => {
+        const r = radiusScale(area);
+        const item = container.append("div").attr("class", "flex items-center gap-1.5");
+        item.append("svg").attr("width", r * 2 + 4).attr("height", r * 2 + 4)
+          .append("circle").attr("cx", r + 2).attr("cy", r + 2).attr("r", r)
+          .attr("fill", "rgba(100, 116, 139, 0.2)").attr("stroke", "#64748b").attr("stroke-width", 1.5);
+        item.append("span").attr("class", "text-[11px] text-slate-300 font-mono").text(`${(area / 1000).toFixed(0)}k m²`);
+      });
+    }
+
+    // --- 5. ZOOM ---
+    function focusTransform() {
+      const box = plotBox();
+      const fb = focusBox(model, selectedComparator);
+      const px0 = xBase(fb.x[0]), px1 = xBase(fb.x[1]);
+      const py0 = yBase(fb.y[1]), py1 = yBase(fb.y[0]);
+      const plotW = box.x1 - box.x0, plotH = box.y1 - box.y0;
+      const k = Math.max(1, Math.min(plotW / Math.max(px1 - px0, 1), plotH / Math.max(py1 - py0, 1)));
+      const cx = (px0 + px1) / 2, cy = (py0 + py1) / 2;
+      const t = d3.zoomIdentity.translate((box.x0 + box.x1) / 2 - k * cx, (box.y0 + box.y1) / 2 - k * cy).scale(k);
+      const extent = [[box.x0, box.y0], [box.x1, box.y1]];
+      return zoomBehaviour.constrain()(t, extent, extent);
+    }
+
+    function applyTransform(t, animate) {
+      if (animate && !REDUCED_MOTION) svg.transition().duration(500).call(zoomBehaviour.transform, t);
+      else svg.call(zoomBehaviour.transform, t);
+    }
+
+    function applyFocusView(animate) { applyTransform(focusTransform(), animate); }
+
+    function zoomBy(factor) {
+      if (!REDUCED_MOTION) svg.transition().duration(300).call(zoomBehaviour.scaleBy, factor);
+      else svg.call(zoomBehaviour.scaleBy, factor);
+    }
+
+    function updateZoomUI() {
+      const note = document.getElementById("offViewNote");
+      if (!note) return;
+      const off = (lastFrame || []).filter(d => d.offView);
+      if (off.length === 0) { note.classList.add("hidden"); return; }
+      const names = off.map(d => ABBREVIATIONS[d.institution] || d.institution);
+      const shown = names.slice(0, 3).join(", ") + (names.length > 3 ? ` +${names.length - 3}` : "");
+      note.textContent = `${off.length} outside view (${shown})`;
+      note.classList.remove("hidden");
+    }
+
+    // --- 6. FRAME RENDERER ---
+    function renderFrame(progress) {
+      if (!model) return;
+      const yearIdx = Math.min(LAST_YEAR, Math.floor(progress));
+      const yearLabel = ACADEMIC_YEARS[yearIdx];
+      document.getElementById("watermarkYear").textContent = yearLabel;
+      document.getElementById("liveYearBadge").textContent = `${yearLabel} (${(2015 + progress).toFixed(1)})`;
+      document.getElementById("timeScrubber").value = progress;
+
+      const { sx, sy, sr } = currentScales();
+      const box = plotBox();
+      const frame = computeFrame(model, progress, selectedComparator, sx, sy, sr);
+      frame.forEach(d => { d.offView = d.x < box.x0 - d.r || d.x > box.x1 + d.r || d.y < box.y0 - d.r || d.y > box.y1 + d.r; });
+      separateBubbles(frame, box);
+      lastFrame = frame;
+
+      const counted = frame.filter(d => d.counted);
+      const medianX = d3.median(counted, d => d.energyIntensity) || 0;
+      const medianY = d3.median(counted, d => d.emissionsIntensity) || 0;
+
+      renderMedianCrosshairs(medianX, medianY, sx, sy, box);
+      renderCometTrails(progress, sx, sy);
+      renderTethers(frame);
+      renderBubbles(frame);
+      renderLabels(placeLabels(frame, box));
+      updateKPICardiffAndNarrative(frame, counted, medianX, medianY, yearLabel, progress);
+      updateZoomUI();
+    }
+
+    function renderMedianCrosshairs(medX, medY, sx, sy, box) {
+      const cx = sx(medX), cy = sy(medY);
+      medianGroup.selectAll("*").remove();
+      medianGroup.append("line").attr("x1", cx).attr("y1", box.y0).attr("x2", cx).attr("y2", box.y1)
+        .attr("stroke", "#475569").attr("stroke-width", 1.2).attr("stroke-dasharray", "4,4");
+      medianGroup.append("line").attr("x1", box.x0).attr("y1", cy).attr("x2", box.x1).attr("y2", cy)
+        .attr("stroke", "#475569").attr("stroke-width", 1.2).attr("stroke-dasharray", "4,4");
+      medianGroup.append("text").attr("x", cx + 4).attr("y", box.y0 + 12).attr("fill", "#94a3b8").attr("font-size", "10px")
+        .attr("class", "label-halo").text(`Sector median energy: ${medX.toFixed(1)}`);
+      medianGroup.append("text").attr("x", box.x1 - 4).attr("y", cy - 4).attr("text-anchor", "end").attr("fill", "#94a3b8")
+        .attr("font-size", "10px").attr("class", "label-halo").text(`Sector median emissions: ${medY.toFixed(1)}`);
+    }
+
+    function renderCometTrails(progress, sx, sy) {
+      trailGroup.selectAll("*").remove();
+      const line = d3.line().x(d => d.x).y(d => d.y).curve(d3.curveMonotoneX);
+
+      [SUBJECT, selectedComparator].forEach(inst => {
+        const hist = model.byInst[inst];
+        if (!hist) return;
+        const isCardiff = inst === SUBJECT;
+        const strokeColor = isCardiff ? COLOR_CARDIFF : COLOR_COMP;
+        const yearIdx = Math.min(LAST_YEAR, Math.floor(progress));
+        const frac = progress - yearIdx;
+
+        // Build segments of consecutive positioned years; a gap in the data breaks the trail rather than bridging it.
+        const segments = [];
+        let seg = [];
+        for (let i = 0; i <= yearIdx; i++) {
+          const rec = hist[i];
+          if (rec && rec.positioned) seg.push({ x: sx(rec.energyIntensity), y: sy(rec.emissionsIntensity) });
+          else if (seg.length) { segments.push(seg); seg = []; }
+        }
+        const d1 = hist[yearIdx], d2 = hist[Math.min(LAST_YEAR, yearIdx + 1)];
+        if (frac > 0 && d1 && d1.positioned && d2 && d2.positioned) {
+          seg.push({
+            x: sx(d1.energyIntensity + (d2.energyIntensity - d1.energyIntensity) * frac),
+            y: sy(d1.emissionsIntensity + (d2.emissionsIntensity - d1.emissionsIntensity) * frac)
+          });
+        }
+        if (seg.length) segments.push(seg);
+
+        segments.forEach(points => {
+          if (points.length < 2) return;
+          trailGroup.append("path").datum(points).attr("fill", "none").attr("stroke", strokeColor)
+            .attr("stroke-width", isCardiff ? 3 : 2).attr("stroke-opacity", 0.6)
+            .attr("stroke-dasharray", isCardiff ? "none" : "4,3").attr("d", line);
+          for (let i = 1; i < points.length; i++) {
+            const p1 = points[i - 1], p2 = points[i];
+            if (Math.hypot(p2.x - p1.x, p2.y - p1.y) < 8) continue;
+            const angle = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
+            trailGroup.append("polygon").attr("points", "-4,-3 4,0 -4,3").attr("fill", strokeColor).attr("opacity", 0.8)
+              .attr("transform", `translate(${(p1.x + p2.x) / 2}, ${(p1.y + p2.y) / 2}) rotate(${angle})`);
+          }
+        });
+      });
+    }
+
+    // A faint tether shows where a nudged bubble really sits, so the separation never misleads.
+    function renderTethers(frame) {
+      tetherGroup.selectAll("*").remove();
+      frame.filter(d => d.shift > 4 && d.opacity > 0.2).forEach(d => {
+        tetherGroup.append("line").attr("x1", d.x).attr("y1", d.y).attr("x2", d.rx).attr("y2", d.ry)
+          .attr("stroke", "#64748b").attr("stroke-width", 1).attr("stroke-opacity", 0.4 * d.opacity);
+        tetherGroup.append("circle").attr("cx", d.x).attr("cy", d.y).attr("r", 1.8)
+          .attr("fill", "#94a3b8").attr("fill-opacity", 0.6 * d.opacity);
+      });
+    }
+
+    function renderBubbles(frame) {
+      const ordered = [...frame].sort((a, b) => {
+        if (a.isCardiff !== b.isCardiff) return a.isCardiff ? 1 : -1;
+        if (a.isComparator !== b.isComparator) return a.isComparator ? 1 : -1;
+        return b.r - a.r; // bigger grey bubbles behind smaller ones
+      });
+
+      const selection = bubbleGroup.selectAll("g.bubble-node").data(ordered, d => d.institution);
+      selection.exit().remove();
+      const enter = selection.enter().append("g").attr("class", "bubble-node cursor-pointer");
+      enter.append("circle").attr("class", "pulse-ring");
+      enter.append("circle").attr("class", "main-circle");
+      const merge = enter.merge(selection);
+      merge.order();
+
+      merge.attr("transform", d => `translate(${d.rx}, ${d.ry})`).attr("opacity", d => d.opacity);
+
+      merge.select(".pulse-ring")
+        .attr("r", d => d.r + 5)
+        .attr("fill", "none")
+        .attr("stroke", COLOR_CARDIFF)
+        .attr("stroke-width", 1.5)
+        .attr("class", d => d.isCardiff ? "pulse-ring pulse-effect" : "pulse-ring")
+        .attr("display", d => d.isCardiff ? null : "none");
+
+      merge.select(".main-circle")
+        .attr("r", d => d.r)
+        .attr("fill", d => d.isCardiff ? COLOR_CARDIFF : d.isComparator ? COLOR_COMP : COLOR_DEFAULT)
+        .attr("fill-opacity", d => {
+          if (isFollowCardiff && !d.isCardiff && !d.isComparator) return 0.12;
+          return d.isCardiff || d.isComparator ? 0.85 : 0.45;
+        })
+        .attr("stroke", d => d.isCardiff ? "#fff" : d.isComparator ? "#e0f2fe" : "#475569")
+        .attr("stroke-opacity", d => (isFollowCardiff && !d.isCardiff && !d.isComparator) ? 0.35 : 1)
+        .attr("stroke-width", d => (d.isCardiff || d.isComparator ? 2.5 : 1))
+        .attr("class", d => d.isCardiff ? "main-circle glow-cardiff" : d.isComparator ? "main-circle glow-york" : "main-circle");
+
+      merge.on("click", (evt, d) => { if (d.institution !== SUBJECT) setComparator(d.institution); });
+      merge.on("mousemove", (evt, d) => showTooltip(evt, d)).on("mouseleave", hideTooltip);
+    }
+
+    function renderLabels(labels) {
+      labelGroup.selectAll("*").remove();
+      labels.forEach(l => {
+        if (l.hidden) return;
+        const dim = isFollowCardiff && !l.isCardiff && !l.isComparator;
+        const colour = l.isCardiff ? "#fecdd3" : l.isComparator ? "#e0f2fe" : l.kind === "inside" ? "#f1f5f9" : "#cbd5e1";
+        const weight = l.isCardiff || l.isComparator ? "700" : l.priority ? "600" : "500";
+        const opacity = (dim ? 0.35 : 1) * l.opacity;
+        if (l.leader) {
+          labelGroup.append("line").attr("x1", l.leader.x1).attr("y1", l.leader.y1).attr("x2", l.leader.x2).attr("y2", l.leader.y2)
+            .attr("stroke", "#94a3b8").attr("stroke-width", 0.8).attr("stroke-opacity", 0.6 * opacity);
+        }
+        labelGroup.append("text")
+          .attr("x", l.x).attr("y", l.y + l.h - 0.22 * l.fs)
+          .attr("text-anchor", "start").attr("fill", colour)
+          .attr("font-size", `${l.fs}px`).attr("font-weight", weight)
+          .attr("opacity", opacity)
+          .attr("class", "label-halo pointer-events-none")
+          .text(l.text);
+      });
+    }
+
+    // --- 7. TOOLTIP & KPIS ---
+    function fmtNum(v, digits) {
+      return v.toLocaleString("en-GB", { minimumFractionDigits: digits, maximumFractionDigits: digits });
+    }
+    function cell(v, digits, unit, cls) {
+      if (v === null || v === undefined) return `<b class="text-amber-300">${NEEDS_DATA}</b>`;
+      return `<b class="${cls || "text-white"}">${fmtNum(v, digits)}</b>${unit ? " " + unit : ""}`;
+    }
+
+    function showTooltip(evt, d) {
+      const snapIdx = Math.min(LAST_YEAR, Math.max(0, Math.round(currentProgress)));
+      const rec = model.byInst[d.institution][snapIdx];
+      const year = ACADEMIC_YEARS[snapIdx];
+      const role = d.isCardiff ? "Subject" : d.isComparator ? "Comparator" : "Peer institution (click to compare)";
+      const rows = rec ? `
+          <div><span class="text-slate-400">Energy intensity:</span> ${cell(rec.energyIntensity, 1, "kWh/m²")}</div>
+          <div><span class="text-slate-400">Emissions intensity:</span> ${cell(rec.emissionsIntensity, 1, "kgCO₂e/m²", "text-rose-400")}</div>
+          <div><span class="text-slate-400">Total estate area:</span> ${cell(rec.floorArea, 0, "m²")}</div>
+          <div><span class="text-slate-400">Total Scope 1&2:</span> ${cell(rec.emissions, 1, "tCO₂e")}</div>
+          <div><span class="text-slate-400">Energy:</span> ${cell(rec.energy, 0, "kWh")}</div>
+          <div><span class="text-slate-400">Renewables:</span> ${cell(rec.renewablesPct, 1, "%")}</div>
+          <div><span class="text-slate-400">Buildings:</span> ${cell(rec.buildings, 0, "")}</div>`
+        : `<div class="text-amber-300 font-semibold">${NEEDS_DATA}: no return for ${year}</div>`;
+      const nudge = d.shift > 4 ? `<div class="text-[10px] text-slate-400 mt-1">Bubble nudged ${d.shift.toFixed(0)}px to avoid overlap; the dot marks its true position.</div>` : "";
+
+      d3.select("#chartTooltip").style("opacity", "1")
+        .style("left", `${evt.clientX + 14}px`).style("top", `${evt.clientY - 14}px`)
+        .html(`
+          <div class="font-bold text-sm text-white mb-1 border-b border-slate-700 pb-1 flex items-center justify-between gap-2">
+            <span>${d.institution}</span>
+            <span class="text-[10px] font-normal px-1.5 py-0.5 rounded whitespace-nowrap ${d.isCardiff ? 'bg-rose-500/20 text-rose-300' : 'bg-slate-800 text-slate-300'}">${role}</span>
+          </div>
+          <div class="text-[10px] text-slate-400 mb-1">Source values for ${year} (nearest year)</div>
+          <div class="space-y-1 font-mono text-[11px] text-slate-300">${rows}</div>${nudge}`);
+    }
+
+    function hideTooltip() { d3.select("#chartTooltip").style("opacity", "0"); }
+
+    function updateKPICardiffAndNarrative(frame, counted, medX, medY, yearLabel, progress) {
+      const cardiff = frame.find(d => d.isCardiff);
+      const comparator = frame.find(d => d.isComparator);
+
+      if (cardiff) {
+        document.getElementById("kpiEnergy").innerHTML = `${cardiff.energyIntensity.toFixed(1)} <span class="text-xs font-normal text-slate-400">kWh/m²</span>`;
+        document.getElementById("kpiEmissions").innerHTML = `${cardiff.emissionsIntensity.toFixed(1)} <span class="text-xs font-normal text-slate-400">kgCO₂e/m²</span>`;
+        document.getElementById("kpiEmissionsTotal").textContent = `${fmtNum(cardiff.emissions, 1)} tCO₂e total`;
+        document.getElementById("kpiFloorArea").innerHTML = `${(cardiff.floorArea / 1000).toFixed(0)}k <span class="text-xs font-normal text-slate-400">m²</span>`;
+
+        const energyDiff = ((cardiff.energyIntensity - medX) / medX) * 100;
+        const eBadge = document.getElementById("kpiEnergyMedian");
+        eBadge.textContent = `${Math.abs(energyDiff).toFixed(1)}% ${energyDiff < 0 ? "below" : "above"} median`;
+        eBadge.className = `text-[10px] ${energyDiff < 0 ? "text-emerald-400 font-semibold" : "text-amber-400"}`;
+
+        const emissionsDiff = ((cardiff.emissionsIntensity - medY) / medY) * 100;
+        const emBadge = document.getElementById("kpiEmissionsMedian");
+        emBadge.textContent = `${Math.abs(emissionsDiff).toFixed(1)}% ${emissionsDiff < 0 ? "below" : "above"} median`;
+        emBadge.className = emissionsDiff < 0 ? "text-emerald-400 font-semibold" : "text-amber-400";
+
+        const rankList = [...counted].sort((a, b) => a.emissionsIntensity - b.emissionsIntensity);
+        const rank = rankList.findIndex(d => d.isCardiff) + 1;
+        document.getElementById("kpiRank").textContent = rank > 0 ? `#${rank} of ${counted.length}` : "--";
+      }
+
+      const compDiffBadge = document.getElementById("compEmissionsDiff");
+      const compDetail = document.getElementById("compDetail");
+      if (cardiff && comparator) {
+        const diffEmissions = cardiff.emissionsIntensity - comparator.emissionsIntensity;
+        if (diffEmissions < 0) {
+          compDiffBadge.textContent = `${Math.abs(diffEmissions).toFixed(1)} kg/m² lower`;
+          compDiffBadge.className = "text-xs font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+        } else {
+          compDiffBadge.textContent = `${diffEmissions.toFixed(1)} kg/m² higher`;
+          compDiffBadge.className = "text-xs font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30";
+        }
+        compDetail.textContent = `Cardiff ${cardiff.emissionsIntensity.toFixed(1)} vs ${ABBREVIATIONS[comparator.institution] || comparator.institution} ${comparator.emissionsIntensity.toFixed(1)} kgCO₂e/m²`;
+      } else if (cardiff) {
+        compDiffBadge.textContent = NEEDS_DATA;
+        compDiffBadge.className = "text-xs font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30";
+        compDetail.textContent = `${ABBREVIATIONS[selectedComparator] || selectedComparator} has no positionable return for ${yearLabel}`;
+      }
+
+      updateNarrativeSentence(cardiff, comparator, counted, medX, medY, yearLabel, progress);
+    }
+
+    // Every sentence is computed from the data on screen; nothing is asserted that the numbers do not show.
+    function updateNarrativeSentence(cardiff, comparator, counted, medX, medY, yearLabel, progress) {
+      const banner = document.getElementById("narrativeText");
+      if (!cardiff) { banner.textContent = `${yearLabel}: Cardiff University has no positionable return (${NEEDS_DATA}).`; return; }
+      const yearIdx = Math.min(LAST_YEAR, Math.floor(progress));
+      const hist = model.byInst[SUBJECT];
+      const base = hist[0], now = hist[yearIdx], prev = yearIdx > 0 ? hist[yearIdx - 1] : null;
+      const rank = [...counted].sort((a, b) => a.emissionsIntensity - b.emissionsIntensity).findIndex(d => d.isCardiff) + 1;
+      const pct = (a, b) => ((a - b) / b) * 100;
+      const dir = v => v < 0 ? "down" : "up";
+      const compName = comparator ? (ABBREVIATIONS[comparator.institution] || comparator.institution) : null;
+
+      let callout;
+      if (yearIdx === 0) {
+        callout = `Baseline ${yearLabel}: Cardiff's Scope 1&2 intensity is ${cardiff.emissionsIntensity.toFixed(1)} kgCO₂e/m² (${fmtNum(cardiff.emissions, 1)} tCO₂e in total), rank #${rank} of ${counted.length} where #1 is lowest.`;
+      } else if (yearIdx === LAST_YEAR && base && now && base.positioned && now.positioned) {
+        callout = `${yearLabel}: Cardiff ends the decade at ${now.emissionsIntensity.toFixed(1)} kgCO₂e/m², ${Math.abs(pct(now.emissionsIntensity, base.emissionsIntensity)).toFixed(1)}% ${dir(now.emissionsIntensity - base.emissionsIntensity)} on 2015/16; total Scope 1&2 ${fmtNum(base.emissions, 1)} to ${fmtNum(now.emissions, 1)} tCO₂e (${Math.abs(pct(now.emissions, base.emissions)).toFixed(1)}% ${dir(now.emissions - base.emissions)}).`;
+      } else if (now && prev && now.positioned && prev.positioned) {
+        const change = pct(now.emissionsIntensity, prev.emissionsIntensity);
+        const belowBoth = cardiff.energyIntensity < medX && cardiff.emissionsIntensity < medY;
+        const vsComp = comparator ? ` and ${cardiff.emissionsIntensity < comparator.emissionsIntensity ? "below" : "above"} ${compName} (${comparator.emissionsIntensity.toFixed(1)})` : "";
+        callout = `${yearLabel}: Cardiff's emissions intensity is ${Math.abs(change).toFixed(1)}% ${dir(change)} on the year at ${cardiff.emissionsIntensity.toFixed(1)} kgCO₂e/m², ${belowBoth ? "below the sector median on both axes" : `${cardiff.emissionsIntensity < medY ? "below" : "above"} the sector median (${medY.toFixed(1)})`}${vsComp}.`;
+      } else {
+        callout = `${yearLabel}: Cardiff energy intensity ${cardiff.energyIntensity.toFixed(1)} kWh/m², Scope 1&2 intensity ${cardiff.emissionsIntensity.toFixed(1)} kgCO₂e/m².`;
+      }
+      if (REDUCED_MOTION && !isPlaying) callout += " Autoplay is off (reduced motion): press play or drag the timeline.";
+      banner.textContent = callout;
+    }
+
+    // --- 8. ANIMATION LOOP, 3S HOLD, FADE RESET ---
+    function cancelFrame() {
+      if (animFrameId !== null) { cancelAnimationFrame(animFrameId); animFrameId = null; }
+    }
+
+    function startAnimationLoop() {
+      cancelFrame();
+      cancelPendingTimers();
+      isPlaying = true;
+      lastTimestamp = null;
+      updatePlayPauseIcons();
+      const token = ++loopToken;
+      animFrameId = requestAnimationFrame(ts => animationStep(ts, token));
+    }
+
+    function stopAnimationLoop() {
+      isPlaying = false;
+      loopToken++;
+      cancelFrame();
+      updatePlayPauseIcons();
+    }
+
+    function animationStep(timestamp, token) {
+      if (token !== loopToken || !isPlaying) return;
+      if (lastTimestamp === null) lastTimestamp = timestamp;
+      const delta = Math.min(0.1, (timestamp - lastTimestamp) / 1000); // a hidden tab never jumps several years
+      lastTimestamp = timestamp;
+      currentProgress += (delta / SECONDS_PER_YEAR) * playSpeed;
+
+      if (currentProgress >= LAST_YEAR) {
+        currentProgress = LAST_YEAR;
+        renderFrame(currentProgress);
+        isPlaying = false;
+        animFrameId = null;
+        updatePlayPauseIcons();
+        triggerEndStateHold();
+        return;
+      }
+      renderFrame(currentProgress);
+      animFrameId = requestAnimationFrame(ts => animationStep(ts, token));
+    }
+
+    function togglePlayPause() {
+      if (isPlaying) { stopAnimationLoop(); return; }
+      cancelPendingTimers();
+      if (currentProgress >= LAST_YEAR) currentProgress = 0;
+      startAnimationLoop();
+    }
+
+    function restartAnimation() {
+      stopAnimationLoop();
+      cancelPendingTimers();
+      currentProgress = 0;
+      startAnimationLoop();
+    }
+
+    function triggerEndStateHold() {
+      cancelPendingTimers();
+      isHoldingEnd = true;
+      showEndStateSummary();
+      holdTimer = setTimeout(() => {
+        holdTimer = null;
+        isHoldingEnd = false;
+        hideEndStateSummary();
+        fadeResetThenPlay();
+      }, END_HOLD_MS);
+    }
+
+    function fadeResetThenPlay() {
+      const el = document.getElementById("chartSvg");
+      if (REDUCED_MOTION) { currentProgress = 0; startAnimationLoop(); return; }
+      el.style.opacity = "0";
+      fadeTimer = setTimeout(() => {
+        fadeTimer = null;
+        currentProgress = 0;
+        renderFrame(0);
+        el.style.opacity = "1";
+        startAnimationLoop();
+      }, RESET_FADE_MS);
+    }
+
+    function cancelPendingTimers() {
+      if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
+      if (fadeTimer) { clearTimeout(fadeTimer); fadeTimer = null; }
+      if (openingTimer) { clearTimeout(openingTimer); openingTimer = null; }
+      isHoldingEnd = false;
+      const el = document.getElementById("chartSvg");
+      if (el) el.style.opacity = "1";
+      hideEndStateSummary();
+    }
+
+    function showEndStateSummary() {
+      const modal = document.getElementById("endStateOverlay");
+      const content = document.getElementById("endStateSummaryContent");
+      const c0 = model.byInst[SUBJECT]?.[0], c9 = model.byInst[SUBJECT]?.[LAST_YEAR];
+      const k0 = model.byInst[selectedComparator]?.[0], k9 = model.byInst[selectedComparator]?.[LAST_YEAR];
+      const compAbbr = ABBREVIATIONS[selectedComparator] || selectedComparator;
+      const pctChange = (a, b) => (a && b && a.positioned && b.positioned) ? ((b.emissionsIntensity - a.emissionsIntensity) / a.emissionsIntensity) * 100 : null;
+      const inten = r => (r && r.emissionsIntensity !== null) ? r.emissionsIntensity.toFixed(1) : NEEDS_DATA;
+      const total = r => (r && r.emissions !== null) ? fmtNum(r.emissions, 1) : NEEDS_DATA;
+      const cardiffChange = pctChange(c0, c9);
+      const compChange = pctChange(k0, k9);
+      const totalChange = (c0 && c9 && c0.emissions !== null && c9.emissions !== null) ? ((c9.emissions - c0.emissions) / c0.emissions) * 100 : null;
+      const word = v => v === null ? "" : (v < 0 ? "reduced" : "increased");
+
+      content.innerHTML = `
+        <div class="p-2.5 rounded bg-slate-800/80 border border-slate-700">
+          <p class="font-semibold text-rose-300">Cardiff University 10-year trajectory</p>
+          <p class="mt-0.5">Emissions intensity ${word(cardiffChange)} by <b class="text-white">${cardiffChange === null ? NEEDS_DATA : Math.abs(cardiffChange).toFixed(1) + "%"}</b> (${inten(c0)} to ${inten(c9)} kgCO₂e/m²).</p>
+          <p class="mt-0.5">Total Scope 1&2 ${word(totalChange)} by <b class="text-white">${totalChange === null ? NEEDS_DATA : Math.abs(totalChange).toFixed(1) + "%"}</b> (${total(c0)} to ${total(c9)} tCO₂e).</p>
+        </div>
+        <div class="p-2.5 rounded bg-slate-800/80 border border-slate-700 mt-2">
+          <p class="font-semibold text-sky-300">${selectedComparator} comparison</p>
+          <p class="mt-0.5">${compAbbr} emissions intensity ${compChange === null ? "change: " + NEEDS_DATA : word(compChange) + " by <b class=\"text-white\">" + Math.abs(compChange).toFixed(1) + "%</b>"} (${inten(k0)} to ${inten(k9)} kgCO₂e/m²).</p>
+          <p class="mt-0.5">Final year: Cardiff ${inten(c9)} vs ${compAbbr} ${inten(k9)} kgCO₂e/m².</p>
+        </div>`;
+
+      modal.classList.remove("opacity-0", "pointer-events-none");
+      modal.classList.add("opacity-100");
+    }
+
+    function hideEndStateSummary() {
+      const modal = document.getElementById("endStateOverlay");
+      if (!modal) return;
+      modal.classList.add("opacity-0", "pointer-events-none");
+      modal.classList.remove("opacity-100");
+    }
+
+    function updatePlayPauseIcons() {
+      document.getElementById("iconPlay").classList.toggle("hidden", isPlaying);
+      document.getElementById("iconPause").classList.toggle("hidden", !isPlaying);
+    }
+
+    // --- 9. CINEMATIC OPENING ---
+    function triggerCinematicOpening() {
+      renderFrame(0);
+      const el = document.getElementById("chartSvg");
+      if (REDUCED_MOTION) {
+        el.style.opacity = "1";
+        isPlaying = false;
+        updatePlayPauseIcons();
+        renderFrame(0); // refresh the narrative with the autoplay note
+        return;
+      }
+      el.style.opacity = "0";
+      openingTimer = setTimeout(() => {
+        openingTimer = null;
+        el.style.opacity = "1";
+        startAnimationLoop();
+      }, 800);
+    }
+  </script>
+</body>
+</html>

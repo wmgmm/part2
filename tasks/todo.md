@@ -2688,6 +2688,59 @@ edit in it is lost. Kill by port instead: `fuser -k 4173/tcp`.
 
 ---
 
+## 2026-09-06 (addendum 91): a corrected dashboard, built by a Fable subagent
+
+Matt asked whether everything else was labelled, and for a Fable subagent to correct the data,
+polish the visuals and see whether it could zoom in so crowded bubbles separate. He also said
+it matters that he can **verify the data was included incorrectly**, so the fabricated build is
+kept and the check is now reproducible.
+
+**Labelling audit, answering the question directly.** After the Cardiff Met fix, all 18
+institutions in the old build label in all ten frames. Nothing else was missing. But the
+crowding he noticed is real and measurable: **11 to 19 overlapping label pairs and 29 to 46
+touching bubble pairs per frame**, against a prompt that explicitly asked for collision
+avoidance and 60 to 80% occupancy.
+
+**`tools/verify_chart_data.py`** extracts the CSV a build embeds in itself and diffs it against
+`HESA_Estates_Workshop.csv`. Exit 0 and IDENTICAL on a clean build, so it doubles as a
+regression test. On the old build it prints 180 rows against 307, 18 institutions against 31,
+11 of 180 rows matching, and 13 named institutions dropped. **The year-by-year Cardiff table
+turned up something new: the error grows monotonically**, 1.6% out in 2016/17, 14.8% by
+2019/20, 38.1% by 2024/25. With York's first six years exact and last four invented, that is
+the same fingerprint twice: it read the real file, then drifted into generating plausible
+continuations. Worth saying out loud in the room, because it means spot-checking the first few
+rows of an AI's output is exactly the wrong check.
+
+**`public/placeholders/Cardiff_Estates_Dashboard.html`**, 92 KB, built by the subagent.
+Verified here rather than taken on trust:
+
+- **Data identical**, confirmed with our own script, not the agent's: 307 of 307 rows, 31
+  institutions, every Cardiff year exact.
+- **Displayed figures recomputed from the CSV independently.** Energy intensity 222.0 kWh/m2,
+  emissions intensity 40.0 kgCO2e/m2, floor 532,968 m2, rank 11 of 31, intensity down 39.1%
+  while absolute emissions fell 28.1%, sector medians 44.4 and 225.0. All reproduce exactly.
+  The two different percentages are correct and are a teaching point: intensity fell faster
+  than absolute emissions because the estate grew.
+- **Crowding fixed:** max **2** overlapping label pairs, down from 11 to 19. Every one of the
+  31 institutions labels at some point, 27 to 31 per frame.
+- **Missing data handled honestly:** Glasgow's absent 2015/16 emissions and Birmingham's
+  three-year gap fade out rather than plotting as zero, trails break at gaps, and a footnote
+  states the blank counts and says they are never filled in or interpolated.
+- Zoom, pan, Reset view and Full range controls, and an honest "N outside view (names)" chip
+  when the focus view crops an outlier such as Trinity Saint David.
+
+**One correction to the agent's report.** It claimed 0 overlapping label pairs in every frame.
+Measured in a real browser with real glyph widths it is **0 to 2**: its harness estimated text
+width at 0.58 em per character. Still a large improvement, but its number was optimistic.
+General lesson, and the reason the file was re-checked from scratch: it verified with DOM stubs
+and never rendered the page.
+
+**Not wired in.** `Example_Bubble_Chart.html` is untouched and still the artifact on Exercise 06
+step 5. Matt decides whether step 5 keeps the fabricated one, swaps to the corrected one, or
+shows both, which is the version that actually teaches the lesson.
+
+---
+
 # HANDOVER, end of 2026-09-05
 
 Read this first. It supersedes the earlier "OPEN" block, which is folded in below.
