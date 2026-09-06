@@ -174,9 +174,9 @@ Eleven files ship. **Not generated:** `Sustainable-Futures-en.pdf` (the publishe
 `Deep_research_output.pdf` (a real run, and Exercise 01's fallback),
 `Example_Training_Session.pdf` (a real run of the 04 skill, Exercise 05's backup source),
 `HESA_Estates_Management.xlsx` (13 MB, **unlinked**, the generator's input) and
-`Example_Bubble_Chart.html` (a real Canvas run kept **exactly as generated**, invented data and
-all, which is Exercise 06 step 5's whole point, so never "fix" it). **Generated:** the four
-skills plus `HESA_Estates_Workshop.csv` and `.xlsx`.
+`Example_Bubble_Chart.html` (a real Canvas run; **its invented data stays invented**, that
+being Exercise 06 step 5's point. Only edit: one name added to its label priority list).
+**Generated:** the four skills plus `HESA_Estates_Workshop.csv` and `.xlsx`.
 
 ## Styling
 

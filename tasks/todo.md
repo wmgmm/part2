@@ -2661,6 +2661,33 @@ around 18 institutions, and it would cost the exercise its punchline.
 
 ---
 
+## 2026-09-06 (addendum 90): Cardiff Met labelled in the example dashboard
+
+Matt: keep the rest as is so he can see the site, but Cardiff Met was showing as an unlabelled
+grey dot. Cause: `Cardiff Metropolitan University` was already in the chart's `ABBREVIATIONS`
+map as "Cardiff Met", but `renderLabels` drops any label whose bubble radius is under 12px
+unless the institution is in `PRIORITY_LABEL_INSTITUTIONS`. Cardiff Met's estate is small
+(98,745 m2 against Cardiff's 512,000 in this file), so it never cleared the threshold.
+
+**Fix: one line**, adding `"Cardiff Metropolitan University"` to that priority list. **The
+embedded CSV is untouched** and verified identical to the pre-edit file, so the exhibit still
+carries exactly the invented numbers that make it worth showing. That is now the only
+divergence from Gemini's output, and `CLAUDE.md` says so.
+
+**Verified in the DOM, not from a screenshot.** The label renders at 9px beside the bubble in
+grey, `opacity: 1`, `visibility: visible`, inside the chart bounds, overlapping no other label,
+and present in 8 of 8 samples. A screenshot of this page is not evidence either way: the intro
+fade is driven by requestAnimationFrame, an unfocused tab throttles it, and the whole plot
+captures blank. Two probe attempts also failed misleadingly because `document.querySelector('svg')`
+picks up an icon rather than the chart; scope label queries as `document.querySelectorAll('svg text')`
+or via `ownerSVGElement`.
+
+**New trap, cost a shell:** `pkill -f "vite preview"` matches the invoking shell too, because
+that pattern is in its own command line, so the whole tool call dies with exit 144 and every
+edit in it is lost. Kill by port instead: `fuser -k 4173/tcp`.
+
+---
+
 # HANDOVER, end of 2026-09-05
 
 Read this first. It supersedes the earlier "OPEN" block, which is folded in below.
