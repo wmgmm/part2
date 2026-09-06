@@ -56,9 +56,12 @@ function WorkflowStrip({ workflow }) {
 function ArtifactCard({ artifact }) {
   const [copied, setCopied] = useState(false);
   const isText = /\.(md|txt)$/.test(artifact.filename);
-  // A browser renders text and PDFs; it downloads everything else. On an .xlsx a
-  // VIEW button just repeats DOWNLOAD under a different name, so it is hidden.
-  const canView = isText || /\.pdf$/.test(artifact.filename);
+  // An .html artifact is a working page, not a document, so opening it is the
+  // point and saving it is the fallback: the two buttons swap roles below.
+  const isPage = /\.html$/.test(artifact.filename);
+  // A browser renders text, PDFs and HTML; it downloads everything else. On an
+  // .xlsx a VIEW button just repeats DOWNLOAD under a different name, so it is hidden.
+  const canView = isText || isPage || /\.pdf$/.test(artifact.filename);
 
   const download = () => {
     const link = document.createElement('a');
@@ -132,7 +135,22 @@ function ArtifactCard({ artifact }) {
         )}
       </div>
       <div className="mission-artifact__actions">
-        <button type="button" className="btn-artifact" onClick={download}>
+        {/* Served as text/html and same-origin, so a plain link renders it. */}
+        {isPage && (
+          <a
+            className="btn-artifact"
+            href={artifact.downloadPath}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            OPEN IT
+          </a>
+        )}
+        <button
+          type="button"
+          className={`btn-artifact${isPage ? ' btn-artifact--ghost' : ''}`}
+          onClick={download}
+        >
           DOWNLOAD
         </button>
         {/* COPY is opt-in: only the brand skill needs it, because Studio's
@@ -147,7 +165,7 @@ function ArtifactCard({ artifact }) {
             VIEW IN BROWSER
           </button>
         )}
-        {canView && !isText && (
+        {canView && !isText && !isPage && (
           <a
             className="btn-artifact btn-artifact--ghost"
             href={artifact.downloadPath}

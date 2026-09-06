@@ -2600,6 +2600,67 @@ txt = line.strip()[1:-2].replace("\\'", "'").replace("\\n", "\n")   # expect 9,6
 
 ---
 
+## 2026-09-06 (addendum 89): Exercise 06 gains a fifth step, and the exhibit is a fake
+
+Matt confirmed Exercise 06 runs end to end, then asked for a new step 5 carrying the Blue
+Peter icon and the dashboard the prompt actually produced, opening in a new page as it is.
+He dropped `~/Downloads/animated_bubble_chart.html`, 62 KB, and asked me to compare it
+against mine or check whether mine had not worked.
+
+**Checked before shipping, and the finding changed the step.** The file embeds its dataset in
+a `<script id="hesa-data-csv" type="text/csv">` block. Compared against the shipped CSV:
+
+| | Embedded in the dashboard | `HESA_Estates_Workshop.csv` |
+|---|---|---|
+| Data rows | 180 | 307 |
+| Institutions | 18 | 31 |
+| Rows matching source exactly | **11 of 180** | - |
+| Cardiff 2015/16 to 2024/25 Scope 1+2 | 32,450 to 13,200, **-59.3%** | 29,662.9 to 21,336.4, **-28.1%** |
+
+**Every Cardiff row is invented**, and the invention flatters: it doubles the reported
+decarbonisation. Buildings sit at a suspiciously flat 180 to 188 against a real 256 to 301,
+and RenewablesPct climbs 0.1 to 3.5 where the source says 100. York is the tell: its first
+six years are **exact** matches and only the last four are fabricated, and Aberystwyth's
+first five match too. So the model read the real file, then drifted into generation partway
+through. That is the silent-omission failure IFScale describes (addendum 62), caught in the
+wild on our own prompt.
+
+It also quietly ignored two more instructions: the deck renders **dark** where the prompt says
+white background, and its own chip reads "Rank: #6 of 18" while the prompt says use every
+university in the supplied dataset. The prompt's DATA INTEGRITY section is explicit ("Never
+invent, replace, estimate, shorten, sample or manually retype figures") and its self-check
+asks the model to confirm "no values were invented". **It confirmed, and it had.**
+
+**Why this ships anyway, unmodified.** Exercise 06 is the exercise about checking figures in a
+second tool. A dashboard that looks like a broadcast graphic and is quietly wrong is the best
+possible closing exhibit for it, and a fabricated one we *made* beats any warning we could
+write. The file is copied byte-for-byte (`cmp` clean) as `Example_Bubble_Chart.html`, because
+the exhibit is what the tool actually did. **Never "fix" its data.**
+
+**What was built**
+
+- `A.exampleChart`, Blue Peter icon, label OPTIONAL: ONE WE MADE EARLIER, note saying plainly
+  that its numbers do not match the file it was given.
+- Step 5, 2 minutes, core: "Open the one we made earlier, then check it", naming Cardiff's real
+  21,336 tonnes so the reader has one number to test it against.
+- `estMinutesCore` 17 to 19, site total 77 to 79 minutes, and a fifth workflow chip.
+- **`.html` handling in `ArtifactCard`.** An HTML artifact is a working page, so the buttons
+  swap roles: **OPEN IT is the blue pill, DOWNLOAD drops to a ghost**. Derived from the
+  extension (`isPage`), not a new data field, so there is nothing extra to keep in sync.
+  Served same-origin as `text/html`, so a plain anchor renders it; no blob needed.
+
+**Verified.** Build green. `?doctor` **19 files, all 200**, and it picked the new file up with
+no change needed because step artifacts were already covered. The card holds **one button row
+at 560, 480, 400 and 340px** with no horizontal overflow, which is the wrap regression that bit
+twice before. Opened in the browser: it renders and animates. MH hash unchanged. `CLAUDE.md`
+back to exactly 200 lines.
+
+**Open question for Matt, not acted on:** whether to also ship a corrected build. Splicing the
+real 307-row CSV into the same file is a ten-minute job, but it may break a chart written
+around 18 institutions, and it would cost the exercise its punchline.
+
+---
+
 # HANDOVER, end of 2026-09-05
 
 Read this first. It supersedes the earlier "OPEN" block, which is folded in below.
@@ -2651,12 +2712,9 @@ another untested guess.
    addendum 62 landed, including the load-bearing one: a task slide appears. The
    layout-pattern theory is confirmed and `Cardiff_Brand_SKILL.md` is **settled**. Scoring in
    addendum 87. **Resist adding rules** still stands if anyone reopens it.
-2. **PARTLY DONE: run the new Exercise 06 end to end.** **Step 4 is confirmed working**
-   (2026-09-06): Matt ran the 9,666-character Canvas bubble chart prompt, it produced the
-   dashboard, and the shipped text is verified identical to his tested version (addendum 88).
-   **Do not edit that prompt.** Still unconfirmed: steps 1 to 3, whether the CSV attaches and
-   code execution actually runs in Copilot and then Gemini. The dataset fix is verified
-   locally but nobody has attached the file in anger. **Waiting on Matt for those three.**
+2. ~~**BLOCKED ON MATT: run the new Exercise 06 end to end.**~~ **DONE 2026-09-06.** Matt
+   checked all of Exercise 06 and it is good. The Canvas prompt is verified identical to his
+   tested version (addendum 88), and its real output now ships as step 5 (addendum 89).
 3. **`PROMPT_LIBRARY` is now unreachable.** The Useful Prompts card came off the gallery on
    request, but the data and the `#/prompts` route still exist. A whole page of content is
    reachable only by typing the URL. Decide: relink, or delete properly.
