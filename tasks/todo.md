@@ -2572,6 +2572,34 @@ request to "improve" it as needing a new controlled run first. `CLAUDE.md` updat
 
 ---
 
+## 2026-09-06 (addendum 88): the Canvas prompt confirmed against a working run
+
+Matt ran the Exercise 06 step 4 Canvas prompt: "we have the canvas prompt and it works
+amazing so don't change it". He pasted his final version back to be checked against what
+the site ships.
+
+**Verified identical.** Extracted the single-quoted literal from `src/data/missions.js`
+(9,666 characters, no stray escapes), stripped blank lines from both, and diffed:
+**159 non-blank lines each, identical line for line**, including `÷`, `×`, the en-dash in
+"60-80%", and every curly quote. The site ships the prompt that was tested.
+
+The only difference is whitespace: his pasted copy carries a blank line between every
+bullet, which is how it rendered coming back through the chat. The card deliberately keeps
+bullets tight, because he asked earlier the same day to reflow prompt 1 so the box does not
+grow a vertical scrollbar. **Left as is**; adding 158 blank lines would roughly double the
+card's height for no gain.
+
+**Do not edit this prompt.** It is now in the same category as `Cardiff_Brand_SKILL.md` and
+the `MH_*` constants: tested in a real run, and any change needs a new run to justify it.
+To re-verify after any edit near it:
+
+```python
+line = pathlib.Path("src/data/missions.js").read_text().splitlines()[863]
+txt = line.strip()[1:-2].replace("\\'", "'").replace("\\n", "\n")   # expect 9,666 chars
+```
+
+---
+
 # HANDOVER, end of 2026-09-05
 
 Read this first. It supersedes the earlier "OPEN" block, which is folded in below.
@@ -2623,10 +2651,12 @@ another untested guess.
    addendum 62 landed, including the load-bearing one: a task slide appears. The
    layout-pattern theory is confirmed and `Cardiff_Brand_SKILL.md` is **settled**. Scoring in
    addendum 87. **Resist adding rules** still stands if anyone reopens it.
-2. **BLOCKED ON MATT: run the new Exercise 06 end to end.** The dataset fix is verified
-   locally, but nobody has attached the CSV to Gemini or Copilot and confirmed code execution
-   actually works now. The 9,666-character bubble chart prompt has never been run either.
-   **Waiting on Matt to run both and drop the results back.**
+2. **PARTLY DONE: run the new Exercise 06 end to end.** **Step 4 is confirmed working**
+   (2026-09-06): Matt ran the 9,666-character Canvas bubble chart prompt, it produced the
+   dashboard, and the shipped text is verified identical to his tested version (addendum 88).
+   **Do not edit that prompt.** Still unconfirmed: steps 1 to 3, whether the CSV attaches and
+   code execution actually runs in Copilot and then Gemini. The dataset fix is verified
+   locally but nobody has attached the file in anger. **Waiting on Matt for those three.**
 3. **`PROMPT_LIBRARY` is now unreachable.** The Useful Prompts card came off the gallery on
    request, but the data and the `#/prompts` route still exist. A whole page of content is
    reachable only by typing the URL. Decide: relink, or delete properly.
