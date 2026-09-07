@@ -661,7 +661,7 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 3,
-        title: 'Audit one of your new images',
+        title: 'Audit, revise and improve accessibility of your new images',
         body:
           'Download one of your new images with the download icon, then run the audit on it. Alt text is the line a screen reader reads aloud in place of the picture. If the description does not match what you meant, the image failed.',
         attachLabel: 'NEW CHAT',
