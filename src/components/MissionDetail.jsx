@@ -317,6 +317,18 @@ function ChoiceStep({ step }) {
             <div className="step-backup">
               <span className="step-backup__label">{step.backup.label || 'Backup'}</span>
               <p className="step-backup__text">{step.backup.text}</p>
+              {step.backup.examples && (
+                <ul className="step-backup__swaps">
+                  {step.backup.examples.map(([from, to]) => (
+                    <li key={from}>
+                      &ldquo;{from}&rdquo;
+                      <span aria-hidden="true"> &rarr; </span>
+                      <span className="sr-only"> becomes </span>
+                      &ldquo;{to}&rdquo;
+                    </li>
+                  ))}
+                </ul>
+              )}
               {step.backup.attach && (
                 <AttachStrip items={step.backup.attach} label={step.backup.attachLabel} />
               )}
@@ -368,6 +380,18 @@ function Step({ step, number, lane }) {
             <div className="step-backup">
               <span className="step-backup__label">{step.backup.label || 'Backup'}</span>
               <p className="step-backup__text">{step.backup.text}</p>
+              {step.backup.examples && (
+                <ul className="step-backup__swaps">
+                  {step.backup.examples.map(([from, to]) => (
+                    <li key={from}>
+                      &ldquo;{from}&rdquo;
+                      <span aria-hidden="true"> &rarr; </span>
+                      <span className="sr-only"> becomes </span>
+                      &ldquo;{to}&rdquo;
+                    </li>
+                  ))}
+                </ul>
+              )}
               {step.backup.attach && (
                 <AttachStrip items={step.backup.attach} label={step.backup.attachLabel} />
               )}

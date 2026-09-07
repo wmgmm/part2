@@ -607,6 +607,13 @@ export const MISSIONS = [
         backup: {
           label: 'STILL GOT TEXT?',
           text: 'Open a NEW chat and send the step 2 prompt again, with the ban replaced by what you want instead.',
+          // Google's own advice for Gemini image generation, which has no
+          // negative prompt field: describe the scene, do not ban the thing.
+          examples: [
+            ['No text', 'Bare walls and blank screens'],
+            ['No cars', 'A deserted street'],
+            ['No people', 'An empty room'],
+          ],
           attachLabel: 'NEW CHAT',
           attach: [A.stepTwoPrompt],
         },
