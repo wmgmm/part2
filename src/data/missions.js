@@ -609,7 +609,7 @@ export const MISSIONS = [
     pageTitle: 'Vibe Code a Playable Game From the Plan in Canvas',
     summary: 'Build a working 8-bit game out of a policy document. No code required.',
     tools: [TOOLS.canvas],
-    estMinutesCore: 11,
+    estMinutesCore: 12,
     toolInfo: {
       feature:
         'Canvas turns a description into working web apps, decks and documents you can edit in place. You write no code at any point.',
@@ -652,7 +652,7 @@ export const MISSIONS = [
         estMinutes: 2,
         title: 'Read the code tab',
         body:
-          'Canvas has a Code toggle at the top, next to Preview. Look at the strings: the title, the messages, the food names.',
+          'Canvas has a Code toggle at the top, next to Preview. Look at the strings: the title, the messages, the food names. Augment it as a human here: review what it wrote, then add or alter anything.',
       },
       {
         tier: 'core',
@@ -660,6 +660,13 @@ export const MISSIONS = [
         title: 'Play it, then fix it in words',
         body:
           'Name the one thing that spoils it and type that into the chat: \"too fast, slow the items by half\". Canvas rebuilds it in place.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 1,
+        title: 'Responsible AI',
+        body:
+          'The human value is in the review and the improvement. AI gets you a draft in seconds; deciding what is wrong and changing it is yours.',
       },
       {
         tier: 'stretch',
