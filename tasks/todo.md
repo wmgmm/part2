@@ -2972,6 +2972,39 @@ unchanged at 22 because both attached files were already known to it.
 
 ---
 
+## 2026-09-07 (addendum 97): the way home moves into the black bar
+
+Matt: the site's look is right but "← ALL EXERCISES" above the title "looks so bad", remove
+it, brainstorm first. Diagnosis: it was the last black stroke on the exercise pages, a bold mono
+caps pill with a 2px border, a survivor of the escaperoom skin. Three options were put up; he
+chose **A, the wordmark is home, but discoverable**.
+
+First cut kept a quiet sentence-case "← All exercises" on the page. He did not like that either
+and asked for the control to live **in the black bar, spelled out**. So:
+
+- `AI IN THE WORKPLACE PART 2` in the bar is now a link to the gallery, underlined on hover.
+- On exercise pages (`compact`) the bar also carries **"← Return to all exercises"** at the
+  right: sans, sentence case, white text, a 1px white hairline pill on black, the inverse of
+  the ghost buttons below. Fills white on hover.
+- The on-page link is gone entirely. The post-verdict "All exercises →" stays, restyled to
+  sentence-case sans in the accent.
+
+**Two traps hit while verifying, both already in the log, both bit again.**
+
+1. **Stale bundle.** Navigating to a hash URL does not refetch `index.html`, so the tab kept
+   the previous build and reported the old link still present. Check `script[src]` against the
+   bundle the build printed, then `location.reload()`.
+2. **Frozen exit animation.** After a real click on the home link the hash flipped to `#/` but
+   the exercise page stayed in the DOM at `opacity: 0.243`, mid-exit. `document.hidden` was
+   true: an unfocused tab throttles rAF, and `AnimatePresence mode="wait"` will not mount the
+   gallery until the exit completes. Routing was fine. **A stuck page transition in a
+   background tab is not evidence of a routing bug.**
+
+**Verified** on the right bundle: old link absent, control inside the bar, 24px from the right
+edge, `href="#/"`.
+
+---
+
 # HANDOVER, end of 2026-09-05
 
 Read this first. It supersedes the earlier "OPEN" block, which is folded in below.

@@ -325,8 +325,6 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
 
   return (
     <section className="mission-detail">
-      <a href="#/" className="mission-detail__back">← ALL EXERCISES</a>
-
       <header className="mission-detail__header">
         <p className="eyebrow">{mission.code ? `EXERCISE ${mission.code}` : 'USEFUL PROMPTS'}</p>
         <div className="mission-head-row">
@@ -405,7 +403,7 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
               &ldquo;{mission.verdict}&rdquo;
               <cite>— {mission.verdictBy || 'C. Gravitas'}</cite>
             </blockquote>
-            <a href="#/" className="mission-verdict__next">BACK TO ALL EXERCISES →</a>
+            <a href="#/" className="mission-verdict__next">All exercises →</a>
           </div>
         )}
       </div>

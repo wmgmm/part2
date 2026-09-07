@@ -2139,3 +2139,58 @@ a:hover,
   color: var(--black);
   opacity: 1;
 }
+
+/* Home navigation, 2026-09-07. The bordered mono pill above the title was the
+   last black stroke on the exercise pages, and a quieter link in the same place
+   still looked wrong to Matt. So the way home lives in the black bar: the
+   wordmark links to the gallery, and on exercise pages a spelled-out control sits
+   at the right, a hairline pill in white on black, the inverse of the ghost
+   buttons below it. The post-verdict link stays, in sentence case. */
+.tagline-bar__title {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tagline-bar__title:hover,
+.tagline-bar__title:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.tagline-bar__home {
+  margin-left: auto;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #ffffff;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 980px;
+  padding: 0.22rem 0.75rem;
+  white-space: nowrap;
+}
+
+.tagline-bar__home:hover,
+.tagline-bar__home:focus-visible {
+  background: #ffffff;
+  color: var(--black);
+  border-color: #ffffff;
+}
+
+.mission-verdict__next {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.mission-verdict__next:hover,
+.mission-verdict__next:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
