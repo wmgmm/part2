@@ -80,6 +80,10 @@
   button:focus-visible { outline: 3px solid var(--warn); outline-offset: 2px; }
   button[disabled] { opacity: 0.55; cursor: default; }
   .toggles button { font-size: 0.8em; min-height: 2em; padding: 0.2em 0.6em; }
+  .settings { font-size: 0.75em; min-height: 1.8em; padding: 0.15em 0.55em; margin-top: 0.35rem; color: var(--dim); border-color: var(--dim); }
+  .settings[aria-expanded="true"] { color: var(--fg); }
+  .toggles[hidden] { display: none; }
+  .toggles .hint { flex-basis: 100%; color: var(--dim); font-size: 0.75em; }
 
   .meters { display: grid; grid-template-columns: repeat(auto-fit, minmax(29ch, 1fr)); gap: 0.2rem 1.2rem; margin: 0.4rem 0; }
   .meter { white-space: nowrap; }
@@ -130,11 +134,13 @@
       <h1>DEMAND FIRST</h1>
       <p class="sub">The Sustainable Adventures of Cardiff University</p>
     </div>
-    <div class="toggles" aria-label="Display settings">
+    <button type="button" id="btn-settings" class="settings" aria-expanded="false" aria-controls="toggles">SETTINGS</button>
+    <div class="toggles" id="toggles" aria-label="Display settings" hidden>
       <button type="button" id="tgl-text" aria-pressed="false">TEXT: NORMAL</button>
       <button type="button" id="tgl-hc" aria-pressed="false">CONTRAST: NORMAL</button>
       <button type="button" id="tgl-motion" aria-pressed="true">MOTION: ON</button>
       <button type="button" id="btn-restart">RESTART</button>
+      <span class="hint">Keys: A B C D or 1 2 3 4 to choose, ENTER to continue, any key skips the typing.</span>
     </div>
   </header>
 
@@ -157,7 +163,6 @@
     <div id="choices"></div>
   </main>
 
-  <footer>Keys: A B C D or 1 2 3 4 to choose. ENTER to continue. Any key skips the typing. Progress is saved in this browser.</footer>
 </div>
 
 <script>
@@ -171,7 +176,7 @@ const LEVELS = [
   { name: "LEVEL 1: THE DESK", line: "Where sustainability begins: at your elbow." },
   { name: "LEVEL 2: THE BUILDING", line: "You have been given a lanyard with more access. Use it wisely." },
   { name: "LEVEL 3: THE DEPARTMENT", line: "Bigger decisions. Bigger emails." },
-  { name: "LEVEL 4: THE UNIVERSITY", line: "Someone has noticed. They gave you a bigger budget and a smaller office." }
+  { name: "LEVEL 4: THE UNIVERSITY", line: "Someone has noticed. They gave you a bigger budget and a smaller office. The Matts sent a card. It was reused." }
 ];
 
 const STAGE_NAME = {
@@ -219,7 +224,7 @@ const SCENARIOS = [
       { k: "C", t: "Keep current monitors", r: 1, s: 1, d: [8, 12, -2, 4], tags: ["reuse"], items: 50,
         say: ["The most sustainable monitor is the one already on the desk.", "Fifty of them, in fact.", "The team sulks for an afternoon, then forgets.", "", "Demand avoided."] },
       { k: "D", t: "Buy carbon offsets", r: 4, s: 4, d: [-2, -8, 0, -5], tags: ["purchase", "offset"],
-        say: ["You bought offsets before considering the actual problem.", "", "The Sustainability Goblin gains strength."] }
+        say: ["You bought offsets before considering the actual problem.", "", "The Sustainability Goblin gains strength.", "Somewhere, one of The Matts sighs into a reusable cup."] }
     ]
   },
   {
@@ -281,16 +286,17 @@ const SCENARIOS = [
     text: [
       "February. The heating in Block C runs at 23 degrees,",
       "24 hours a day, including the weekend,",
-      "when Block C contains one security guard",
-      "and a very warm fern."
+      "when Block C contains one security guard,",
+      "a very warm fern,",
+      "and Matt Hayden's three cats, who are not supposed to be there."
     ],
     opts: [
       { k: "A", t: "Turn it down to 19 and off at weekends", r: 1, s: 1, d: [9, 9, -3, 4], tags: [],
-        say: ["Nineteen is the standard. Cardigans appear.", "The fern adjusts.", "The guard gets a heater the size of a shoebox and is delighted.", "", "Demand avoided, at scale."] },
+        say: ["Nineteen is the standard. Cardigans appear.", "The fern adjusts.", "The guard gets a heater the size of a shoebox and is delighted.", "The cats relocate to the server room, which was always warmer.", "", "Demand avoided, at scale."] },
       { k: "B", t: "Replace the boiler with a heat pump", r: 2, s: 2, d: [6, -20, 0, 5], tags: ["purchase"],
         say: ["A good move, and an expensive one,", "and it still heats an empty building at the weekend.", "", "Stage two before stage one costs you twice."] },
       { k: "C", t: "Buy everyone a heated gilet", r: 3, s: 0, d: [-3, -9, 3, -2], tags: ["purchase"],
-        say: ["Forty gilets. The heating is still on.", "Block C is now a sauna full of people dressed for the Arctic."] },
+        say: ["Forty gilets. The heating is still on.", "Block C is now a sauna full of people dressed for the Arctic.", "The cats have never been happier. This is not the metric."] },
       { k: "D", t: "Offset Block C's heating emissions", r: 4, s: 4, d: [-1, -10, 0, -4], tags: ["purchase", "offset"],
         say: ["You have paid for the emissions to be forgiven.", "They continue regardless.", "The fern says nothing, but it knows."] }
     ]
@@ -383,7 +389,7 @@ const SCENARIOS = [
       { k: "A", t: "Order all three, in recycled materials", r: 3, s: 2, d: [-4, -9, 1, 0], tags: ["purchase"],
         say: ["Recycled tote bags join the 2019, 2022 and 2024 tote bags", "in every attendee's cupboard of totes."] },
       { k: "B", t: "Order nothing branded. Use last year's lanyards.", r: 1, s: 1, d: [6, 9, -1, 3], tags: ["reuse"], items: 120,
-        say: ["Somewhere in a store room, 200 lanyards from 2023 are found.", "Nobody notices. Nobody ever notices lanyards.", "", "Demand avoided."] },
+        say: ["Somewhere in a store room, 200 lanyards from 2023 are found.", "Nobody notices. Nobody ever notices lanyards.", "The Matts own forty each and cannot say where from.", "", "Demand avoided."] },
       { k: "C", t: "Order the bottles only, since people use those", r: 2, s: 1, d: [1, -3, 1, 1], tags: ["purchase"],
         say: ["One item, actually wanted.", "Two hundred and forty items avoided.", "Reasonable."] },
       { k: "D", t: "Order all three and offset the shipping", r: 4, s: 4, d: [-5, -12, 1, -3], tags: ["purchase", "offset"],
@@ -469,7 +475,8 @@ const SCENARIOS = [
       "The Vice-Chancellor asks for one sentence to put",
       "at the top of the sustainability strategy.",
       "",
-      "The room offers four."
+      "The room offers four.",
+      "One of The Matts is at the back, pretending to take notes."
     ],
     opts: [
       { k: "A", t: "'We will buy sustainable products wherever possible.'", r: 3, s: 2, d: [1, -2, 0, 1], tags: [],
@@ -485,7 +492,7 @@ const SCENARIOS = [
 ];
 
 const TITLES = [
-  { min: 81, name: "MASTER OF DEMAND FIRST", line: "You asked whether it was needed. Every time. The planet quietly nods." },
+  { min: 81, name: "MASTER OF DEMAND FIRST", line: "You asked whether it was needed. Every time. The planet quietly nods. The Matts would like a word, and the word is 'yes'." },
   { min: 61, name: "DEMAND REDUCTION RANGER", line: "Mostly avoided, occasionally swapped, rarely offset. Procurement fears you." },
   { min: 31, name: "REASONABLE RECYCLER", line: "You did the right things, usually a stage or two late." },
   { min: 0,  name: "CARBON CHAOS INTERN", line: "You bought your way through it. The Sustainability Goblin sends flowers. Carbon-neutral ones." }
@@ -495,7 +502,8 @@ const ACHIEVEMENTS = [
   { id: "nobuy",  name: "The Best Purchase",          how: "Make no purchases for five decisions in a row" },
   { id: "repair", name: "Repair Wizard",              how: "Choose repair three times" },
   { id: "escape", name: "Conference Escape Artist",   how: "Avoid all travel" },
-  { id: "circle", name: "Circular Economy Sorcerer",  how: "Keep ten or more items in use" }
+  { id: "circle", name: "Circular Economy Sorcerer",  how: "Keep ten or more items in use" },
+  { id: "cats",   name: "Cat Herder",                 how: "Finish the shift with every meter above 50. Matt Hayden's three cats approve" }
 ];
 
 const POINTS = { 1: 3, 2: 2, 3: 1, 4: 0 };
@@ -592,6 +600,7 @@ function finish() {
 
 function scrollDown() {
   const y = document.body.scrollHeight;
+  if (y <= window.innerHeight) return;
   window.scrollTo({ top: y, behavior: prefs.motion ? "smooth" : "auto" });
 }
 
@@ -600,6 +609,16 @@ function trim() {
 }
 
 function clearChoices() { choices.innerHTML = ""; }
+
+// One scene per screen. The terminal is wiped, the page goes back to the
+// top, and the new scene types in. No scrollback, like the games it copies.
+function screen(lines, done) {
+  if (typing) flush();
+  term.innerHTML = "";
+  clearChoices();
+  window.scrollTo(0, 0);
+  print(lines, done);
+}
 
 function button(label, key, onClick, primary) {
   const b = document.createElement("button");
@@ -657,9 +676,9 @@ function wipe() { try { localStorage.removeItem(SAVE_KEY); } catch (e) {} }
 
 function intro() {
   phase = "intro";
-  term.innerHTML = ""; clearChoices(); litStage(0);
+  litStage(0);
   renderMeters();
-  print([
+  screen([
     ...banner("CARDIFF UNIVERSITY MAINFRAME"),
     "",
     "Congratulations.",
@@ -677,6 +696,9 @@ function intro() {
     "The plan calls its method 'Demand First'.",
     "You will work out what that means by playing.",
     "",
+    "Your predecessors, known only as The Matts, left one note:",
+    ["'Ask if it is needed. Then ask again.'", "warn"],
+    "",
     ["Sixteen decisions. Four levels. One question.", "dim"]
   ], () => {
     button("BEGIN", "", startRun, true).focus();
@@ -685,9 +707,9 @@ function intro() {
 
 function offerResume(saved) {
   phase = "resume";
-  term.innerHTML = ""; clearChoices(); litStage(0);
+  litStage(0);
   S = saved; renderMeters();
-  print([
+  screen([
     ...banner("SESSION FOUND"),
     "",
     "A previous shift was interrupted at decision " + (S.idx + 1) + " of " + SCENARIOS.length + ".",
@@ -715,15 +737,16 @@ function levelIntro() {
   phase = "level";
   const lv = LEVELS[S.idx / 4];
   litStage(0);
-  print(["", ...banner(lv.name), [lv.line, "dim"], ""], () => scenario());
+  screen([...banner(lv.name), "", [lv.line, "dim"], "", ["Decisions " + (S.idx + 1) + " to " + (S.idx + 4) + " of " + SCENARIOS.length + ".", "dim"]], () => {
+    button("BEGIN LEVEL", "", scenario, true).focus();
+  });
 }
 
 function scenario() {
   phase = "scenario";
   litStage(0);
   const sc = SCENARIOS[S.idx];
-  print([
-    "",
+  screen([
     ...banner(sc.banner),
     "",
     ...sc.text,
@@ -779,6 +802,7 @@ function choose(key) {
     : ["+0 points. That was the worst of the four.", "fail"];
 
   const out = [
+    ...banner(sc.banner),
     "",
     ["> " + o.k + ") " + o.t, "dim"],
     "",
@@ -794,7 +818,7 @@ function choose(key) {
   });
 
   const dead = names.find(n => S.meters[n] <= 0);
-  print(out, () => {
+  screen(out, () => {
     if (dead) { button("SOMEONE HAS NOTICED", "", () => ending(dead), true).focus(); return; }
     const last = S.idx >= SCENARIOS.length;
     button(last ? "SEE HOW YOU DID" : "CONTINUE", "", next, true).focus();
@@ -806,13 +830,14 @@ function ending(dead) {
   clearChoices(); litStage(0);
   const pct = Math.round(100 * S.points / MAX_POINTS);
   const title = TITLES.find(t => pct >= t.min);
+  if (!dead && S.idx >= SCENARIOS.length && Object.values(S.meters).every(v => v > 50) && !S.unlocked.includes("cats")) S.unlocked.push("cats");
   const noticed = {
     carbon: "The carbon budget is spent. A very quiet email arrives from the Vice-Chancellor.",
     budget: "Finance has noticed. They have a spreadsheet, and it has your name at the top.",
-    wellbeing: "The staff have noticed. There is a petition, and a cake, and the cake is for someone else.",
+    wellbeing: "The staff have noticed. There is a petition, and a cake, and the cake is for someone else. Three cats have signed the petition.",
     reputation: "The press has noticed. The headline uses the word 'greenwash' and your photograph."
   };
-  const out = ["", ...banner("END OF SHIFT")];
+  const out = [...banner("END OF SHIFT")];
   if (dead) out.push("", [noticed[dead], "fail"], "", ["Shift ended after " + S.idx + " of " + SCENARIOS.length + " decisions.", "dim"]);
   out.push(
     "",
@@ -840,7 +865,7 @@ function ending(dead) {
     ["Cardiff University's Sustainable Futures plan, 2025 to 2035.", "dim"]
   );
   wipe();
-  print(out, () => {
+  screen(out, () => {
     button("PLAY AGAIN", "", () => { S = freshState(); intro(); }, true).focus();
   });
 }
@@ -884,6 +909,12 @@ function applyPrefs() {
   $("tgl-motion").setAttribute("aria-pressed", String(prefs.motion));
   try { localStorage.setItem(PREF_KEY, JSON.stringify(prefs)); } catch (e) {}
 }
+$("btn-settings").addEventListener("click", () => {
+  const open = $("toggles").hidden;
+  $("toggles").hidden = !open;
+  $("btn-settings").setAttribute("aria-expanded", String(open));
+  if (open) $("tgl-text").focus();
+});
 $("tgl-text").addEventListener("click", () => { prefs.lg = !prefs.lg; applyPrefs(); });
 $("tgl-hc").addEventListener("click", () => { prefs.hc = !prefs.hc; applyPrefs(); });
 $("tgl-motion").addEventListener("click", () => { prefs.motion = !prefs.motion; applyPrefs(); if (!prefs.motion) flush(); });
