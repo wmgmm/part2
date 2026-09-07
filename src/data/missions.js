@@ -410,7 +410,7 @@ const A = {
     label: 'SKILL 5: VERIFY AND REPAIR',
     filename: 'Verify_And_Repair.md',
     downloadPath: `${BASE}placeholders/Verify_And_Repair.md`,
-    note: 'The long version of the check in this step, to keep. Works on any figure from any tool.',
+    note: 'Attach it and it does the checking. Keep it: it works on any figure from any tool.',
     copyable: true,
     thumb: SKILL_ICON,
   },
@@ -842,7 +842,7 @@ export const MISSIONS = [
         'Copilot and Gemini both write and run Python on a data file you attach, so the numbers are computed rather than guessed. Both prefer CSV, not Excel.',
       apps: [APPS.copilot, APPS.gemini],
     },
-    workflow: ['Run it in Copilot', 'Verify and repair', 'Build the dashboard', 'Compare with ours', 'Verify and repair'],
+    workflow: ['Run it in Copilot', 'Verify in Gemini', 'Build the dashboard', 'Compare with ours', 'Verify and repair'],
     brief:
       'Analyse ten years of Cardiff\'s real emissions, then check the answer in a second tool before you trust it.',
     artifacts: [A.hesaData],
@@ -860,19 +860,19 @@ export const MISSIONS = [
         // Gemini and an .xlsx for Copilot, and step 2 tells them to try both.
         promptEmphasis: 'Work out every figure by writing and running code (Python), not by estimating.',
         prompt:
-          'Analyse the attached file on university estates and energy use, from the perspective of Cardiff University. Work out every figure by writing and running code (Python), not by estimating. I do not need to see the Python: just use it for the maths. If you cannot run code on this file, say so at the top of your answer and label every figure as approximate.\n\nOutput:\n1. An executive summary paragraph from a Cardiff University perspective, with specific and actionable information.\n\n2. One publication-quality chart for the most recent year: box plots across every university in the file for emissions per square metre, energy per square metre and renewable percentage, with Cardiff clearly marked and labelled. Place any legend outside the plotting area so it does not cover data points, labels or boxplots.\n\n3. Cardiff reports 100% renewable energy through green tariffs and still reports over 21,000 tonnes of Scope 1 and 2 emissions. Explain how both can be true, and say what the renewable figure does not cover.',
+          'Analyse the attached file on university estates and energy use, from the perspective of Cardiff University. Work out every figure by writing and running code (Python), not by estimating. I do not need to see the Python: just use it for the maths. If you cannot run code on this file, say so at the top of your answer and label every figure as approximate.\n\nOutput:\n1. An executive summary paragraph from a Cardiff University perspective, with specific and actionable information.\n\n2. One publication-quality chart for the most recent year: box plots across every university in the file for emissions per square metre, energy per square metre and renewable percentage, with Cardiff clearly marked and labelled. Place any legend outside the plotting area so it does not cover data points, labels or boxplots.\n\n3. Cardiff reports 100% renewable energy through green tariffs and still reports over 21,000 tonnes of Scope 1 and 2 emissions. Explain how both can be true, and say what the renewable figure does not cover.\n\n4. End with one line labelled KEY FIGURE: the single number this analysis turns on, with its unit, the period or group it covers, and what it shows, written so that someone with only the data file could check it.',
       },
       {
         tier: 'core',
         estMinutes: 5,
-        title: 'Verify and repair the numbers',
+        title: 'Verify it in Gemini, with the skill',
         artifact: A.verifySkill,
         body:
-          'Repeat the same analysis with Gemini. Do the two agree? Then check the number that matters in a fresh chat, and do not tell it where the figure came from.',
+          'Now Gemini, in a new chat. Attach the skill and the CSV, paste in the KEY FIGURE line from Copilot, and do not tell it where that line came from. A rubber stamp is not a check.',
         attachLabel: 'NEW CHAT',
-        attach: [A.hesaData],
-        promptLabel: 'THE REUSABLE CHECK',
-        promptNote: '[paste your figure in, and do not say who produced it]',
+        attach: [A.verifySkill, A.hesaData],
+        promptLabel: 'THE VERIFY PROMPT',
+        promptNote: '[attach both, then paste the KEY FIGURE line over the brackets]',
         // Built on evidence, not instinct, and the evidence sets the shape.
         // Intrinsic self-correction, a model reviewing its own answer in the same
         // chat, degrades accuracy and flips right answers to wrong. Worse, models
@@ -882,9 +882,9 @@ export const MISSIONS = [
         // came from: the anonymity is the mechanism, so explaining undoes it.
         // The closing line is the Responsible AI point and also UK law: under the
         // DUAA 2025, rubber-stamping an AI output is not meaningful oversight.
-        promptEmphasis: 'Recompute this from the attached file.',
+        promptEmphasis: 'Follow the attached skill file as your instructions.',
         prompt:
-          'Recompute this from the attached file.\n\nFIGURE TO CHECK: [paste the number and what it claims]\n\n1. Work it out from the file by writing and running code, and show the code.\n2. Work it out a second, independent way. If the two disagree, give both and say which is wrong.\n3. Anything the file cannot settle, list under UNVERIFIED. Do not estimate it.\n4. Say whether the figure is right, wrong or unverifiable, and what it should be.\n\nShow your working so a person can follow it and disagree with it. I am signing this off, not you.',
+          'Follow the attached skill file as your instructions.\n\nFIGURE TO CHECK: [paste the KEY FIGURE line here]',
       },
       {
         tier: 'core',

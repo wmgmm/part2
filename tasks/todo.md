@@ -2937,6 +2937,41 @@ whether to link it, merge it, or retire it. Open item 4 is now slightly worse, n
 
 ---
 
+## 2026-09-07 (addendum 96): p1 hands p2 one line, and p2 runs on the skill
+
+Matt's shape: p1 runs in Copilot, p2 verifies in Gemini using the skill, and p1 should emit
+something extra that makes p2 easy. He wanted the extra to be generic enough to paste into any
+data analysis, without overloading the workshop prompt.
+
+**One output, not a section.** Prompt-engineering term for it is answer shape: a fixed,
+labelled terminal line the next step can consume without interpretation. Added as item 4 of the
+p1 prompt:
+
+> End with one line labelled KEY FIGURE: the single number this analysis turns on, with its
+> unit, the period or group it covers, and what it shows, written so that someone with only the
+> data file could check it.
+
+Why this shape: it forces a **definition** (measure, unit, period or group) and a **claim**, and
+deliberately not the **method**. A verifier handed the method tends to replicate it; the skill
+asks for two independent routes, so the method stays out. "Someone with only the data file" is
+the falsifiability test written as a sentence. Nothing in it is about Cardiff, HESA or emissions,
+so it pastes onto any analysis prompt as it stands.
+
+**p2 now attaches the skill rather than restating it.** NEW CHAT, paperclip, `Verify_And_Repair.md`
++ the CSV, and a two-line prompt: "Follow the attached skill file as your instructions."
+(the same load-bearing line Exercise 04 uses, and its `promptEmphasis`) then
+`FIGURE TO CHECK: [paste the KEY FIGURE line here]`. The bracket text says nothing about which
+tool produced the line, on purpose: the anonymity from addendum 95 is the mechanism.
+
+The skill card stays on the step so the file can be downloaded to attach. Its note changed from
+"the long version to keep" to "Attach it and it does the checking", because that is now its job.
+
+**Verified.** Bundle checked against the build, p1 prompt ends on item 4, p2 bold renders, strip
+reads NEW CHAT then clip then skill + CSV with no overflow, card one button row. `?doctor` count
+unchanged at 22 because both attached files were already known to it.
+
+---
+
 # HANDOVER, end of 2026-09-05
 
 Read this first. It supersedes the earlier "OPEN" block, which is folded in below.
