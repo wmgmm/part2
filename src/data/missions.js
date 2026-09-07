@@ -712,7 +712,7 @@ export const MISSIONS = [
         'A skill is a file you attach alongside your document. Nothing to install and it works in Gemini and Copilot.',
       apps: [APPS.gemini, APPS.copilot],
     },
-    workflow: ['Paste the prompt', 'Attach the files', 'Augment it', 'Save/copy it'],
+    workflow: ['Paste the prompt', 'Attach the files', 'Review and augment', 'Save/copy it'],
     brief:
       'Build a half-hour training session on the sustainability plan pdf, using a skill file.',
     artifacts: [A.trainingSkill, A.susPlan],
@@ -748,7 +748,7 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 4,
-        title: 'Augment it as a human',
+        title: 'Review and Augment',
         body:
           'Review the session and add or alter anything. Start at the gap note: everything the training needed and the plan does not say, no dates, no named owners, no thresholds. That list is your questions for whoever owns the plan.',
       },
@@ -764,7 +764,7 @@ export const MISSIONS = [
         estMinutes: 1,
         title: 'Responsible AI',
         body:
-          'The human value is in the review and the improvement. AI gets you a draft in seconds; deciding what is wrong and changing it is yours.',
+          'The human value is in the review and the improvement.',
       },
     ],
     verdictBy: 'The Matts',
