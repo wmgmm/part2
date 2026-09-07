@@ -484,9 +484,10 @@ const A = {
   // it has no downloadPath. The preflight skips the download and checks the icon.
   // `paste: true` means the strip shows no paperclip: the prompt is pasted,
   // not attached. A real file in the same strip brings the clip back.
+  // A step renders its strip before its prompt box, so the prompt is below.
   thisPrompt: {
-    label: 'THE PROMPT ABOVE',
-    filename: 'paste the prompt above',
+    label: 'THE PROMPT BELOW',
+    filename: 'paste the prompt below',
     thumb: PROMPT_ICON,
     paste: true,
   },
