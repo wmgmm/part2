@@ -128,7 +128,7 @@ const MH_DEEP_RESEARCH = `The Sustainable Futures plan establishes a four-stage 
 // His covering email. Exercise 01, step 4. Deck slide 16 is the summary of it.
 const MH_COPILOT_TOP_AND_TAIL = `Act as a rigorous research editor, fact-checker and professional report designer.
 
-Use the Google Deep Research report as source material and produce a completely new, standalone PDF report. The report is supplied in one of two ways: attached to this message as a PDF, or pasted at the end of this prompt under the heading DEEP RESEARCH REPORT BY GEMINI, PASTED BELOW. Wherever this prompt says "the attached PDF", it means that report.
+Use the Google Deep Research report as source material and produce a completely new, standalone PDF report. The report is supplied in one of two ways: attached to this message as a file, or pasted at the end of this prompt under the heading DEEP RESEARCH REPORT BY GEMINI, PASTED BELOW. Wherever this prompt says "the attached PDF", it means that report.
 
 CRITICAL SEPARATION RULE
 
@@ -262,7 +262,7 @@ Output only the completed, professionally formatted new PDF. Do not substitute a
 
 ---
 
-DEEP RESEARCH REPORT BY GEMINI, PASTED BELOW (leave this empty if the PDF is attached):`;
+DEEP RESEARCH REPORT BY GEMINI, PASTED BELOW (leave this empty if the file is attached):`;
 
 // Deck slide 17. Exercise 02, step 1.
 const MH_IMAGE_REVERSE = `Review the image and reverse-engineer it into a reusable AI image generation prompt that can be pasted directly into an AI image generator.
@@ -543,7 +543,7 @@ export const MISSIONS = [
         body:
           'Use Copilot. Attach the PDF from the links above, or paste what you copied after the last line of the prompt. It returns the rebuilt report in the chat, not as a file, so keep the tab open.',
         promptLabel: 'THE FACT-CHECK AND REDRAFT',
-        promptNote: '[attach the PDF, or paste the copied report after the last line]',
+        promptNote: '[attach the file, or paste the copied report after the last line]',
         // Display only, and deliberately so: MH_COPILOT_TOP_AND_TAIL is 133
         // lines and this is his own heading on line 5. COPY still writes the
         // constant byte for byte.
