@@ -843,7 +843,7 @@ export const MISSIONS = [
     },
     workflow: ['Build the dashboard', 'Compare with ours', 'Verify and repair'],
     brief:
-      'Turn ten years of real emissions data into an animated story that a room can follow, then prove the numbers in it are the ones in the file.',
+      'Turn ten years of real emissions data into an animated story that a room can follow.',
     artifacts: [A.hesaData],
     steps: [
       {
