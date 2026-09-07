@@ -750,7 +750,7 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'Review and Augment',
         body:
-          'Review the session and add or alter anything. Start at the gap note: everything the training needed and the plan does not say, no dates, no named owners, no thresholds. That list is your questions for whoever owns the plan.',
+          'Review the session and add or alter anything. It is useful to focus on the gap note: everything the training needed and the plan does not say, no dates, no named owners, no thresholds. That list is your questions for whoever owns the plan.',
       },
       {
         tier: 'core',
