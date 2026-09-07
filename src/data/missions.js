@@ -111,13 +111,14 @@ export const APPS = {
 // the site; any divergence shows up live. Whitespace was normalised (the deck
 // lost some spaces after full stops) and the presentational quotation marks
 // wrapping the deck versions were dropped so the text pastes clean.
-// Three edits directed by Matt Mort on 2026-09-07, so do not "restore" them
+// Four edits directed by Matt Mort on 2026-09-07, so do not "restore" them
 // from the deck: MH_COPILOT_TOP_AND_TAIL gained a top line and a bottom
 // heading so the report can be attached OR pasted; MH_IMAGE_REVERSE is Matt's
 // rewrite (output-only, fixed section format, pinned placeholder); MH_ACCESSIBILITY_AUDIT
 // keeps his three opening sentences and adds eight labelled output headings
 // ending in a ranked list of changes, researched 2026-09-07 (see tasks/todo.md
-// addenda 107 and 108).
+// addenda 107 and 108); MH_CANVAS_GAME gained one sentence naming the four-stage
+// 'Demand First' principle as the thing the game should teach.
 // Nothing else was changed.
 // ============================================================================
 
@@ -332,7 +333,7 @@ CHANGES TO THE PICTURE: up to three, numbered, most important first, drawn only 
 const MH_CANVAS_THIN = `Generate a functional mini-game reminiscent of classic ZX Spectrum titles. In this game, a character must navigate a university dining hall to collect low-impact foods while dodging high-carbon options.`;
 
 // Deck slide 22, the engineered version. Exercise 03, step 2.
-const MH_CANVAS_GAME = `Please review the attached 'Sustainable Futures' document. I would like you to create a playable 8-bit web game in a single HTML file using JavaScript and CSS. The visual style must mimic a vintage ZX Spectrum game with a black background and bright, blocky neon colours. The player controls a pixelated character who must cross a busy university dining hall. The goal is to collect low-impact foods to score points, while dodging high-carbon items moving rapidly across the screen. If you hit a high-carbon item, you lose a life. Crucially, use specific terminology, quotes, or policy goals directly from the attached document for the game's title, the introductory screen text, and the 'game over' messages. For example, you could name the game after one of the core goals or reference the 'Demand First' principle in the instructions. Please make it fully playable with keyboard arrow keys.`;
+const MH_CANVAS_GAME = `Please review the attached 'Sustainable Futures' document. I would like you to create a playable 8-bit web game in a single HTML file using JavaScript and CSS. The visual style must mimic a vintage ZX Spectrum game with a black background and bright, blocky neon colours. The player controls a pixelated character who must cross a busy university dining hall. The goal is to collect low-impact foods to score points, while dodging high-carbon items moving rapidly across the screen. If you hit a high-carbon item, you lose a life. Crucially, use specific terminology, quotes, or policy goals directly from the attached document for the game's title, the introductory screen text, and the 'game over' messages. For example, you could name the game after one of the core goals or reference the 'Demand First' principle in the instructions. The game should help the player learn the plan's four-stage 'Demand First' principle. Please make it fully playable with keyboard arrow keys.`;
 
 
 // The three skills share one file-type icon, because that is what it is: a
