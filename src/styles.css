@@ -2444,3 +2444,19 @@ main:focus {
   line-height: 1.5;
   color: var(--black);
 }
+
+/* Step photo, 2026-09-07: a fifth smaller and centred in the card, so it reads
+   as an illustration rather than a banner. Display only: the file on the
+   artifact card above is untouched, and a --ui screenshot still gets the
+   full column because it has to stay readable. */
+.mission-step__figure:not(.mission-step__figure--ui) {
+  text-align: center;
+}
+
+/* Scoped away from --ui: this rule sits after it and would otherwise win on
+   equal specificity, shrinking the screenshot people have to read. */
+.mission-step__figure:not(.mission-step__figure--ui) img {
+  max-width: 368px;
+  margin-left: auto;
+  margin-right: auto;
+}
