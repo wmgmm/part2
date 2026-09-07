@@ -326,7 +326,9 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
   return (
     <section className="mission-detail">
       <header className="mission-detail__header">
-        <p className="eyebrow">{mission.code ? `EXERCISE ${mission.code}` : 'USEFUL PROMPTS'}</p>
+        <p className="eyebrow">
+          {mission.bonus ? 'BONUS EXERCISE' : mission.code ? `EXERCISE ${mission.code}` : 'USEFUL PROMPTS'}
+        </p>
         <div className="mission-head-row">
           <div className="mission-head-row__text">
             <h2 className="mission-detail__title">{mission.pageTitle || mission.title}</h2>

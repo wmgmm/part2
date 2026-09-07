@@ -21,9 +21,9 @@ test runner.
 ## What this is
 
 The AI in the Workplace Part 2 workshop site for Cardiff University staff: six guided
-exercises (called Exercises in the UI; still `MISSIONS` in code), anchored on one real
-document, Cardiff's Sustainable Futures plan 2025-35. Teaches Gemini Deep Research, Gemini
-Notebook, Gemini Canvas and Copilot. Core step time is 82 minutes, so nobody runs all six.
+exercises plus one bonus (`MISSIONS` in code), anchored on one real document, Cardiff's
+Sustainable Futures plan 2025-35. Teaches Gemini Deep Research, Notebook, Canvas and Copilot.
+Core step time is 71 minutes, bonus excluded, so nobody runs all six.
 
 | # | Title | Tool | What it does |
 |---|---|---|---|
@@ -32,7 +32,8 @@ Notebook, Gemini Canvas and Copilot. Core step time is 82 minutes, so nobody run
 | 03 | The Game | Gemini Canvas | Build the same 8-bit game twice, thinly then fully specified |
 | 04 | The Module | Gemini or Copilot | Run `Training_Module_Builder.md` on the plan |
 | 05 | The Brand | Gemini Notebook | One source, two skills, two decks that differ only by the skill |
-| 06 | The Numbers | Copilot then Gemini then Canvas | Analyse real HESA data, cross-check it, build a dashboard, check it, repair it |
+| 06 | The Story | Gemini Canvas | Build a dashboard from real HESA data, compare it with ours, repair it |
+| B1 | Analyse the Numbers | Copilot then Gemini | **Bonus**, off the tally: analyse the data, verify one figure with a skill |
 
 ### The constraint that governs everything
 
@@ -134,17 +135,18 @@ an exercise, edit the data file.
 | `choice`, `hook`, `toolChip`, `collapsed` | the accordion rows under the stretch heading |
 
 `mission.toolsJoin` sets how the picker card joins tool names: default `+` for tools used in
-sequence, `'or'` where either will do (Exercise 04).
+sequence, `'or'` where either will do (Exercise 04). `mission.bonus: true` keeps a mission in
+`MISSIONS` (routing and `?doctor` see it) but puts it in the gallery's red-headed strip, not a
+card, leaves it out of the "n of 6" tally, and sets the eyebrow to BONUS EXERCISE.
 
 **Unused renderers, live but with no data:** `SortGame` (`type: 'sort'`), `check: true`,
-`laneNotes`, and the artifact `sourceLink` field. Kept deliberately; do not document them as
-features and **grep before adding a field with one of those names**.
+`laneNotes`, artifact `sourceLink`. Kept deliberately; **grep before reusing one of those names**.
 
 ### Components worth knowing
 
 `MissionDetail.jsx` also holds `ArtifactCard`, `AttachStrip`, `StepFigure`, `ChoiceStep` and
-`ToolCards`. `PromptBox` copies with a select-text fallback. `TaglineBar` takes `compact`:
-full strapline on splash and gallery, title only behind the sign-in.
+`ToolCards`. `PromptBox` copies with a select-text fallback. `TaglineBar` takes `compact`: the
+wordmark is always the home link; on exercise pages it also carries "Return to all exercises".
 
 **Persistence** (`src/lib/progress.js`): localStorage. `workshop_user_v1` holds
 `{name, email, lane}`; `workshop_progress_v1:<lowercased email>` holds completion. The
@@ -170,25 +172,23 @@ thumbnails, attach lists, `attachExtra` and logos, derived from `MISSIONS` so it
 **A new field naming a file must be added to `collectUrls` in `DoctorPanel.jsx` in the same
 commit.** Missed twice, both times reporting all-clear over an invisible asset.
 
-Twelve files ship. **Not generated:** `Sustainable-Futures-en.pdf` (the published plan),
-`Deep_research_output.pdf` (a real run, 01's fallback), `Example_Training_Session.pdf` (a real
-run of the 04 skill, 05's backup source), `HESA_Estates_Management.xlsx` (13 MB, **unlinked**,
-the generator's input), `Example_Bubble_Chart.html` (a real Canvas run; **its invented data
-stays invented**, step 5's point) and `Cardiff_Estates_Dashboard.html` (the same app repaired,
-step 6's answer). Check either with `python3 tools/verify_chart_data.py <file>`: it exits 0 only
-if every row matches. **Generated:** the four skills plus `HESA_Estates_Workshop.csv`/`.xlsx`.
+Twelve files ship. **Not generated:** `Sustainable-Futures-en.pdf` (the plan),
+`Deep_research_output.pdf` (01's fallback), `Example_Training_Session.pdf` (05's backup source),
+`HESA_Estates_Management.xlsx` (13 MB, **unlinked**, the generator's input),
+`Example_Bubble_Chart.html` (a real Canvas run; **its invented data stays invented**, 06 step
+2's point) and `Cardiff_Estates_Dashboard.html` (the same app repaired, 06 step 3). Check either
+with `python3 tools/verify_chart_data.py <file>`, exit 0 only if every row matches.
+**Generated:** the five skills plus `HESA_Estates_Workshop.csv`/`.xlsx`.
 
 ## Styling
 
 Single file, `src/styles.css`. Palette from the thematts pages: page `#f5f5f7`, white cards,
-charcoal `#1d1d1f`, blue accent `#0071e3`. Custom properties at `:root`; later sections
-override earlier ones by cascade, so **append restyles at the end rather than editing old
-blocks**.
+charcoal `#1d1d1f`, blue accent `#0071e3`, and Cardiff red `#E4251B` only on the bonus strip.
+Custom properties at `:root`; later sections win by cascade, so **append restyles at the end**.
 
 **No black strokes and no monospace UI labels**, matching the Part 1 page: mono is for prompt
-content only. Drawn icons (`*_icon.*`) carry their own outline and get no card border;
-photographic covers (`*_cover.*`) keep one. The escaperoom and leaderboard components were
-deleted 2026-09-04; git has them, do not reintroduce them.
+content only. Drawn icons (`*_icon.*`) carry their own outline and get no card border; photo
+covers (`*_cover.*`) keep one. Escaperoom and leaderboard were deleted 2026-09-04; git has them.
 
 ## Deployment
 

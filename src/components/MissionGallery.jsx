@@ -5,7 +5,11 @@ import { MISSIONS, HERO_IMAGE } from '../data/missions.js';
 const BASE = import.meta.env.BASE_URL;
 
 export default function MissionGallery({ progress }) {
-  const completedCount = MISSIONS.filter(m => progress[m.id]).length;
+  // Bonus exercises are optional: listed in their own strip under the cards,
+  // and not counted, so "n of 6" stays true to the day's six.
+  const main = MISSIONS.filter(m => !m.bonus);
+  const bonus = MISSIONS.filter(m => m.bonus);
+  const completedCount = main.filter(m => progress[m.id]).length;
 
   return (
     <section className="evidence-section">
@@ -31,20 +35,20 @@ export default function MissionGallery({ progress }) {
 
       <div className="evidence-section__header">
         <h2 className="evidence-section__title">BUILD THE STAFF BRIEFING PACK</h2>
-        {completedCount === MISSIONS.length ? (
+        {completedCount === main.length ? (
           <p className="mission-progress-line mission-progress-line--done">
-            All {MISSIONS.length} complete. &ldquo;The briefing pack exists. The real
+            All {main.length} complete. &ldquo;The briefing pack exists. The real
             work is making this how the team works every week.&rdquo; &mdash; C.G.
           </p>
         ) : (
           <p className="mission-progress-line">
-            {completedCount} of {MISSIONS.length} exercises complete
+            {completedCount} of {main.length} exercises complete
           </p>
         )}
       </div>
 
       <div className="evidence-grid mission-grid">
-        {MISSIONS.map(mission => (
+        {main.map(mission => (
           <MissionCard
             key={mission.id}
             mission={mission}
@@ -52,6 +56,23 @@ export default function MissionGallery({ progress }) {
           />
         ))}
       </div>
+
+      {/* A slim full-width card, the slot the old prompt-library strip used.
+          Deliberately not a MissionCard: no numeral, no tick, sits under the
+          grid rather than in it. */}
+      {bonus.map(m => (
+        <button
+          key={m.id}
+          type="button"
+          className="bonus-strip"
+          onClick={() => { window.location.hash = '#/' + m.id; }}
+        >
+          <span className="bonus-strip__label">Bonus exercises</span>
+          <span className="bonus-strip__line">
+            <strong>{m.title}.</strong> {m.summary} &rarr;
+          </span>
+        </button>
+      ))}
 
       <div className="governance-callout governance-callout--discreet">
         <p>

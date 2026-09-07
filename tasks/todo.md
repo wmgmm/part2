@@ -3005,6 +3005,58 @@ edge, `href="#/"`.
 
 ---
 
+## 2026-09-07 (addendum 98): Exercise 06 split into The Story and a Bonus exercise
+
+Matt: snapshot first, then split 06. **06 becomes data storytelling** (the Canvas build, the
+comparison with ours, the repair), titled **The Story**. The analysis half (run in Copilot,
+verify in Gemini with the skill) becomes a **Bonus exercise**, reached from a slim white card
+that spans the full width of the card grid, headed **BONUS EXERCISES** in **Cardiff red**.
+Decisions taken in plan mode: the card opens a proper exercise page (`#/bonus1`), the red is
+brand `#E4251B`, the bonus is excluded from the tally and the core-time total, and 06's page
+title is *Turn Ten Years of Real Data Into a Story You Can Show*.
+
+**Snapshot:** tag `snapshot-2026-09-07-pre-split` on `ed595be`, and
+`snapshot-gallery-pre-split.jpg` at repo root, untracked like the other images.
+
+**What moved where.** Old steps 3-5 (6+2+3 = 11 min) stay on `m6` with new title, summary,
+tools (Gemini + Canvas only), feature line, workflow and brief. Old steps 1-2 (6+5 = 11 min)
+move verbatim to `bonus1`, which reuses 06's old page title, feature line and brief because
+they already described exactly that half. One copy fix: old step 3 said "with the CSV attached
+**again**", which as a first step follows nothing; "again" is gone. The old two-sentence
+verdict split one sentence each way: Matt's storytelling line stays on 06 with a second clause
+about checking, and "Ask for the code..." goes to the bonus. **Flag for Matt:** he wrote the
+storytelling sentence, so if the added clause is unwanted, cut it.
+
+**The strip already existed.** Exploration found the full-width white card under the grid was
+the prompt-library strip deleted in `4eeef36`. Its CSS came back from git as `.bonus-strip`:
+white, hairline border, card radius, hover lift. The label is a red eyebrow (`--cardiff-red`,
+appended to `:root` at the end of the stylesheet), the only brand red on the site, so blue
+stays the colour of things you press. It sits outside the grid, so full width needs no
+`grid-column` trick, and it renders one row per bonus mission.
+
+**The one thing the split would have broken, and did not.** The gallery counted
+`MISSIONS.length`, so a seventh member would have read "0 of 7". `bonus: true` on the mission
+plus `main = MISSIONS.filter(m => !m.bonus)` for the grid and all three tally usages keeps it
+"n of 6". The bonus stays inside `MISSIONS` deliberately: `getMission` finds it by id with no
+router change, and `?doctor` iterates the array so its files stay preflighted. It has
+`code: 'B1'` because the doctor labels rows by code, and the detail eyebrow gained a
+`mission.bonus` branch reading BONUS EXERCISE instead of EXERCISE B1.
+
+Completing the bonus still writes `progress['bonus1']` and reveals its verdict; the gallery just
+does not count it. Nothing else in `MissionDetail` needed to change.
+
+**Verified** on the built bundle: MH hash unchanged, gallery 6 cards and "0 of 6", strip width
+identical to the grid's 1,320px and left-aligned to it, label `rgb(228, 37, 27)` in sans,
+no overflow; `#/bonus1` shows BONUS EXERCISE, two steps, both attach strips, both bold lines,
+the CSV card and the return control. `CLAUDE.md` back to exactly 200 lines, with the stale
+`TaglineBar` note fixed on the way.
+
+**Trap, again:** clicking the strip flipped the hash but the detail page did not mount in the
+hidden tab, because the gallery's exit animation froze mid-way. Reloading straight onto the
+route is the reliable check.
+
+---
+
 # HANDOVER, end of 2026-09-05
 
 Read this first. It supersedes the earlier "OPEN" block, which is folded in below.
