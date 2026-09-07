@@ -322,6 +322,7 @@ AMBIGUOUS OR MISLEADING:
 WORDS IN THE IMAGE: quote exactly what you can read, name what you cannot, or say "none".
 ALT TEXT: under 125 characters, most important thing first, written for what the image is doing on the page rather than a list of what is in it. Assume it needs alt text, and do not start it with "image of".
 ONE CLEAR SUBJECT: could you write that alt text without leaving something important out? Say "yes", or name the one thing that crowded it out.
+IN GREYSCALE: does any meaning depend on colour alone? Say "nothing" if not. Do not name colours and do not judge contrast.
 I ASSUMED: the one guess you had to make about where this image will be used. Name one, not a list.
 CHANGES TO THE PICTURE: up to three, numbered, most important first, drawn only from the checks above and only where you can point at what you saw. Say what you want in the new picture rather than what to take out. Then give one line containing all of them, ready to paste into an image prompt. Changes to the picture only, never a caption and never wording placed beside the image.`;
 
