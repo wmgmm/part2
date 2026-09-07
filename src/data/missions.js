@@ -887,7 +887,7 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 4,
-        title: 'Paste the brand skill into Slide Deck',
+        title: 'Click Slides, copy the prompt and paste the skill file',
         artifact: A.brandSkill,
         body:
           'In the Studio pane, click Slide Deck. Paste the prompt into the description box, then COPY the skill below and paste it underneath. Do NOT add it as a source, or the deck becomes about the rules.',
