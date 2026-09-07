@@ -320,7 +320,7 @@ function ChoiceStep({ step }) {
           {step.backup && (
             <div className="step-backup">
               <span className="step-backup__label">{step.backup.label || 'Backup'}</span>
-              <p className="step-backup__text">{step.backup.text}</p>
+              <p className="step-backup__text">{renderBody(step.backup.text, step.bodyIcons)}</p>
               {step.backup.examples && (
                 <ul className="step-backup__swaps">
                   {step.backup.examples.map(([from, to]) => (
@@ -388,7 +388,7 @@ function Step({ step, number, lane }) {
       {step.backup && (
             <div className="step-backup">
               <span className="step-backup__label">{step.backup.label || 'Backup'}</span>
-              <p className="step-backup__text">{step.backup.text}</p>
+              <p className="step-backup__text">{renderBody(step.backup.text, step.bodyIcons)}</p>
               {step.backup.examples && (
                 <ul className="step-backup__swaps">
                   {step.backup.examples.map(([from, to]) => (
