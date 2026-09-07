@@ -64,6 +64,48 @@
       .pulse-effect, .animate-ping { animation: none !important; }
       #chartSvg, #endStateOverlay, .transition-all { transition: none !important; }
     }
+
+    /* --- Fit-to-window layout (laptops and up); phones and tiny windows keep scrolling --- */
+    /* Tailwind's play CDN injects its stylesheet after this block, so every selector below
+       carries a class or id plus a second component to outrank single-class utilities. */
+    @media (min-width: 1024px) and (min-height: 560px) {
+      body.flex { height: 100vh; overflow: hidden; }
+      main.flex-1 { flex: 1 1 auto; min-height: 0; }
+      #chartContainer { flex: 1 1 auto; min-height: 200px; }
+    }
+
+    /* Compaction tier 1: anything shorter than the uncompacted page needs (~1150px) */
+    @media (max-height: 1100px) {
+      body.flex { padding: 12px; }
+      header.w-full { margin-bottom: 8px; }
+      header.w-full > div.pb-4 { padding-bottom: 8px; }
+      header.w-full h1 { font-size: 1.25rem; line-height: 1.75rem; }
+      header.w-full > div.grid { margin-top: 8px; }
+      header.w-full .grid > div { padding: 8px; }
+      header.w-full .grid > div span.text-xl { font-size: 1rem; line-height: 1.5rem; }
+      #narrativeBanner { margin-top: 6px; padding-top: 4px; padding-bottom: 4px; }
+      main.flex-1 { padding: 12px; }
+      main > div.mt-3 { margin-top: 6px; padding-top: 6px; }
+      #dataStatus { margin-top: 4px; }
+      footer.w-full { margin-top: 8px; padding: 8px; }
+    }
+
+    /* Compaction tier 2: laptop screens, subtitle held to one line */
+    @media (max-height: 750px) {
+      body.flex { padding: 8px; }
+      header.w-full { margin-bottom: 4px; }
+      header.w-full > div.pb-4 { padding-bottom: 4px; }
+      header.w-full h1 { font-size: 1.125rem; line-height: 1.5rem; }
+      header.w-full h1 + p { font-size: 11px; line-height: 1.25; }
+      header.w-full > div.grid { margin-top: 4px; }
+      header.w-full .grid > div { padding: 6px 8px; }
+      header.w-full .grid > div span.text-xl { font-size: 0.9375rem; line-height: 1.25rem; }
+      #narrativeBanner { margin-top: 4px; padding-top: 2px; padding-bottom: 2px; }
+      main.flex-1 { padding: 8px 12px; }
+      main > div.mt-3 { margin-top: 4px; padding-top: 4px; }
+      #dataStatus { margin-top: 2px; }
+      footer.w-full { margin-top: 4px; padding: 6px 8px; }
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between p-3 md:p-6 text-slate-100 selection:bg-rose-500 selection:text-white">
@@ -1059,7 +1101,7 @@ Wrexham University,2024/25,28,59974,10330513,21716,1340,72,40.7,1848.0
       xBase = d3.scaleLinear().domain(model.fullX).range([box.x0, box.x1]);
       yBase = d3.scaleLinear().domain(model.fullY).range([box.y1, box.y0]);
       // Area proportional to floor area: sqrt radius scale anchored at zero.
-      radiusScale = d3.scaleSqrt().domain([0, model.maxArea]).range([0, width > 768 ? 34 : 24]);
+      radiusScale = d3.scaleSqrt().domain([0, model.maxArea]).range([0, Math.max(14, Math.min(width > 768 ? 34 : 24, height / 14))]);
 
       svg.append("defs").append("clipPath").attr("id", "plotClip")
         .append("rect").attr("x", box.x0).attr("y", box.y0).attr("width", box.x1 - box.x0).attr("height", box.y1 - box.y0);

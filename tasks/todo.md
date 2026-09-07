@@ -3160,6 +3160,64 @@ note itself is a separate change and has not been made.
 
 ---
 
+## 2026-09-07 (addendum 102): the dashboard now fits the screen it is shown on
+
+Matt: the Canvas dashboard looks superb but the room has to scroll to see it. Measured before
+touching anything: **the page was 1,148px tall at every window size**, because
+`#chartContainer` carried `min-h-[480px] md:min-h-[560px]` and nothing in the layout responded
+to viewport height. On a 1366x768 laptop that is 490px, about 43% of the page, below the fold.
+
+Everything except the chart cost **588px**: body padding 48, header title block 120, KPI grid 99,
+narrative 50, header margin 16, main padding 40, legend bar 94 (its circles are drawn from the
+bubble radius scale, hence 69px tall), provenance 33, footer 78.
+
+**Three changes, one file, no data touched:**
+
+1. **Fit to window**, guarded by `@media (min-width: 1024px) and (min-height: 560px)`:
+   `body { height: 100vh; overflow: hidden }`, `main` and `#chartContainer` flex to fill, the
+   fixed `min-h-*` reduced to a 200px floor. Phones and very short windows keep scrolling instead
+   of clipping, verified at 390x700.
+2. **Two compaction tiers** in the existing `<style>` block, `max-height: 1100px` and
+   `max-height: 750px`: smaller title, tighter card padding, thinner footer, and the subtitle
+   held to one line. Nothing hidden, nothing reordered, per Matt's choice.
+3. **Bubble radius derives from height as well as width**:
+   `Math.max(14, Math.min(width > 768 ? 34 : 24, height / 14))`. A short chart no longer fills
+   with overlapping circles, and the external legend shrinks with it because
+   `renderExternalLegend` reads the same scale.
+
+**Measured after, probe iframes, no scrolling at any of them:**
+
+| viewport | page height | chart |
+|---|---|---|
+| 1280x600 | 600 | 252 |
+| 1366x657 | 657 | 302 |
+| 1440x731 | 731 | 365 |
+| 1536x722 | 722 | 358 |
+| 1920x950 | 950 | 491 |
+| 1920x1150 | 1150 | 562, uncompacted, exactly as it looked before |
+
+**The subagent's tier 1 breakpoint was 900px and I raised it to 1100.** At 900 a 1080p laptop
+(about 950px of usable page) fell outside compaction and the chart dropped to 362px, shorter than
+the 560 it used to have. At 1100 that screen gets 491 and the deck-sized window still gets 562.
+
+**A trap worth keeping.** The subagent's first write went through Python text mode and silently
+rewrote the embedded CSV's CRLF line endings to LF. `tools/verify_chart_data.py` still said
+IDENTICAL, because it parses the CSV rather than comparing bytes. It caught itself and redid the
+edit in binary mode. **Read and write that file as bytes.** Byte check against HEAD:
+
+```bash
+python3 - <<'EOF'
+import re, subprocess
+new = open('public/placeholders/Cardiff_Estates_Dashboard.html','rb').read()
+old = subprocess.run(['git','show','HEAD:public/placeholders/Cardiff_Estates_Dashboard.html'],
+                     capture_output=True).stdout
+pat = re.compile(rb'<script id="hesa-data-csv".*?</script>', re.S)
+print(pat.search(new).group(0) == pat.search(old).group(0))
+EOF
+```
+
+---
+
 # HANDOVER, end of 2026-09-05
 
 Read this first. It supersedes the earlier "OPEN" block, which is folded in below.
