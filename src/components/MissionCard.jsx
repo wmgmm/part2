@@ -38,9 +38,11 @@ export default function MissionCard({ mission, completed }) {
 
       {completed && <span className="mission-card__done-stamp">DONE</span>}
 
+      {/* The number and the blue stage word name the card; the title still
+          heads the exercise page and stays in the aria-label. Only the tools
+          survive down here, because knowing you need Copilot before you click
+          is the one thing that saves a wasted click. */}
       <span className="evidence-card__label mission-card__label">
-        <span className="evidence-card__id">EXERCISE {mission.code}</span>
-        <span className="evidence-card__name">{mission.title}</span>
         <span className="mission-card__meta">
           {mission.tools.join(` ${mission.toolsJoin || '+'} `)}
         </span>

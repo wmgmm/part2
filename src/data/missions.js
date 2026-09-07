@@ -530,7 +530,7 @@ const A = {
 export const MISSIONS = [
   {
     id: 'm1',
-    stage: 'Research',
+    stage: 'Deep Research',
     code: '01',
     level: 1,
     title: 'The Landscape',
@@ -614,7 +614,7 @@ export const MISSIONS = [
 
   {
     id: 'm2',
-    stage: 'Illustrate',
+    stage: 'Image Prompts',
     code: '02',
     level: 2,
     title: 'The Image',
@@ -710,7 +710,7 @@ export const MISSIONS = [
 
   {
     id: 'm3',
-    stage: 'Build',
+    stage: 'Gamification',
     code: '03',
     level: 2,
     title: 'The Game',
@@ -781,7 +781,7 @@ export const MISSIONS = [
 
   {
     id: 'm4',
-    stage: 'Teach',
+    stage: 'Training Skill',
     code: '04',
     level: 2,
     title: 'The Module',
@@ -859,12 +859,12 @@ export const MISSIONS = [
 
   {
     id: 'm5',
-    stage: 'Shape',
+    stage: 'Shape the Brand',
     code: '05',
     level: 2,
     title: 'The Brand',
     pageTitle: 'Turn the Training Into Internal Slides That Look Like Cardiff',
-    summary: 'One source in a notebook, the brand skill in the deck description, one deck out.',
+    summary: 'One source, one skill, one Cardiff-branded deck out.',
     tools: [TOOLS.notebook],
     estMinutesCore: 16,
     toolInfo: {
@@ -936,7 +936,7 @@ export const MISSIONS = [
 
   {
     id: 'm6',
-    stage: 'Narrate',
+    stage: 'Dashboard',
     code: '06',
     level: 3,
     title: 'The Story',
