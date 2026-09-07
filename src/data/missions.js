@@ -534,7 +534,7 @@ export const MISSIONS = [
         estMinutes: 1,
         title: 'Copy the Deep Research Report',
         body:
-          'Click "Share and export", then "Copy contents". Cardiff also offers "Export to notebook", useful later but not here. Paste the report into a Word document and save it: Copilot reads an attached file better than one very long paste.',
+          'Click "Share and export", then "Copy contents". Paste the report into a Word document and save it: Copilot prefers an attached file to a copy and paste.',
         backup: {
           label: 'OR PASTE IT STRAIGHT IN',
           text:
