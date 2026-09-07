@@ -327,7 +327,7 @@ const A = {
     label: 'OPTIONAL: A FINISHED DEEP RESEARCH RUN',
     filename: 'Deep_research_output.pdf',
     downloadPath: `${BASE}placeholders/Deep_research_output.pdf`,
-    note: 'The brief already run, so you can compare, or so you can do the Copilot half if your own run is still going.',
+    note: 'A copy of the Matts Deep Research report, a backup for step 4 if your own run is still going.',
     thumb: EXAMPLE_ICON,
   },
   trainingSkill: {
