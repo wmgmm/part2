@@ -838,8 +838,6 @@ export const MISSIONS = [
     tools: [TOOLS.gemini, TOOLS.canvas],
     estMinutesCore: 11,
     toolInfo: {
-      feature:
-        'Gemini Canvas builds a working web page from a description. It writes the data into the page as it goes, which is exactly why the page has to be checked.',
       apps: [APPS.gemini],
     },
     workflow: ['Build the dashboard', 'Compare with ours', 'Verify and repair'],
