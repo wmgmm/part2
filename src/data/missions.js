@@ -313,8 +313,12 @@ const MH_ACCESSIBILITY_AUDIT = `Describe this image for someone who cannot see i
 
 Be concise: about 60 words for the description, then one sentence for each answer. No preamble, no hedging, no lists of maybes.
 
-Then end with four labelled lines:
+Answer under these headings, in this order:
 
+DESCRIPTION:
+MAIN MESSAGE:
+AMBIGUOUS OR MISLEADING:
+WORDS IN THE IMAGE:
 ALT TEXT: under 125 characters, most important thing first, written for what the image is doing on the page rather than a list of what is in it. Assume it needs alt text, and do not start it with "image of".
 I ASSUMED: the one guess you had to make about where this image will be used. Name one, not a list.
 IN GREYSCALE: does any meaning depend on colour alone? Say "nothing" if not. Do not comment on how it looks.

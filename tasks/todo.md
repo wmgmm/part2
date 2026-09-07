@@ -3504,7 +3504,7 @@ Mac before the day.
 
 **Matt's rewrite of `MH_IMAGE_REVERSE`** landed in the same commit: output-only, a fixed
 seven-line format, the placeholder pinned. Anchor hash is now
-`c14234c2487f7e15355597c43628a836fdc0a5c3e7e62f536375b1310507eb3f`. His pasted text had a
+`39ef035d0d357f8f242e7cc49f29ebc1913936ebacfc84d7328299d65c815e9b`. His pasted text had a
 non-breaking hyphen in "reverse-engineer"; the constant uses a plain hyphen.
 
 ## 2026-09-07 (addendum 107): the accessibility audit prompt, researched and rewritten
@@ -3599,7 +3599,7 @@ reworded prompt shows up live.** Verify the block by anchor, never a line range:
 start=$(grep -n "^const MH_DEEP_RESEARCH" src/data/missions.js | cut -d: -f1)
 end=$(grep -n "^const MH_CANVAS_GAME" src/data/missions.js | cut -d: -f1)
 sed -n "${start},${end}p" src/data/missions.js | sha256sum
-# c14234c2487f7e15355597c43628a836fdc0a5c3e7e62f536375b1310507eb3f
+# 39ef035d0d357f8f242e7cc49f29ebc1913936ebacfc84d7328299d65c815e9b
 ```
 
 **Editable without touching his words:** step `title`, `body`, `promptLabel`, `promptNote`,
