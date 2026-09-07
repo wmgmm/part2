@@ -742,7 +742,7 @@ export const MISSIONS = [
         estMinutes: 1,
         title: 'Responsible AI',
         body:
-          'Share responsibly: no C1 or C2 data in anything you make public. Do not put staff, student or sensitive financial or research data into something you are sharing by link. Nobody has reviewed this code either, which is fine for a demo with friends.',
+          'Share responsibly: no C1 or C2 data in anything you make public. Do not put staff, student or sensitive financial or research data into something you are sharing by link.',
       },
     ],
     verdictBy: 'The Matts',
