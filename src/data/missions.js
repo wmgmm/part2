@@ -852,7 +852,7 @@ export const MISSIONS = [
         estMinutes: 6,
         title: 'Attach the data and run the prompt',
         body:
-          'Start in Copilot. Download the CSV file from the card above and attach it.',
+          'Start in Copilot. Download the HESA_Estates_Workshop.csv file from the card above and attach it.',
         attach: [A.hesaData],
         promptLabel: 'YOUR PROMPT',
         promptNote: '[attach HESA_Estates_Workshop.csv]',
