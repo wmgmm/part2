@@ -175,9 +175,9 @@ commit.** Missed twice, both times reporting all-clear over an invisible asset.
 Twelve files ship. **Not generated:** `Sustainable-Futures-en.pdf` (the plan),
 `Deep_research_output.pdf` (01's fallback), `Example_Training_Session.pdf` (05's backup source),
 `HESA_Estates_Management.xlsx` (13 MB, **unlinked**, the generator's input),
-`Example_Bubble_Chart.html` (a real Canvas run; **its invented data stays invented**, 06 step
-2's point) and `Cardiff_Estates_Dashboard.html` (the same app repaired, 06 step 3). Check either
-with `python3 tools/verify_chart_data.py <file>`, exit 0 only if every row matches.
+`Cardiff_Estates_Dashboard.html` (06 step 2's card: a real Canvas run, repaired against the
+CSV) and `Example_Bubble_Chart.html` (its first, fabricated version, **unlinked, kept as
+evidence**). Check either with `python3 tools/verify_chart_data.py <file>`; exit 0 means clean.
 **Generated:** the five skills plus `HESA_Estates_Workshop.csv`/`.xlsx`.
 
 ## Styling

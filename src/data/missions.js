@@ -383,20 +383,13 @@ const A = {
   },
   exampleChart: {
     label: 'OPTIONAL: ONE WE MADE EARLIER',
-    filename: 'Example_Bubble_Chart.html',
-    downloadPath: `${BASE}placeholders/Example_Bubble_Chart.html`,
-    // Kept exactly as Canvas produced it, because the point of the card is what
-    // the tool actually did. It looks superb and its numbers are invented: only
-    // 11 of its 180 embedded rows match the CSV, and it drops 13 universities.
-    note: 'A real Canvas build from the prompt above. It looks superb, and its numbers do not match the file it was given.',
-    thumb: EXAMPLE_ICON,
-  },
-  fixedChart: {
-    label: 'THE SAME APP, REPAIRED',
     filename: 'Cardiff_Estates_Dashboard.html',
     downloadPath: `${BASE}placeholders/Cardiff_Estates_Dashboard.html`,
-    note: 'Rebuilt from the CSV. All 31 universities, all 307 rows, every figure traceable.',
-    thumb: HTML_ICON,
+    // The finished build, repaired against the CSV (verify_chart_data.py exits 0).
+    // The first, fabricated build is kept unlinked as Example_Bubble_Chart.html:
+    // 11 of its 180 embedded rows matched the CSV and it dropped 13 universities.
+    note: 'A real Canvas build from the prompt above. It looks superb, but after manual checking we had to adjust some of the numbers.',
+    thumb: EXAMPLE_ICON,
   },
   // Not a download: the reader already has this one, because Canvas made it.
   // It exists so the attach strip can show what goes in the new chat.
@@ -874,9 +867,8 @@ export const MISSIONS = [
         tier: 'core',
         estMinutes: 3,
         title: 'Always verify, and repair if required',
-        artifact: A.fixedChart,
         body:
-          'The first version of our app got the data slightly wrong, and it flattered Cardiff (Thanks Gemini 😂). So we downloaded the HTML, opened a new Gemini chat with Canvas on, and attached the app and the CSV together. This is what came back. Afterwards, open Code and Show recent changes to see exactly what it altered.',
+          'The first version of our app got the data slightly wrong, and it flattered Cardiff (Thanks Gemini 😂). So we downloaded the HTML, opened a new Gemini chat with Canvas on, and attached the app and the CSV together. Afterwards, open Code and Show recent changes to see exactly what it altered.',
         attachLabel: 'NEW CHAT',
         attach: [A.yourChart, A.hesaData],
         attachExtra: {
