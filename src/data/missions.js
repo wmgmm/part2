@@ -712,7 +712,7 @@ export const MISSIONS = [
         'A skill is a file you attach alongside your document. Nothing to install and it works in Gemini and Copilot.',
       apps: [APPS.gemini, APPS.copilot],
     },
-    workflow: ['Paste the prompt', 'Attach the files', 'Review the gap note', 'Save/copy it'],
+    workflow: ['Paste the prompt', 'Attach the files', 'Augment it', 'Save/copy it'],
     brief:
       'Build a half-hour training session on the sustainability plan pdf, using a skill file.',
     artifacts: [A.trainingSkill, A.susPlan],
@@ -748,9 +748,9 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 4,
-        title: 'Review the gap note at the bottom',
+        title: 'Augment it as a human',
         body:
-          'The gap note is everything the training needed and the plan does not say: no dates, no named owners, no thresholds. That list is your questions for whoever owns the plan. Augment it as a human: review the session and add or alter anything.',
+          'Review the session and add or alter anything. Start at the gap note: everything the training needed and the plan does not say, no dates, no named owners, no thresholds. That list is your questions for whoever owns the plan.',
       },
       {
         tier: 'core',
