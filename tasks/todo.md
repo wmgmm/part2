@@ -3504,7 +3504,7 @@ Mac before the day.
 
 **Matt's rewrite of `MH_IMAGE_REVERSE`** landed in the same commit: output-only, a fixed
 seven-line format, the placeholder pinned. Anchor hash is now
-`93f4a4ac35b28f9438154b7a50e984ee7e4ce88bc61d2c3b104797ec20f3b1b3`. His pasted text had a
+`6f0cc6af26103db0d2ce3cff8290ad61d8368c36b99a7b0b846a480c9c4d1b5f`. His pasted text had a
 non-breaking hyphen in "reverse-engineer"; the constant uses a plain hyphen.
 
 ## 2026-09-07 (addendum 107): the accessibility audit prompt, researched and rewritten
@@ -3571,6 +3571,55 @@ caption contradicting the tweet text doubted their own understanding rather than
 its study of 3,467 real hallucination cases "This is My Fault", Really? That is the argument
 for the "say so if you cannot read them" line, and it belongs in what Matt says out loud.
 
+## 2026-09-07 (addendum 108): the audit becomes a list of changes, not a verdict
+
+Matt asked for a simple three-area framework rated High, Medium and Low, then said on
+reflection that the scoring might be wrong and it is "more about the suggested changes we can
+then make to the image". Two subagents were briefed, one to research and one to design; both
+were steered mid-flight. The design agent came back agreeing: **drop the rating entirely.**
+
+**Why no rating.** It is a verdict on an image the participant made four minutes ago, and they
+cannot act on it. A bare label is unfalsifiable, so each rating needs a justifying sentence,
+which spends the whole budget of a three-minute exercise saying what the findings already say.
+Every mechanism against the flat-Medium failure (hard triggers, mandatory evidence, a
+counterfactual clause) costs 40 to 60 words to defend a number nobody uses. The one ordinal
+element kept is the **priority order of the changes themselves**, numbered, most important
+first, which is the only ranking a person with three minutes can act on: do number one.
+
+**The three places to look** are no longer things to rate but places that reliably yield a
+change: the lettering that could not be read, whatever competes with the subject, and any
+meaning carried by colour alone. The first is the near-guaranteed defect in an AI-generated
+image and the reason the WORDS IN THE IMAGE heading already worked in a real run. The second
+earned the heading `WHAT THE EYE FINDS FIRST`, which the greyscale cut paid for: without it the
+model proposes composition changes before it has said what the composition is about, which is
+how the first run drifted. The third is demoted to four words inside the changes line, because
+it fires empty on a photograph but is the most severe fault when it does fire on a diagram.
+
+**Rejected areas:** contrast (cannot be judged without inventing ratios); whether the image
+needs a caption (needs page context, and there is none); representation and stereotyping
+(collides with the existing "do not guess anyone's age, background or feelings"); "can it be
+summed up in one sentence" (circular with ALT TEXT, which already tests that); anatomical
+artefacts (already caught by AMBIGUOUS OR MISLEADING, and an accuracy fault, not an access one).
+
+**Cuts that paid for it.** "Quote any words in the image exactly, and say so if you cannot read
+them" left the opening paragraph and became the WORDS IN THE IMAGE heading's own instruction,
+where the model reads it immediately before answering rather than 150 words earlier. The
+"Look at legibility, clutter, and text baked into the picture" clause went, because the findings
+are the framework now and keeping both says it twice. `REGENERATION PROMPT` became `CHANGES TO
+THE PICTURE`: "prompt" invited a whole replacement image prompt, which is the wrong shape when
+the participant already holds a reusable one from step 1. **Matt endorsed the REGENERATION
+PROMPT name via review feedback, so flag this if he wants it back.**
+
+**Ordering settled: reasoning first, changes last.** A finding stated before the description is
+a guess, and the description is what forces the model to enumerate the picture. A participant
+cannot check a verdict before seeing the evidence. And the three frozen sentences put describing
+first, out loud, so a findings block above DESCRIPTION would fight the deck being read from.
+
+Two to three changes rather than one, because regeneration takes thirty seconds and the
+expensive cycle is read, decide, paste. A fast participant pastes all three, a slow one pastes
+number 1 and still gets the biggest win. The floor of one stops an empty list and the ceiling
+of three stops an essay. Prompt is now 1,430 characters and 252 words, against 1,154 and 207.
+
 # HANDOVER, end of 2026-09-07
 
 **Supersedes the 2026-09-05 handover above.** That block's traps still hold; this one carries the
@@ -3599,7 +3648,7 @@ reworded prompt shows up live.** Verify the block by anchor, never a line range:
 start=$(grep -n "^const MH_DEEP_RESEARCH" src/data/missions.js | cut -d: -f1)
 end=$(grep -n "^const MH_CANVAS_GAME" src/data/missions.js | cut -d: -f1)
 sed -n "${start},${end}p" src/data/missions.js | sha256sum
-# 93f4a4ac35b28f9438154b7a50e984ee7e4ce88bc61d2c3b104797ec20f3b1b3
+# 6f0cc6af26103db0d2ce3cff8290ad61d8368c36b99a7b0b846a480c9c4d1b5f
 ```
 
 **Editable without touching his words:** step `title`, `body`, `promptLabel`, `promptNote`,

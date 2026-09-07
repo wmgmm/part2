@@ -115,8 +115,9 @@ export const APPS = {
 // from the deck: MH_COPILOT_TOP_AND_TAIL gained a top line and a bottom
 // heading so the report can be attached OR pasted; MH_IMAGE_REVERSE is Matt's
 // rewrite (output-only, fixed section format, pinned placeholder); MH_ACCESSIBILITY_AUDIT
-// keeps his three opening sentences and adds four labelled output lines plus
-// three guards, researched 2026-09-07 (see tasks/todo.md addendum 107).
+// keeps his three opening sentences and adds eight labelled output headings
+// ending in a ranked list of changes, researched 2026-09-07 (see tasks/todo.md
+// addenda 107 and 108).
 // Nothing else was changed.
 // ============================================================================
 
@@ -309,19 +310,20 @@ Consistency requirement: Match all previously generated images in style, palette
 Subject: [Replace only this section for each image]`;
 
 // Deck slide 19. Exercise 02, step 4.
-const MH_ACCESSIBILITY_AUDIT = `Describe this image for someone who cannot see it. What is the main message? What might be ambiguous or misleading? Quote any words in the image exactly, and say so if you cannot read them. Do not guess anyone's age, background or feelings.
+const MH_ACCESSIBILITY_AUDIT = `Describe this image for someone who cannot see it. What is the main message? What might be ambiguous or misleading? Do not guess anyone's age, background or feelings.
 
-Be concise: about 60 words for the description, then one sentence for each answer. No preamble, no hedging, no lists of maybes.
+Be concise: about 60 words for the description, then one sentence for each answer. No preamble, no hedging, no lists of maybes. No percentages, ratios or measurements.
 
 Answer under these headings, in this order:
 
 DESCRIPTION:
 MAIN MESSAGE:
 AMBIGUOUS OR MISLEADING:
-WORDS IN THE IMAGE:
+WORDS IN THE IMAGE: quote exactly what you can read, name what you cannot, or say "none".
+WHAT THE EYE FINDS FIRST: name the one thing this picture is about, then anything that competes with it.
 ALT TEXT: under 125 characters, most important thing first, written for what the image is doing on the page rather than a list of what is in it. Assume it needs alt text, and do not start it with "image of".
 I ASSUMED: the one guess you had to make about where this image will be used. Name one, not a list.
-REGENERATION PROMPT: one accessibility problem with the image itself and the change that fixes it, worded to go straight into a prompt for a new image. Look at legibility, clutter, and text baked into the picture, which cannot be resized or read aloud. Say what you want rather than what to remove. Not a caption and not any wording placed beside the image.`;
+CHANGES TO THE PICTURE: at least one and at most three, numbered, most important first, drawn from the lettering you could not read, from whatever competes with the subject, and from any meaning only colour carries. Write each as one sentence that could be pasted straight into a prompt for a new image, naming something visible in this picture. Describe what you want to see rather than what to take out. Changes to the picture only, never a caption and never wording placed beside the image.`;
 
 // Deck slide 21, the short version he shows first. PARKED 2026-09-07: Matt
 // dropped Exercise 03's thin-ask step for now, so this is currently unused.
