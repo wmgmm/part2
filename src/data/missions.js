@@ -115,7 +115,8 @@ export const APPS = {
 // from the deck: MH_COPILOT_TOP_AND_TAIL gained a top line and a bottom
 // heading so the report can be attached OR pasted; MH_IMAGE_REVERSE is Matt's
 // rewrite (output-only, fixed section format, pinned placeholder); MH_ACCESSIBILITY_AUDIT
-// asks for alt text and a greyscale check. Nothing else was changed.
+// asks for a labelled alt text line, a greyscale check and one human
+// augmentation line. Nothing else was changed.
 // ============================================================================
 
 // Deck slide 9. Exercise 01, step 1.
@@ -307,7 +308,13 @@ Consistency requirement: Match all previously generated images in style, palette
 Subject: [Replace only this section for each image]`;
 
 // Deck slide 19. Exercise 02, step 4.
-const MH_ACCESSIBILITY_AUDIT = `Describe this image for someone who cannot see it. What is the main message? What might be ambiguous or misleading? Then suggest alt text for it in under 125 characters, and say whether anything would be lost if it were viewed in greyscale.`;
+const MH_ACCESSIBILITY_AUDIT = `Describe this image for someone who cannot see it. What is the main message? What might be ambiguous or misleading?
+
+Then end with three labelled lines:
+
+ALT TEXT: under 125 characters, written for what the image is doing on the page rather than a list of what is in it. If the image is purely decorative, say so and give empty alt text instead.
+IN GREYSCALE: what would be lost if the colour were removed, or "nothing".
+A PERSON COULD: the single change a human should make to improve this image's accessibility. Name the action and who to ask, not the wording itself.`;
 
 // Deck slide 21, the short version he shows first. Exercise 03, step 1.
 const MH_CANVAS_THIN = `Generate a functional mini-game reminiscent of classic ZX Spectrum titles. In this game, a character must navigate a university dining hall to collect low-impact foods while dodging high-carbon options.`;
@@ -633,7 +640,7 @@ export const MISSIONS = [
         estMinutes: 3,
         title: 'Audit one of your new images',
         body:
-          'Download one of your new images with the download icon, then run the audit on it. If the description does not match what you meant to make, the image failed.',
+          'Download one of your new images with the download icon, then run the audit on it. Alt text is the line a screen reader reads aloud in place of the picture. If the description does not match what you meant, the image failed.',
         attachLabel: 'NEW CHAT',
         attach: [A.yourImage, A.thisPrompt],
         promptLabel: 'THE ACCESSIBILITY AUDIT',
