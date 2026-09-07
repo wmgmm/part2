@@ -452,9 +452,14 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 2,
-        title: 'Paste the brief into Deep Research',
+        title: 'Turn on Deep Research and paste the prompt',
         body:
-          'Use Gemini. Turn Deep Research on in the Tools menu, under the box where you type. It costs one of your five runs a month.',
+          'Use Gemini. Click the + under the box where you type, then select Deep Research. It costs one of your five runs a month.',
+        attachLabel: 'ENABLE',
+        attachExtra: {
+          src: 'deep_research_button.png',
+          alt: 'The Deep Research item in Gemini\'s + menu, ticked.',
+        },
         promptLabel: 'THE BRIEF (RUN IT AS IT IS TODAY)',
         prompt: MH_DEEP_RESEARCH,
       },
