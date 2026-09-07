@@ -504,6 +504,14 @@ const A = {
     filename: 'the image you just made',
     thumb: IMAGE_ICON,
   },
+  // Strip-only: the prompt box sits under the strip, so on a step whose own
+  // prompt is the thing to paste, the strip has to point down, not up.
+  repairPromptBelow: {
+    label: 'THE REPAIR PROMPT BELOW',
+    filename: 'paste the repair prompt below',
+    thumb: PROMPT_ICON,
+    paste: true,
+  },
   // Strip-only too: Exercise 02 step 3's new-chat retry needs the whole step 2
   // prompt, not just the line on the page.
   stepOnePrompt: {
@@ -989,7 +997,7 @@ export const MISSIONS = [
           download: { src: 'download_icon.png', alt: 'the Download button in Canvas' },
         },
         attachLabel: 'SAME CHAT',
-        attach: [A.thisPrompt, A.hesaData],
+        attach: [A.repairPromptBelow, A.hesaData],
         promptLabel: 'THE REPAIR PROMPT',
         promptNote: '[reattach the CSV in this chat]',
         promptEmphasis: 'Check every number in the app against the CSV',
