@@ -473,6 +473,17 @@ for filename, body in SKILLS.items():
     flag = "" if n < 4900 else "   <-- OVER 4,900: will truncate in Notebook's 5,000-char box"
     print(f"  {filename:32} {n:5,d} chars{flag}")
 
+# Exercise 02's backup card: Matt Hayden's style block, extracted from the
+# MH_STYLE_BLOCK constant in missions.js so the file and the constant cannot
+# drift. Not a skill, so it is not in SKILLS and has no length warning.
+import re
+_missions = (Path(__file__).resolve().parent.parent / "src" / "data" / "missions.js").read_text(encoding="utf-8")
+_m = re.search(r"^const MH_STYLE_BLOCK = `(.*?)`;$", _missions, re.S | re.M)
+assert _m, "MH_STYLE_BLOCK not found in missions.js"
+_style = _m.group(1).replace("\\'", "'").replace("\\`", "`") + "\n"
+(OUT / "Example_Style_Block.md").write_text(_style, encoding="utf-8")
+print(f"  {'Example_Style_Block.md':32} {len(_style):5,d} chars (from MH_STYLE_BLOCK)")
+
 # Retired 2026-09-04: the workshop now hands out working skills rather than
 # asking participants to write one, and Document QA's accountability finding
 # arrives instead as the training skill's gap note. Git history has the file.

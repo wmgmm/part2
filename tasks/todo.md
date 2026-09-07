@@ -3395,6 +3395,55 @@ fiddly.
 
 ---
 
+## 2026-09-07 (addendum 104): Exercises 01 and 02 tuned to the Cardiff accounts, three MH prompts edited
+
+Matt ran 01 and 02 on the Cardiff Gemini and Copilot accounts and sent a list. Everything
+landed in one commit.
+
+**The rule change.** Three of Matt Hayden's prompt constants are edited, at Matt's explicit
+direction, for the first time since they were fixed on 2026-09-04. The header comment above the
+`MH_*` block lists them so nobody "restores" them from the deck, and `CLAUDE.md` now says
+"verbatim except those three". Anchor hash before
+`e4f8082373927ce38d7d8b59c1352c51f4f77aab05e0c9e5636b1818fa26fabf`, after
+`f94d871840e4d6c9b71287799504f849efd8d439e48a3a5cd88a6cbbcb2ca7ea`. **Deck slides 9, 17 and 19
+and the covering email now differ from the site** in those three places; Matt Hayden has not
+been told by this session.
+
+- `MH_COPILOT_TOP_AND_TAIL`: a new line 3 says the report is either attached as a PDF or pasted
+  at the end under a named heading, and "wherever this prompt says 'the attached PDF', it means
+  that report". The heading `DEEP RESEARCH REPORT BY GEMINI, PASTED BELOW (leave this empty if
+  the PDF is attached):` is appended after the last line. Reason: Cardiff's Gemini offers only
+  "Copy contents" and "Export to notebook" under Share and export, so most of the room will
+  paste, not attach. The 2026 vendor guidance agrees on the shape: instructions first, pasted
+  material last, an explicit delimiter the instructions name. Defining the term once at the top
+  fixed the seven internal "attached PDF" references without touching them.
+- `MH_IMAGE_REVERSE`: "an AI image generation prompt", and the placeholder is pinned to
+  `Subject: [INSERT SUBJECT HERE]` so step 2 can tell people what to replace.
+- `MH_ACCESSIBILITY_AUDIT`: asks for alt text under 125 characters (the de facto ceiling, an old
+  JAWS limit; WCAG sets none) and whether anything is lost in greyscale (WCAG 1.4.1, colour
+  alone).
+
+**01.** Step 3 is "Copy the report out" and quotes the two options Cardiff actually shows. Step
+4 says attach or paste. The "Choose your next move" block is gone. New step 5, Responsible AI:
+energy. Google's own figure is a median 0.24 Wh per Gemini text prompt (August 2025), the same
+order as the long-quoted 0.3 Wh for a search; Google gave no number for Deep Research and said
+so, hence "far more" and no figure on the page. Core time 10 to 11.
+
+**02.** Page heading "Analyse a Photo to Build a Reusable Prompt That Replicates Its Unique
+Style". The picture is now `cardiff_study_space.jpg` (Pillow, quality 90, 87 KB, same 620x413;
+the webp is deleted, git has it). Step 1 "Clone the style of the image into a reusable prompt".
+Step 2 uses the template from step 1 with an example subject; Matt Hayden's style block moved
+out of the step and became a Blue Peter card at the top, `Example_Style_Block.md`, which
+`make_artifacts.py` extracts from `MH_STYLE_BLOCK` by regex so the two cannot drift (verified
+byte-equal plus a trailing newline). Step 3 runs the ban line in the SAME CHAT strip, then a
+NEW CHAT `backup` card, the 06 pattern, with a new strip-only `A.stepTwoPrompt`. Step 4
+"Audit one of your new images". Stretch block gone, new Responsible AI step 5 on accessibility.
+Verdict untouched. Core time 12 to 14; site total 78.
+
+**Verified:** `?doctor` 25 files all 200 (the jpg replaces the webp, the md is new); both pages
+render five core steps and no stretch heading; the top-and-tail prompt box ends with the new
+heading; every new body is at or under 45 words; `CLAUDE.md` still 200 lines.
+
 # HANDOVER, end of 2026-09-07
 
 **Supersedes the 2026-09-05 handover above.** That block's traps still hold; this one carries the
@@ -3429,14 +3478,12 @@ prompt**, that has bitten twice). **Not editable:** the constant strings themsel
 
 Where 01 and 02 stand after today:
 
-- **01 The Landscape**, 10 minutes, four core steps plus two stretch. Step 1 is now "Turn on Deep
-  Research and paste the prompt": body names the **+ under the box** rather than a Tools menu, an
-  ENABLE strip carries Matt's screenshot `public/deep_research_button.png` (181x25, a 1:1 grab, so
-  slightly soft on a high-DPI projector, worth a 2x retake), and the run count became
-  "(limited usage)". Step 2 is "Review and Edit the plan", and the workflow chip reads "Review and
-  edit". The optional card note is now "A copy of the Matts Deep Research report, a backup for
-  step 4 if your own run is still going."
-- **02 The Image**, 12 minutes, untouched today.
+- **01 The Landscape**, 11 minutes, five core steps, no stretch block. Step 1 "Turn on Deep
+  Research and paste the prompt" with Matt's ENABLE screenshot; step 3 "Copy the report out"
+  (Cardiff shows only "Copy contents" and "Export to notebook"); step 4's prompt takes the report
+  attached or pasted; step 5 Responsible AI, energy. See addendum 104.
+- **02 The Image**, 14 minutes, five core steps, no stretch block. JPEG picture, style block as a
+  Blue Peter card, SAME CHAT then NEW CHAT on step 3, Responsible AI on accessibility. Addendum 104.
 
 ## Where the site is
 
@@ -3481,6 +3528,8 @@ yesterday's copy and make you doubt a correct edit.** Add any new file-bearing s
 
 ## Still open
 
+- **Deck slides 9, 17 and 19 and the covering email now differ from three `MH_*` constants**
+  (addendum 104). Matt to tell Matt Hayden, or the room sees the divergence live.
 - `Verify_And_Repair.md` and the revised 06 repair prompt are untested in a real run.
 - `Fact_Check_Cardiff.md` and `Example_Bubble_Chart.html` are generated but linked nowhere.
 - `PROMPT_LIBRARY` still routes at `#/prompts` with nothing linking to it. Relink or delete.

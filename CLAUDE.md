@@ -23,12 +23,12 @@ test runner.
 The AI in the Workplace Part 2 workshop site for Cardiff University staff: six guided
 exercises plus one bonus (`MISSIONS` in code), anchored on one real document, Cardiff's
 Sustainable Futures plan 2025-35. Teaches Gemini Deep Research, Notebook, Canvas and Copilot.
-Core step time is 75 minutes, bonus excluded, so nobody runs all six.
+Core step time is 78 minutes, bonus excluded, so nobody runs all six.
 
 | # | Title | Tool | What it does |
 |---|---|---|---|
 | 01 | The Landscape | Deep Research + Copilot | Research the plan, then make Copilot fact-check and rebuild it |
-| 02 | The Image | Copilot | Reverse a supplied picture into a reusable prompt |
+| 02 | The Image | Copilot | Clone a photo's style into a reusable prompt, then audit an image |
 | 03 | The Game | Gemini Canvas | Build the same 8-bit game twice, thinly then fully specified |
 | 04 | The Module | Gemini or Copilot | Run `Training_Module_Builder.md` on the plan |
 | 05 | The Brand | Gemini Notebook | One source, two skills, two decks that differ only by the skill |
@@ -39,10 +39,10 @@ Core step time is 75 minutes, bonus excluded, so nobody runs all six.
 
 **Exercises 01-03 are Matt Hayden's.** His prompts are held as `MH_*` constants at the top
 of `missions.js`, **verbatim** from his deck (`AI in the workplace 2.pptx`, slides 7-24) and
-covering email. The room follows his deck while working through the site, so any divergence
-shows up live. **Do not reword, retitle, reformat or improve them.** `promptEmphasis` is
-allowed on them because it is display-only. Exercises 04-06 are Matt Mort's and can be
-edited freely.
+email, except three edits Matt directed on 2026-09-07, listed in the block's header comment
+(deck slides 9, 17 and 19 now differ). **Do not reword, retitle, reformat or improve them**
+beyond that. `promptEmphasis` is allowed on them because it is display-only. Exercises 04-06
+are Matt Mort's and can be edited freely.
 
 **Verify the `MH_*` block by anchor, never by line range**: a hardcoded `sed` range drifts
 as comments are added above it and reports a false mismatch.
@@ -51,7 +51,7 @@ as comments are added above it and reports a false mismatch.
 start=$(grep -n "^const MH_DEEP_RESEARCH" src/data/missions.js | cut -d: -f1)
 end=$(grep -n "^const MH_CANVAS_GAME" src/data/missions.js | cut -d: -f1)
 sed -n "${start},${end}p" src/data/missions.js | sha256sum
-# e4f8082373927ce38d7d8b59c1352c51f4f77aab05e0c9e5636b1818fa26fabf
+# f94d871840e4d6c9b71287799504f849efd8d439e48a3a5cd88a6cbbcb2ca7ea
 ```
 
 ### The skills
@@ -155,7 +155,7 @@ leaderboard backend is kept for a planned check-in wall: `src/lib/leaderboard.js
 
 ## Artifacts
 
-Served from `public/placeholders/`, except `cardiff_study_space.webp` at the site root
+Served from `public/placeholders/`, except `cardiff_study_space.jpg` at the site root
 because it is also Exercise 02's step image. Downloaded via a synthetic `<a download>`,
 same-origin only. Fields: `label`, `filename`, `downloadPath`, `note`, `thumb` (site-root
 relative, all twelve carry one), `copyable` (adds COPY), `sourceLink` (unused).
@@ -172,13 +172,13 @@ thumbnails, attach lists, `attachExtra` and logos, derived from `MISSIONS` so it
 **A new field naming a file must be added to `collectUrls` in `DoctorPanel.jsx` in the same
 commit.** Missed twice, both times reporting all-clear over an invisible asset.
 
-Twelve files ship. **Not generated:** `Sustainable-Futures-en.pdf` (the plan),
+Thirteen files ship. **Not generated:** `Sustainable-Futures-en.pdf` (the plan),
 `Deep_research_output.pdf` (01's fallback), `Example_Training_Session.pdf` (05's backup source),
 `HESA_Estates_Management.xlsx` (13 MB, **unlinked**, the generator's input),
 `Cardiff_Estates_Dashboard.html` (06 step 2's card: a real Canvas run, repaired against the
 CSV) and `Example_Bubble_Chart.html` (its first, fabricated version, **unlinked, kept as
 evidence**). Check either with `python3 tools/verify_chart_data.py <file>`; exit 0 means clean.
-**Generated:** the five skills plus `HESA_Estates_Workshop.csv`/`.xlsx`.
+**Generated:** the five skills, `Example_Style_Block.md` (from `MH_STYLE_BLOCK`) and `HESA_Estates_Workshop.csv`/`.xlsx`.
 
 ## Styling
 

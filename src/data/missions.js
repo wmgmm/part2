@@ -110,8 +110,12 @@ export const APPS = {
 // email of 2026-09-04. The room reads these off his deck while working through
 // the site; any divergence shows up live. Whitespace was normalised (the deck
 // lost some spaces after full stops) and the presentational quotation marks
-// wrapping the deck versions were dropped so the text pastes clean. Nothing
-// else was changed.
+// wrapping the deck versions were dropped so the text pastes clean.
+// Three edits directed by Matt Mort on 2026-09-07, so do not "restore" them
+// from the deck: MH_COPILOT_TOP_AND_TAIL gained a top line and a bottom
+// heading so the report can be attached OR pasted; MH_IMAGE_REVERSE says "AI
+// image generation prompt" and fixes the placeholder text; MH_ACCESSIBILITY_AUDIT
+// asks for alt text and a greyscale check. Nothing else was changed.
 // ============================================================================
 
 // Deck slide 9. Exercise 01, step 1.
@@ -123,7 +127,7 @@ const MH_DEEP_RESEARCH = `The Sustainable Futures plan establishes a four-stage 
 // His covering email. Exercise 01, step 4. Deck slide 16 is the summary of it.
 const MH_COPILOT_TOP_AND_TAIL = `Act as a rigorous research editor, fact-checker and professional report designer.
 
-Use the attached Google Deep Research PDF as source material and produce a completely new, standalone PDF report.
+Use the Google Deep Research report as source material and produce a completely new, standalone PDF report. The report is supplied in one of two ways: attached to this message as a PDF, or pasted at the end of this prompt under the heading DEEP RESEARCH REPORT BY GEMINI, PASTED BELOW. Wherever this prompt says "the attached PDF", it means that report.
 
 CRITICAL SEPARATION RULE
 
@@ -253,13 +257,21 @@ Before producing the final PDF:
 - confirm that all commentary on changes is confined to the appendix;
 - confirm that the final document reads as a coherent, standalone report.
 
-Output only the completed, professionally formatted new PDF. Do not substitute an outline, draft, summary, methodology note or commentary for the finished PDF.`;
+Output only the completed, professionally formatted new PDF. Do not substitute an outline, draft, summary, methodology note or commentary for the finished PDF.
+
+---
+
+DEEP RESEARCH REPORT BY GEMINI, PASTED BELOW (leave this empty if the PDF is attached):`;
 
 // Deck slide 17. Exercise 02, step 1.
-const MH_IMAGE_REVERSE = `Describe this image as a generation prompt. Break it into subject, composition, camera or perspective, lighting, colour palette, illustration style, and mood. Then give me a reusable template version with the subject left as a placeholder.`;
+const MH_IMAGE_REVERSE = `Describe this image as an AI image generation prompt. Break it into subject, composition, camera or perspective, lighting, colour palette, illustration style, and mood. Then give me a reusable template version with the subject left as a placeholder, written exactly as:
+
+Subject: [INSERT SUBJECT HERE]`;
 
 // His covering email, "Example image style guide prompt for consistency".
-// Deck slide 18 is the summary of it. Exercise 02, step 2.
+// Deck slide 18 is the summary of it. Since 2026-09-07 it ships as Exercise
+// 02's backup card, Example_Style_Block.md, which tools/make_artifacts.py
+// extracts from this constant so the two cannot drift.
 const MH_STYLE_BLOCK = `Task: Create a reusable visual style block that will be applied to every image in this project. The style must remain consistent across all illustrations, characters, scenes and learning materials.
 
 Style Block:
@@ -287,7 +299,7 @@ Consistency requirement: Match all previously generated images in style, palette
 Subject: [Replace only this section for each image]`;
 
 // Deck slide 19. Exercise 02, step 4.
-const MH_ACCESSIBILITY_AUDIT = `Describe this image for someone who cannot see it. What is the main message? What might be ambiguous or misleading?`;
+const MH_ACCESSIBILITY_AUDIT = `Describe this image for someone who cannot see it. What is the main message? What might be ambiguous or misleading? Then suggest alt text for it in under 125 characters, and say whether anything would be lost if it were viewed in greyscale.`;
 
 // Deck slide 21, the short version he shows first. Exercise 03, step 1.
 const MH_CANVAS_THIN = `Generate a functional mini-game reminiscent of classic ZX Spectrum titles. In this game, a character must navigate a university dining hall to collect low-impact foods while dodging high-carbon options.`;
@@ -366,10 +378,20 @@ const A = {
   // placeholders/, and it is its own thumbnail.
   studySpace: {
     label: 'THE PICTURE FOR THIS EXERCISE',
-    filename: 'cardiff_study_space.webp',
-    downloadPath: `${BASE}cardiff_study_space.webp`,
+    filename: 'cardiff_study_space.jpg',
+    downloadPath: `${BASE}cardiff_study_space.jpg`,
     note: 'A Cardiff social space. Download it, then attach it to Copilot.',
-    thumb: 'cardiff_study_space.webp',
+    thumb: 'cardiff_study_space.jpg',
+  },
+  // Matt Hayden's style block, the kind of template step 1 should hand back.
+  // Generated from MH_STYLE_BLOCK by tools/make_artifacts.py.
+  styleExample: {
+    label: 'OPTIONAL: A REUSABLE PROMPT WE MADE EARLIER',
+    filename: 'Example_Style_Block.md',
+    downloadPath: `${BASE}placeholders/Example_Style_Block.md`,
+    note: 'Matt Hayden\'s reusable style prompt, a backup for step 2 if step 1 did not give you a template.',
+    copyable: true,
+    thumb: EXAMPLE_ICON,
   },
   hesaData: {
     label: 'TEN YEARS OF REAL DATA',
@@ -415,6 +437,13 @@ const A = {
     filename: 'paste the prompt above',
     thumb: PROMPT_ICON,
   },
+  // Strip-only too: Exercise 02 step 3's new-chat retry needs the whole step 2
+  // prompt, not just the line on the page.
+  stepTwoPrompt: {
+    label: 'YOUR STEP 2 PROMPT',
+    filename: 'your step 2 prompt, plus the line above',
+    thumb: PROMPT_ICON,
+  },
   factCheckSkill: {
     label: 'SKILL 4: CHECK IT BEFORE IT GOES',
     filename: 'Fact_Check_Cardiff.md',
@@ -436,18 +465,16 @@ export const MISSIONS = [
     accentType: 'stamp-red',
     accentText: 'START HERE',
     tools: [TOOLS.deepResearch, TOOLS.copilot],
-    estMinutesCore: 10,
+    estMinutesCore: 11,
     toolInfo: {
       feature:
         'Deep Research browses the web on its own and comes back with a cited report. Copilot then fact-checks it and rebuilds it as a document.',
       apps: [APPS.gemini, APPS.copilot],
     },
-    workflow: ['Paste the brief', 'Review and edit', 'Save as PDF', 'Top and tail it'],
+    workflow: ['Paste the brief', 'Review and edit', 'Copy it out', 'Top and tail it'],
     brief:
       'Research how other organisations deliver what the plan promises, then have Copilot prove every claim.',
     artifacts: [A.susPlan, A.deepResearch],
-    stretchTitle: 'CHOOSE YOUR NEXT MOVE',
-    stretchIntro: 'Pick ONE path below; come back for another any time.',
     steps: [
       {
         tier: 'core',
@@ -473,18 +500,18 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 1,
-        title: 'Save the report as a PDF',
+        title: 'Copy the report out',
         body:
-          'Use Export to Docs, then File, Download, PDF Document. Copilot needs a file, not a link. Out of runs? Download Deep_research_output.pdf from the links above.',
+          'Click "Share and export" at the top of the report. At Cardiff that offers "Copy contents" and "Export to notebook". Use "Copy contents" today; the notebook route is useful later, not here. Out of runs? Use Deep_research_output.pdf from the links above.',
       },
       {
         tier: 'core',
         estMinutes: 5,
         title: 'Top and tail it in Copilot',
         body:
-          'Use Copilot. It returns the rebuilt report in the chat, not as a file, so keep the tab open.',
+          'Use Copilot. Attach the PDF from the links above, or paste what you copied after the last line of the prompt. It returns the rebuilt report in the chat, not as a file, so keep the tab open.',
         promptLabel: 'THE FACT-CHECK AND REDRAFT',
-        promptNote: '[attach the PDF you saved in step 3]',
+        promptNote: '[attach the PDF, or paste the copied report after the last line]',
         // Display only, and deliberately so: MH_COPILOT_TOP_AND_TAIL is 133
         // lines and this is his own heading on line 5. COPY still writes the
         // constant byte for byte.
@@ -492,24 +519,11 @@ export const MISSIONS = [
         prompt: MH_COPILOT_TOP_AND_TAIL,
       },
       {
-        tier: 'stretch',
-        choice: 'A',
-        toolChip: 'Gemini Notebook',
-        hook: 'Your report, as five other things.',
-        estMinutes: 4,
-        title: 'Remake it in Gemini Notebook',
+        tier: 'core',
+        estMinutes: 1,
+        title: 'Responsible AI',
         body:
-          'Drop the finished report into a Gemini Notebook as a source. Studio turns it into an infographic, a quiz, or an audio overview.',
-      },
-      {
-        tier: 'stretch',
-        choice: 'B',
-        toolChip: 'Gemini Deep Research',
-        hook: 'The same machine, pointed at your own work.',
-        estMinutes: 4,
-        title: 'Point it at your own question',
-        body:
-          'Swap the subject of the brief for a live question from your role: a supplier comparison, a sector scan, what other universities do.',
+          'Every prompt uses energy: a web search\'s worth for a chat reply, far more for a Deep Research run. Fix the plan at step 2 rather than rerun, and name sources you trust, such as peer-reviewed or official ones: the web can be wrong too.',
       },
     ],
     verdictBy: 'The Matts',
@@ -523,31 +537,29 @@ export const MISSIONS = [
     code: '02',
     level: 2,
     title: 'The Image',
-    pageTitle: 'Reverse Engineer an Image Into a Prompt You Can Reuse',
+    pageTitle: 'Analyse a Photo to Build a Reusable Prompt That Replicates Its Unique Style',
     summary: 'Turn a picture back into the prompt that would make it, then lock the look.',
     tools: [TOOLS.copilot],
-    estMinutesCore: 12,
+    estMinutesCore: 14,
     toolInfo: {
       feature:
         'Copilot can read an image as well as make one. The same moves work in Gemini, so nothing here is Copilot-only.',
       apps: [APPS.copilot],
     },
-    workflow: ['Reverse the image', 'Lock the look', 'Try to ban something', 'Audit an image'],
+    workflow: ['Clone the style', 'Reuse the prompt', 'Try to ban something', 'Audit an image'],
     brief:
       'Turn a picture you like into a prompt you own, then freeze it as a reusable style block.',
-    artifacts: [A.studySpace],
-    stretchTitle: 'CHOOSE YOUR NEXT MOVE',
-    stretchIntro: 'Pick ONE path below; come back for another any time.',
+    artifacts: [A.studySpace, A.styleExample],
     steps: [
       {
         tier: 'core',
         estMinutes: 3,
-        title: 'Reverse the image into a prompt',
+        title: 'Clone the style of the image into a reusable prompt',
         body:
           'Use Copilot. Download the picture from the card above, attach it with the paperclip, and paste the prompt.',
         attach: [A.studySpace],
         image: {
-          src: 'cardiff_study_space.webp',
+          src: 'cardiff_study_space.jpg',
           alt: 'Three students talking around a small round table in a bright Cardiff University social space, red sofas, a laptop and a vase of pink flowers on the table, floor-to-ceiling windows behind.',
           caption: 'The image to work from.',
         },
@@ -557,47 +569,44 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 4,
-        title: 'Lock the look, then swap the subject',
+        title: 'Use the reusable prompt from step 1 with a new subject',
         body:
-          'Replace the bracket after Subject: on the last line with what you want a picture of, then send. Send it again with a different subject, nothing else changed.',
-        promptLabel: 'THE STYLE BLOCK',
-        prompt: MH_STYLE_BLOCK,
-      },
-      {
-        tier: 'core',
-        estMinutes: 2,
-        title: 'Try to ban something from the image',
-        body:
-          'Add \"no text anywhere in the image\" to your last prompt and run it again. You will usually get text: the model weights the noun, not the negation.',
+          'Paste the template Copilot gave you, replace [INSERT SUBJECT HERE] with the example below, and send it. Then send it again with another subject, nothing else changed. No template from step 1? Use the one we made earlier at the top.',
+        promptLabel: 'AN EXAMPLE SUBJECT',
+        prompt: 'Subject: two colleagues comparing notes over coffee in a university library atrium',
       },
       {
         tier: 'core',
         estMinutes: 3,
-        title: 'Audit one of your images',
+        title: 'Try to ban something from the image',
         body:
-          'Download an image with the download icon. Open a NEW Copilot chat, upload it, and paste the prompt. If the description does not match your intent, the image failed.',
+          'In the same chat, add the line below to your step 2 prompt and send it. You will usually still get text: the model weights the noun (text) over the negation (no). Then try the same prompt in a NEW chat, which often fixes it.',
+        promptLabel: 'THE LINE TO ADD',
+        prompt: 'No text anywhere in the image.',
+        attachLabel: 'SAME CHAT',
+        attach: [A.thisPrompt],
+        backup: {
+          label: 'STILL GOT TEXT?',
+          text: 'Open a new chat and send the whole step 2 prompt with the line added. A clean start often fixes it.',
+          attachLabel: 'NEW CHAT',
+          attach: [A.stepTwoPrompt],
+        },
+      },
+      {
+        tier: 'core',
+        estMinutes: 3,
+        title: 'Audit one of your new images',
+        body:
+          'Download one of your new images with the download icon. Open a NEW Copilot chat, upload it, and paste the prompt. If the description does not match your intent, the image failed.',
         promptLabel: 'THE ACCESSIBILITY AUDIT',
         prompt: MH_ACCESSIBILITY_AUDIT,
       },
       {
-        tier: 'stretch',
-        choice: 'A',
-        toolChip: 'Copilot',
-        hook: 'If your team has a brand kit, use it.',
-        estMinutes: 4,
-        title: 'Make it official',
+        tier: 'core',
+        estMinutes: 1,
+        title: 'Responsible AI',
         body:
-          'Check Copilot for a brand kit before you invent a palette. It also has style presets and aspect ratios, where your organisation has set them up.',
-      },
-      {
-        tier: 'stretch',
-        choice: 'B',
-        toolChip: 'Copilot or Gemini',
-        hook: 'The same trick, on things that are not pictures.',
-        estMinutes: 4,
-        title: 'Reverse engineer anything',
-        body:
-          'Paste in a report you admire and ask for the structure that produced it. Always ask for the reusable template version.',
+          'Seeing your own work from someone else\'s perspective is hard. AI is a cheap second pair of eyes for accessibility: alt text, a plain description, what a screen reader would give. A start, not a substitute for asking the people who rely on it.',
       },
     ],
     verdictBy: 'The Matts',
