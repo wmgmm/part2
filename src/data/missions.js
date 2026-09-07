@@ -789,13 +789,13 @@ export const MISSIONS = [
     summary: 'Run a skill, get a training session.',
     // "or", not "+": 01 and 06 use both of their tools in sequence, this one
     // works in either. The card was telling people they needed both.
-    tools: [TOOLS.gemini, TOOLS.copilot],
+    tools: [TOOLS.copilot, TOOLS.gemini],
     toolsJoin: 'or',
     estMinutesCore: 13,
     toolInfo: {
       feature:
-        'A skill is a file you attach alongside your document. Nothing to install and it works in Gemini and Copilot.',
-      apps: [APPS.gemini, APPS.copilot],
+        'A skill is a file you attach alongside your document. Nothing to install and it works in Copilot and Gemini.',
+      apps: [APPS.copilot, APPS.gemini],
     },
     workflow: ['Paste the prompt', 'Attach the files', 'Review and augment', 'Save/copy it'],
     brief:
@@ -827,7 +827,7 @@ export const MISSIONS = [
         // instead. At this step the question in the room is "which two?", and
         // showing them is faster than reading them.
         body:
-          'In Gemini the button is a + under the box where you type; in Copilot it is a paperclip. Attach both, then send with the prompt above.',
+          'In Copilot the button is a paperclip; in Gemini it is a + under the box where you type. Attach both, then send with the prompt above.',
         attach: [A.trainingSkill, A.susPlan],
       },
       {
@@ -842,7 +842,7 @@ export const MISSIONS = [
         estMinutes: 2,
         title: 'Save/copy the training session',
         body:
-          'In Gemini, the copy icon sits under the answer. Copy the whole thing: Exercise 05 pastes it straight into a notebook, so you never need a file. In Copilot, the three dots give you Export to Word.',
+          'In Copilot, the three dots give you Export to Word. In Gemini, the copy icon under the answer copies the whole thing, and Exercise 05 pastes it straight into a notebook, so you never need a file.',
       },
       {
         tier: 'core',
