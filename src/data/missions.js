@@ -613,7 +613,7 @@ export const MISSIONS = [
         estMinutes: 1,
         title: 'Responsible AI',
         body:
-          'AI uses energy: a chat reply is about a web search, a Deep Research run far more. Fix the deep research plan at step 2 rather than rerun. Handy hint: guide AI on sources you trust, peer-reviewed or official ones. The web can be wrong too.',
+          'AI uses energy: a chat reply is much the same as a web search, a Deep Research run far more. Fix the deep research plan at step 2 rather than rerun. Handy hint: guide AI on sources you trust, peer-reviewed or official ones. The web can be wrong too.',
       },
     ],
     verdictBy: 'The Matts',
