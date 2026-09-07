@@ -23,7 +23,7 @@ test runner.
 The AI in the Workplace Part 2 workshop site for Cardiff University staff: six guided
 exercises plus one bonus (`MISSIONS` in code), anchored on one real document, Cardiff's
 Sustainable Futures plan 2025-35. Teaches Gemini Deep Research, Notebook, Canvas and Copilot.
-Core step time is 78 minutes, bonus excluded, so nobody runs all six.
+Core step time is 82 minutes, bonus excluded, so nobody runs all six.
 
 | # | Title | Tool | What it does |
 |---|---|---|---|

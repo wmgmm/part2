@@ -875,7 +875,7 @@ export const MISSIONS = [
     pageTitle: 'Turn the Training Into Internal Slides That Look Like Cardiff',
     summary: 'One skill, one Cardiff-branded deck.',
     tools: [TOOLS.notebook],
-    estMinutesCore: 16,
+    estMinutesCore: 20,
     toolInfo: {
       feature:
         'Gemini Notebook answers only from the sources you give it.',
@@ -891,7 +891,7 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'Add your training session to a notebook',
         body:
-          'Use Gemini Notebook. Click Create new, then paste your Exercise 04 training session in as a source. If 04 did not run for you, upload the backup PDF above instead.',
+          'Use Gemini Notebook. Click Create new, then Add source, choose Copied text, paste your Exercise 04 training session and click Insert. If 04 did not run for you, upload the backup PDF above instead.',
       },
       {
         tier: 'core',
@@ -899,7 +899,7 @@ export const MISSIONS = [
         title: 'Click Slides, copy the prompt and paste the skill file',
         artifact: A.brandSkill,
         body:
-          'In the Studio pane, click Slide Deck. Paste the prompt into the description box, then COPY the skill below and paste it underneath. Do NOT add it as a source, or the deck becomes about the rules.',
+          'In the Studio pane, click Slide Deck. Click COPY PROMPT, under the skill card, and paste it into the description box. Press Enter, then click COPY on the skill card, not DOWNLOAD, and paste that underneath. Do NOT add it as a source, or the deck becomes about the rules.',
         image: {
           src: 'notebook_slide_deck.webp',
           ui: true,
@@ -913,14 +913,14 @@ export const MISSIONS = [
       },
       {
         tier: 'core',
-        estMinutes: 4,
+        estMinutes: 6,
         title: 'Generate the deck, then export',
         body:
-          'Read the prompt back before you press Generate. The three-dot menu on the slide viewer then gives you PowerPoint or PDF.',
+          'Read the prompt back before you press Generate. The three-dot menu on the slide viewer then gives you PowerPoint or PDF. Generation takes a few minutes: read the brand skill while you wait.',
       },
       {
         tier: 'core',
-        estMinutes: 3,
+        estMinutes: 5,
         title: 'Now run it again with a different skill',
         artifact: A.mattsBrandSkill,
         body:
