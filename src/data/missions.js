@@ -767,7 +767,7 @@ export const MISSIONS = [
     pageTitle: 'Turn the Training Into Internal Slides That Look Like Cardiff',
     summary: 'One source in a notebook, the brand skill in the deck description, one deck out.',
     tools: [TOOLS.notebook],
-    estMinutesCore: 15,
+    estMinutesCore: 16,
     toolInfo: {
       feature:
         'Gemini Notebook answers only from the sources you give it.',
@@ -821,6 +821,13 @@ export const MISSIONS = [
         promptNote: '[this time paste TheMattsBrandSkill.md underneath]',
         prompt:
           'Training slide deck on the Demand First ladder, so staff can apply it in practice.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 1,
+        title: 'Responsible AI',
+        body:
+          'AI branding will not be as good as a human designer, so use it for low-risk work like that internal presentation, not for anything public facing.',
       },
     ],
     verdictBy: 'The Matts',
