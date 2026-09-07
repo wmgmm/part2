@@ -876,14 +876,18 @@ export const MISSIONS = [
         title: 'Always verify, and repair if required',
         artifact: A.fixedChart,
         body:
-          'The first version of our app got the data slightly wrong, and it flattered Cardiff (Thanks Gemini 😂). So we downloaded the HTML, opened a new Gemini chat and attached the app and the CSV together. This is what came back.',
+          'The first version of our app got the data slightly wrong, and it flattered Cardiff (Thanks Gemini 😂). So we downloaded the HTML, opened a new Gemini chat with Canvas on, and attached the app and the CSV together. This is what came back.',
         attachLabel: 'NEW CHAT',
         attach: [A.yourChart, A.hesaData],
+        attachExtra: {
+          src: 'canvas_button.webp',
+          alt: 'The Canvas button in Gemini, a small grey chip reading Canvas.',
+        },
         promptLabel: 'THE REPAIR PROMPT',
-        promptNote: '[attach your saved HTML and the CSV]',
+        promptNote: '[Canvas on, then attach your saved HTML and the CSV]',
         promptEmphasis: 'Check every number in the app against the CSV',
         prompt:
-          'The attached HTML app has a copy of its data written inside it. Check every number in the app against the CSV, which is the only source you should trust. List anything that does not match, then rebuild the file using the CSV values only. Do not retype, round or fill in any figure: if a cell is blank, show NEEDS DATA.',
+          'Open a Canvas workspace for the attached HTML file and rebuild it there, so it runs as an app rather than showing as code in the chat.\n\nThe app has a copy of its data written inside it. Check every number in the app against the CSV, which is the only source you should trust. List anything that does not match, then rebuild the file using the CSV values only. Do not retype, round or fill in any figure: if a cell is blank, show NEEDS DATA.',
       },
     ],
     verdictBy: 'The Matts',

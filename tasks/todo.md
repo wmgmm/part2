@@ -3091,6 +3091,31 @@ was read as optional. One line; waiting on the answer before changing a tested p
 
 ---
 
+## 2026-09-07 (addendum 100): the repair rebuilt the app, but Canvas showed it as code
+
+Answering addendum 99's open question. Matt's repair run did rebuild the app, in a new chat
+with Canvas enabled, but Gemini output the corrected HTML as a code block in the chat rather
+than rendering it in the Canvas panel, unlike the original build. That is also why the file he
+brought back was byte-identical to the input: there was no rendered app to download, so the
+attached file was the original.
+
+His web search found the cause: uploading an existing HTML file into a new chat makes Gemini
+treat it as a code asset rather than start a Canvas session, so it answers with a markdown code
+block. The fix is to ask for the workspace explicitly.
+
+**Changes to Exercise 06 step 3**, a tested prompt edited on evidence:
+- The repair prompt now opens: "Open a Canvas workspace for the attached HTML file and rebuild
+  it there, so it runs as an app rather than showing as code in the chat." The rest is
+  unchanged and `promptEmphasis` still matches.
+- The attach strip gains the Canvas control, so it reads NEW CHAT, clip, your-dashboard.html +
+  CSV, then enable Canvas, matching step 1's strip.
+- The prompt note reads "[Canvas on, then attach your saved HTML and the CSV]" and the body
+  says the new chat had Canvas on, because that is what happened.
+
+Untested in the new form: Matt runs it next.
+
+---
+
 # HANDOVER, end of 2026-09-05
 
 Read this first. It supersedes the earlier "OPEN" block, which is folded in below.
