@@ -544,8 +544,19 @@ function line(text, cls) {
   return el;
 }
 
+// Rules run the full width of the terminal, so they line up with the green
+// interface above them. Column count is measured from the live font.
+function columns() {
+  const probe = document.createElement("span");
+  probe.textContent = "0000000000";
+  probe.style.cssText = "position:absolute;visibility:hidden;white-space:pre";
+  term.appendChild(probe);
+  const cw = probe.getBoundingClientRect().width / 10 || 9;
+  term.removeChild(probe);
+  return Math.max(24, Math.floor(term.clientWidth / cw));
+}
 function banner(title) {
-  const rule = "-".repeat(Math.min(48, Math.max(24, title.length + 8)));
+  const rule = "-".repeat(columns());
   return [[rule, "box"], [title, "box"], [rule, "box"]];
 }
 
@@ -679,25 +690,15 @@ function intro() {
   screen([
     ...banner("CARDIFF UNIVERSITY MAINFRAME"),
     "",
-    "Congratulations.",
-    "",
-    "You have been appointed",
+    "You are the new",
     ["ACTING SUPREME SUSTAINABILITY OFFICER.", "warn"],
-    "",
     "Contract length: until someone notices.",
     "",
-    "The university's carbon budget is dwindling.",
-    "Every decision moves four meters:",
-    "CARBON, BUDGET, WELLBEING and REPUTATION.",
-    "If any one of them hits zero, someone notices.",
+    "Sixteen decisions. Four meters.",
+    "Let any meter hit zero and someone notices.",
     "",
-    "The plan calls its method 'Demand First'.",
-    "You will work out what that means by playing.",
-    "",
-    "Your predecessors, known only as The Matts, left one note:",
-    ["'Ask if it is needed. Then ask again.'", "warn"],
-    "",
-    ["Sixteen decisions. Four levels. One question.", "dim"]
+    "The Matts left one note:",
+    ["'Ask if it is needed. Then ask again.'", "warn"]
   ], () => {
     button("BEGIN", "", startRun, true).focus();
   });
