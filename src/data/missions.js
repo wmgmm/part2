@@ -841,7 +841,7 @@ export const MISSIONS = [
     toolInfo: {
       apps: [APPS.gemini],
     },
-    workflow: ['Build the dashboard', 'Compare with ours', 'Verify and repair', 'Responsible AI'],
+    workflow: ['Build the dashboard', 'Compare with ours', 'Verify and repair'],
     brief:
       'Turn ten years of real emissions data into an animated story that a room can follow, then prove the numbers in it are the ones in the file.',
     artifacts: [A.hesaData],
