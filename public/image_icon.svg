@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 120" width="96" height="120" role="img">
+  <!-- A generated picture: same page-with-a-folded-corner as skill_md_icon.svg and
+       prompt_icon.svg so the family reads as one, banded green and carrying a
+       framed landscape where the others have bullets or angle brackets. Drawn,
+       not photographed, so it stays sharp at the 26-52px the strip renders it at. -->
+  <defs>
+    <clipPath id="imagepage">
+      <path d="M12 6 H68 L90 28 V108 Q90 114 84 114 H12 Q6 114 6 108 V12 Q6 6 12 6 Z"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#imagepage)">
+    <rect x="0" y="0" width="96" height="120" fill="#fdfdfe"/>
+    <rect x="0" y="0" width="96" height="34" fill="#c7e4d2"/>
+  </g>
+
+  <!-- the fold flap, drawn over the band -->
+  <path d="M68 6 L90 28 H68 Z" fill="#3f8f62"/>
+
+  <path d="M12 6 H68 L90 28 V108 Q90 114 84 114 H12 Q6 114 6 108 V12 Q6 6 12 6 Z"
+        fill="none" stroke="#b3b9c0" stroke-width="2.5" stroke-linejoin="round"/>
+
+  <text x="48" y="57" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="15" font-weight="700" fill="#2f6b49" letter-spacing="-0.3">IMAGE</text>
+
+  <!-- a framed landscape where the markdown icon has bullets -->
+  <rect x="18" y="68" width="60" height="40" rx="3" fill="#eef6f1" stroke="#3f8f62" stroke-width="2.6"/>
+  <circle cx="33" cy="80" r="5" fill="#7cc39a"/>
+  <path d="M21 105 L38 86 L50 98 L59 89 L75 105 Z" fill="#3f8f62"/>
+</svg>

@@ -331,6 +331,7 @@ const EXAMPLE_ICON = 'blue_peter_icon.webp';
 const EXCEL_ICON = 'excel_icon.webp';
 const HTML_ICON = 'html_icon.svg';
 const PROMPT_ICON = 'prompt_icon.svg';
+const IMAGE_ICON = 'image_icon.svg';
 
 const A = {
   susPlan: {
@@ -446,6 +447,13 @@ const A = {
     filename: 'paste the prompt above',
     thumb: PROMPT_ICON,
     paste: true,
+  },
+  // Strip-only: the picture the reader has just generated, so the audit step
+  // can show what goes in the new chat rather than only describing it.
+  yourImage: {
+    label: 'YOUR NEW IMAGE',
+    filename: 'the image you just made',
+    thumb: IMAGE_ICON,
   },
   // Strip-only too: Exercise 02 step 3's new-chat retry needs the whole step 2
   // prompt, not just the line on the page.
@@ -623,7 +631,9 @@ export const MISSIONS = [
         estMinutes: 3,
         title: 'Audit one of your new images',
         body:
-          'Download one of your new images with the download icon. Open a NEW Copilot chat, upload it, and paste the prompt. If the description does not match your intent, the image failed.',
+          'Download one of your new images with the download icon, then run the audit on it. If the description does not match what you meant to make, the image failed.',
+        attachLabel: 'NEW CHAT',
+        attach: [A.yourImage, A.thisPrompt],
         promptLabel: 'THE ACCESSIBILITY AUDIT',
         prompt: MH_ACCESSIBILITY_AUDIT,
       },

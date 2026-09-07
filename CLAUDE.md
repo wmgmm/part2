@@ -132,7 +132,7 @@ an exercise, edit the data file.
 | `backup` | `{label, text, attach, attachLabel}`: a card under the prompt for the fallback route, label defaults to BACKUP, optional strip |
 | `bodyIcons` | `{name: {src, alt}}`; `{name}` in `body` renders that image inline, for a control the reader must find |
 | `artifact` | a download card inside the step, for a file used only there |
-| `attach`, `attachLabel`, `attachExtra` | the attach strip: paperclip, label, each file as thumbnail plus filename, optionally a trailing control image joined by "then enable". Label defaults from the count. `attachExtra` works with no files. |
+| `attach`, `attachLabel`, `attachExtra` | the attach strip: paperclip, label, each file as thumbnail plus filename, optionally a trailing control image joined by "then enable". Label defaults from the count. `attachExtra` works with no files; an item with `paste: true` shows no paperclip. |
 | `image` | `{src, alt, caption, ui}`; `src` is site-root relative, `ui: true` gives it the full column |
 | `choice`, `hook`, `toolChip`, `collapsed` | the accordion rows under the stretch heading |
 
