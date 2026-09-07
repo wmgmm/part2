@@ -3504,7 +3504,7 @@ Mac before the day.
 
 **Matt's rewrite of `MH_IMAGE_REVERSE`** landed in the same commit: output-only, a fixed
 seven-line format, the placeholder pinned. Anchor hash is now
-`fdfcae1f742ff362b88ec01a5753eba4688c9fa14672b093a7a2c2ce3a46bd82`. His pasted text had a
+`93f4a4ac35b28f9438154b7a50e984ee7e4ce88bc61d2c3b104797ec20f3b1b3`. His pasted text had a
 non-breaking hyphen in "reverse-engineer"; the constant uses a plain hyphen.
 
 ## 2026-09-07 (addendum 107): the accessibility audit prompt, researched and rewritten
@@ -3599,7 +3599,7 @@ reworded prompt shows up live.** Verify the block by anchor, never a line range:
 start=$(grep -n "^const MH_DEEP_RESEARCH" src/data/missions.js | cut -d: -f1)
 end=$(grep -n "^const MH_CANVAS_GAME" src/data/missions.js | cut -d: -f1)
 sed -n "${start},${end}p" src/data/missions.js | sha256sum
-# fdfcae1f742ff362b88ec01a5753eba4688c9fa14672b093a7a2c2ce3a46bd82
+# 93f4a4ac35b28f9438154b7a50e984ee7e4ce88bc61d2c3b104797ec20f3b1b3
 ```
 
 **Editable without touching his words:** step `title`, `body`, `promptLabel`, `promptNote`,
@@ -3652,6 +3652,9 @@ yesterday's copy and make you doubt a correct edit.** Add any new file-bearing s
 
 ## Traps added today
 
+- **The `MH_*` anchor hash covers the comments inside the range, not just the prompts.** Parking
+  a note above `MH_CANVAS_THIN` moved the hash with no prompt text changed. Expect that, and do
+  not read a mismatch as evidence a prompt was edited: diff before you conclude anything.
 - **A later step's prompt can contradict an earlier step's lesson.** Review feedback on
   Exercise 02 step 4 asked for "negative prompt terms" to clear visual clutter. Step 3, three
   steps earlier in the same exercise, teaches that negative prompts fail because the model

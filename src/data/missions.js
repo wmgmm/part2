@@ -323,7 +323,9 @@ ALT TEXT: under 125 characters, most important thing first, written for what the
 I ASSUMED: the one guess you had to make about where this image will be used. Name one, not a list.
 REGENERATION PROMPT: one accessibility problem with the image itself and the change that fixes it, worded to go straight into a prompt for a new image. Look at legibility, clutter, and text baked into the picture, which cannot be resized or read aloud. Say what you want rather than what to remove. Not a caption and not any wording placed beside the image.`;
 
-// Deck slide 21, the short version he shows first. Exercise 03, step 1.
+// Deck slide 21, the short version he shows first. PARKED 2026-09-07: Matt
+// dropped Exercise 03's thin-ask step for now, so this is currently unused.
+// Keep it, the comparison step is expected back.
 const MH_CANVAS_THIN = `Generate a functional mini-game reminiscent of classic ZX Spectrum titles. In this game, a character must navigate a university dining hall to collect low-impact foods while dodging high-carbon options.`;
 
 // Deck slide 22, the engineered version. Exercise 03, step 2.
@@ -690,37 +692,23 @@ export const MISSIONS = [
     pageTitle: 'Vibe Code a Playable Game From the Plan in Canvas',
     summary: 'Build a working 8-bit game out of a policy document. No code required.',
     tools: [TOOLS.canvas],
-    estMinutesCore: 12,
+    estMinutesCore: 10,
     toolInfo: {
       feature:
         'Canvas turns a description into working web apps, decks and documents you can edit in place. You write no code at any point.',
       apps: [APPS.gemini],
     },
-    workflow: ['Run the thin ask', 'Run the detailed prompt', 'Read the code', 'Give AI feedback'],
+    workflow: ['Run the detailed prompt', 'Read the code', 'Give AI feedback'],
     brief:
-      'Build the same 8-bit game twice from the sustainability plan, once thinly and once fully specified.',
+      'Build a playable 8-bit game from the sustainability plan, fully specified, without writing code.',
     artifacts: [A.susPlan],
     steps: [
       {
         tier: 'core',
-        estMinutes: 2,
-        title: 'Run the thin ask with nothing attached (so very limited context)',
-        body:
-          'Use Gemini. Turn Canvas on in the Tools menu and run this with nothing attached. Play it for ten seconds.',
-        attachLabel: 'ENABLE',
-        attachExtra: {
-          src: 'canvas_button.webp',
-          alt: 'The Canvas button in Gemini, a small grey chip reading Canvas.',
-        },
-        promptLabel: 'THE THIN ASK',
-        prompt: MH_CANVAS_THIN,
-      },
-      {
-        tier: 'core',
         estMinutes: 4,
-        title: 'NEW chat, then run the detailed prompt with the PDF for more context',
+        title: 'Run the detailed prompt with the PDF for context',
         body:
-          'NEW chat, or Canvas edits the first game instead of building a second. Turn Canvas on and attach the PDF: the context the thin ask lacked is what lifts the output.',
+          'Use Gemini. Turn Canvas on in the Tools menu and attach the plan before you send this. The detail and the document are what lift the output.',
         promptLabel: 'THE ENGINEERED ASK',
         attachLabel: 'NEW CHAT',
         attach: [A.susPlan],
@@ -728,7 +716,7 @@ export const MISSIONS = [
           src: 'canvas_button.webp',
           alt: 'The Canvas button in Gemini, a small grey chip reading Canvas.',
         },
-        promptNote: '[new chat, Canvas on, attach Sustainable-Futures-en.pdf]',
+        promptNote: '[Canvas on, attach Sustainable-Futures-en.pdf]',
         prompt: MH_CANVAS_GAME,
       },
       {
@@ -755,7 +743,7 @@ export const MISSIONS = [
     ],
     verdictBy: 'The Matts',
     verdict:
-      'Both games came from the same model on the same day. Everything that separates them is in the prompt, which is the whole argument for writing the second kind.',
+      'The model is the same one that would have given you a toy from one thin line. Everything that separates that from this is in the prompt: the detail, the document, the constraints.',
   },
 
   {

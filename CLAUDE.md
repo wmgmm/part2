@@ -23,7 +23,7 @@ test runner.
 The AI in the Workplace Part 2 workshop site for Cardiff University staff: six guided
 exercises plus one bonus (`MISSIONS` in code), anchored on one real document, Cardiff's
 Sustainable Futures plan 2025-35. Teaches Gemini Deep Research, Notebook, Canvas and Copilot.
-Core step time is 78 minutes, bonus excluded, so nobody runs all six.
+Core step time is 76 minutes, bonus excluded, so nobody runs all six.
 
 | # | Title | Tool | What it does |
 |---|---|---|---|
@@ -51,7 +51,7 @@ as comments are added above it and reports a false mismatch.
 start=$(grep -n "^const MH_DEEP_RESEARCH" src/data/missions.js | cut -d: -f1)
 end=$(grep -n "^const MH_CANVAS_GAME" src/data/missions.js | cut -d: -f1)
 sed -n "${start},${end}p" src/data/missions.js | sha256sum
-# fdfcae1f742ff362b88ec01a5753eba4688c9fa14672b093a7a2c2ce3a46bd82
+# 93f4a4ac35b28f9438154b7a50e984ee7e4ce88bc61d2c3b104797ec20f3b1b3
 ```
 
 ### The skills
