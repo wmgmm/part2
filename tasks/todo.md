@@ -3713,6 +3713,45 @@ Two things caught by measurement that a read would have missed: the meter row ov
 itself at laptop width because the grid minimum was narrower than a meter, and the first bar
 design overflowed a phone. Both fixed before commit.
 
+## 2026-09-07 (addendum 111): the site is frozen; the pack around it
+
+Matt froze the site at the deployed tree (`e0c7c01`, live) and asked for three things beside it.
+Nothing under `src/`, `public/` or `index.html` changed; `git status` on those paths is empty.
+
+**The email folder, `deliverables/2026-09-08-workshop-pack/`.** `attach/` (68 KB plus the hint
+PDF, zipped as `workshop-pack.zip`, 47 KB): README with the site URL and the work-account
+reminder, the hint sheets, the five skills, the style block, the CSV. `large/` (12 MB, for a
+shared drive): the plan, the two backup PDFs, the three HTML apps and the amended deck. The
+copies of tracked files in `large/` are git-ignored inside the pack; recreate with `cp`.
+
+**The hint sheets, `tools/make_hint_sheets.py`.** One A4 page per exercise plus a cover and the
+bonus, eight pages, generated from the site's data so they cannot drift. The data is extracted
+without touching the site:
+
+    sed 's#import\.meta\.env\.BASE_URL#"/part2/"#g' src/data/missions.js > /tmp/missions.mjs
+    node --input-type=module -e "import * as m from '/tmp/missions.mjs'; import fs from 'node:fs';
+      fs.writeFileSync('/tmp/missions.json', JSON.stringify({missions: m.MISSIONS}))"
+    python3 tools/make_hint_sheets.py /tmp/missions.json deliverables/.../attach/Workshop_Hint_Sheets.pdf
+
+Each page carries the exercise's QR code and URL, the files to download, the core steps with
+the site's own words, prompts under 700 characters inline in a mono box, longer ones pointed at
+the site's COPY button (01's top-and-tail, 06's build prompt). `KeepInFrame(mode="shrink")`
+guarantees one page each. Checked: every core step title appears on its page.
+
+**The deck, `tools/make_deck_slides.py`.** Reads Matt Hayden's `AI in the workplace 2 (4).pptx`
+(sha256 `7fcc1a8f…`, unchanged before and after) and writes `(5)` to the pack and to Downloads.
+His slide 21, "Gemini notebook", is the template: cloned three times with images re-linked, then
+the four slides sit at 21 to 24 as Skills, The Module, Gemini notebook (his 21, rough notes
+replaced, pictures kept) and The Dashboard. 42 slides; all 38 other originals are text-identical
+at their shifted positions. The Copilot mark comes from his slide 12 and the Canvas mark from
+his slide 18, so nothing new was drawn. Bullets are one line each at 20pt with `[OPTIONAL]` in
+dim grey, and a small "Website: Exercise 04" line maps each slide to its page.
+
+**Trap:** `python-pptx` has no slide-duplicate. Deep-copying the shape tree works only if every
+`a:blip` `r:embed` is re-pointed at a relationship on the new slide part
+(`new.part.relate_to(src.part.rels[rid].target_part, RT.IMAGE)`); otherwise PowerPoint repairs
+the file and drops the pictures.
+
 # HANDOVER, end of 2026-09-07
 
 **Supersedes the 2026-09-05 handover above.** That block's traps still hold; this one carries the
