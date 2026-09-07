@@ -583,11 +583,11 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'Use the reusable prompt from step 1 with a new subject',
         body:
-          'Start a NEW chat. Paste the prompt Copilot generated in step 1, replace [INSERT SUBJECT HERE] with the example below, and send it. Then send it again with another subject, nothing else changed. None from step 1? Use the one at the top.',
+          'Start a NEW chat. Paste the prompt Copilot generated in step 1, replace [INSERT SUBJECT HERE] with the example below, and send it. Remember to experiment: for this one the subject is Mr Judge complaining about his noisy colleagues.',
         attachLabel: 'NEW CHAT',
         attach: [A.stepOnePrompt],
         promptLabel: 'AN EXAMPLE SUBJECT',
-        prompt: 'two colleagues comparing notes over coffee in a university library atrium',
+        prompt: 'Mr Judge complaining about his noisy colleagues',
       },
       {
         tier: 'core',
