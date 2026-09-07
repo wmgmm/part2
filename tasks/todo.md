@@ -3392,3 +3392,97 @@ fiddly.
   `*{animation:none!important;transition:none!important;opacity:1!important}` first.
 - **`convert` here is metapub, not ImageMagick.** Use `convert-im6.q16`. For icons on white,
   find the artwork by hue rather than thresholding the background.
+
+---
+
+# HANDOVER, end of 2026-09-07
+
+**Supersedes the 2026-09-05 handover above.** That block's traps still hold; this one carries the
+current state and what is about to change.
+
+## Snapshot
+
+`git tag snapshot-2026-09-07-pre-mh-tweaks` on `d81e929`, tree clean apart from three untracked
+snapshot images at the repo root. **`main` is 120 commits ahead of `origin/main` and the live
+site is far behind. That is expected. Never push unless Matt asks in that same message.**
+
+## Next job: tweaks to Matt Hayden's Exercises 01 and 02
+
+Read this before touching either.
+
+**His prompts are `MH_*` constants at the top of `missions.js` and are verbatim from his deck
+(slides 7-24) and covering email. The room follows his deck while working through the site, so a
+reworded prompt shows up live.** Verify the block by anchor, never a line range:
+
+```bash
+start=$(grep -n "^const MH_DEEP_RESEARCH" src/data/missions.js | cut -d: -f1)
+end=$(grep -n "^const MH_CANVAS_GAME" src/data/missions.js | cut -d: -f1)
+sed -n "${start},${end}p" src/data/missions.js | sha256sum
+# e4f8082373927ce38d7d8b59c1352c51f4f77aab05e0c9e5636b1818fa26fabf
+```
+
+**Editable without touching his words:** step `title`, `body`, `promptLabel`, `promptNote`,
+`attach` / `attachLabel` / `attachExtra`, `artifact`, `image`, `bodyIcons`, `backup`, and
+`promptEmphasis` (display only: COPY writes the plain constant, so a non-matching substring
+degrades to no emphasis and never loses text, but **always assert your substring is really in the
+prompt**, that has bitten twice). **Not editable:** the constant strings themselves.
+
+Where 01 and 02 stand after today:
+
+- **01 The Landscape**, 10 minutes, four core steps plus two stretch. Step 1 is now "Turn on Deep
+  Research and paste the prompt": body names the **+ under the box** rather than a Tools menu, an
+  ENABLE strip carries Matt's screenshot `public/deep_research_button.png` (181x25, a 1:1 grab, so
+  slightly soft on a high-DPI projector, worth a 2x retake), and the run count became
+  "(limited usage)". Step 2 is "Review and Edit the plan", and the workflow chip reads "Review and
+  edit". The optional card note is now "A copy of the Matts Deep Research report, a backup for
+  step 4 if your own run is still going."
+- **02 The Image**, 12 minutes, untouched today.
+
+## Where the site is
+
+Six exercises plus one bonus, **75 minutes** of core steps (10 / 12 / 12 / 13 / 16 / 12), bonus
+excluded. Build green. `CLAUDE.md` is exactly 200 lines and must stay there.
+
+Today's other changes:
+
+- **A Responsible AI closing step now ends 03, 04, 05 and 06**, one sentence each, specific to
+  what that exercise built. See addendum 101.
+- **04 step 3 is "Review and Augment"**, and `Training_Module_Builder.md` closes its gap note with
+  one "a person could" line. Tested on a real run, addendum 101.
+- **The splash** says "Download the public PDF" with no size warning, step 1 fits one line, and
+  the deck breaks before "Skills You Will Use on Monday".
+- **The 06 dashboard fits the screen it is shown on** and its collision nudge is capped at
+  3 kgCO2e/m2 with that stated on the page. Addenda 102 and 103, which carry the numbers.
+
+## Verify before you hand anything back
+
+```bash
+npm run build                                   # dev is BROKEN, ENOSPC, use preview
+python3 tools/verify_chart_data.py public/placeholders/Cardiff_Estates_Dashboard.html
+wc -l CLAUDE.md                                 # exactly 200
+```
+
+Then hard-refresh http://localhost:4173/part2/ and check `script[src]` matches what the build
+printed. **Hash navigation does not refetch `index.html`, so a stale bundle will happily show you
+yesterday's copy and make you doubt a correct edit.** Add any new file-bearing step field to
+`collectUrls` in `DoctorPanel.jsx` in the same commit; `?doctor` currently reports 24 files, all
+200.
+
+## Traps added today
+
+- **Edit `Cardiff_Estates_Dashboard.html` as bytes.** Python text mode silently rewrote the
+  embedded CSV's CRLF endings to LF, and `verify_chart_data.py` did not notice because it parses
+  rather than compares. Byte-check the block against HEAD, the snippet is in addendum 102.
+- **A pixel-based layout constant becomes a bigger lie on a smaller chart.** The bubble nudge cap
+  was `r * 1.2 + 10` pixels; on the fitted chart that was 9.66 kgCO2e/m2 of error. Anything that
+  displaces a mark from its true position should be capped in data units.
+- **`resize_window` did not change `innerWidth`/`innerHeight` here.** Measure responsive layouts
+  with fixed-size probe iframes instead, and wait about 3s for D3 to draw before reading.
+
+## Still open
+
+- `Verify_And_Repair.md` and the revised 06 repair prompt are untested in a real run.
+- `Fact_Check_Cardiff.md` and `Example_Bubble_Chart.html` are generated but linked nowhere.
+- `PROMPT_LIBRARY` still routes at `#/prompts` with nothing linking to it. Relink or delete.
+- The gap note in a real 04 run came back at eighteen bullets. Capping it is a one-line skill
+  change, deliberately not made without a second run to look at.
