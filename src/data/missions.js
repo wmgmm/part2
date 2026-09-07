@@ -314,7 +314,7 @@ Then end with three labelled lines:
 
 ALT TEXT: under 125 characters, written for what the image is doing on the page rather than a list of what is in it. If the image is purely decorative, say so and give empty alt text instead.
 IN GREYSCALE: what would be lost if the colour were removed, or "nothing".
-A PERSON COULD: the single change a human should make to improve this image's accessibility. Name the action and who to ask, not the wording itself.`;
+A PERSON COULD: the single change we should make to the image itself to improve its accessibility, such as contrast, the legibility of any text in it, or something that only the colour is carrying. Name the change to the image, not new wording.`;
 
 // Deck slide 21, the short version he shows first. Exercise 03, step 1.
 const MH_CANVAS_THIN = `Generate a functional mini-game reminiscent of classic ZX Spectrum titles. In this game, a character must navigate a university dining hall to collect low-impact foods while dodging high-carbon options.`;
