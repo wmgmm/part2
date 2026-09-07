@@ -623,7 +623,7 @@ export const MISSIONS = [
             ['No cars', 'A deserted street'],
             ['No people', 'An empty room'],
           ],
-          after: 'Those words are still in this chat and still pulling on it, so you might need a new one to shake them off.',
+          after: 'Those words are still in this chat and still pulling on it, so you need a new chat to shake them off.',
           attachLabel: 'NEW CHAT',
           attach: [A.stepTwoPrompt],
         },
