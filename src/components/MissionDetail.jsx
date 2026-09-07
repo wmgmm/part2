@@ -185,17 +185,27 @@ function ArtifactCard({ artifact }) {
 // two answers it faster than a sentence does. Not a download: the cards above
 // are for that, this is a reminder of what to pick up.
 function AttachStrip({ items = [], label, extra }) {
+  const clip = (
+    <span className="attach-strip__clip" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+           strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+      </svg>
+    </span>
+  );
+  // A custom label names what happens BEFORE attaching, so it leads and the
+  // paperclip follows it: new chat, then the paperclip, then the files. A
+  // default label ("ATTACH BOTH") is itself the attach instruction, so the
+  // clip stays in front of it.
+  const labelFirst = Boolean(label) && items.length > 0;
+
   return (
     <div className="attach-strip">
-      <span className="attach-strip__clip" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
-             strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
-        </svg>
-      </span>
+      {!labelFirst && clip}
       <span className="attach-strip__label">
         {label || (items.length === 1 ? 'ATTACH THIS' : items.length === 2 ? 'ATTACH BOTH' : 'ATTACH ALL')}
       </span>
+      {labelFirst && clip}
       {items.map((a, i) => (
         <React.Fragment key={a.filename}>
           {i > 0 && <span className="attach-strip__plus" aria-hidden="true">+</span>}

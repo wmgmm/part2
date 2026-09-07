@@ -2787,6 +2787,42 @@ emphasis is display-only on this prompt too. Build green, `?doctor` **21 files a
 
 ---
 
+## 2026-09-07 (addendum 93): the attach strip reads NEW CHAT, then the paperclip
+
+Matt, on step 6: "new chat then paperclip". The strip always drew the clip first, so it read
+`clip NEW CHAT file`, which puts the attaching before the thing you do first.
+
+**Rule now in `AttachStrip`:** a **custom** `attachLabel` names what happens before attaching,
+so it leads and the clip follows it. A **default** label (ATTACH THIS / BOTH / ALL) is itself
+the attach instruction, so the clip still leads. Implemented as
+`labelFirst = Boolean(label) && items.length > 0`.
+
+This also fixes **Exercise 06 step 4**, which Matt asked for in the same words on 2026-09-05
+("jus t tune the order New Chat then paperclip") and which had been built clip-first. Both
+NEW CHAT strips now match. The `items.length > 0` guard keeps **Exercise 03 step 1** as it was,
+`clip ENABLE [Canvas]`, because nothing is attached there and a paperclip after ENABLE would
+promise a file that does not exist.
+
+`.attach-strip__label` margin-right 0.15rem to 0.35rem, so the label does not crowd the clip
+now that it sits in front of it.
+
+**Verified in the browser**, with the loaded bundle checked against the one the build printed,
+after yesterday's stale-bundle false negative. Rendered order:
+
+| Where | Order |
+|---|---|
+| 06 step 2 | CLIP, ATTACH THIS, csv |
+| 06 step 4 | NEW CHAT, CLIP, csv, then enable, Canvas |
+| 06 step 6 | NEW CHAT, CLIP, your-dashboard.html, +, csv |
+| 03 step 1 | CLIP, ENABLE, Canvas |
+| 03 step 2 | CLIP, ATTACH THIS, pdf |
+
+All one row, no overflow. **Trap seen twice today:** changing the hash on this SPA does not
+re-render if the route is already mounted in the way the probe expects, so a query can report
+the previous exercise's DOM. Reload after changing the hash before trusting what you read.
+
+---
+
 # HANDOVER, end of 2026-09-05
 
 Read this first. It supersedes the earlier "OPEN" block, which is folded in below.
