@@ -51,7 +51,7 @@ as comments are added above it and reports a false mismatch.
 start=$(grep -n "^const MH_DEEP_RESEARCH" src/data/missions.js | cut -d: -f1)
 end=$(grep -n "^const MH_CANVAS_GAME" src/data/missions.js | cut -d: -f1)
 sed -n "${start},${end}p" src/data/missions.js | sha256sum
-# 59177fc781fbf8fabd8e39406330b67548d00ec7a20c29b36b8625924b6b636d
+# fdfcae1f742ff362b88ec01a5753eba4688c9fa14672b093a7a2c2ce3a46bd82
 ```
 
 ### The skills
