@@ -8,7 +8,9 @@ const progressKey = email => `workshop_progress_v1:${email.trim().toLowerCase()}
 export function loadUser() {
   try {
     const raw = localStorage.getItem(USER_KEY);
-    return raw ? JSON.parse(raw) : null;
+    const user = raw ? JSON.parse(raw) : null;
+    // Only a record with an email is usable: progress is keyed by it.
+    return user && typeof user === 'object' && typeof user.email === 'string' ? user : null;
   } catch {
     return null;
   }

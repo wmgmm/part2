@@ -41,7 +41,7 @@ export default function SplashScreen({ onStart }) {
         </p>
 
         {/* 3-step instructions */}
-        <ol className="splash-steps">
+        <ol className="splash-steps" role="list">
           <li className="splash-step">
             <span className="splash-step__num">1</span>
             <span className="splash-step__text">
@@ -76,6 +76,7 @@ export default function SplashScreen({ onStart }) {
             <div className="splash-field">
               <input
                 type="text"
+                autoComplete="name"
                 className={`splash-input ${errors.name ? 'splash-input--error' : ''}`}
                 placeholder="Your name"
                 value={name}
@@ -91,6 +92,7 @@ export default function SplashScreen({ onStart }) {
             <div className="splash-field">
               <input
                 type="email"
+                autoComplete="email"
                 className={`splash-input ${errors.email ? 'splash-input--error' : ''}`}
                 placeholder="name@example.com"
                 value={email}
@@ -108,6 +110,7 @@ export default function SplashScreen({ onStart }) {
         </div>
 
         <motion.button
+          type="button"
           className="btn-start"
           onClick={handleStart}
           whileHover={{ scale: 1.03, backgroundColor: '#0077ed', color: '#ffffff' }}

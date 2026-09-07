@@ -14,7 +14,7 @@ function collectUrls() {
   };
   MISSIONS.forEach(m => {
     (m.artifacts || []).forEach(a => {
-      add(a.downloadPath, `${m.code} · ${a.filename}`);
+      if (a.downloadPath) add(a.downloadPath, `${m.code} · ${a.filename}`);
       if (a.thumb) add(`${BASE}${a.thumb}`, `${m.code} · ${a.thumb}`);
     });
     // Steps can carry their own picture (Exercise 02) or their own download
@@ -66,9 +66,9 @@ export default function DoctorPanel() {
   return (
     <div className="doctor">
       <h1 className="doctor__title">PREFLIGHT CHECK</h1>
-      {!results && <p className="doctor__status">Checking {collectUrls().length} files…</p>}
+      {!results && <p className="doctor__status" role="status">Checking {collectUrls().length} files…</p>}
       {results && (
-        <p className={`doctor__status ${failures ? 'doctor__status--bad' : 'doctor__status--good'}`}>
+        <p className={`doctor__status ${failures ? 'doctor__status--bad' : 'doctor__status--good'}`} role="status">
           {failures === 0
             ? `All ${results.length} files respond. Run the session.`
             : `${failures} of ${results.length} files FAILED. Fix before the session.`}

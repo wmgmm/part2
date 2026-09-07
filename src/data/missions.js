@@ -113,8 +113,8 @@ export const APPS = {
 // wrapping the deck versions were dropped so the text pastes clean.
 // Three edits directed by Matt Mort on 2026-09-07, so do not "restore" them
 // from the deck: MH_COPILOT_TOP_AND_TAIL gained a top line and a bottom
-// heading so the report can be attached OR pasted; MH_IMAGE_REVERSE says "AI
-// image generation prompt" and fixes the placeholder text; MH_ACCESSIBILITY_AUDIT
+// heading so the report can be attached OR pasted; MH_IMAGE_REVERSE is Matt's
+// rewrite (output-only, fixed section format, pinned placeholder); MH_ACCESSIBILITY_AUDIT
 // asks for alt text and a greyscale check. Nothing else was changed.
 // ============================================================================
 
@@ -264,9 +264,19 @@ Output only the completed, professionally formatted new PDF. Do not substitute a
 DEEP RESEARCH REPORT BY GEMINI, PASTED BELOW (leave this empty if the PDF is attached):`;
 
 // Deck slide 17. Exercise 02, step 1.
-const MH_IMAGE_REVERSE = `Describe this image as an AI image generation prompt. Break it into subject, composition, camera or perspective, lighting, colour palette, illustration style, and mood. Then give me a reusable template version with the subject left as a placeholder, written exactly as:
+const MH_IMAGE_REVERSE = `Review the image and reverse-engineer it into a reusable AI image generation prompt. Return ONLY the final prompt. No introductions, explanations, notes, markdown, code fences, analysis or commentary.
 
-Subject: [INSERT SUBJECT HERE]`;
+Format exactly as:
+
+Subject: [INSERT SUBJECT HERE]
+Composition: ...
+Camera/Perspective: ...
+Lighting: ...
+Colour Palette: ...
+Illustration Style: ...
+Mood: ...
+
+Describe each section in enough detail to recreate the image accurately while allowing the subject to be replaced. Keep the subject placeholder exactly as written.`;
 
 // His covering email, "Example image style guide prompt for consistency".
 // Deck slide 18 is the summary of it. Since 2026-09-07 it ships as Exercise
@@ -419,7 +429,6 @@ const A = {
   yourChart: {
     label: 'YOUR CANVAS APP',
     filename: 'your-dashboard.html',
-    downloadPath: `${BASE}placeholders/Cardiff_Estates_Dashboard.html`,
     thumb: HTML_ICON,
   },
   verifySkill: {

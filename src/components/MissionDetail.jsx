@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PromptBox from './PromptBox.jsx';
 import SortGame from './SortGame.jsx';
 
@@ -68,6 +68,18 @@ function renderBody(body, icons = {}) {
 function ArtifactCard({ artifact }) {
   const [copied, setCopied] = useState(false);
   const isText = /\.(md|txt)$/.test(artifact.filename);
+  // Prefetched so COPY can write to the clipboard inside the click itself:
+  // Safari refuses a clipboard write that follows an await.
+  const [text, setText] = useState(null);
+  useEffect(() => {
+    if (!isText || !artifact.copyable) return undefined;
+    let live = true;
+    fetch(artifact.downloadPath)
+      .then(r => r.text())
+      .then(t => { if (live) setText(t); })
+      .catch(() => {});
+    return () => { live = false; };
+  }, [artifact.downloadPath, artifact.copyable, isText]);
   // An .html artifact is a working page, not a document, so opening it is the
   // point and saving it is the fallback: the two buttons swap roles below.
   const isPage = /\.html$/.test(artifact.filename);
@@ -87,13 +99,21 @@ function ArtifactCard({ artifact }) {
   // Servers send .md as text/markdown and browsers download that rather than
   // rendering it, so open a text/plain blob instead. Then VIEW actually views.
   const view = async () => {
+    // Open the tab inside the click, before any await: Safari and Firefox
+    // treat a window.open that follows a fetch as a popup and block it silently.
+    const w = window.open('', '_blank');
+    if (!w) {
+      download();
+      return;
+    }
+    w.opener = null;
     try {
       const res = await fetch(artifact.downloadPath);
       const url = URL.createObjectURL(new Blob([await res.text()], { type: 'text/plain' }));
-      window.open(url, '_blank', 'noopener,noreferrer');
+      w.location = url;
       setTimeout(() => URL.revokeObjectURL(url), 60000);
     } catch {
-      window.open(artifact.downloadPath, '_blank', 'noopener,noreferrer');
+      w.location = artifact.downloadPath;
     }
   };
 
@@ -101,12 +121,12 @@ function ArtifactCard({ artifact }) {
   // into Gemini Notebook's Slide Deck description box, which takes text not files.
   const copy = async () => {
     try {
-      const res = await fetch(artifact.downloadPath);
-      await navigator.clipboard.writeText(await res.text());
+      const body = text ?? (await (await fetch(artifact.downloadPath)).text());
+      await navigator.clipboard.writeText(body);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      window.open(artifact.downloadPath, '_blank', 'noopener,noreferrer');
+      view();
     }
   };
 
@@ -154,6 +174,7 @@ function ArtifactCard({ artifact }) {
             href={artifact.downloadPath}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`Open ${artifact.filename} in a new tab`}
           >
             OPEN IT
           </a>
@@ -162,18 +183,29 @@ function ArtifactCard({ artifact }) {
           type="button"
           className={`btn-artifact${isPage ? ' btn-artifact--ghost' : ''}`}
           onClick={download}
+          aria-label={`Download ${artifact.filename}`}
         >
           DOWNLOAD
         </button>
         {/* COPY is opt-in: only the brand skill needs it, because Studio's
             description box takes pasted text, not files. Everything else is attached. */}
         {isText && artifact.copyable && (
-          <button type="button" className="btn-artifact btn-artifact--ghost" onClick={copy}>
+          <button
+            type="button"
+            className="btn-artifact btn-artifact--ghost"
+            onClick={copy}
+            aria-label={`Copy ${artifact.filename} to the clipboard`}
+          >
             {copied ? 'COPIED ✓' : 'COPY'}
           </button>
         )}
         {isText && (
-          <button type="button" className="btn-artifact btn-artifact--ghost" onClick={view}>
+          <button
+            type="button"
+            className="btn-artifact btn-artifact--ghost"
+            onClick={view}
+            aria-label={`View ${artifact.filename} in a new tab`}
+          >
             VIEW IN BROWSER
           </button>
         )}
@@ -183,10 +215,14 @@ function ArtifactCard({ artifact }) {
             href={artifact.downloadPath}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`View ${artifact.filename} in a new tab`}
           >
             VIEW IN BROWSER
           </a>
         )}
+        <span className="sr-only" role="status">
+          {copied ? `${artifact.filename} copied to the clipboard` : ''}
+        </span>
       </div>
     </div>
   );
@@ -213,7 +249,7 @@ function AttachStrip({ items = [], label, extra }) {
 
   return (
     <div className="attach-strip">
-      {!labelFirst && clip}
+      {!labelFirst && items.length > 0 && clip}
       <span className="attach-strip__label">
         {label || (items.length === 1 ? 'ATTACH THIS' : items.length === 2 ? 'ATTACH BOTH' : 'ATTACH ALL')}
       </span>
@@ -363,7 +399,7 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
         </p>
         <div className="mission-head-row">
           <div className="mission-head-row__text">
-            <h2 className="mission-detail__title">{mission.pageTitle || mission.title}</h2>
+            <h1 className="mission-detail__title">{mission.pageTitle || mission.title}</h1>
           </div>
           {mission.toolInfo?.apps && <ToolCards apps={mission.toolInfo.apps} />}
         </div>
@@ -383,7 +419,7 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
       {core.length > 0 && (
         <>
           <h3 className="mission-detail__section">INSTRUCTIONS</h3>
-          <ol className="mission-steps">
+          <ol className="mission-steps" role="list">
             {core.map((step, i) => (
               <Step key={i} step={step} number={i + 1} lane={lane} />
             ))}
@@ -399,7 +435,7 @@ export default function MissionDetail({ mission, lane, completed, onComplete }) 
           {mission.stretchIntro && (
             <p className="mission-brief">{mission.stretchIntro}</p>
           )}
-          <ol className="mission-steps mission-steps--stretch">
+          <ol className="mission-steps mission-steps--stretch" role="list">
             {(() => {
               // Number only the plain steps; lettered/collapsed rows carry no number.
               let n = core.length;

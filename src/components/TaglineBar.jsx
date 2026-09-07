@@ -5,7 +5,7 @@ import React from 'react';
 // work someone is already doing, so `compact` drops it to the title alone.
 export default function TaglineBar({ compact = false }) {
   return (
-    <div className="tagline-bar">
+    <header className="tagline-bar">
       {/* The wordmark is the home link, the Apple and thematts convention.
           Underlined on hover so it reads as one; the small text link on each
           exercise page covers anyone who does not expect it to be. */}
@@ -22,6 +22,6 @@ export default function TaglineBar({ compact = false }) {
       {compact && (
         <a href="#/" className="tagline-bar__home">&larr; Return to all exercises</a>
       )}
-    </div>
+    </header>
   );
 }

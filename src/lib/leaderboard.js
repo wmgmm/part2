@@ -38,6 +38,7 @@ export function recordAttendance({ name, email }) {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain' },
+      signal: AbortSignal.timeout(5000),
       body: JSON.stringify({
         type: 'signin',
         v: 1,

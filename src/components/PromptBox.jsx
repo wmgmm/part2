@@ -39,11 +39,14 @@ export default function PromptBox({ prompt, label = 'PROMPT', note, emphasis }) 
         <button type="button" className="prompt-box__copy" onClick={handleCopy}>
           {state === 'copied' ? 'COPIED ✓' : state === 'select' ? 'PRESS CTRL+C' : 'COPY PROMPT'}
         </button>
+        <span className="sr-only" role="status">
+          {state === 'copied' ? 'Prompt copied to the clipboard' : state === 'select' ? 'Prompt selected, press Ctrl+C to copy' : ''}
+        </span>
       </div>
       {/* Emphasis is presentation only: handleCopy writes the plain `prompt`
           string, so the bold never reaches the clipboard, and the select-text
           fallback still selects exactly the same characters. */}
-      <pre className="prompt-box__text" ref={preRef}>
+      <pre className="prompt-box__text" ref={preRef} tabIndex={0} aria-label={`${label}, prompt text`}>
         {split ? (
           <>
             {split[0]}

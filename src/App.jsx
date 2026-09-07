@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
 import SplashScreen from './components/SplashScreen.jsx';
 import MissionGallery from './components/MissionGallery.jsx';
 import MissionDetail from './components/MissionDetail.jsx';
@@ -37,6 +37,40 @@ export default function App() {
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
 
+  // Route housekeeping. An unknown route (#/m7, a typo) goes home instead of
+  // showing the gallery under a lying URL. Every route change starts at the
+  // top, moves focus into main so keyboard and screen-reader users follow the
+  // page change, and names the exercise in the tab title. The first run is the
+  // page load, which keeps its natural focus and scroll.
+  const firstRoute = useRef(true);
+  useEffect(() => {
+    if (route && !getMission(route)) {
+      window.location.replace('#/');
+      return;
+    }
+    const m = route ? getMission(route) : null;
+    document.title = m
+      ? `${m.code ? `${m.code} ` : ''}${m.title} · AI in the Workplace Part 2`
+      : 'AI in the Workplace Part 2';
+    if (firstRoute.current) {
+      firstRoute.current = false;
+      return;
+    }
+    window.scrollTo(0, 0);
+    document.getElementById('main-content')?.focus({ preventScroll: true });
+  }, [route]);
+
+  // The skip link focuses main directly rather than changing the hash, so
+  // #main-content never enters history and Back still goes where expected.
+  const skipToMain = e => {
+    e.preventDefault();
+    const el = document.getElementById('main-content');
+    if (el) {
+      el.focus();
+      el.scrollIntoView();
+    }
+  };
+
   const handleStart = ({ name, email }) => {
     const user = { name, email };
     saveUser(user);
@@ -66,10 +100,10 @@ export default function App() {
   const mission = player && route ? getMission(route) : null;
 
   return (
-    <>
-      <a href="#main-content" className="skip-link">Skip to main content</a>
+    <MotionConfig reducedMotion="user">
+      <a href="#main-content" className="skip-link" onClick={skipToMain}>Skip to main content</a>
       <TaglineBar compact={Boolean(player)} />
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
       <AnimatePresence mode="wait">
         {!player && (
           <motion.div key="splash" {...pageVariants}>
@@ -80,12 +114,12 @@ export default function App() {
         {player && !mission && (
           <motion.div key="home" {...pageVariants} className="active-layout">
             <MissionGallery progress={progress} />
-            <p className="session-footer">
+            <footer className="session-footer">
               Signed in as {player.name}.{' '}
               <button type="button" className="session-footer__signout" onClick={handleSignOut}>
                 Not you?
               </button>
-            </p>
+            </footer>
           </motion.div>
         )}
 
@@ -101,6 +135,6 @@ export default function App() {
         )}
       </AnimatePresence>
       </main>
-    </>
+    </MotionConfig>
   );
 }

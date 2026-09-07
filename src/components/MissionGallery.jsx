@@ -34,7 +34,7 @@ export default function MissionGallery({ progress }) {
       </div>
 
       <div className="evidence-section__header">
-        <h2 className="evidence-section__title">BUILD THE STAFF BRIEFING PACK</h2>
+        <h1 className="evidence-section__title">BUILD THE STAFF BRIEFING PACK</h1>
         {completedCount === main.length ? (
           <p className="mission-progress-line mission-progress-line--done">
             All {main.length} complete. &ldquo;The briefing pack exists. The real

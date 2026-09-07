@@ -15,7 +15,7 @@
   --grey:  #6e6e73;
   --parchment: #fbfbfd;
   --accent: #0071e3;
-  --accent-hover: #0077ed;
+  --accent-hover: #0062c4;
   --border-soft: #e5e5ea;
   --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04);
   --shadow-hover: 0 4px 12px rgba(0,0,0,0.06), 0 16px 40px rgba(0,0,0,0.08);
@@ -35,7 +35,7 @@
 }
 
 html {
-  font-size: 16px;
+  font-size: 100%;
   -webkit-font-smoothing: antialiased;
   color-scheme: light;
 }
@@ -45,6 +45,7 @@ body {
   color: var(--black);
   font-family: var(--font-body);
   min-height: 100vh;
+  min-height: 100svh;
   overflow-x: hidden;
 }
 
@@ -114,6 +115,7 @@ h1, h2, h3 {
 /* ---- Active Layout ---- */
 .active-layout {
   min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   background: var(--page);
@@ -124,6 +126,7 @@ h1, h2, h3 {
    ============================================================ */
 .splash {
   min-height: 100vh;
+  min-height: 100svh;
   background: var(--page);
   display: flex;
   justify-content: center;
@@ -301,10 +304,9 @@ h1, h2, h3 {
   color: var(--black);
   border: 2px solid var(--black);
   font-family: var(--font-body);
-  font-size: 0.9rem;
+  font-size: 1rem;
   padding: 0.6rem 0.8rem;
   width: 100%;
-  outline: none;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
 
@@ -543,9 +545,9 @@ h1, h2, h3 {
     grid-template-columns: 1fr;
   }
 
-  /* Evidence grid: single column */
+  /* Evidence grid: two columns on tablets, one column below 480px */
   .evidence-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: none;
     gap: 1rem;
   }
@@ -562,11 +564,6 @@ h1, h2, h3 {
 
 /* ---- Mid-size phones in landscape (667px wide, e.g. iPhone SE landscape) ---- */
 @media (max-width: 650px) {
-  .evidence-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-
   .hero {
     padding: 1.5rem 1rem;
   }
@@ -1315,7 +1312,7 @@ a:hover,
 }
 
 .mission-detail__title {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-weight: 700;
   letter-spacing: -0.02em;
   font-size: clamp(1.9rem, 5vw, 2.8rem);
@@ -1325,7 +1322,7 @@ a:hover,
 .mission-step__title,
 .evidence-section__title,
 .mission-card__big-code {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .evidence-section__title {
@@ -1334,7 +1331,7 @@ a:hover,
 }
 
 .evidence-card__name {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-style: normal;
   font-weight: 600;
 }
@@ -1480,7 +1477,7 @@ a:hover,
 .mission-detail .directive__text,
 .evidence-section .directive__text {
   color: var(--black);
-  font-family: 'Inter Tight', sans-serif;
+  font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 0.95rem;
 }
 
@@ -1503,7 +1500,7 @@ a:hover,
   border: 1px solid var(--accent);
   color: var(--accent);
   border-radius: 999px;
-  font-family: 'Inter Tight', sans-serif;
+  font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-weight: 600;
   font-size: 0.8rem;
   line-height: 1.7;
@@ -1521,7 +1518,7 @@ a:hover,
 
 /* Gallery card id line: quiet grey, google-style */
 .evidence-card__id {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   letter-spacing: 0.06em;
 }
 
@@ -1554,7 +1551,7 @@ a:hover,
 }
 
 .mission-card__summary {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 0.9rem;
   color: #424245;
 }
@@ -1578,7 +1575,7 @@ a:hover,
 .mission-card__meta {
   color: var(--grey);
   opacity: 1;
-  font-family: 'Inter Tight', sans-serif;
+  font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 0.78rem;
 }
 
@@ -1637,7 +1634,7 @@ a:hover,
 /* Memo label + signature: readable, full contrast */
 .mission-detail .directive__label,
 .evidence-section .directive__label {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -1763,6 +1760,7 @@ a:hover,
   padding: 0.85rem 1.1rem;
   cursor: pointer;
   list-style: none;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -1780,7 +1778,7 @@ a:hover,
 }
 
 .path-acc__title {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-weight: 700;
   font-size: 1rem;
   flex: 1;
@@ -1788,7 +1786,7 @@ a:hover,
 }
 
 .path-chip {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 0.72rem;
   font-weight: 600;
   color: var(--grey);
@@ -1830,7 +1828,7 @@ a:hover,
   max-width: 860px;
   margin: 0 auto;
   padding: 2rem 1.2rem;
-  font-family: 'Inter Tight', sans-serif;
+  font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .doctor__title {
@@ -1880,7 +1878,7 @@ a:hover,
 
 /* Stage word beside the big card number: "01 Discover" */
 .mission-card__stage {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: clamp(1.05rem, 2vw, 1.35rem);
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -1933,7 +1931,7 @@ a:hover,
    than the blue of .eyebrow, so the label does not compete with the accent
    step number sitting a few pixels to its left. */
 .mission-artifact__label {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 0.7rem;
   letter-spacing: 0.1em;
   color: var(--grey);
@@ -1951,7 +1949,7 @@ a:hover,
    base hover and flipped to solid blue, which made the secondary actions
    shout louder than the button they sit beside. */
 .btn-artifact {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-weight: 600;
   font-size: 0.78rem;
   letter-spacing: 0.02em;
@@ -1989,7 +1987,7 @@ a:hover,
 .prompt-box__label,
 .prompt-box__note,
 .mission-step__caption {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .prompt-box__label {
@@ -2010,7 +2008,7 @@ a:hover,
    the drift this whole section exists to close. Size and padding are Matt's,
    set deliberately so it reads as a button from across a room. */
 .prompt-box__copy {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-weight: 600;
   letter-spacing: 0.02em;
 }
@@ -2279,4 +2277,130 @@ a:hover,
   width: auto;
   vertical-align: -0.12em;
   margin: 0 0.1em;
+}
+
+/* ============================================================
+   Pre-deploy polish, 2026-09-07. Appended so the cascade wins.
+   Findings from the cross-browser, accessibility and functional
+   audits; see tasks/todo.md addendum 106.
+   ============================================================ */
+
+/* Visually hidden, read by screen readers: copy confirmations. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* main is the skip-link and route-change focus target; no ring on a region. */
+main:focus {
+  outline: none;
+}
+
+/* Three-button skill cards wrapped off the screen on phones. */
+.mission-artifact__actions {
+  flex-wrap: wrap;
+}
+
+/* Two-tool pages pushed the tool cards past a phone viewport: the strap
+   could never shrink, so its row never got the chance to wrap. */
+.mission-head-row .tool-cards {
+  flex-shrink: 1;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Contrast: the accent blue is 4.31:1 on the page grey at small sizes.
+   One notch darker passes AA and reads the same. */
+.eyebrow,
+.splash-link {
+  color: #0062c4;
+}
+
+.prompt-box__label {
+  color: #656569;
+}
+
+.sort-choice--amber {
+  color: #8f5b00;
+}
+
+/* Splash inputs: a visible boundary, a real focus ring, and 16px text so
+   iOS Safari does not zoom in on focus. */
+.splash-input {
+  border-color: #8e8e93;
+}
+
+.splash-input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Hit areas for the two inline text controls (24px, WCAG 2.2) without
+   moving anything: padding balanced by a negative margin. */
+.tagline-bar__title,
+.session-footer__signout {
+  padding: 0.35rem 0;
+  margin: -0.35rem 0;
+}
+
+.bonus-strip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Inline text links: vertical padding grows the hit area without moving
+   the line. The splash stamp is the brand red one notch darker for AA. */
+.splash-link,
+.mission-verdict__next {
+  padding: 0.3rem 0;
+}
+
+.cover-brand-stamp {
+  color: #c62b21;
+}
+
+/* Sizes that scale with the text instead of pinning it. */
+.step-badge {
+  min-width: 1.75em;
+  height: 1.75em;
+}
+
+.splash-headline {
+  font-size: clamp(2.6rem, 12vw, 5.5rem);
+  overflow-wrap: anywhere;
+}
+
+/* The mono wordmark plus its tracking is wider than a 320px phone. */
+@media (max-width: 480px) {
+  .tagline-bar {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .tagline-bar__title {
+    letter-spacing: 0.1em;
+  }
+}
+
+/* Handouts: the prompt box must not truncate at 24rem on paper. */
+@media print {
+  .prompt-box__text {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .tagline-bar,
+  .skip-link,
+  .prompt-box__copy,
+  .mission-artifact__actions,
+  .session-footer {
+    display: none;
+  }
 }

@@ -3458,6 +3458,53 @@ and do not share an app holding confidential (C1/C2) work data by link. The work
 "Run the detailed prompt". The stretch block stays on 03; only 01 and 02 lost theirs, and only
 by request. Verified on the preview and `?doctor` (25, all 200).
 
+## 2026-09-07 (addendum 106): pre-deploy polish, and Matt's rewrite of the reverse prompt
+
+Matt, getting ready to deploy: review for cross-browser quirks, exercise consistency, WCAG
+quick wins and a functional pre-flight, then safe minimal fixes, no rewrites, no content
+changes. Three read-only audits (CSS, accessibility, functional) plus browser probes: iframes at
+320, 390, 700, 768 and 1366px on every route, keyboard tabbing, contrast computed from rendered
+styles. Findings and what changed, one commit:
+
+**Fixed, high.** No scroll reset on route change (`App.jsx` now scrolls to top, focuses `main`,
+sets `document.title` per exercise, and rewrites an unknown route to `#/`). Three-button skill
+cards clipped on phones (`.mission-artifact__actions` wraps). Tool cards overflowed a phone on
+every two-tool page (`.mission-head-row .tool-cards` may shrink). VIEW IN BROWSER and COPY on
+artifact cards awaited a fetch before `window.open` / clipboard write, which Safari and Firefox
+block as a popup: the tab now opens inside the click and the skill text is prefetched so COPY
+writes inside the click. Contrast: eyebrow, splash links, prompt label, button hover blue,
+splash input border, amber sort colour, splash stamp all now pass AA (measured zero failures on
+every route and the splash). Splash inputs: real focus ring, 16px text so iOS does not zoom.
+`MotionConfig reducedMotion="user"` so framer-motion honours the OS setting. One `h1` per page
+(gallery and exercise titles, class-styled so nothing moved: gallery title measured identical).
+
+**Fixed, medium.** Skip link focuses `main` directly so `#main-content` never enters history
+(Back works in one press). Gallery grid breakpoints were inverted (two columns at 481 to 650,
+one at 651 to 768): now two columns to 768, one below 480. Paperclip no longer shown on ENABLE
+strips that attach nothing. Copy confirmations and doctor status announced (`role="status"`,
+`.sr-only`); DOWNLOAD/COPY/VIEW carry the filename in their names; `ol`s carry `role="list"`;
+tagline bar is a `header`, sign-out row a `footer`; splash inputs have `autocomplete`; wordmark
+tracking reduced under 480px; `-webkit-user-select`; `html { font-size: 100% }`; print rule so
+prompts do not truncate on paper; Inter Tight stacks carry a system fallback (17 rules);
+`div`s inside the card `button` are `span`s; `loadUser` rejects records without an email;
+`recordAttendance` has a 5s timeout; doctor guards a strip-only artifact; `yourChart` lost its
+misleading `downloadPath`; `lang="en-GB"`; favicon (`public/favicon.svg`, a black square with a
+white 2, swap it if you have a better one).
+
+**Not changed, Matt's call.** Skill labels read 1, 2, 3, 5 because `Fact_Check_Cardiff.md`
+("SKILL 4") is linked nowhere. Attendance is recorded on first sign-in only. `#/prompts` still
+unreachable. Two HESA `.xlsx` files ship unreferenced and a comment on the bonus claims an
+`.xlsx` hand-out. Pill buttons are 32px (pass WCAG 2.2's 24px, not Apple's 44).
+
+**Not testable here.** The Safari and Firefox popup and clipboard fixes are correct by
+construction (gesture preserved) but were only exercised in Chrome. Worth one click each on a
+Mac before the day.
+
+**Matt's rewrite of `MH_IMAGE_REVERSE`** landed in the same commit: output-only, a fixed
+seven-line format, the placeholder pinned. Anchor hash is now
+`46d1ef20e30c9f9816fb7777f7ffb9de0e87653c19f58cdc184c16994c2580cc`. His pasted text had a
+non-breaking hyphen in "reverse-engineer"; the constant uses a plain hyphen.
+
 # HANDOVER, end of 2026-09-07
 
 **Supersedes the 2026-09-05 handover above.** That block's traps still hold; this one carries the
@@ -3471,6 +3518,11 @@ site is far behind. That is expected. Never push unless Matt asks in that same m
 
 ## Next job: tweaks to Matt Hayden's Exercises 01 and 02
 
+**Done, 2026-09-07 afternoon (addenda 104 to 106).** The 01 and 02 tweaks, the 03 tweaks and
+the pre-deploy polish are all committed. Three `MH_*` constants now carry Matt-directed edits
+(listed in the block's header comment), so the hash below is the new one, and the deck differs
+from the site in those three places. The rules below still hold for anything further.
+
 Read this before touching either.
 
 **His prompts are `MH_*` constants at the top of `missions.js` and are verbatim from his deck
@@ -3481,7 +3533,7 @@ reworded prompt shows up live.** Verify the block by anchor, never a line range:
 start=$(grep -n "^const MH_DEEP_RESEARCH" src/data/missions.js | cut -d: -f1)
 end=$(grep -n "^const MH_CANVAS_GAME" src/data/missions.js | cut -d: -f1)
 sed -n "${start},${end}p" src/data/missions.js | sha256sum
-# e4f8082373927ce38d7d8b59c1352c51f4f77aab05e0c9e5636b1818fa26fabf
+# 46d1ef20e30c9f9816fb7777f7ffb9de0e87653c19f58cdc184c16994c2580cc
 ```
 
 **Editable without touching his words:** step `title`, `body`, `promptLabel`, `promptNote`,
@@ -3500,7 +3552,7 @@ Where 01 and 02 stand after today:
   Blue Peter card, SAME CHAT then NEW CHAT on step 3, Responsible AI on accessibility. Addendum 104.
 - **03 The Game**, 12 minutes, prompts untouched. Step 2 uses the NEW CHAT strip with the Canvas
   chip, step 3 asks which strings came from the PDF, step 5 carries the C1/C2 sharing warning.
-  Stretch block still present. Addendum 105.
+  Stretch block removed; step 4 is "Play it, then give AI feedback". Addenda 105 and 106.
 
 ## Where the site is
 
@@ -3534,6 +3586,10 @@ yesterday's copy and make you doubt a correct edit.** Add any new file-bearing s
 
 ## Traps added today
 
+- **A background tab never finishes a framer-motion exit, so hash routing looks broken.**
+  `document.hidden` is true, Chrome throttles `requestAnimationFrame`, and `AnimatePresence
+  mode="wait"` waits forever for the exit animation. Cost half an hour before the check. Probe
+  routing with the tab in front; layout and contrast probes in iframes are fine either way.
 - **Edit `Cardiff_Estates_Dashboard.html` as bytes.** Python text mode silently rewrote the
   embedded CSV's CRLF endings to LF, and `verify_chart_data.py` did not notice because it parses
   rather than compares. Byte-check the block against HEAD, the snippet is in addendum 102.
