@@ -844,7 +844,7 @@ export const MISSIONS = [
         estMinutes: 6,
         title: 'Attach the data and run the prompt',
         body:
-          'Start in Copilot, and you will repeat this in Gemini. Download the CSV from the card above, attach it with the paperclip and send. Read what comes back before you go near the second tool.',
+          'Start in Copilot. Download the CSV file from the card above and attach it.',
         attach: [A.hesaData],
         promptLabel: 'YOUR PROMPT',
         promptNote: '[attach HESA_Estates_Workshop.csv]',
@@ -859,7 +859,7 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'Verify and repair the numbers',
         body:
-          'Same prompt, same file, in Gemini this time. Do the two agree? Then run this check in both. It works on any AI analysis, so keep it: a person signs the numbers off, and a rubber stamp does not count.',
+          'Repeat the same analysis with Gemini. Do the two agree? Then run this check in both. It works on any AI analysis, so keep it: a person signs the numbers off, and a rubber stamp does not count.',
         promptLabel: 'THE REUSABLE CHECK',
         promptNote: '[keep this one, it works on any AI analysis]',
         // Built on the evidence, not on instinct. Asking a model to review its
