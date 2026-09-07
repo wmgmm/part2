@@ -61,11 +61,10 @@ export default function SplashScreen({ onStart }) {
           <li className="splash-step">
             <span className="splash-step__num">2</span>
             <span className="splash-step__text">
-              <strong>Download the source file</strong> we will be using:{' '}
+              <strong>Download the public PDF</strong> we will be using:{' '}
               <a href={`${BASE}placeholders/Sustainable-Futures-en.pdf`} target="_blank" rel="noopener noreferrer" className="splash-link">
                 the sustainability plan
-              </a>. It is a public document, safe to upload. It is 10.7 MB, so start it now
-              if the wifi is thin.
+              </a>.
             </span>
           </li>
         </ol>
