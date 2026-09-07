@@ -3680,6 +3680,39 @@ attached HTML file", which reads oddly in a chat where the app is already presen
 predates the swap, because the old backup already sent people to the same chat with this prompt.
 Worth a look after a real run.
 
+## 2026-09-07 (addendum 110): two games for Exercise 03, one fixed and one built
+
+**`Demand_First_Game.html`**, Matt's own Canvas build, now Exercise 03 step 4's card. Read
+before improving: its scoring was backwards. Cancelling wasteful demand scored 100, swapping
+150, recycling 200, planting a tree 200, so a player optimising for score learned to skip
+prevention and offset. A subagent inverted it to 400, 250, 150, 50 from one table, made carbon
+saved follow the same shape, printed the price on every item and on a permanent ladder, and made
+unhandled demand cascade into the next stage at the lower rate in orange, so the hierarchy is
+felt in play rather than read off four side cards. Stage names are the plan's words. The victory
+screen is a per-stage breakdown against a ceiling of 3,550. Verified by driving the loop
+synchronously with `update(1/60)` because the probe tab is background-throttled and
+`requestAnimationFrame` never fires; observed +400 for an avoid, +250 for a slipped item in
+stage 2, +150 in stage 3, +50 in stage 4, and the cascade banners. **Real-time feel and the
+stage clocks (26/28/34/26 s) are untested against a person.** Fits 1366x768 without scrolling.
+
+**`Demand_First_Adventure.html`**, built by Fable to Matt's PRD: "Oregon Trail meets Zork
+meets Cardiff University procurement". 903 lines, one file, vanilla JS, green-screen terminal,
+sixteen scenarios over four levels (desk, building, department, university), four meters
+(carbon, budget, wellbeing, reputation), rank-based scoring where each option's rank is set per
+scenario with the hierarchy as the guide and common sense applied (repairing a working monitor
+is theatre, not circularity), four titles, four hidden achievements, a save in localStorage with
+a resume prompt, and large-text, high-contrast and motion-off modes. Verified in the browser: a
+best run scores 48 of 48 and unlocks three achievements; a worst run is cut off after seven
+decisions when the budget hits zero; a reload offers to resume at the right decision; the
+toggles persist; no overflow at 390, 1366 or 1920 px; option buttons 44 px. Keyboard handling
+verified with synthetic events only, since real key presses do not reach a background tab.
+**Not linked from any page and not covered by `?doctor`**, pending Matt's decision on where it
+goes. The obvious home is a second card on Exercise 03 step 4.
+
+Two things caught by measurement that a read would have missed: the meter row overlapped
+itself at laptop width because the grid minimum was narrower than a meter, and the first bar
+design overflowed a phone. Both fixed before commit.
+
 # HANDOVER, end of 2026-09-07
 
 **Supersedes the 2026-09-05 handover above.** That block's traps still hold; this one carries the
@@ -3727,7 +3760,8 @@ Where 01 and 02 stand after today:
   Blue Peter card, SAME CHAT then NEW CHAT on step 3, Responsible AI on accessibility. Addendum 104.
 - **03 The Game**, 12 minutes, prompts untouched. Step 2 uses the NEW CHAT strip with the Canvas
   chip, step 3 asks which strings came from the PDF, step 5 carries the C1/C2 sharing warning.
-  Stretch block removed; step 4 is "Play it, then give AI feedback". Addenda 105 and 106.
+  Thin-ask step parked; step 4 is Matt's rescored Canvas game; Responsible AI leads with Share
+  Responsibly. A separate text adventure is hosted but unlinked. Addenda 105 to 110.
 
 ## Where the site is
 

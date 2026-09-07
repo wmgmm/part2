@@ -172,12 +172,12 @@ thumbnails, attach lists, `attachExtra` and logos, derived from `MISSIONS` so it
 **A new field naming a file must be added to `collectUrls` in `DoctorPanel.jsx` in the same
 commit.** Missed twice, both times reporting all-clear over an invisible asset.
 
-Fourteen files ship. **Not generated:** `Sustainable-Futures-en.pdf` (the plan),
+Fifteen files ship. **Not generated:** `Sustainable-Futures-en.pdf` (the plan),
 `Deep_research_output.pdf` (01's fallback), `Example_Training_Session.pdf` (05's backup source),
-`HESA_Estates_Management.xlsx` (13 MB, **unlinked**, the generator's input), and three real
-Canvas runs: `Cardiff_Estates_Dashboard.html` (06 step 2, repaired against the CSV),
-`Demand_First_Game.html` (03, rescored to rank the four stages as the plan does) and
-`Example_Bubble_Chart.html` (fabricated, **unlinked**). `verify_chart_data.py` checks a chart.
+`HESA_Estates_Management.xlsx` (13 MB, **unlinked**, the generator's input), three real Canvas
+runs: `Cardiff_Estates_Dashboard.html` (06 step 2), `Demand_First_Game.html` (03 step 4, rescored
+to rank the four stages as the plan does), `Example_Bubble_Chart.html` (fabricated, **unlinked**);
+and `Demand_First_Adventure.html`, a text adventure built to a PRD, **unlinked**, hosted for Matt.
 **Generated:** the five skills, `Example_Style_Block.md` and `HESA_Estates_Workshop.csv`/`.xlsx`.
 
 ## Styling

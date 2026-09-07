@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Demand First: The Sustainable Adventures of Cardiff University</title>
+<style>
+  /* Retro green-screen terminal. One file, no dependencies, no build.
+     Colours from the brief; the high-contrast mode swaps the whole palette. */
+  :root {
+    --bg: #001100;
+    --fg: #00FF66;
+    --warn: #FFFF00;
+    --fail: #FF6666;
+    --ok: #66FF66;
+    --dim: #00aa44;
+    --glow: 0 0 6px rgba(0, 255, 102, 0.55);
+    --font: "Courier New", Courier, "Lucida Console", monospace;
+    --size: 16px;
+  }
+  body.hc {
+    --bg: #000000;
+    --fg: #ffffff;
+    --warn: #ffd400;
+    --fail: #ff8080;
+    --ok: #a0ffa0;
+    --dim: #d0d0d0;
+    --glow: none;
+  }
+  body.lg { --size: 21px; }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font);
+    font-size: var(--size);
+    line-height: 1.45;
+    text-shadow: var(--glow);
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+  /* Scan lines and a soft vignette. Purely decorative, gone in high contrast. */
+  body::before {
+    content: "";
+    position: fixed; inset: 0; pointer-events: none; z-index: 5;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0 1px, transparent 1px 3px);
+    mix-blend-mode: multiply;
+  }
+  body::after {
+    content: "";
+    position: fixed; inset: 0; pointer-events: none; z-index: 4;
+    background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.55) 100%);
+  }
+  body.hc::before, body.hc::after { display: none; }
+
+  .skip {
+    position: absolute; left: -999px; top: 0; background: var(--fg); color: var(--bg);
+    padding: 0.4rem 0.8rem; z-index: 20; text-shadow: none;
+  }
+  .skip:focus { left: 0.5rem; top: 0.5rem; }
+
+  .wrap { max-width: 82ch; margin: 0 auto; padding: 0.75rem 1rem 3rem; position: relative; z-index: 6; }
+
+  header { border-bottom: 1px solid var(--dim); padding-bottom: 0.5rem; margin-bottom: 0.5rem; }
+  .brand { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 1rem; justify-content: space-between; }
+  .brand h1 { font-size: 1.15em; margin: 0; letter-spacing: 0.08em; }
+  .brand .sub { margin: 0; color: var(--dim); font-size: 0.85em; }
+  .toggles { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; }
+
+  button {
+    font: inherit; color: var(--fg); background: transparent;
+    border: 1px solid var(--dim); padding: 0.35em 0.7em; cursor: pointer;
+    text-shadow: inherit; text-align: left; min-height: 2.4em;
+  }
+  button:hover { background: rgba(0,255,102,0.12); }
+  body.hc button:hover { background: rgba(255,255,255,0.15); }
+  button:focus-visible { outline: 3px solid var(--warn); outline-offset: 2px; }
+  button[disabled] { opacity: 0.55; cursor: default; }
+  .toggles button { font-size: 0.8em; min-height: 2em; padding: 0.2em 0.6em; }
+
+  .meters { display: grid; grid-template-columns: repeat(auto-fit, minmax(29ch, 1fr)); gap: 0.2rem 1.2rem; margin: 0.4rem 0; }
+  .meter { white-space: nowrap; }
+  .meter .lbl { display: inline-block; width: 11ch; }
+  .meter .bar { letter-spacing: 0.02em; }
+  .meter.low .bar { color: var(--fail); }
+  .meter.mid .bar { color: var(--warn); }
+  .meter.high .bar { color: var(--ok); }
+
+  .hier { display: flex; flex-wrap: wrap; gap: 0.3rem 0.9rem; color: var(--dim); font-size: 0.85em; border-bottom: 1px solid var(--dim); padding: 0.25rem 0 0.45rem; margin-bottom: 0.6rem; }
+  .hier span { padding: 0 0.2em; border: 1px solid transparent; }
+  .hier span.lit { color: var(--warn); border-color: var(--warn); }
+
+  #term { white-space: pre-wrap; overflow-wrap: anywhere; min-height: 12em; outline: none; }
+  #term .l { display: block; min-height: 1.45em; }
+  #term .warn { color: var(--warn); }
+  #term .fail { color: var(--fail); }
+  #term .ok { color: var(--ok); }
+  #term .dim { color: var(--dim); }
+  #term .box { color: var(--warn); }
+  .cursor::after { content: "\2588"; animation: blink 1s steps(1) infinite; }
+  body.nomo .cursor::after { animation: none; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  #choices { display: grid; gap: 0.4rem; margin: 0.8rem 0 0; }
+  #choices button { width: 100%; min-height: 2.75em; }
+  #choices button .k { color: var(--warn); margin-right: 0.6em; }
+  .row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  footer { margin-top: 1.2rem; color: var(--dim); font-size: 0.8em; border-top: 1px solid var(--dim); padding-top: 0.4rem; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  @media (max-width: 480px) {
+    .wrap { padding: 0.5rem 0.6rem 2.5rem; }
+    .meters { grid-template-columns: 1fr; }
+    .meter .lbl { width: 10ch; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cursor::after { animation: none; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#term">Skip to the terminal</a>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <h1>DEMAND FIRST</h1>
+      <p class="sub">The Sustainable Adventures of Cardiff University</p>
+    </div>
+    <div class="toggles" aria-label="Display settings">
+      <button type="button" id="tgl-text" aria-pressed="false">TEXT: NORMAL</button>
+      <button type="button" id="tgl-hc" aria-pressed="false">CONTRAST: NORMAL</button>
+      <button type="button" id="tgl-motion" aria-pressed="true">MOTION: ON</button>
+      <button type="button" id="btn-restart">RESTART</button>
+    </div>
+  </header>
+
+  <section class="meters" aria-label="Your four meters">
+    <div class="meter" id="m-carbon"><span class="lbl">CARBON</span><span class="bar"></span></div>
+    <div class="meter" id="m-budget"><span class="lbl">BUDGET</span><span class="bar"></span></div>
+    <div class="meter" id="m-wellbeing"><span class="lbl">WELLBEING</span><span class="bar"></span></div>
+    <div class="meter" id="m-reputation"><span class="lbl">REPUTATION</span><span class="bar"></span></div>
+  </section>
+
+  <nav class="hier" aria-label="The Demand First hierarchy, in order">
+    <span id="h1">1 AVOID DEMAND</span>
+    <span id="h2">2 LOW-IMPACT ALTERNATIVE</span>
+    <span id="h3">3 CIRCULARITY</span>
+    <span id="h4">4 MANAGE THE RESIDUE</span>
+  </nav>
+
+  <main>
+    <div id="term" role="log" aria-live="polite" tabindex="-1"></div>
+    <div id="choices"></div>
+  </main>
+
+  <footer>Keys: A B C D or 1 2 3 4 to choose. ENTER to continue. Any key skips the typing. Progress is saved in this browser.</footer>
+</div>
+
+<script>
+/* ------------------------------------------------------------------ data */
+
+// Deltas are [carbon, budget, wellbeing, reputation]. Rank 1 is the best
+// option available in that scenario, 4 the worst; points are 3, 2, 1, 0.
+// Stage is where the option sits on the Demand First hierarchy, 0 meaning
+// it is just buying things. Tags feed the hidden achievements.
+const LEVELS = [
+  { name: "LEVEL 1: THE DESK", line: "Where sustainability begins: at your elbow." },
+  { name: "LEVEL 2: THE BUILDING", line: "You have been given a lanyard with more access. Use it wisely." },
+  { name: "LEVEL 3: THE DEPARTMENT", line: "Bigger decisions. Bigger emails." },
+  { name: "LEVEL 4: THE UNIVERSITY", line: "Someone has noticed. They gave you a bigger budget and a smaller office." }
+];
+
+const STAGE_NAME = {
+  0: "NO STAGE. JUST BUYING THINGS.",
+  1: "STAGE 1: AVOID DEMAND",
+  2: "STAGE 2: SOURCE A LOW-IMPACT ALTERNATIVE",
+  3: "STAGE 3: ENSURE CIRCULARITY",
+  4: "STAGE 4: MANAGE THE UNAVOIDABLE RESIDUE"
+};
+
+const SCENARIOS = [
+  // ---------------------------------------------------------- level 1
+  {
+    banner: "DEPARTMENT OF PAPER",
+    text: [
+      "The office printer has died.",
+      "Its final act: a 60 page document titled",
+      "'For Reference Only'.",
+      "",
+      "A memo arrives: 'We need a replacement urgently.'"
+    ],
+    opts: [
+      { k: "A", t: "Buy a new, faster, bigger printer", r: 4, s: 0, d: [-8, -12, 2, -4], tags: ["purchase"],
+        say: ["A printer with the footprint of a small car arrives.", "It prints 'For Reference Only' beautifully.", "Nobody reads it."] },
+      { k: "B", t: "Buy an eco-labelled printer", r: 3, s: 2, d: [-5, -10, 1, 1], tags: ["purchase"],
+        say: ["Lower impact. Still a printer.", "You sourced an alternative for a demand nobody checked.", "Stage two, without stage one."] },
+      { k: "C", t: "Ask what actually needs printing", r: 1, s: 1, d: [6, 8, -1, 5], tags: [],
+        say: ["It turns out: almost nothing.", "Two forms and one person's crossword.", "The shared printer down the corridor covers it.", "", "Demand avoided. Procurement is confused."] },
+      { k: "D", t: "Repair the old printer", r: 2, s: 3, d: [3, 2, 0, 2], tags: ["repair"],
+        say: ["A technician, a paperclip and forty minutes. It lives.", "Circularity in action.", "You still have not asked what it is printing."] }
+    ]
+  },
+  {
+    banner: "DEPARTMENT OF VERY IMPORTANT PURCHASES",
+    text: [
+      "Your team wants 50 new monitors.",
+      "",
+      "The old monitors still work."
+    ],
+    opts: [
+      { k: "A", t: "Buy new eco-certified monitors", r: 3, s: 2, d: [-10, -15, 3, 0], tags: ["purchase"],
+        say: ["Fifty boxes.", "Fifty working monitors go to a cupboard called 'storage'", "that is really a cupboard called 'landfill, eventually'.", "", "Eco-certified does not mean needed."] },
+      { k: "B", t: "Repair existing monitors", r: 2, s: 3, d: [0, -2, -2, 0], tags: ["repair"],
+        say: ["You raise 50 repair tickets for 50 monitors that work.", "IT replies with a single question mark.", "", "Circularity is good.", "Circularity of things that are already fine is theatre."] },
+      { k: "C", t: "Keep current monitors", r: 1, s: 1, d: [8, 12, -2, 4], tags: ["reuse"], items: 50,
+        say: ["The most sustainable monitor is the one already on the desk.", "Fifty of them, in fact.", "The team sulks for an afternoon, then forgets.", "", "Demand avoided."] },
+      { k: "D", t: "Buy carbon offsets", r: 4, s: 4, d: [-2, -8, 0, -5], tags: ["purchase", "offset"],
+        say: ["You bought offsets before considering the actual problem.", "", "The Sustainability Goblin gains strength."] }
+    ]
+  },
+  {
+    banner: "DEPARTMENT OF PATIENCE",
+    text: [
+      "Your laptop is four years old.",
+      "It boots in a leisurely ninety seconds.",
+      "It then works perfectly."
+    ],
+    opts: [
+      { k: "A", t: "Request the top-spec new laptop", r: 4, s: 0, d: [-9, -14, 4, -3], tags: ["purchase"],
+        say: ["It boots in eight seconds.", "You spend the other 82 feeling guilty.", "The old one goes in a drawer with three older ones."] },
+      { k: "B", t: "Request the eco-labelled new laptop", r: 3, s: 2, d: [-6, -11, 3, 0], tags: ["purchase"],
+        say: ["A greener way to replace something that was not broken.", "Stage two is doing its best. Stage one was not consulted."] },
+      { k: "C", t: "Ask IT to upgrade the drive", r: 2, s: 3, d: [2, -2, 3, 2], tags: ["repair"],
+        say: ["A forty pound part. It now boots in twelve seconds.", "Four more years of service.", "", "Repair beats replace, and IT quite like you now."] },
+      { k: "D", t: "Keep it. Make tea during the boot.", r: 1, s: 1, d: [5, 6, 1, 2], tags: ["reuse"], items: 1,
+        say: ["Ninety seconds a day is six hours a year,", "roughly the time you spend looking for the good mugs.", "", "It boots. That is the job. Demand avoided."] }
+    ]
+  },
+  {
+    banner: "DEPARTMENT OF HOT AIR",
+    text: [
+      "July. The office is 27 degrees.",
+      "A colleague proposes a desk fan for everyone.",
+      "There are 40 of you."
+    ],
+    opts: [
+      { k: "A", t: "Buy 40 desk fans", r: 3, s: 0, d: [-6, -8, 4, -2], tags: ["purchase"],
+        say: ["Forty fans. Forty plugs.", "The office now sounds like a small airport", "and is 26 degrees."] },
+      { k: "B", t: "Check the store room and the blinds first", r: 1, s: 1, d: [5, 6, 3, 3], tags: ["reuse"], items: 6,
+        say: ["Six fans, a box of 2019 conference lanyards,", "and a blind that has never once been lowered.", "", "Lower it. Share the six. 27 becomes 24.", "The desk fan industry weeps."] },
+      { k: "C", t: "Buy two efficient fans for the hot corner", r: 2, s: 2, d: [1, -3, 3, 1], tags: ["purchase"],
+        say: ["Two fans, where the sun actually lands.", "A low-impact answer to a real problem.", "Though nobody looked in the store room."] },
+      { k: "D", t: "Buy a portable air conditioner", r: 4, s: 0, d: [-9, -12, 4, -3], tags: ["purchase"],
+        say: ["It is 22 degrees at your desk", "and 31 degrees at the exhaust hose,", "which points at Sandra."] }
+    ]
+  },
+  // ---------------------------------------------------------- level 2
+  {
+    banner: "DEPARTMENT OF ILLUMINATION",
+    text: [
+      "Every night the third floor is lit like a cruise ship.",
+      "Nobody is there. The cleaners finish at seven."
+    ],
+    opts: [
+      { k: "A", t: "Install motion sensors throughout", r: 2, s: 2, d: [5, -6, 0, 3], tags: ["purchase"],
+        say: ["Lights that notice when nobody is there.", "A good purchase. Also a purchase.", "Somebody should check what already exists."] },
+      { k: "B", t: "Put a sign by the switch: LAST OUT, LIGHTS OFF", r: 4, s: 1, d: [1, 1, 0, 0], tags: [],
+        say: ["The sign is laminated, so people know it is serious.", "It works for a week.", "Then someone props the door open with it.", "", "The lights are still on. The sign glows nicely under them."] },
+      { k: "C", t: "Ask Estates to put floor three on the timer floors one and two already use", r: 1, s: 1, d: [7, 3, 0, 4], tags: ["reuse"], items: 1,
+        say: ["The timer exists. It has existed for six years.", "Nobody asked.", "", "Demand avoided using the forbidden technique:", "an email to Estates."] },
+      { k: "D", t: "Switch every fitting to LED", r: 3, s: 2, d: [4, -8, 0, 2], tags: ["purchase"],
+        say: ["The empty floor is now lit very efficiently.", "All night.", "Stage two, working overtime to cover for stage one."] }
+    ]
+  },
+  {
+    banner: "DEPARTMENT OF THERMAL COMFORT",
+    text: [
+      "February. The heating in Block C runs at 23 degrees,",
+      "24 hours a day, including the weekend,",
+      "when Block C contains one security guard",
+      "and a very warm fern."
+    ],
+    opts: [
+      { k: "A", t: "Turn it down to 19 and off at weekends", r: 1, s: 1, d: [9, 9, -3, 4], tags: [],
+        say: ["Nineteen is the standard. Cardigans appear.", "The fern adjusts.", "The guard gets a heater the size of a shoebox and is delighted.", "", "Demand avoided, at scale."] },
+      { k: "B", t: "Replace the boiler with a heat pump", r: 2, s: 2, d: [6, -20, 0, 5], tags: ["purchase"],
+        say: ["A good move, and an expensive one,", "and it still heats an empty building at the weekend.", "", "Stage two before stage one costs you twice."] },
+      { k: "C", t: "Buy everyone a heated gilet", r: 3, s: 0, d: [-3, -9, 3, -2], tags: ["purchase"],
+        say: ["Forty gilets. The heating is still on.", "Block C is now a sauna full of people dressed for the Arctic."] },
+      { k: "D", t: "Offset Block C's heating emissions", r: 4, s: 4, d: [-1, -10, 0, -4], tags: ["purchase", "offset"],
+        say: ["You have paid for the emissions to be forgiven.", "They continue regardless.", "The fern says nothing, but it knows."] }
+    ]
+  },
+  {
+    banner: "DEPARTMENT OF ROOMS",
+    text: [
+      "The department asks for two more meeting rooms.",
+      "The booking system shows the existing six are,",
+      "on average, 31 percent occupied.",
+      "Mostly by people who booked them 'just in case'."
+    ],
+    opts: [
+      { k: "A", t: "Convert two offices into meeting rooms", r: 4, s: 0, d: [-6, -15, -4, -1], tags: ["purchase"],
+        say: ["Two people lose their offices.", "The eight rooms are 24 percent occupied.", "Everyone is 'just in casing' harder than ever."] },
+      { k: "B", t: "Auto-release bookings nobody turns up to", r: 1, s: 1, d: [4, 6, 1, 3], tags: [],
+        say: ["A checkbox in the booking system.", "Real meetings now find a room every time.", "No walls were harmed.", "", "Demand avoided."] },
+      { k: "C", t: "Hire the conference centre across town for overflow", r: 3, s: 2, d: [-3, -8, -1, 0], tags: ["purchase"],
+        say: ["A lower-impact alternative to building.", "Not to the problem.", "People now walk fifteen minutes to sit in a room a third full."] },
+      { k: "D", t: "Put a PLEASE CANCEL IF NOT NEEDED sign on each door", r: 2, s: 1, d: [1, 1, 0, 1], tags: [],
+        say: ["It helps, slightly.", "A sign is stage one with the batteries taken out."] }
+    ]
+  },
+  {
+    banner: "DEPARTMENT OF LIQUIDS",
+    text: [
+      "The labs use a great deal of water.",
+      "A supplier offers a rainwater harvesting system for the roof.",
+      "It is very shiny."
+    ],
+    opts: [
+      { k: "A", t: "Buy the rainwater system", r: 3, s: 2, d: [3, -14, 0, 3], tags: ["purchase"],
+        say: ["It works.", "It also supplies water to taps that run for no reason.", "Stage two, while stage one drips."] },
+      { k: "B", t: "Audit which taps and equipment run when not needed", r: 1, s: 1, d: [5, 5, 0, 3], tags: [],
+        say: ["One cooling loop has run continuously since 2017.", "It cools nothing.", "Turned off. Water use falls 20 percent.", "", "Demand avoided. Cost: one afternoon and a clipboard."] },
+      { k: "C", t: "Fit aerators and push taps", r: 2, s: 2, d: [3, -3, 0, 2], tags: ["purchase"],
+        say: ["Cheap, quick and effective.", "A low-impact alternative done well.", "The cooling loop, meanwhile, cools on."] },
+      { k: "D", t: "Join a water offset scheme", r: 4, s: 4, d: [0, -6, 0, -3], tags: ["purchase", "offset"],
+        say: ["Somewhere, a wetland is restored on your behalf.", "Here, the taps run.", "The Sustainability Goblin fills a paddling pool."] }
+    ]
+  },
+  // ---------------------------------------------------------- level 3
+  {
+    banner: "DEPARTMENT OF GOING PLACES",
+    text: [
+      "You are invited to a meeting in London.",
+      "",
+      "Duration: 42 minutes.",
+      "Agenda: 'catch-up'."
+    ],
+    travel: true,
+    opts: [
+      { k: "A", t: "Fly", r: 4, s: 0, d: [-12, -10, 1, -6], tags: ["travel"],
+        say: ["Cardiff to London by air involves two airports, one bus,", "and a strong sense that something has gone wrong.", "", "42 minutes of meeting. Seven hours of travel."] },
+      { k: "B", t: "Take the train", r: 2, s: 2, d: [-3, -6, 2, 1], tags: ["travel"],
+        say: ["Two hours each way, decent wifi,", "a sandwich you regret.", "A low-impact alternative. The trip still happened."] },
+      { k: "C", t: "Attend online", r: 1, s: 1, d: [8, 8, 2, 3], tags: ["no-travel"],
+        say: ["Demand avoided.", "", "You defeated 180 kg of CO2 using the forbidden technique:", "asking if the trip was necessary.", "", "The catch-up takes 19 minutes."] },
+      { k: "D", t: "Fly and buy offsets", r: 3, s: 4, d: [-10, -12, 1, -4], tags: ["travel", "purchase", "offset"],
+        say: ["You have bought a small tree to apologise to the sky.", "The sky is unmoved."] }
+    ]
+  },
+  {
+    banner: "DEPARTMENT OF SANDWICHES",
+    text: [
+      "A 40-person workshop needs lunch.",
+      "Last time, 40 lunches were ordered and 23 were eaten.",
+      "The rest were composted, eventually, by the bin."
+    ],
+    opts: [
+      { k: "A", t: "Order 40 again, but vegetarian", r: 2, s: 2, d: [2, -6, 1, 2], tags: ["purchase"],
+        say: ["Lower impact per sandwich.", "Seventeen lower-impact sandwiches still go in the bin."] },
+      { k: "B", t: "Ask people to confirm, then order 25, plant-based", r: 1, s: 1, d: [6, 2, 1, 4], tags: ["purchase"],
+        say: ["Twenty-seven turn up. Twenty-five lunches.", "Two people share, and bond.", "", "Demand measured, then met."] },
+      { k: "C", t: "Order 40 premium platters with a carbon-neutral label", r: 4, s: 4, d: [-4, -12, 2, -2], tags: ["purchase", "offset"],
+        say: ["The label is lovely.", "The bin is full."] },
+      { k: "D", t: "Provide nothing. People can bring their own.", r: 3, s: 1, d: [5, 6, -6, -3], tags: [],
+        say: ["Technically, zero food waste.", "Also zero goodwill.", "Three people leave at 12:30 'for a meeting'.", "", "Avoiding demand includes the demand for people to come back."] }
+    ]
+  },
+  {
+    banner: "DEPARTMENT OF LANYARDS",
+    text: [
+      "The annual away day is being planned.",
+      "Proposed: 120 branded tote bags,",
+      "120 branded water bottles,",
+      "120 branded notebooks."
+    ],
+    opts: [
+      { k: "A", t: "Order all three, in recycled materials", r: 3, s: 2, d: [-4, -9, 1, 0], tags: ["purchase"],
+        say: ["Recycled tote bags join the 2019, 2022 and 2024 tote bags", "in every attendee's cupboard of totes."] },
+      { k: "B", t: "Order nothing branded. Use last year's lanyards.", r: 1, s: 1, d: [6, 9, -1, 3], tags: ["reuse"], items: 120,
+        say: ["Somewhere in a store room, 200 lanyards from 2023 are found.", "Nobody notices. Nobody ever notices lanyards.", "", "Demand avoided."] },
+      { k: "C", t: "Order the bottles only, since people use those", r: 2, s: 1, d: [1, -3, 1, 1], tags: ["purchase"],
+        say: ["One item, actually wanted.", "Two hundred and forty items avoided.", "Reasonable."] },
+      { k: "D", t: "Order all three and offset the shipping", r: 4, s: 4, d: [-5, -12, 1, -3], tags: ["purchase", "offset"],
+        say: ["Three hundred and sixty items, and a certificate.", "The certificate is the only one that will be kept."] }
+    ]
+  },
+  {
+    banner: "DEPARTMENT OF PROCUREMENT",
+    text: [
+      "A supplier offers a three-year contract for lab consumables.",
+      "Bonus: 10 percent more stock than you order,",
+      "free, every quarter."
+    ],
+    opts: [
+      { k: "A", t: "Accept. Free stock is free.", r: 4, s: 0, d: [-6, -4, 0, -3], tags: ["purchase"],
+        say: ["Free stock is stock. It arrives quarterly.", "By year two the store room has a store room.", "", "Free is a price. You pay it in shelves."] },
+      { k: "B", t: "Ask for a contract based on actual monthly usage, no bonus", r: 1, s: 1, d: [6, 7, 0, 4], tags: [],
+        say: ["Usage data reveals the department orders", "40 percent more pipette tips than it uses.", "Contract cut to fit.", "", "Demand measured. Procurement sends a slightly emotional email."] },
+      { k: "C", t: "Accept, but choose the recycled-content range", r: 2, s: 2, d: [-1, -4, 0, 1], tags: ["purchase"],
+        say: ["Greener consumables, in the same excessive quantity.", "Stage two, applied to a number nobody questioned."] },
+      { k: "D", t: "Accept and set up packaging take-back", r: 3, s: 3, d: [0, -5, 0, 1], tags: ["purchase"],
+        say: ["Circular packaging for stock you did not need.", "Stage three, working hard to cover for stage one."] }
+    ]
+  },
+  // ---------------------------------------------------------- level 4
+  {
+    banner: "DEPARTMENT OF BUILDINGS",
+    text: [
+      "A department wants a new building.",
+      "The business case cites 'space pressure'.",
+      "Average occupancy across the estate last year: 38 percent."
+    ],
+    opts: [
+      { k: "A", t: "Build it, to the highest green standard", r: 3, s: 2, d: [-15, -25, 3, 2], tags: ["purchase"],
+        say: ["A beautiful low-energy building.", "Its embodied carbon equals eleven years of the old one's heating.", "Occupancy across the estate: now 36 percent."] },
+      { k: "B", t: "Commission an occupancy study and refit existing space", r: 1, s: 1, d: [10, -8, 1, 5], tags: ["reuse"], items: 2,
+        say: ["Two under-used floors, refitted.", "The department moves in eight months later.", "No new building.", "", "Demand avoided, at scale, with a spreadsheet."] },
+      { k: "C", t: "Build it, then offset the construction carbon", r: 4, s: 4, d: [-14, -30, 3, -3], tags: ["purchase", "offset"],
+        say: ["Concrete, then a certificate.", "The concrete will outlast the certificate by roughly a century."] },
+      { k: "D", t: "Lease a temporary modular building", r: 2, s: 2, d: [-5, -12, 0, 0], tags: ["purchase"],
+        say: ["Lower impact than concrete.", "Still a building nobody checked the need for.", "It stays for eleven years,", "which is what 'temporary' means in universities."] }
+    ]
+  },
+  {
+    banner: "DEPARTMENT OF SUNSHINE",
+    text: [
+      "A proposal: 4,000 solar panels across the campus roofs.",
+      "Cost: substantial. Payback: nine years.",
+      "Everyone loves it."
+    ],
+    opts: [
+      { k: "A", t: "Install the panels now", r: 2, s: 2, d: [8, -20, 3, 6], tags: ["purchase"],
+        say: ["Good. Genuinely good.", "Sized to power a campus that leaves the lights on,", "so 15 percent of the panels exist to light empty rooms.", "", "Stage two done well. Stage one skipped."] },
+      { k: "B", t: "Cut demand first, then size the array to what is left", r: 1, s: 1, d: [11, -14, 2, 7], tags: ["purchase"],
+        say: ["Timers, heating schedules and one very stern email", "cut demand 18 percent.", "The array is 3,300 panels, not 4,000.", "", "Same outcome, cheaper. The order matters."] },
+      { k: "C", t: "Skip solar. Buy a green electricity tariff.", r: 3, s: 2, d: [3, -4, 0, 1], tags: ["purchase"],
+        say: ["A certificate says your electricity is green.", "The grid says otherwise at six o'clock in January."] },
+      { k: "D", t: "Skip solar. Buy offsets to reach net zero.", r: 4, s: 4, d: [0, -15, 0, -4], tags: ["purchase", "offset"],
+        say: ["Net zero, on paper.", "The paper is not recycled."] }
+    ]
+  },
+  {
+    banner: "DEPARTMENT OF VANS",
+    text: [
+      "The estates fleet is 30 diesel vans. Replacement is due.",
+      "Telematics show the average van drives 11 miles a day",
+      "and is parked for 21 hours."
+    ],
+    opts: [
+      { k: "A", t: "Replace all 30 with electric vans", r: 2, s: 2, d: [6, -22, 1, 4], tags: ["purchase"],
+        say: ["Thirty electric vans, parked 21 hours a day,", "being electric in a car park.", "Better. Not smaller."] },
+      { k: "B", t: "Cut the fleet to 18 shared electric vans", r: 1, s: 1, d: [10, -12, -1, 6], tags: ["purchase"],
+        say: ["Twelve vans avoided entirely.", "Eighteen electric ones, shared through a booking app.", "Grumbling for a month. Then the app works.", "", "Avoid first. Then source low-impact."] },
+      { k: "C", t: "Keep the diesels running longer", r: 3, s: 3, d: [1, 6, -2, -2], tags: ["reuse"], items: 30,
+        say: ["Circular, in the sense that they keep going round.", "Also in the sense of the exhaust."] },
+      { k: "D", t: "Replace with hybrids and offset the rest", r: 4, s: 4, d: [0, -20, 0, -2], tags: ["purchase", "offset"],
+        say: ["Thirty new vans, most of them still burning diesel,", "plus a receipt for the guilt."] }
+    ]
+  },
+  {
+    banner: "DEPARTMENT OF STRATEGY",
+    text: [
+      "The Vice-Chancellor asks for one sentence to put",
+      "at the top of the sustainability strategy.",
+      "",
+      "The room offers four."
+    ],
+    opts: [
+      { k: "A", t: "'We will buy sustainable products wherever possible.'", r: 3, s: 2, d: [1, -2, 0, 1], tags: [],
+        say: ["Wrong mindset, nicely phrased.", "It starts with buying."] },
+      { k: "B", t: "'We will ask, before every purchase, whether we need it at all.'", r: 1, s: 1, d: [8, 8, 0, 6], tags: [],
+        say: ["Correct mindset. Demand First, in one line.", "The room goes quiet in the good way.", "", "Somewhere, a procurement officer feels a chill", "and does not know why."] },
+      { k: "C", t: "'We will recycle everything we can.'", r: 2, s: 3, d: [2, 0, 0, 2], tags: [],
+        say: ["Stage three, leading from the front.", "Recycling is what you do with the things", "you already failed to avoid."] },
+      { k: "D", t: "'We will be carbon neutral by 2030 through offsetting.'", r: 4, s: 4, d: [-3, -10, 0, -5], tags: ["offset"],
+        say: ["Stage four, first.", "The Sustainability Goblin is appointed to the board."] }
+    ]
+  }
+];
+
+const TITLES = [
+  { min: 81, name: "MASTER OF DEMAND FIRST", line: "You asked whether it was needed. Every time. The planet quietly nods." },
+  { min: 61, name: "DEMAND REDUCTION RANGER", line: "Mostly avoided, occasionally swapped, rarely offset. Procurement fears you." },
+  { min: 31, name: "REASONABLE RECYCLER", line: "You did the right things, usually a stage or two late." },
+  { min: 0,  name: "CARBON CHAOS INTERN", line: "You bought your way through it. The Sustainability Goblin sends flowers. Carbon-neutral ones." }
+];
+
+const ACHIEVEMENTS = [
+  { id: "nobuy",  name: "The Best Purchase",          how: "Make no purchases for five decisions in a row" },
+  { id: "repair", name: "Repair Wizard",              how: "Choose repair three times" },
+  { id: "escape", name: "Conference Escape Artist",   how: "Avoid all travel" },
+  { id: "circle", name: "Circular Economy Sorcerer",  how: "Keep ten or more items in use" }
+];
+
+const POINTS = { 1: 3, 2: 2, 3: 1, 4: 0 };
+const MAX_POINTS = SCENARIOS.length * 3;
+const SAVE_KEY = "demandFirstAdventure.v1";
+const PREF_KEY = "demandFirstAdventure.prefs";
+
+/* ------------------------------------------------------------------ state */
+
+let S = freshState();
+let phase = "intro";          // intro | resume | level | scenario | response | ending
+let typing = null;            // active typewriter job
+let prefs = { lg: false, hc: false, motion: true };
+
+function freshState() {
+  return {
+    idx: 0,
+    meters: { carbon: 60, budget: 60, wellbeing: 60, reputation: 60 },
+    points: 0,
+    noBuyStreak: 0,
+    repairs: 0,
+    items: 0,
+    travelled: false,
+    unlocked: [],
+    log: []
+  };
+}
+
+/* ------------------------------------------------------------------ dom */
+
+const term = document.getElementById("term");
+const choices = document.getElementById("choices");
+const $ = id => document.getElementById(id);
+
+function line(text, cls) {
+  const el = document.createElement("span");
+  el.className = "l" + (cls ? " " + cls : "");
+  el.textContent = text;
+  term.appendChild(el);
+  return el;
+}
+
+function banner(title) {
+  const rule = "-".repeat(Math.min(48, Math.max(24, title.length + 8)));
+  return [[rule, "box"], [title, "box"], [rule, "box"]];
+}
+
+// Print a list of lines with a typewriter. Each item is a string or
+// [string, cls]. Resolves when done. Any key or click flushes the rest.
+function print(lines, done) {
+  const queue = lines.map(l => Array.isArray(l) ? l : [l, ""]);
+  const job = { queue, done, el: null, i: 0, text: "" };
+  if (typing) flush();
+  typing = job;
+  if (!prefs.motion) { flush(); return; }
+  step();
+}
+
+function step() {
+  const job = typing; if (!job) return;
+  if (!job.el) {
+    if (!job.queue.length) { finish(); return; }
+    const [text, cls] = job.queue.shift();
+    job.text = text; job.i = 0;
+    job.el = line("", cls + " cursor");
+    if (!text) { job.el.classList.remove("cursor"); job.el = null; job.timer = setTimeout(step, 40); return; }
+  }
+  job.i += 2;
+  job.el.textContent = job.text.slice(0, job.i);
+  scrollDown();
+  if (job.i >= job.text.length) {
+    job.el.classList.remove("cursor"); job.el = null;
+    job.timer = setTimeout(step, 90);
+  } else {
+    job.timer = setTimeout(step, 14);
+  }
+}
+
+function flush() {
+  const job = typing; if (!job) return;
+  clearTimeout(job.timer);
+  if (job.el) { job.el.textContent = job.text; job.el.classList.remove("cursor"); }
+  job.queue.forEach(([t, c]) => line(t, c));
+  job.queue = [];
+  finish();
+}
+
+function finish() {
+  const job = typing; typing = null;
+  scrollDown();
+  trim();
+  if (job && job.done) job.done();
+}
+
+function scrollDown() {
+  const y = document.body.scrollHeight;
+  window.scrollTo({ top: y, behavior: prefs.motion ? "smooth" : "auto" });
+}
+
+function trim() {
+  while (term.children.length > 420) term.removeChild(term.firstChild);
+}
+
+function clearChoices() { choices.innerHTML = ""; }
+
+function button(label, key, onClick, primary) {
+  const b = document.createElement("button");
+  b.type = "button";
+  if (key) {
+    const k = document.createElement("span"); k.className = "k"; k.textContent = key + ")";
+    b.appendChild(k);
+  }
+  b.appendChild(document.createTextNode(label));
+  b.dataset.key = key || "";
+  b.addEventListener("click", onClick);
+  choices.appendChild(b);
+  return b;
+}
+
+/* ------------------------------------------------------------------ meters */
+
+function bar(v) {
+  const n = Math.round(v / 10);
+  return "[" + "#".repeat(n) + "-".repeat(10 - n) + "] " + String(v).padStart(3, " ");
+}
+
+function renderMeters() {
+  ["carbon", "budget", "wellbeing", "reputation"].forEach(k => {
+    const v = S.meters[k];
+    const el = $("m-" + k);
+    el.querySelector(".bar").textContent = bar(v);
+    el.className = "meter " + (v <= 25 ? "low" : v <= 50 ? "mid" : "high");
+    el.setAttribute("role", "meter");
+    el.setAttribute("aria-valuemin", "0");
+    el.setAttribute("aria-valuemax", "100");
+    el.setAttribute("aria-valuenow", String(v));
+    el.setAttribute("aria-label", k.charAt(0).toUpperCase() + k.slice(1) + " " + v + " out of 100");
+  });
+}
+
+function litStage(s) {
+  for (let i = 1; i <= 4; i++) $("h" + i).classList.toggle("lit", i === s);
+}
+
+/* ------------------------------------------------------------------ flow */
+
+function save() {
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch (e) {}
+}
+function loadSave() {
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (!raw) return null;
+    const s = JSON.parse(raw);
+    return s && typeof s.idx === "number" && s.meters ? s : null;
+  } catch (e) { return null; }
+}
+function wipe() { try { localStorage.removeItem(SAVE_KEY); } catch (e) {} }
+
+function intro() {
+  phase = "intro";
+  term.innerHTML = ""; clearChoices(); litStage(0);
+  renderMeters();
+  print([
+    ...banner("CARDIFF UNIVERSITY MAINFRAME"),
+    "",
+    "Congratulations.",
+    "",
+    "You have been appointed",
+    ["ACTING SUPREME SUSTAINABILITY OFFICER.", "warn"],
+    "",
+    "Contract length: until someone notices.",
+    "",
+    "The university's carbon budget is dwindling.",
+    "Every decision moves four meters:",
+    "CARBON, BUDGET, WELLBEING and REPUTATION.",
+    "If any one of them hits zero, someone notices.",
+    "",
+    "The plan calls its method 'Demand First'.",
+    "You will work out what that means by playing.",
+    "",
+    ["Sixteen decisions. Four levels. One question.", "dim"]
+  ], () => {
+    button("BEGIN", "", startRun, true).focus();
+  });
+}
+
+function offerResume(saved) {
+  phase = "resume";
+  term.innerHTML = ""; clearChoices(); litStage(0);
+  S = saved; renderMeters();
+  print([
+    ...banner("SESSION FOUND"),
+    "",
+    "A previous shift was interrupted at decision " + (S.idx + 1) + " of " + SCENARIOS.length + ".",
+    "",
+    "Someone has not noticed yet."
+  ], () => {
+    button("CONTINUE THAT SHIFT", "A", () => next(), true);
+    button("START A NEW SHIFT", "B", () => { S = freshState(); wipe(); startRun(); });
+    choices.firstChild.focus();
+  });
+}
+
+function startRun() {
+  S = freshState(); save();
+  next();
+}
+
+function next() {
+  clearChoices();
+  if (S.idx >= SCENARIOS.length) { ending(null); return; }
+  if (S.idx % 4 === 0) levelIntro(); else scenario();
+}
+
+function levelIntro() {
+  phase = "level";
+  const lv = LEVELS[S.idx / 4];
+  litStage(0);
+  print(["", ...banner(lv.name), [lv.line, "dim"], ""], () => scenario());
+}
+
+function scenario() {
+  phase = "scenario";
+  litStage(0);
+  const sc = SCENARIOS[S.idx];
+  print([
+    "",
+    ...banner(sc.banner),
+    "",
+    ...sc.text,
+    "",
+    ["What will you do?", "warn"]
+  ], () => {
+    sc.opts.forEach(o => button(o.t, o.k, () => choose(o.k)));
+    choices.firstChild.focus();
+  });
+}
+
+function fmt(n) { return (n > 0 ? "+" : "") + n; }
+
+function choose(key) {
+  if (phase !== "scenario") return;
+  const sc = SCENARIOS[S.idx];
+  const o = sc.opts.find(x => x.k === key);
+  if (!o) return;
+  phase = "response";
+  clearChoices();
+
+  // Apply effects.
+  const names = ["carbon", "budget", "wellbeing", "reputation"];
+  names.forEach((n, i) => { S.meters[n] = Math.max(0, Math.min(100, S.meters[n] + o.d[i])); });
+  const pts = POINTS[o.r];
+  S.points += pts;
+  S.log.push({ i: S.idx, k: key, r: o.r });
+
+  // Achievement bookkeeping.
+  const bought = o.tags.includes("purchase");
+  S.noBuyStreak = bought ? 0 : S.noBuyStreak + 1;
+  if (o.tags.includes("repair")) S.repairs += 1;
+  if (o.tags.includes("reuse")) S.items += (o.items || 1);
+  if (o.tags.includes("travel")) S.travelled = true;
+  const fresh = [];
+  const unlock = id => { if (!S.unlocked.includes(id)) { S.unlocked.push(id); fresh.push(id); } };
+  if (S.noBuyStreak >= 5) unlock("nobuy");
+  if (S.repairs >= 3) unlock("repair");
+  if (S.items >= 10) unlock("circle");
+  let lastTravelIdx = -1;
+  SCENARIOS.forEach((s, i) => { if (s.travel) lastTravelIdx = i; });
+  const lastTravel = S.idx === lastTravelIdx;
+  if (lastTravel && !S.travelled) unlock("escape");
+
+  S.idx += 1;
+  save();
+  renderMeters();
+  litStage(o.s);
+
+  const verdict = pts === 3 ? ["+3 points. Best available.", "ok"]
+    : pts === 2 ? ["+2 points. A better option existed.", "warn"]
+    : pts === 1 ? ["+1 point. Two better options existed.", "warn"]
+    : ["+0 points. That was the worst of the four.", "fail"];
+
+  const out = [
+    "",
+    ["> " + o.k + ") " + o.t, "dim"],
+    "",
+    ...o.say,
+    "",
+    [STAGE_NAME[o.s], o.s === 1 ? "ok" : o.s === 4 || o.s === 0 ? "fail" : "warn"],
+    ["CARBON " + fmt(o.d[0]) + "   BUDGET " + fmt(o.d[1]) + "   WELLBEING " + fmt(o.d[2]) + "   REPUTATION " + fmt(o.d[3]), "dim"],
+    verdict
+  ];
+  fresh.forEach(id => {
+    const a = ACHIEVEMENTS.find(x => x.id === id);
+    out.push("", ["ACHIEVEMENT UNLOCKED: " + a.name, "warn"], [a.how + ".", "dim"]);
+  });
+
+  const dead = names.find(n => S.meters[n] <= 0);
+  print(out, () => {
+    if (dead) { button("SOMEONE HAS NOTICED", "", () => ending(dead), true).focus(); return; }
+    const last = S.idx >= SCENARIOS.length;
+    button(last ? "SEE HOW YOU DID" : "CONTINUE", "", next, true).focus();
+  });
+}
+
+function ending(dead) {
+  phase = "ending";
+  clearChoices(); litStage(0);
+  const pct = Math.round(100 * S.points / MAX_POINTS);
+  const title = TITLES.find(t => pct >= t.min);
+  const noticed = {
+    carbon: "The carbon budget is spent. A very quiet email arrives from the Vice-Chancellor.",
+    budget: "Finance has noticed. They have a spreadsheet, and it has your name at the top.",
+    wellbeing: "The staff have noticed. There is a petition, and a cake, and the cake is for someone else.",
+    reputation: "The press has noticed. The headline uses the word 'greenwash' and your photograph."
+  };
+  const out = ["", ...banner("END OF SHIFT")];
+  if (dead) out.push("", [noticed[dead], "fail"], "", ["Shift ended after " + S.idx + " of " + SCENARIOS.length + " decisions.", "dim"]);
+  out.push(
+    "",
+    ["SCORE: " + S.points + " of " + MAX_POINTS + " (" + pct + " percent)", "warn"],
+    "",
+    ["YOUR TITLE:", "dim"],
+    [title.name, "ok"],
+    title.line,
+    "",
+    ["ACHIEVEMENTS", "dim"]
+  );
+  ACHIEVEMENTS.forEach(a => {
+    const got = S.unlocked.includes(a.id);
+    out.push([(got ? "[x] " : "[ ] ") + (got ? a.name : "???") + "  (" + a.how + ")", got ? "ok" : "dim"]);
+  });
+  out.push(
+    "",
+    ["WHAT YOU WERE DOING, WHETHER YOU NOTICED OR NOT", "dim"],
+    "1. Avoid demand.            Do we need this at all?",
+    "2. Low-impact alternative.  If we do, is there a lighter way?",
+    "3. Circularity.             Keep it in use. Repair, share, recover.",
+    "4. Manage the residue.      Offset last, never first.",
+    "",
+    ["That order is the whole of Demand First.", "warn"],
+    ["Cardiff University's Sustainable Futures plan, 2025 to 2035.", "dim"]
+  );
+  wipe();
+  print(out, () => {
+    button("PLAY AGAIN", "", () => { S = freshState(); intro(); }, true).focus();
+  });
+}
+
+/* ------------------------------------------------------------------ input */
+
+document.addEventListener("keydown", e => {
+  if (e.altKey || e.ctrlKey || e.metaKey) return;
+  const tag = (e.target && e.target.tagName) || "";
+  if (typing) {
+    // Any key skips the typing, and is consumed so it does not also choose.
+    if (!(e.key === "Tab")) { e.preventDefault(); flush(); }
+    return;
+  }
+  const k = e.key.toUpperCase();
+  const map = { "1": "A", "2": "B", "3": "C", "4": "D" };
+  const want = map[k] || (["A", "B", "C", "D"].includes(k) ? k : null);
+  if (want && (phase === "scenario" || phase === "resume")) {
+    const b = choices.querySelector('button[data-key="' + want + '"]');
+    if (b) { e.preventDefault(); b.click(); }
+    return;
+  }
+  if ((e.key === "Enter" || e.key === " ") && tag !== "BUTTON") {
+    const b = choices.querySelector("button");
+    if (b && choices.querySelectorAll("button").length === 1) { e.preventDefault(); b.click(); }
+  }
+});
+term.addEventListener("click", () => { if (typing) flush(); });
+
+/* ------------------------------------------------------------------ prefs */
+
+function applyPrefs() {
+  document.body.classList.toggle("lg", prefs.lg);
+  document.body.classList.toggle("hc", prefs.hc);
+  document.body.classList.toggle("nomo", !prefs.motion);
+  $("tgl-text").textContent = "TEXT: " + (prefs.lg ? "LARGE" : "NORMAL");
+  $("tgl-text").setAttribute("aria-pressed", String(prefs.lg));
+  $("tgl-hc").textContent = "CONTRAST: " + (prefs.hc ? "HIGH" : "NORMAL");
+  $("tgl-hc").setAttribute("aria-pressed", String(prefs.hc));
+  $("tgl-motion").textContent = "MOTION: " + (prefs.motion ? "ON" : "OFF");
+  $("tgl-motion").setAttribute("aria-pressed", String(prefs.motion));
+  try { localStorage.setItem(PREF_KEY, JSON.stringify(prefs)); } catch (e) {}
+}
+$("tgl-text").addEventListener("click", () => { prefs.lg = !prefs.lg; applyPrefs(); });
+$("tgl-hc").addEventListener("click", () => { prefs.hc = !prefs.hc; applyPrefs(); });
+$("tgl-motion").addEventListener("click", () => { prefs.motion = !prefs.motion; applyPrefs(); if (!prefs.motion) flush(); });
+$("btn-restart").addEventListener("click", () => { if (typing) flush(); S = freshState(); wipe(); intro(); });
+
+/* ------------------------------------------------------------------ boot */
+
+(function boot() {
+  try {
+    const p = JSON.parse(localStorage.getItem(PREF_KEY) || "null");
+    if (p && typeof p === "object") prefs = Object.assign(prefs, p);
+    else if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) prefs.motion = false;
+  } catch (e) {}
+  applyPrefs();
+  const saved = loadSave();
+  if (saved && saved.idx > 0 && saved.idx < SCENARIOS.length) offerResume(saved); else intro();
+})();
+</script>
+</body>
+</html>
