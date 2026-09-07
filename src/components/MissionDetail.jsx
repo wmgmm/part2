@@ -246,14 +246,17 @@ function AttachStrip({ items = [], label, extra }) {
   // default label ("ATTACH BOTH") is itself the attach instruction, so the
   // clip stays in front of it.
   const labelFirst = Boolean(label) && items.length > 0;
+  // A pasted prompt is not an attachment, so a strip of nothing but pastes
+  // shows no paperclip. One real file in the list brings it back.
+  const clipNeeded = items.some(a => !a.paste);
 
   return (
     <div className="attach-strip">
-      {!labelFirst && items.length > 0 && clip}
+      {!labelFirst && clipNeeded && clip}
       <span className="attach-strip__label">
         {label || (items.length === 1 ? 'ATTACH THIS' : items.length === 2 ? 'ATTACH BOTH' : 'ATTACH ALL')}
       </span>
-      {labelFirst && clip}
+      {labelFirst && clipNeeded && clip}
       {items.map((a, i) => (
         <React.Fragment key={a.filename}>
           {i > 0 && <span className="attach-strip__plus" aria-hidden="true">+</span>}

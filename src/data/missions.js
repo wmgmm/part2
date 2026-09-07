@@ -439,10 +439,13 @@ const A = {
   },
   // Strip-only, like yourChart: stands for the prompt already on the page, so
   // it has no downloadPath. The preflight skips the download and checks the icon.
+  // `paste: true` means the strip shows no paperclip: the prompt is pasted,
+  // not attached. A real file in the same strip brings the clip back.
   thisPrompt: {
     label: 'THE PROMPT ABOVE',
     filename: 'paste the prompt above',
     thumb: PROMPT_ICON,
+    paste: true,
   },
   // Strip-only too: Exercise 02 step 3's new-chat retry needs the whole step 2
   // prompt, not just the line on the page.
@@ -450,11 +453,13 @@ const A = {
     label: 'YOUR STEP 1 PROMPT',
     filename: 'the prompt from step 1, subject replaced',
     thumb: PROMPT_ICON,
+    paste: true,
   },
   stepTwoPrompt: {
     label: 'YOUR STEP 2 PROMPT',
     filename: 'your step 2 prompt, plus the line above',
     thumb: PROMPT_ICON,
+    paste: true,
   },
   factCheckSkill: {
     label: 'SKILL 4: CHECK IT BEFORE IT GOES',
