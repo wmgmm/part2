@@ -907,7 +907,7 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'Generate the deck, then export',
         body:
-          'Read the prompt back before you press Generate. The three-dot menu on the slide viewer then gives you PowerPoint or PDF, not Google Slides.',
+          'Read the prompt back before you press Generate. The three-dot menu on the slide viewer then gives you PowerPoint or PDF.',
       },
       {
         tier: 'core',
