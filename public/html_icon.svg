@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 120" width="96" height="120" role="img">
+  <!-- A saved web app: same page-with-a-folded-corner as skill_md_icon.svg so the
+       two read as a set, but banded in HTML orange and marked with angle brackets
+       rather than bullets. Drawn, not photographed, so it stays sharp at the
+       46-52px the attach strip and artifact card render it at. -->
+  <defs>
+    <clipPath id="htmlpage">
+      <path d="M12 6 H68 L90 28 V108 Q90 114 84 114 H12 Q6 114 6 108 V12 Q6 6 12 6 Z"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#htmlpage)">
+    <rect x="0" y="0" width="96" height="120" fill="#fdfdfe"/>
+    <rect x="0" y="0" width="96" height="34" fill="#f7d3c4"/>
+  </g>
+
+  <!-- the fold flap, drawn over the band -->
+  <path d="M68 6 L90 28 H68 Z" fill="#e0603a"/>
+
+  <path d="M12 6 H68 L90 28 V108 Q90 114 84 114 H12 Q6 114 6 108 V12 Q6 6 12 6 Z"
+        fill="none" stroke="#b3b9c0" stroke-width="2.5" stroke-linejoin="round"/>
+
+  <text x="48" y="57" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="17" font-weight="700" fill="#c04a26" letter-spacing="-0.3">HTML</text>
+
+  <!-- angle brackets where the markdown icon has bullets -->
+  <g fill="none" stroke="#e0603a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M23 69 L18 73.5 L23 78"/>
+    <path d="M23 81 L18 85.5 L23 90"/>
+    <path d="M23 93 L18 97.5 L23 102"/>
+  </g>
+  <g fill="#c4c9ce">
+    <rect x="30" y="72.1" width="47" height="2.8" rx="1.4"/>
+    <rect x="30" y="84.1" width="47" height="2.8" rx="1.4"/>
+    <rect x="30" y="96.1" width="34" height="2.8" rx="1.4"/>
+  </g>
+</svg>

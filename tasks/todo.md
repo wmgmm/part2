@@ -2741,6 +2741,52 @@ shows both, which is the version that actually teaches the lesson.
 
 ---
 
+## 2026-09-07 (addendum 92): Exercise 06 gains step 6, Always verify and repair
+
+Matt's shape for the ending: step 5 stops being "check it against the CSV" and becomes **"Open
+the one the Matts made earlier, then check it against yours"**, and a new step 6 tells the
+story of the repair. He then cut the line naming Cardiff's 21,336 tonnes from step 5, which is
+right: step 5 is now app against app, and handing over the answer would do the comparison for
+the reader.
+
+**Step 6, "Always verify, and repair if required".** The narrative is what actually happened
+here: the first version of the app got the data slightly wrong and it flattered Cardiff, so the
+HTML was downloaded, a new Gemini chat opened, and the app and the CSV attached together.
+`Cardiff_Estates_Dashboard.html` is the card on that step, labelled THE SAME APP, REPAIRED.
+
+**One thing added that Matt did not specify:** a repair prompt, because every other acting step
+in 06 carries one and "attach both and ask it to fix" is not runnable on its own. It tells the
+model the CSV is the only source it should trust, to list what does not match before rebuilding,
+and never to retype, round or fill in a figure. Cut it if it is not wanted.
+
+**`html_icon.svg`**, new, drawn to match `skill_md_icon.svg` exactly (same page and folded
+corner geometry, same 96x120 box) so the two read as a set: HTML orange band, angle brackets
+where the markdown icon has bullets. Renders 26x33 in the strip, identical to the Excel icon.
+
+**`A.yourChart` is not a download.** It exists only so the attach strip can show
+`your-dashboard.html`, the reader's own Canvas export, which we cannot supply. Its
+`downloadPath` points at the repaired file purely so `?doctor` has something to HEAD. If anyone
+ever puts it on a card as an artifact, that path is wrong: fix it then.
+
+**Two real defects caught in the browser, both worth remembering.**
+
+1. **`promptEmphasis` silently did nothing.** The substring ended in a full stop where the
+   prompt has a comma, so `indexOf` missed and it degraded to no emphasis, exactly as designed.
+   The design is right, but it fails *quietly*: nothing in the build or the preflight notices.
+   **Always confirm the bold actually rendered**, and assert the substring is present in the
+   prompt string, which is now a two-line check worth repeating.
+2. **The preview served a stale bundle.** `vite preview` was started before the rebuild, so the
+   page held `index-dqUA8l7i.js` while `dist/` had `index-BcF9C6Sz.js`, and the first
+   "the bold is still missing" reading was false. **Check `script[src]` matches the bundle the
+   build just printed** before believing a negative result from the browser.
+
+**Verified.** COPY writes 318 characters, no markup, identical to the rendered `<pre>`, so the
+emphasis is display-only on this prompt too. Build green, `?doctor` **21 files all 200**,
+6 steps, attach strip one row with no overflow, MH hash unchanged, `CLAUDE.md` back to exactly
+200 lines. Exercise 06 is now 22 minutes and the site total is 82.
+
+---
+
 # HANDOVER, end of 2026-09-05
 
 Read this first. It supersedes the earlier "OPEN" block, which is folded in below.

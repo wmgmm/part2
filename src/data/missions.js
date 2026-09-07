@@ -309,6 +309,7 @@ const EXAMPLE_ICON = 'blue_peter_icon.webp';
 // The spreadsheet you attach in Exercise 06. Same folded-corner document shape
 // as the other two, so the set reads as one family.
 const EXCEL_ICON = 'excel_icon.webp';
+const HTML_ICON = 'html_icon.svg';
 
 const A = {
   susPlan: {
@@ -389,6 +390,21 @@ const A = {
     // 11 of its 180 embedded rows match the CSV, and it drops 13 universities.
     note: 'A real Canvas build from the prompt above. It looks superb, and its numbers do not match the file it was given.',
     thumb: EXAMPLE_ICON,
+  },
+  fixedChart: {
+    label: 'THE SAME APP, REPAIRED',
+    filename: 'Cardiff_Estates_Dashboard.html',
+    downloadPath: `${BASE}placeholders/Cardiff_Estates_Dashboard.html`,
+    note: 'Rebuilt from the CSV. All 31 universities, all 307 rows, every figure traceable.',
+    thumb: HTML_ICON,
+  },
+  // Not a download: the reader already has this one, because Canvas made it.
+  // It exists so the attach strip can show what goes in the new chat.
+  yourChart: {
+    label: 'YOUR CANVAS APP',
+    filename: 'your-dashboard.html',
+    downloadPath: `${BASE}placeholders/Cardiff_Estates_Dashboard.html`,
+    thumb: HTML_ICON,
   },
   factCheckSkill: {
     label: 'SKILL 4: CHECK IT BEFORE IT GOES',
@@ -812,13 +828,13 @@ export const MISSIONS = [
     pageTitle: 'Ten Years of Real Data, Run Twice and Checked',
     summary: 'Run the real numbers in one tool, check them in another, then build a dashboard.',
     tools: [TOOLS.copilot, TOOLS.gemini, TOOLS.canvas],
-    estMinutesCore: 19,
+    estMinutesCore: 22,
     toolInfo: {
       feature:
         'Copilot and Gemini both write and run Python on a data file you attach, so the numbers are computed rather than guessed. Both prefer CSV, not Excel.',
       apps: [APPS.copilot, APPS.gemini],
     },
-    workflow: ['Paste the prompt', 'Run it in Copilot', 'Repeat in Gemini', 'Build the dashboard', 'Check what it built'],
+    workflow: ['Paste the prompt', 'Run it in Copilot', 'Repeat in Gemini', 'Build the dashboard', 'Check it', 'Repair it'],
     brief:
       'Analyse ten years of Cardiff\'s real emissions, then check the answer in a second tool before you trust it.',
     artifacts: [A.hesaData],
@@ -876,10 +892,25 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 2,
-        title: 'Open the one we made earlier, then check it',
+        title: 'Open the one the Matts made earlier, then check it against yours',
         artifact: A.exampleChart,
         body:
-          'This is a real Canvas build from the prompt above. Open it, watch it, then check it against the CSV. Cardiff ends 2024/25 on 21,336 tonnes in the source file. See what the dashboard says.',
+          'Open ours and run yours beside it. Same prompt, same file, so do they agree?',
+      },
+      {
+        tier: 'core',
+        estMinutes: 3,
+        title: 'Always verify, and repair if required',
+        artifact: A.fixedChart,
+        body:
+          'The first version of our app got the data slightly wrong, and it flattered Cardiff. So we downloaded the HTML, opened a new Gemini chat and attached the app and the CSV together. This is what came back.',
+        attachLabel: 'NEW CHAT',
+        attach: [A.yourChart, A.hesaData],
+        promptLabel: 'THE REPAIR PROMPT',
+        promptNote: '[attach your saved HTML and the CSV]',
+        promptEmphasis: 'Check every number in the app against the CSV',
+        prompt:
+          'The attached HTML app has a copy of its data written inside it. Check every number in the app against the CSV, which is the only source you should trust. List anything that does not match, then rebuild the file using the CSV values only. Do not retype, round or fill in any figure: if a cell is blank, show NEEDS DATA.',
       },
     ],
     verdictBy: 'The Matts',

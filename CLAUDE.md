@@ -23,7 +23,7 @@ test runner.
 The AI in the Workplace Part 2 workshop site for Cardiff University staff: six guided
 exercises (called Exercises in the UI; still `MISSIONS` in code), anchored on one real
 document, Cardiff's Sustainable Futures plan 2025-35. Teaches Gemini Deep Research, Gemini
-Notebook, Gemini Canvas and Copilot. Core step time is 79 minutes, so nobody runs all six.
+Notebook, Gemini Canvas and Copilot. Core step time is 82 minutes, so nobody runs all six.
 
 | # | Title | Tool | What it does |
 |---|---|---|---|
@@ -32,7 +32,7 @@ Notebook, Gemini Canvas and Copilot. Core step time is 79 minutes, so nobody run
 | 03 | The Game | Gemini Canvas | Build the same 8-bit game twice, thinly then fully specified |
 | 04 | The Module | Gemini or Copilot | Run `Training_Module_Builder.md` on the plan |
 | 05 | The Brand | Gemini Notebook | One source, two skills, two decks that differ only by the skill |
-| 06 | The Numbers | Copilot then Gemini then Canvas | Analyse real HESA data, cross-check it, build a dashboard, then check the dashboard |
+| 06 | The Numbers | Copilot then Gemini then Canvas | Analyse real HESA data, cross-check it, build a dashboard, check it, repair it |
 
 ### The constraint that governs everything
 
@@ -156,7 +156,7 @@ leaderboard backend is kept for a planned check-in wall: `src/lib/leaderboard.js
 Served from `public/placeholders/`, except `cardiff_study_space.webp` at the site root
 because it is also Exercise 02's step image. Downloaded via a synthetic `<a download>`,
 same-origin only. Fields: `label`, `filename`, `downloadPath`, `note`, `thumb` (site-root
-relative, all ten carry one), `copyable` (adds COPY), `sourceLink` (unused).
+relative, all twelve carry one), `copyable` (adds COPY), `sourceLink` (unused).
 
 **Buttons:** DOWNLOAD is a blue pill, everything else a hairline ghost, one primary action per
 card, except `.html`: a working page, so **OPEN IT takes the pill and DOWNLOAD drops to ghost**.
@@ -165,18 +165,18 @@ because servers send `.md` as `text/markdown` and browsers download it. Anything
 DOWNLOAD only: no browser renders an `.xlsx`. COPY exists because a skill goes two ways,
 attached as a file or pasted into Notebook's description box, which takes text not files.
 
-**`?doctor` must know about every file-bearing field.** It HEAD-checks artifacts, step
-images, thumbnails, attach lists, `attachExtra` and logos, derived from `MISSIONS` so it
-cannot drift. **A new field naming a file must be added to `collectUrls` in `DoctorPanel.jsx`
-in the same commit.** Missed twice, both times reporting all-clear over an invisible asset.
+**`?doctor` must know about every file-bearing field.** It HEAD-checks artifacts, step images,
+thumbnails, attach lists, `attachExtra` and logos, derived from `MISSIONS` so it cannot drift.
+**A new field naming a file must be added to `collectUrls` in `DoctorPanel.jsx` in the same
+commit.** Missed twice, both times reporting all-clear over an invisible asset.
 
-Eleven files ship. **Not generated:** `Sustainable-Futures-en.pdf` (the published plan),
-`Deep_research_output.pdf` (a real run, and Exercise 01's fallback),
-`Example_Training_Session.pdf` (a real run of the 04 skill, Exercise 05's backup source),
-`HESA_Estates_Management.xlsx` (13 MB, **unlinked**, the generator's input) and
-`Example_Bubble_Chart.html` (a real Canvas run; **its invented data stays invented**, that
-being Exercise 06 step 5's point. Only edit: one name added to its label priority list).
-**Generated:** the four skills plus `HESA_Estates_Workshop.csv` and `.xlsx`.
+Twelve files ship. **Not generated:** `Sustainable-Futures-en.pdf` (the published plan),
+`Deep_research_output.pdf` (a real run, 01's fallback), `Example_Training_Session.pdf` (a real
+run of the 04 skill, 05's backup source), `HESA_Estates_Management.xlsx` (13 MB, **unlinked**,
+the generator's input), `Example_Bubble_Chart.html` (a real Canvas run; **its invented data
+stays invented**, step 5's point) and `Cardiff_Estates_Dashboard.html` (the same app repaired,
+step 6's answer). Check either with `python3 tools/verify_chart_data.py <file>`: it exits 0 only
+if every row matches. **Generated:** the four skills plus `HESA_Estates_Workshop.csv`/`.xlsx`.
 
 ## Styling
 
