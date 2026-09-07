@@ -62,7 +62,7 @@
   }
   .skip:focus { left: 0.5rem; top: 0.5rem; }
 
-  .wrap { max-width: 82ch; margin: 0 auto; padding: 0.75rem 1rem 3rem; position: relative; z-index: 6; }
+  .wrap { max-width: 82ch; margin: 0 auto; padding: 0.75rem 1rem 1rem; position: relative; z-index: 6; }
 
   header { border-bottom: 1px solid var(--dim); padding-bottom: 0.5rem; margin-bottom: 0.5rem; }
   .brand { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 1rem; justify-content: space-between; }
@@ -110,7 +110,8 @@
   @keyframes blink { 50% { opacity: 0; } }
 
   #choices { display: grid; gap: 0.4rem; margin: 0.8rem 0 0; }
-  #choices button { width: 100%; min-height: 2.75em; }
+  #choices button { width: 100%; min-height: 2.4em; }
+  @media (pointer: coarse) { #choices button { min-height: 2.75em; } }
   #choices button .k { color: var(--warn); margin-right: 0.6em; }
   .row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
@@ -811,7 +812,6 @@ function choose(key) {
 
   const out = [
     ...banner(sc.banner),
-    "",
     ["> " + o.k + ") " + o.t, "dim"],
     "",
     ...o.say,
