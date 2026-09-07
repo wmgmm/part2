@@ -523,7 +523,7 @@ const A = {
   },
   stepTwoPrompt: {
     label: 'YOUR STEP 2 PROMPT',
-    filename: 'your step 2 prompt, plus the line above',
+    filename: 'your step 2 prompt with your rewritten line on the end',
     thumb: PROMPT_ICON,
     paste: true,
   },
@@ -664,7 +664,7 @@ export const MISSIONS = [
           'Start a NEW chat. Paste the prompt Copilot generated in step 1, replace [INSERT SUBJECT HERE] with the example below, and send it. Remember to experiment: for this one the subject is Mr Judge complaining about his noisy cats, with a sign.',
         attachLabel: 'NEW CHAT',
         attach: [A.stepOnePrompt],
-        promptLabel: 'AN EXAMPLE SUBJECT',
+        promptLabel: 'THE SUBJECT: PASTE THIS OVER [INSERT SUBJECT HERE]',
         prompt: 'Mr Judge complaining about his noisy cats, with a sign',
       },
       {
@@ -679,11 +679,11 @@ export const MISSIONS = [
         attach: [A.thisPrompt],
         backup: {
           label: 'STILL GOT TEXT?',
-          text: 'Rewrite the ban as the thing you do want. Describe the surfaces, do not name what should not be on them.',
+          text: 'Copy your step 2 message from this chat first. Then rewrite the ban as the thing you do want: describe the surfaces, do not name what should not be on them.',
           // Google's own advice for Gemini image generation, which has no
           // negative prompt field: describe the scene, do not ban the thing.
           examples: [
-            ['No text', 'Bare walls and blank screens'],
+            ['No text', 'A blank sign, bare walls and blank screens'],
             ['No cats', 'Mr Judge alone, the sofa to himself'],
             ['No cars', 'A deserted street'],
             ['No people', 'An empty room'],
