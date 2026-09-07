@@ -339,7 +339,7 @@ function ChoiceStep({ step }) {
                 <p className="step-backup__after">{step.backup.after}</p>
               )}
               {step.backup.attach && (
-                <AttachStrip items={step.backup.attach} label={step.backup.attachLabel} />
+                <AttachStrip items={step.backup.attach} label={step.backup.attachLabel} extra={step.backup.attachExtra} />
               )}
             </div>
           )}
@@ -407,7 +407,7 @@ function Step({ step, number, lane }) {
                 <p className="step-backup__after">{step.backup.after}</p>
               )}
               {step.backup.attach && (
-                <AttachStrip items={step.backup.attach} label={step.backup.attachLabel} />
+                <AttachStrip items={step.backup.attach} label={step.backup.attachLabel} extra={step.backup.attachExtra} />
               )}
             </div>
           )}

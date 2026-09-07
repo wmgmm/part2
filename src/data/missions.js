@@ -953,29 +953,29 @@ export const MISSIONS = [
         estMinutes: 3,
         title: 'Always verify, and repair if required',
         body:
-          'The first version of our app got the data slightly wrong, and it flattered Cardiff (Thanks Gemini 😂). So we downloaded the HTML {download}, opened a new Gemini chat with Canvas on, and attached the app and the CSV together. Afterwards, open Code and Show recent changes to see exactly what it altered.',
+          'The first version of The Matts\' app got the data slightly wrong, and it flattered Cardiff (Thanks Gemini 😂). Download the HTML {download}, then run the repair in this same chat, reattaching the CSV. Open Code and Show recent changes to see what it altered.',
         // {download} in the body renders Matt's screenshot of the Canvas Download
         // button inline, so the reader sees the control they are looking for.
         bodyIcons: {
           download: { src: 'download_icon.png', alt: 'the Download button in Canvas' },
         },
-        attachLabel: 'NEW CHAT',
-        attach: [A.yourChart, A.hesaData],
-        attachExtra: {
-          src: 'canvas_button.webp',
-          alt: 'The Canvas button in Gemini, a small grey chip reading Canvas.',
-        },
+        attachLabel: 'SAME CHAT',
+        attach: [A.thisPrompt, A.hesaData],
         promptLabel: 'THE REPAIR PROMPT',
-        promptNote: '[Canvas on, then attach your saved HTML and the CSV]',
+        promptNote: '[reattach the CSV in this chat]',
         promptEmphasis: 'Check every number in the app against the CSV',
         prompt:
           'Open a Canvas workspace for the attached HTML file and rebuild it there, so it runs as an app rather than showing as code in the chat.\n\nThe app has a copy of its data written inside it. Check every number in the app against the CSV, which is the only source you should trust. List anything that does not match, then rebuild the file using the CSV values only. Do not retype, round or fill in any figure: if a cell is blank, show NEEDS DATA.',
         backup: {
-          label: 'Backup approach if Canvas goes crazy!',
+          label: 'OPTIONAL: THE CLEANER AUDIT',
           text:
-            'It is better to audit the app in a new chat. But Canvas sometimes messes up and does not display the app. If that happens, run the audit in the same chat that created the app, by copying this prompt and reattaching the CSV.',
-          attachLabel: 'SAME CHAT',
-          attach: [A.thisPrompt, A.hesaData],
+            'A new chat is the better audit, because a model checking its own work in the same thread tends to defend it. Turn Canvas on, then attach your saved HTML and the CSV. Canvas sometimes refuses to display an uploaded app, which is why this is the optional route.',
+          attachLabel: 'NEW CHAT',
+          attach: [A.yourChart, A.hesaData],
+          attachExtra: {
+            src: 'canvas_button.webp',
+            alt: 'The Canvas button in Gemini, a small grey chip reading Canvas.',
+          },
         },
       },
       {

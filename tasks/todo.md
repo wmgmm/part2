@@ -3652,6 +3652,34 @@ It stays for now.
 
 Prompt is now 1,374 characters and 246 words, against 1,154 and 207 before this work.
 
+## 2026-09-07 (addendum 109): Exercise 06 step 3, the two repair routes swapped
+
+Same content, swapped order, at Matt's request. **Same chat is now the main route** and the new
+chat is the optional card, because Canvas misbehaves often enough that the old backup was the
+one the room actually used. The page still says plainly why the new chat is the better audit:
+a model checking its own work in the same thread tends to defend it. The Canvas control moved
+onto the optional card, since that is the route that needs Canvas turned on.
+
+Two supporting changes the swap forced:
+
+- **`MissionDetail.jsx`**: a backup card could not show a control image. Both backup render
+  sites now pass `extra={step.backup.attachExtra}`. `AttachStrip` already handled it.
+- **`DoctorPanel.jsx`**: `collectUrls` collected `s.attachExtra` but not
+  `s.backup?.attachExtra`, so the moved image would have shipped unchecked. Added in the same
+  commit, per the standing rule. The count stays 27 because the `Map` deduplicates the URL; what
+  changed is the row label, which now reads `03 · canvas_button.webp / 06 · canvas_button.webp /
+  06 · canvas_button.webp`. **That is the tell to look for when a field moves rather than a file:
+  the label gains an entry, the count does not move.**
+
+`CLAUDE.md`'s `backup` row was two changes out of date and now documents `examples`, `after` and
+`attachExtra` alongside the original four fields. Anchor hash untouched, nothing in the `MH_*`
+block was read or written.
+
+**Left alone deliberately.** The repair prompt still opens "Open a Canvas workspace for the
+attached HTML file", which reads oddly in a chat where the app is already present. That mismatch
+predates the swap, because the old backup already sent people to the same chat with this prompt.
+Worth a look after a real run.
+
 # HANDOVER, end of 2026-09-07
 
 **Supersedes the 2026-09-05 handover above.** That block's traps still hold; this one carries the
