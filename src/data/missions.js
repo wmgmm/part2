@@ -535,7 +535,7 @@ export const MISSIONS = [
     level: 1,
     title: 'The Landscape',
     pageTitle: 'Research the Plan, Then Have a Second AI Check the Work',
-    summary: 'Run Deep Research on the plan, then make Copilot fact-check and rebuild it.',
+    summary: 'Research the plan, then fact-check it.',
     accentType: 'stamp-red',
     accentText: 'START HERE',
     tools: [TOOLS.deepResearch, TOOLS.copilot],
@@ -619,7 +619,7 @@ export const MISSIONS = [
     level: 2,
     title: 'The Image',
     pageTitle: 'Analyse a Photo to Build a Reusable Prompt That Replicates Its Unique Style',
-    summary: 'Turn a picture back into the prompt that would make it, then lock the look.',
+    summary: 'Turn a picture back into the prompt.',
     tools: [TOOLS.copilot],
     estMinutesCore: 14,
     toolInfo: {
@@ -715,7 +715,7 @@ export const MISSIONS = [
     level: 2,
     title: 'The Game',
     pageTitle: 'Vibe Code a Playable Game From the Plan in Canvas',
-    summary: 'Build a working 8-bit game out of a policy document. No code required.',
+    summary: 'Build a game out of a policy PDF.',
     tools: [TOOLS.canvas],
     estMinutesCore: 12,
     toolInfo: {
@@ -786,7 +786,7 @@ export const MISSIONS = [
     level: 2,
     title: 'The Module',
     pageTitle: 'Build the Staff Training With a Skill',
-    summary: 'Run a working skill on the plan and get a training session out of it.',
+    summary: 'Run a skill, get a training session.',
     // "or", not "+": 01 and 06 use both of their tools in sequence, this one
     // works in either. The card was telling people they needed both.
     tools: [TOOLS.gemini, TOOLS.copilot],
@@ -864,7 +864,7 @@ export const MISSIONS = [
     level: 2,
     title: 'The Brand',
     pageTitle: 'Turn the Training Into Internal Slides That Look Like Cardiff',
-    summary: 'One source, one skill, one Cardiff-branded deck out.',
+    summary: 'One skill, one Cardiff-branded deck.',
     tools: [TOOLS.notebook],
     estMinutesCore: 16,
     toolInfo: {
@@ -941,7 +941,7 @@ export const MISSIONS = [
     level: 3,
     title: 'The Story',
     pageTitle: 'Turn Ten Years of Real Data Into a Story You Can Show',
-    summary: 'Build an animated dashboard from the real numbers, then check it before you trust it.',
+    summary: 'Chart the real numbers, then check them.',
     tools: [TOOLS.gemini, TOOLS.canvas],
     estMinutesCore: 12,
     toolInfo: {
