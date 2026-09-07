@@ -27,8 +27,10 @@ function collectUrls() {
       }
       // The attach strip: its files are usually also in mission.artifacts, but
       // nothing enforces that, and attachExtra is an image nothing else points at.
-      (s.attach || []).forEach(a => {
-        add(a.downloadPath, `${m.code} · ${a.filename}`);
+      // A strip-only item (the reader's own file, the prompt above) has no
+      // downloadPath; its icon is still a file to check.
+      [...(s.attach || []), ...(s.backup?.attach || [])].forEach(a => {
+        if (a.downloadPath) add(a.downloadPath, `${m.code} · ${a.filename}`);
         if (a.thumb) add(`${BASE}${a.thumb}`, `${m.code} · ${a.thumb}`);
       });
       if (s.attachExtra) add(`${BASE}${s.attachExtra.src}`, `${m.code} · ${s.attachExtra.src}`);

@@ -129,7 +129,7 @@ an exercise, edit the data file.
 | `prompt`, `promptLabel` | copyable `PromptBox` |
 | `promptNote` | bold line under the prompt, **deliberately not copied** (it sits outside the `<pre>`). For "[attach the ...]": an instruction to the reader, not text to send. |
 | `promptEmphasis` | a substring of `prompt` shown bold. **Display only:** COPY writes the plain string, so it is safe on `MH_*`. A non-matching substring degrades to no emphasis, never lost text. |
-| `backup` | one grey line under the prompt, led by **Backup:**, for the fallback route when the main one misbehaves |
+| `backup` | `{text, attach, attachLabel}`: a BACKUP card under the prompt for the fallback route, optionally with its own attach strip |
 | `artifact` | a download card inside the step, for a file used only there |
 | `attach`, `attachLabel`, `attachExtra` | the attach strip: paperclip, label, each file as thumbnail plus filename, optionally a trailing control image joined by "then enable". Label defaults from the count. `attachExtra` works with no files. |
 | `image` | `{src, alt, caption, ui}`; `src` is site-root relative, `ui: true` gives it the full column |

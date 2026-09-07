@@ -310,6 +310,7 @@ const EXAMPLE_ICON = 'blue_peter_icon.webp';
 // as the other two, so the set reads as one family.
 const EXCEL_ICON = 'excel_icon.webp';
 const HTML_ICON = 'html_icon.svg';
+const PROMPT_ICON = 'prompt_icon.svg';
 
 const A = {
   susPlan: {
@@ -406,6 +407,13 @@ const A = {
     note: 'Attach it and it does the checking. Keep it: it works on any figure from any tool.',
     copyable: true,
     thumb: SKILL_ICON,
+  },
+  // Strip-only, like yourChart: stands for the prompt already on the page, so
+  // it has no downloadPath. The preflight skips the download and checks the icon.
+  thisPrompt: {
+    label: 'THE PROMPT ABOVE',
+    filename: 'paste the prompt above',
+    thumb: PROMPT_ICON,
   },
   factCheckSkill: {
     label: 'SKILL 4: CHECK IT BEFORE IT GOES',
@@ -880,8 +888,12 @@ export const MISSIONS = [
         promptEmphasis: 'Check every number in the app against the CSV',
         prompt:
           'Open a Canvas workspace for the attached HTML file and rebuild it there, so it runs as an app rather than showing as code in the chat.\n\nThe app has a copy of its data written inside it. Check every number in the app against the CSV, which is the only source you should trust. List anything that does not match, then rebuild the file using the CSV values only. Do not retype, round or fill in any figure: if a cell is blank, show NEEDS DATA.',
-        backup:
-          'It is better to audit the app in a new chat. But Canvas sometimes messes up and does not display the app. If that happens, run the audit in the same chat that created the app, by copying this prompt and reattaching the CSV.',
+        backup: {
+          text:
+            'It is better to audit the app in a new chat. But Canvas sometimes messes up and does not display the app. If that happens, run the audit in the same chat that created the app, by copying this prompt and reattaching the CSV.',
+          attachLabel: 'SAME CHAT',
+          attach: [A.thisPrompt, A.hesaData],
+        },
       },
     ],
     verdictBy: 'The Matts',

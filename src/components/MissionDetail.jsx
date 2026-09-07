@@ -265,7 +265,10 @@ function ChoiceStep({ step }) {
           {step.backup && (
             <div className="step-backup">
               <span className="step-backup__label">Backup</span>
-              <p className="step-backup__text">{step.backup}</p>
+              <p className="step-backup__text">{step.backup.text}</p>
+              {step.backup.attach && (
+                <AttachStrip items={step.backup.attach} label={step.backup.attachLabel} />
+              )}
             </div>
           )}
           {step.link && (
@@ -313,7 +316,10 @@ function Step({ step, number, lane }) {
       {step.backup && (
             <div className="step-backup">
               <span className="step-backup__label">Backup</span>
-              <p className="step-backup__text">{step.backup}</p>
+              <p className="step-backup__text">{step.backup.text}</p>
+              {step.backup.attach && (
+                <AttachStrip items={step.backup.attach} label={step.backup.attachLabel} />
+              )}
             </div>
           )}
       {step.artifact && <ArtifactCard artifact={step.artifact} />}
