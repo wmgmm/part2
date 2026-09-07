@@ -816,9 +816,9 @@ export const MISSIONS = [
         estMinutes: 2,
         title: 'Copy the prompt and paste it',
         body:
-          'Use Copilot or Gemini. You still prompt; the skill helps make it follow your best practice.',
+          'Use Copilot or Gemini. Paste the prompt but do not send it yet: the two files go in first, in step 2. You still prompt; the skill makes the answer follow your best practice.',
         promptLabel: 'YOUR PROMPT, PLUS ONE LINE',
-        promptNote: '[attach the sustainability pdf and the skill file]',
+        promptNote: '[do not send yet: attach both files first, step 2]',
         // The one line that never changes, so it is bolded in the box. "as your
         // instructions" is the working part: with two attachments, the failure
         // mode is the model treating the .md as a second document to summarise.
@@ -836,7 +836,7 @@ export const MISSIONS = [
         // instead. At this step the question in the room is "which two?", and
         // showing them is faster than reading them.
         body:
-          'In Copilot the button is a paperclip; in Gemini it is a + under the box where you type. Attach both, then send with the prompt above.',
+          'Download both from the cards at the top if you have not already. In Copilot the button is a paperclip; in Gemini it is the + under the box. Attach both, check both names show above the prompt, then send.',
         attach: [A.trainingSkill, A.susPlan],
       },
       {
@@ -849,9 +849,9 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 2,
-        title: 'Save/copy the training session',
+        title: 'Copy the training session, Exercise 05 needs it',
         body:
-          'In Copilot, the three dots give you Export to Word. In Gemini, the copy icon under the answer copies the whole thing, and Exercise 05 pastes it straight into a notebook, so you never need a file. Note: we always have classic copy and paste.',
+          'In Copilot, the three dots give you Export to Word. In Gemini, the copy icon under the answer copies the whole thing, and Exercise 05 pastes it straight into a notebook, so you never need a file. Note: we always have classic copy and paste. If it did not run, move on: Exercise 05 has a ready-made session you can use.',
       },
       {
         tier: 'core',
