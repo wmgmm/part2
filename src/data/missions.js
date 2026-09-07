@@ -115,8 +115,9 @@ export const APPS = {
 // from the deck: MH_COPILOT_TOP_AND_TAIL gained a top line and a bottom
 // heading so the report can be attached OR pasted; MH_IMAGE_REVERSE is Matt's
 // rewrite (output-only, fixed section format, pinned placeholder); MH_ACCESSIBILITY_AUDIT
-// asks for a labelled alt text line, a greyscale check and one human
-// augmentation line. Nothing else was changed.
+// keeps his three opening sentences and adds four labelled output lines plus
+// three guards, researched 2026-09-07 (see tasks/todo.md addendum 107).
+// Nothing else was changed.
 // ============================================================================
 
 // Deck slide 9. Exercise 01, step 1.
@@ -308,12 +309,13 @@ Consistency requirement: Match all previously generated images in style, palette
 Subject: [Replace only this section for each image]`;
 
 // Deck slide 19. Exercise 02, step 4.
-const MH_ACCESSIBILITY_AUDIT = `Describe this image for someone who cannot see it. What is the main message? What might be ambiguous or misleading?
+const MH_ACCESSIBILITY_AUDIT = `Describe this image for someone who cannot see it. What is the main message? What might be ambiguous or misleading? Quote any words in the image exactly, and say so if you cannot read them. Do not guess anyone's age, background or feelings.
 
-Then end with three labelled lines:
+Then end with four labelled lines:
 
-ALT TEXT: under 125 characters, written for what the image is doing on the page rather than a list of what is in it. If the image is purely decorative, say so and give empty alt text instead.
-IN GREYSCALE: what would be lost if the colour were removed, or "nothing".
+ALT TEXT: under 125 characters, most important thing first, written for what the image is doing on the page rather than a list of what is in it. Assume it needs alt text, and do not start it with "image of".
+I ASSUMED: the one thing you had to guess about where this image will be used.
+IN GREYSCALE: what the colour alone is carrying that would be lost in black and white, or "nothing".
 A PERSON COULD: the single change we should make to the image itself to improve its accessibility, such as contrast, the legibility of any text in it, or something that only the colour is carrying. Name the change to the image, not new wording.`;
 
 // Deck slide 21, the short version he shows first. Exercise 03, step 1.

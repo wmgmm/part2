@@ -3504,8 +3504,72 @@ Mac before the day.
 
 **Matt's rewrite of `MH_IMAGE_REVERSE`** landed in the same commit: output-only, a fixed
 seven-line format, the placeholder pinned. Anchor hash is now
-`2408efa1b6b3fb5ea472a16be602b5b476403e10892d504348923c9482dc0ff8`. His pasted text had a
+`fe47eff6a49570b98b3d6b3ec5d13e3b42fa82fc9a56090c49061f110103713b`. His pasted text had a
 non-breaking hyphen in "reverse-engineer"; the constant uses a plain hyphen.
+
+## 2026-09-07 (addendum 107): the accessibility audit prompt, researched and rewritten
+
+Matt asked for a web search for a published accessibility audit skill, not to ship one, but to
+see whether Exercise 02 step 4's prompt could be improved. A subagent surveyed the field.
+**There is no accessibility, a11y, WCAG or alt-text skill in `anthropics/skills` at all**; the
+useful material is community-authored, so what came back was techniques rather than a file.
+
+Six changes applied, ranked by value to a three-minute exercise. Matt Hayden's three opening
+deck sentences are byte-identical; everything added is house-authored.
+
+1. **A fourth labelled line, `I ASSUMED`.** The best-evidenced change. Kreiss et al. (EMNLP
+   2022, 16 blind and low-vision plus 59 sighted raters) found relevance to context predicted
+   description quality about as strongly as imaginability, and found no correlation between
+   CLIPScore and any human rating, so automated metrics miss it. ASSETS 2024 showed that
+   feeding page context to GPT-4V produced descriptions blind and low-vision participants rated
+   significantly higher. Our image is standalone with no context to give, and W3C says whether
+   an image is decorative is "a judgment that only the author can make", so surfacing the guess
+   is the only move available.
+2. **`Quote any words in the image exactly, and say so if you cannot read them.`** Their image
+   is AI-generated and will contain pseudo-text. GPT-Vision was shown to trust text baked into
+   an image over the pixels. On genuinely unanswerable visual questions from blind users,
+   abstention was 56% for human experts, 59% for GPT-4V and **14% for Gemini**, one of the two
+   tools this exercise runs on.
+3. **The decorative default reversed to `Assume it needs alt text.`** The old line invited the
+   worst workshop outcome, AI telling someone the image they just made needs no alt text. This
+   change shortens the prompt.
+4. **`Do not guess anyone's age, background or feelings.`** Meta's Automatic Alt Text blocklist
+   removed 103 of its top 200 concepts including identity attributes and categorically omits
+   gender; Google stopped returning gendered Cloud Vision labels. `MH_STYLE_BLOCK` tells the
+   style block to define who is depicted, so participants' images routinely contain people.
+5. **`most important thing first`** on the alt text line, W3C's own advice and the real
+   mitigation the 125 figure was always a proxy for.
+6. **`do not start it with "image of"`.** WebAIM and W3C both say so, because the screen reader
+   already announces the element. Weakest evidence of the six, a convention rather than a
+   finding, but it is the one instruction a participant can check themselves in ten seconds.
+
+**Left alone deliberately.** The `A PERSON COULD` line, already narrowed twice today, keeps its
+one-line cap and its three worked examples, which are what stop the model proposing a caption
+rewrite instead of an image change. The phrase "written for what the image is doing on the page
+rather than a list of what is in it" is the plain-English rendering of SC 1.1.1's "equivalent
+purpose" and is the best line in the prompt. No WCAG numbers, no severity scale, no role line,
+no long-description branch: all standard in the audit skills surveyed, all wrong for three
+minutes with an audience that met the term today.
+
+**Two corrections to what this log said earlier.** 125 characters is not a ceiling and never
+was: JAWS splits long alt text across several graphics rather than truncating it, and the
+truncation story is a misreading of that. Addendum 104 has been corrected in place. And the US
+Title II deadline is not April 2026; an Interim Final Rule moved it to 26 April 2027 and 2028.
+For Cardiff the operative instrument is the Public Sector Bodies (Websites and Mobile
+Applications) Accessibility Regulations 2018 anyway, and gov.uk now states WCAG 2.2 AA.
+
+**A trap the subagent walked into, worth knowing.** It reported the anchor hash in `CLAUDE.md`
+as two states stale. It was not: the agent had read the repo before several commits landed and
+was comparing against its own snapshot. Verified all three records matched the file before
+acting. **A long-running subagent's view of a file it does not own goes stale; re-check any
+repo claim it makes against the working tree.**
+
+**A caveat for the facilitator, not the page.** Two studies eight years apart found that the
+reader who most needs a description is least able to catch its errors: blind users facing a
+caption contradicting the tweet text doubted their own understanding rather than the caption
+("I have to trust them because I don't have any [alternative]", CHI 2017), and UIST 2025 titled
+its study of 3,467 real hallucination cases "This is My Fault", Really? That is the argument
+for the "say so if you cannot read them" line, and it belongs in what Matt says out loud.
 
 # HANDOVER, end of 2026-09-07
 
@@ -3535,7 +3599,7 @@ reworded prompt shows up live.** Verify the block by anchor, never a line range:
 start=$(grep -n "^const MH_DEEP_RESEARCH" src/data/missions.js | cut -d: -f1)
 end=$(grep -n "^const MH_CANVAS_GAME" src/data/missions.js | cut -d: -f1)
 sed -n "${start},${end}p" src/data/missions.js | sha256sum
-# 2408efa1b6b3fb5ea472a16be602b5b476403e10892d504348923c9482dc0ff8
+# fe47eff6a49570b98b3d6b3ec5d13e3b42fa82fc9a56090c49061f110103713b
 ```
 
 **Editable without touching his words:** step `title`, `body`, `promptLabel`, `promptNote`,
@@ -3588,6 +3652,9 @@ yesterday's copy and make you doubt a correct edit.** Add any new file-bearing s
 
 ## Traps added today
 
+- **A long-running subagent's picture of the repo goes stale.** One reported the `MH_*` anchor
+  hash as two states behind; it had read the file before later commits landed. Re-verify any
+  claim a subagent makes about the working tree before acting on it.
 - **A background tab never finishes a framer-motion exit, so hash routing looks broken.**
   `document.hidden` is true, Chrome throttles `requestAnimationFrame`, and `AnimatePresence
   mode="wait"` waits forever for the exit animation. Cost half an hour before the check. Probe
