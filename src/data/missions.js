@@ -538,7 +538,7 @@ export const MISSIONS = [
         backup: {
           label: 'OR PASTE IT STRAIGHT IN',
           text:
-            'Skip Word and paste the report at the end of the Copilot prompt in step 4. Quicker, but a long report may not survive the box. Out of runs? Use Deep_research_output.pdf from the links above.',
+            'Skip Word and paste the report at the end of the Copilot prompt in step 4.',
         },
       },
       {
