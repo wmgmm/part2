@@ -1071,6 +1071,11 @@ export const MISSIONS = [
         promptEmphasis: 'Work out every figure by writing and running code (Python), not by estimating.',
         prompt:
           'Analyse the attached file on university estates and energy use, from the perspective of Cardiff University. Work out every figure by writing and running code (Python), not by estimating. I do not need to see the Python: just use it for the maths. If you cannot run code on this file, say so at the top of your answer and label every figure as approximate.\n\nOutput:\n1. An executive summary paragraph from a Cardiff University perspective, with specific and actionable information.\n\n2. One publication-quality chart for the most recent year: box plots across every university in the file for emissions per square metre, energy per square metre and renewable percentage, with Cardiff clearly marked and labelled. Place any legend outside the plotting area so it does not cover data points, labels or boxplots.\n\n3. Cardiff reports 100% renewable energy through green tariffs and still reports over 21,000 tonnes of Scope 1 and 2 emissions. Explain how both can be true, and say what the renewable figure does not cover.\n\n4. End with one line labelled KEY FIGURE: the single number this analysis turns on, with its unit, the period or group it covers, and what it shows, written so that someone with only the data file could check it.',
+        backup: {
+          label: 'IF COPILOT WILL NOT TAKE THE FILE, OR GIVES NO KEY FIGURE LINE',
+          text:
+            'Run the same prompt in Gemini with the +, then still do step 2 in a new Gemini chat. If the answer has no KEY FIGURE line, reply: give me the KEY FIGURE line only, as item 4 asks.',
+        },
       },
       {
         tier: 'core',
@@ -1078,11 +1083,11 @@ export const MISSIONS = [
         title: 'Verify it in Gemini, with the skill',
         artifact: A.verifySkill,
         body:
-          'Now Gemini, in a new chat. Attach the skill and the CSV, paste in the KEY FIGURE line from Copilot, and do not tell it where that line came from. A rubber stamp is not a check.',
+          'Now Gemini, in a new chat. Download the skill below, then attach it and the CSV with the +. Paste the prompt, then copy only Copilot\'s last line, starting KEY FIGURE, and paste it after FIGURE TO CHECK. Do not say where it came from.',
         attachLabel: 'NEW CHAT',
         attach: [A.verifySkill, A.hesaData],
         promptLabel: 'THE VERIFY PROMPT',
-        promptNote: '[attach both, then paste the KEY FIGURE line over the brackets]',
+        promptNote: '[attach both, paste this prompt, then paste Copilot\'s KEY FIGURE line after it]',
         // Built on evidence, not instinct, and the evidence sets the shape.
         // Intrinsic self-correction, a model reviewing its own answer in the same
         // chat, degrades accuracy and flips right answers to wrong. Worse, models
@@ -1094,7 +1099,7 @@ export const MISSIONS = [
         // DUAA 2025, rubber-stamping an AI output is not meaningful oversight.
         promptEmphasis: 'Follow the attached skill file as your instructions.',
         prompt:
-          'Follow the attached skill file as your instructions.\n\nFIGURE TO CHECK: [paste the KEY FIGURE line here]',
+          'Follow the attached skill file as your instructions.\n\nFIGURE TO CHECK:',
       },
     ],
     verdictBy: 'The Matts',
