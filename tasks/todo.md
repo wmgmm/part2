@@ -3218,6 +3218,45 @@ EOF
 
 ---
 
+## 2026-09-07 (addendum 103): why the bubbles stopped overlapping, and the honesty cap
+
+Matt, on seeing the fitted dashboard: the bubbles used to overlap and now they touch, so are the
+values still right? Fair question, and the answer needed evidence rather than reassurance.
+
+**The bubbles were never drawn purely where the data puts them.** `separateBubbles` relaxes
+collisions: it pushes overlapping bubbles apart, up to a cap, and `renderTethers` draws a grey
+line back to the true position for anything moved more than 4px. Cardiff and the comparator are
+anchored and never move. Smaller radii mean fewer collisions, so the separation succeeds where it
+used to give up, which is exactly what Matt saw.
+
+**The values are exact.** Every institution's plotted energy intensity, emissions intensity and
+floor area was compared against `HESA_Estates_Workshop.csv`, recomputed independently, for
+2015/16 and 2024/25: **zero mismatches** to 1e-9 relative, 30 and 31 institutions. Cardiff
+2024/25 reads 222.0388 kWh/m2 and 40.0332 kgCO2e/m2 against 222.039 and 40.033 from the file.
+
+**But the fit made one thing worse, and that is now fixed.** The nudge was capped in *pixels*
+(`r * 1.2 + 10`). A shorter chart has fewer pixels per kgCO2e/m2, so the same nudge became a
+bigger lie: worst case went from 6.4 to 9.66 kgCO2e/m2, and Exeter sat 24% above its true
+emissions intensity. Two changes:
+
+- **The cap is now expressed in data units**: `separateBubbles(frame, box, Math.abs(sy(10) - sy(13)))`,
+  so no bubble is ever drawn more than **3 kgCO2e/m2** from where its number puts it, at any
+  window size or zoom level.
+- **Clamp then cap, not cap then clamp.** The edge clamp used to run last and could push a bubble
+  past the cap: 5.06 kgCO2e/m2 measured at 2015/16. Reordered, so a bubble on the edge is clipped
+  by `plotClip` rather than shoved inwards.
+
+Measured after: max vertical error **exactly 3.00** at every year and both window heights, max
+horizontal 1.97 kWh/m2 short and 3.66 tall. The trade is more overlap where the sector bunches up
+in 2024/25 (21 pairs at 1366x657), which is the honest picture.
+
+**And it now says so on the page**, appended to the provenance line under the chart: "Where
+bubbles collide they are nudged apart by at most 3 kgCO2e/m2, with a grey line back to the true
+position; Cardiff and the comparator are never moved." Exercise 06 is about checking what a tool
+tells you, so the exhibit should not have an unstated layout fudge in it.
+
+---
+
 # HANDOVER, end of 2026-09-05
 
 Read this first. It supersedes the earlier "OPEN" block, which is folded in below.

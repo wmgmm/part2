@@ -851,11 +851,14 @@ Wrexham University,2024/25,28,59974,10330513,21716,1340,72,40.7,1848.0
     }
 
     // Cosmetic collision separation. Writes rx, ry only; x, y (truth) are untouched and every number shown comes from x, y.
-    function separateBubbles(allNodes, box) {
+    function separateBubbles(allNodes, box, capPx) {
       allNodes.forEach(n => { n.rx = n.x; n.ry = n.y; n.shift = 0; });
       const nodes = allNodes.filter(n => !n.offView); // bubbles outside the viewport are clipped, not dragged in
       const anchored = n => n.isCardiff || n.isComparator;
-      const maxShift = n => n.r * 1.2 + 10;
+      // A bubble may be nudged off its true position to clear a collision, but never
+      // by more than capPx, which the caller sets to a fixed number of data units. On a
+      // short chart that is fewer pixels, so the drawing stays as true as it was.
+      const maxShift = n => Math.min(n.r * 1.2 + 10, capPx || n.r * 1.2 + 10);
 
       for (let iter = 0; iter < 30; iter++) {
         let moved = false;
@@ -879,13 +882,15 @@ Wrexham University,2024/25,28,59974,10330513,21716,1340,72,40.7,1848.0
             moved = true;
           }
         }
-        // Cap displacement and keep bubbles inside the plot.
+        // Keep bubbles inside the plot, THEN cap the displacement, so the edge clamp
+        // can never push a bubble further from its true position than the cap allows.
+        // A bubble sitting on the edge is clipped by plotClip rather than shoved inwards.
         nodes.forEach(n => {
+          n.rx = Math.min(box.x1 - n.r, Math.max(box.x0 + n.r, n.rx));
+          n.ry = Math.min(box.y1 - n.r, Math.max(box.y0 + n.r, n.ry));
           const ox = n.rx - n.x, oy = n.ry - n.y;
           const d = Math.sqrt(ox * ox + oy * oy), cap = maxShift(n);
           if (d > cap) { n.rx = n.x + ox / d * cap; n.ry = n.y + oy / d * cap; }
-          n.rx = Math.min(box.x1 - n.r, Math.max(box.x0 + n.r, n.rx));
-          n.ry = Math.min(box.y1 - n.r, Math.max(box.y0 + n.r, n.ry));
         });
         if (!moved) break;
       }
@@ -1003,7 +1008,9 @@ Wrexham University,2024/25,28,59974,10330513,21716,1340,72,40.7,1848.0
       document.getElementById("dataStatus").textContent =
         `${model.institutions.length} institutions, ${model.rowCount} rows, ${ACADEMIC_YEARS[0]} to ${ACADEMIC_YEARS[LAST_YEAR]}, from HESA Estates Management. ` +
         `Blank cells in the source: ${blanks || "none"}. Blanks are shown as ${NEEDS_DATA}, never filled in or interpolated; ` +
-        `a bubble with no floor area or no Scope 1&2 figure fades out for that year.`;
+        `a bubble with no floor area or no Scope 1&2 figure fades out for that year. ` +
+        `Where bubbles collide they are nudged apart by at most 3 kgCO\u2082e/m\u00b2, with a grey line back to the ` +
+        `true position; Cardiff and the comparator are never moved.`;
     }
 
     let controlsBound = false;
@@ -1240,7 +1247,7 @@ Wrexham University,2024/25,28,59974,10330513,21716,1340,72,40.7,1848.0
       const box = plotBox();
       const frame = computeFrame(model, progress, selectedComparator, sx, sy, sr);
       frame.forEach(d => { d.offView = d.x < box.x0 - d.r || d.x > box.x1 + d.r || d.y < box.y0 - d.r || d.y > box.y1 + d.r; });
-      separateBubbles(frame, box);
+      separateBubbles(frame, box, Math.abs(sy(10) - sy(13)));  // at most 3 kgCO2e/m2 off true
       lastFrame = frame;
 
       const counted = frame.filter(d => d.counted);
