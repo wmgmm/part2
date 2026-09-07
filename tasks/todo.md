@@ -3444,6 +3444,20 @@ Verdict untouched. Core time 12 to 14; site total 78.
 render five core steps and no stretch heading; the top-and-tail prompt box ends with the new
 heading; every new body is at or under 45 words; `CLAUDE.md` still 200 lines.
 
+## 2026-09-07 (addendum 105): Exercise 03, display copy only
+
+Matt's pass over 03. **No prompt touched**, anchor hash still `f94d87…`. Step 1 loses the
+", under the box where you type," clause and its title gains "(so very limited context)".
+Step 2 is retitled "NEW chat, then run the detailed prompt with the PDF for more context",
+its body cut to the two facts that matter (new chat or Canvas edits the first game; the PDF is
+the context the thin ask lacked) and its strip now follows 06: NEW CHAT pill, the PDF, "then
+enable" the Canvas chip. Step 3 says click the Code toggle and asks which strings came from the
+PDF, so the point of reading the code is on the page. Step 5 Responsible AI now reads:
+reviewing is part of the workflow, nobody has reviewed this code, fine for a demo with friends,
+and do not share an app holding confidential (C1/C2) work data by link. The workflow chip is
+"Run the detailed prompt". The stretch block stays on 03; only 01 and 02 lost theirs, and only
+by request. Verified on the preview and `?doctor` (25, all 200).
+
 # HANDOVER, end of 2026-09-07
 
 **Supersedes the 2026-09-05 handover above.** That block's traps still hold; this one carries the
@@ -3484,6 +3498,9 @@ Where 01 and 02 stand after today:
   attached or pasted; step 5 Responsible AI, energy. See addendum 104.
 - **02 The Image**, 14 minutes, five core steps, no stretch block. JPEG picture, style block as a
   Blue Peter card, SAME CHAT then NEW CHAT on step 3, Responsible AI on accessibility. Addendum 104.
+- **03 The Game**, 12 minutes, prompts untouched. Step 2 uses the NEW CHAT strip with the Canvas
+  chip, step 3 asks which strings came from the PDF, step 5 carries the C1/C2 sharing warning.
+  Stretch block still present. Addendum 105.
 
 ## Where the site is
 

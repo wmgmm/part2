@@ -629,7 +629,7 @@ export const MISSIONS = [
         'Canvas turns a description into working web apps, decks and documents you can edit in place. You write no code at any point.',
       apps: [APPS.gemini],
     },
-    workflow: ['Run the thin ask', 'Run the engineered ask', 'Read the code', 'Fix it in words'],
+    workflow: ['Run the thin ask', 'Run the detailed prompt', 'Read the code', 'Fix it in words'],
     brief:
       'Build the same 8-bit game twice from the sustainability plan, once thinly and once fully specified.',
     artifacts: [A.susPlan],
@@ -639,9 +639,9 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 2,
-        title: 'Run the thin ask with nothing attached',
+        title: 'Run the thin ask with nothing attached (so very limited context)',
         body:
-          'Use Gemini. Turn Canvas on in the Tools menu, under the box where you type, and run this with nothing attached. Play it for ten seconds.',
+          'Use Gemini. Turn Canvas on in the Tools menu and run this with nothing attached. Play it for ten seconds.',
         attachLabel: 'ENABLE',
         attachExtra: {
           src: 'canvas_button.webp',
@@ -653,12 +653,17 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 4,
-        title: 'Run the engineered ask in a NEW chat',
+        title: 'NEW chat, then run the detailed prompt with the PDF for more context',
         body:
-          'Start a NEW chat and turn Canvas on before running this. In the same chat Canvas would edit the first game instead of building a second.',
+          'NEW chat, or Canvas edits the first game instead of building a second. Turn Canvas on and attach the PDF: the context the thin ask lacked is what lifts the output.',
         promptLabel: 'THE ENGINEERED ASK',
+        attachLabel: 'NEW CHAT',
         attach: [A.susPlan],
-        promptNote: '[attach Sustainable-Futures-en.pdf]',
+        attachExtra: {
+          src: 'canvas_button.webp',
+          alt: 'The Canvas button in Gemini, a small grey chip reading Canvas.',
+        },
+        promptNote: '[new chat, Canvas on, attach Sustainable-Futures-en.pdf]',
         prompt: MH_CANVAS_GAME,
       },
       {
@@ -666,7 +671,7 @@ export const MISSIONS = [
         estMinutes: 2,
         title: 'Read the code tab',
         body:
-          'Canvas has a Code toggle at the top, next to Preview. Look at the strings: the title, the messages, the food names.',
+          'Canvas has a Code toggle at the top, next to Preview. Click it and skim the strings: the title, the messages, the food names. Which of them came from the PDF?',
       },
       {
         tier: 'core',
@@ -680,7 +685,7 @@ export const MISSIONS = [
         estMinutes: 1,
         title: 'Responsible AI',
         body:
-          'Nobody has reviewed this code. Fine for a demo, but keep real or personal data out of it, and a public Canvas link is not university hosting.',
+          'Reviewing is part of the workflow, so think about risk: nobody has reviewed this code, which is fine for a demo with friends. And if your app holds confidential (C1/C2) work data, do not share it by link.',
       },
       {
         tier: 'stretch',
