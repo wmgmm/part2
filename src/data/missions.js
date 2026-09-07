@@ -454,7 +454,7 @@ export const MISSIONS = [
         estMinutes: 2,
         title: 'Turn on Deep Research and paste the prompt',
         body:
-          'Use Gemini. Click the + under the box where you type, then select Deep Research. It costs one of your five runs a month.',
+          'Use Gemini. Click the + under the box where you type, then select Deep Research (limited usage).',
         attachLabel: 'ENABLE',
         attachExtra: {
           src: 'deep_research_button.png',
