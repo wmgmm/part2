@@ -434,6 +434,15 @@ const A = {
     note: '31 UK universities, 2015/16 to 2024/25, one row each per year.',
     thumb: EXCEL_ICON,
   },
+  // Matt's own Canvas game, improved for the Demand First hierarchy: the four
+  // stages now reward avoiding demand above offsetting it, which is the point.
+  demandFirstGame: {
+    label: 'OPTIONAL: ONE WE MADE EARLIER',
+    filename: 'Demand_First_Game.html',
+    downloadPath: `${BASE}placeholders/Demand_First_Game.html`,
+    note: 'A real Canvas build, tuned so the four stages of Demand First score in the order the plan puts them.',
+    thumb: EXAMPLE_ICON,
+  },
   exampleChart: {
     label: 'OPTIONAL: ONE WE MADE EARLIER',
     filename: 'Cardiff_Estates_Dashboard.html',
@@ -696,7 +705,7 @@ export const MISSIONS = [
     pageTitle: 'Vibe Code a Playable Game From the Plan in Canvas',
     summary: 'Build a working 8-bit game out of a policy document. No code required.',
     tools: [TOOLS.canvas],
-    estMinutesCore: 10,
+    estMinutesCore: 12,
     toolInfo: {
       feature:
         'Canvas turns a description into working web apps, decks and documents you can edit in place. You write no code at any point.',
@@ -736,6 +745,14 @@ export const MISSIONS = [
         title: 'Play it, then give AI feedback',
         body:
           'Name the one thing that spoils it and type that into the chat. Good feedback says what is wrong and what you want instead: \"too fast, slow the items by half\". \"This is bad\" gives it nothing to work with. Canvas rebuilds it in place.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 2,
+        title: 'Play the one the Matts made earlier',
+        artifact: A.demandFirstGame,
+        body:
+          'Ours went through the same feedback loop you just used. Play it and watch the scoring: avoiding demand is worth more than offsetting it, because that is the order the plan puts them in.',
       },
       {
         tier: 'core',

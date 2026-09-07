@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Demand First Learning Simulator</title>
+    
+    <!-- Clean, highly legible Inter font + retro display font for titles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        :root {
+            --zx-black: #08090a;
+            --zx-dark-blue: #0b132b;
+            --zx-cyan: #00ffff;
+            --zx-green: #00ff66;
+            --zx-yellow: #ffea00;
+            --zx-red: #ff3366;
+            --zx-magenta: #ff00ff;
+        }
+
+        body {
+            background-color: var(--zx-black);
+            color: #ffffff;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            overflow-x: hidden;
+        }
+
+        .font-arcade {
+            font-family: 'Press Start 2P', cursive, monospace;
+        }
+
+        /* Scanline Overlay with subtle opacity */
+        .crt-overlay::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            z-index: 20;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        canvas {
+            image-rendering: pixelated;
+            background-color: #030712;
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .spectrum-stripe {
+            background: linear-gradient(90deg, #ff3366 0%, #ffea00 33%, #00ff66 66%, #00ffff 100%);
+            height: 4px;
+        }
+
+        .zx-btn {
+            background-color: #111827;
+            border: 2px solid var(--zx-yellow);
+            color: var(--zx-yellow);
+            padding: 10px 16px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            border-radius: 8px;
+            box-shadow: 0 4px 0 #1d4ed8;
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
+
+        .zx-btn:hover {
+            background-color: var(--zx-yellow);
+            color: #000000;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #1d4ed8;
+        }
+
+        .zx-btn-green {
+            border-color: var(--zx-green);
+            color: var(--zx-green);
+            box-shadow: 0 4px 0 #047857;
+        }
+        .zx-btn-green:hover {
+            background-color: var(--zx-green);
+            color: #000000;
+            box-shadow: 0 6px 0 #047857;
+        }
+
+        .retro-box {
+            background-color: #0f172a;
+            border: 2px solid #1e293b;
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .step-active {
+            border-color: var(--zx-yellow) !important;
+            background-color: #1e1b4b !important;
+            box-shadow: 0 0 12px rgba(255, 234, 0, 0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-3 md:p-6">
+
+    <header class="max-w-6xl w-full mx-auto mb-3">
+        <div class="spectrum-stripe mb-2 rounded-full"></div>
+        <div class="flex flex-row justify-between items-center bg-gray-950 p-3 rounded-xl border border-gray-800 gap-2">
+            <div>
+                <h1 class="text-sm md:text-lg font-black tracking-wide text-yellow-400 uppercase">
+                    DEMAND FIRST SIMULATOR
+                </h1>
+                <p class="text-xs text-cyan-400 font-semibold">
+                    Cardiff University Sustainable Futures Plan
+                </p>
+            </div>
+            <div class="flex gap-2">
+                <button id="crt-toggle" class="zx-btn text-xs py-1.5 px-3">CRT: ON</button>
+                <button id="audio-toggle" class="zx-btn text-xs py-1.5 px-3">SOUND: ON</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-4 gap-4 flex-grow items-start">
+        
+        <!-- Sidebar Guide -->
+        <aside class="lg:col-span-1 flex flex-col gap-3 order-2 lg:order-1 text-sm">
+            
+            <div class="retro-box border-yellow-500/40">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-yellow-400 mb-3 text-center border-b border-gray-800 pb-1.5">
+                    THE 4-STEP HIERARCHY
+                </h2>
+                
+                <div class="space-y-2 text-xs">
+                    <div id="step-card-1" class="p-2.5 rounded-lg border border-gray-800 bg-gray-900 transition-all">
+                        <div class="font-bold text-cyan-400 flex items-center gap-1.5">
+                            <span>1. 🚫</span> AVOID DEMAND
+                        </div>
+                        <p class="text-gray-300 text-[11px] mt-0.5 font-medium">Cancel unneeded resource requests at source.</p>
+                    </div>
+
+                    <div id="step-card-2" class="p-2.5 rounded-lg border border-gray-800 bg-gray-900 transition-all">
+                        <div class="font-bold text-green-400 flex items-center gap-1.5">
+                            <span>2. 🔄</span> LOW-IMPACT SWAP
+                        </div>
+                        <p class="text-gray-300 text-[11px] mt-0.5 font-medium">Choose clean, plant-rich options when needed.</p>
+                    </div>
+
+                    <div id="step-card-3" class="p-2.5 rounded-lg border border-gray-800 bg-gray-900 transition-all">
+                        <div class="font-bold text-yellow-400 flex items-center gap-1.5">
+                            <span>3. ♻️</span> CIRCULAR LOOPS
+                        </div>
+                        <p class="text-gray-300 text-[11px] mt-0.5 font-medium">Reuse, repair, and recycle all waste.</p>
+                    </div>
+
+                    <div id="step-card-4" class="p-2.5 rounded-lg border border-gray-800 bg-gray-900 transition-all">
+                        <div class="font-bold text-pink-400 flex items-center gap-1.5">
+                            <span>4. 🌱</span> MANAGE RESIDUAL
+                        </div>
+                        <p class="text-gray-300 text-[11px] mt-0.5 font-medium">Plant trees to absorb remaining emissions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Current Mission Box -->
+            <div class="retro-box border-green-500/50 bg-gray-950">
+                <h2 class="text-xs font-bold text-green-400 uppercase tracking-wider mb-1">STAGE MISSION</h2>
+                <p id="mission-title" class="text-yellow-300 font-bold text-sm mb-1">LOADING...</p>
+                <p id="mission-instruction" class="text-gray-200 text-xs font-medium leading-relaxed">
+                    Follow objectives on screen.
+                </p>
+            </div>
+
+        </aside>
+
+        <!-- Center Game Screen Frame -->
+        <section class="lg:col-span-3 flex flex-col items-center order-1 lg:order-2 w-full">
+            <div id="screen-border" class="crt-overlay relative w-full bg-black rounded-xl overflow-hidden border-4 border-cyan-400 shadow-2xl max-w-[800px]">
+                
+                <!-- HUD Bar -->
+                <div class="bg-gray-950 border-b border-gray-800 p-3 flex justify-between items-center text-xs md:text-sm font-bold z-10 relative">
+                    <div class="text-yellow-400">SCORE: <span id="hud-score" class="text-white font-mono">000000</span></div>
+                    <div class="text-cyan-400">STAGE: <span id="hud-stage" class="text-white">1/4</span></div>
+                    <div class="text-green-400">CARBON SAVED: <span id="hud-carbon" class="text-white font-mono">0.0 kg</span></div>
+                </div>
+
+                <!-- Canvas -->
+                <canvas id="gameCanvas" width="800" height="480" class="w-full h-auto"></canvas>
+
+                <!-- Modal Overlay -->
+                <div id="modal-overlay" class="absolute inset-0 bg-black/90 backdrop-blur-md flex flex-col justify-center items-center p-4 text-center z-30">
+                    <div id="modal-content" class="max-w-md w-full space-y-4">
+                        <!-- Javascript populates content -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Mobile Controls -->
+            <div class="w-full max-w-[800px] mt-3 grid grid-cols-3 gap-2 md:hidden text-center">
+                <div></div>
+                <button id="btn-up" class="zx-btn py-3 text-sm">▲ UP</button>
+                <div></div>
+                <button id="btn-left" class="zx-btn py-3 text-sm">◄ LEFT</button>
+                <button id="btn-action" class="zx-btn zx-btn-green py-3 text-sm">★ ACTION</button>
+                <button id="btn-right" class="zx-btn py-3 text-sm">► RIGHT</button>
+                <div></div>
+                <button id="btn-down" class="zx-btn py-3 text-sm">▼ DOWN</button>
+                <div></div>
+            </div>
+            
+            <p class="text-xs text-gray-400 mt-2 text-center font-medium">
+                CONTROLS: ARROW KEYS / WASD TO MOVE • SPACEBAR OR ACTION TO INTERACT
+            </p>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-6xl w-full mx-auto mt-4 pt-2 border-t border-gray-800 text-center text-xs text-gray-400 font-medium">
+        <p>Cardiff University Sustainable Futures Strategy (2025–2035)</p>
+    </footer>
+
+    <script>
+        class ZXSoundEngine {
+            constructor() {
+                this.ctx = null;
+                this.enabled = true;
+            }
+
+            init() {
+                if (!this.ctx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioContext();
+                }
+            }
+
+            playBeep(freq = 440, duration = 0.08, type = 'square') {
+                if (!this.enabled) return;
+                try {
+                    this.init();
+                    if (this.ctx.state === 'suspended') this.ctx.resume();
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                    gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + duration);
+
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + duration);
+                } catch (e) {}
+            }
+
+            playSuccessSound() {
+                if (!this.enabled) return;
+                this.playBeep(523.25, 0.06);
+                setTimeout(() => this.playBeep(659.25, 0.06), 60);
+                setTimeout(() => this.playBeep(783.99, 0.1), 120);
+            }
+
+            playCancelSound() {
+                if (!this.enabled) return;
+                this.playBeep(880, 0.05);
+                setTimeout(() => this.playBeep(440, 0.1), 50);
+            }
+
+            playStageClearSound() {
+                if (!this.enabled) return;
+                [440, 554.37, 659.25, 880].forEach((freq, idx) => {
+                    setTimeout(() => this.playBeep(freq, 0.1), idx * 80);
+                });
+            }
+        }
+
+        const soundFx = new ZXSoundEngine();
+
+        document.getElementById('audio-toggle').addEventListener('click', (e) => {
+            soundFx.enabled = !soundFx.enabled;
+            e.target.innerText = `SOUND: ${soundFx.enabled ? 'ON' : 'OFF'}`;
+            if (soundFx.enabled) soundFx.playBeep(600, 0.05);
+        });
+
+        document.getElementById('crt-toggle').addEventListener('click', (e) => {
+            const screen = document.getElementById('screen-border');
+            screen.classList.toggle('crt-overlay');
+            e.target.innerText = `CRT: ${screen.classList.contains('crt-overlay') ? 'ON' : 'OFF'}`;
+        });
+    </script>
+
+    <script>
+        const STAGES = [
+            {
+                number: 1,
+                title: "STAGE 1: AVOID DEMAND",
+                color: "#00ffff",
+                mission: "🚫 CANCEL WASTEFUL DEMAND AT SOURCE!",
+                instruction: "Walk to wasteful items (Heating empty rooms, extra paper prints, flight travel) and press SPACE to CANCEL them before resources are used!",
+                takeaway: "Avoiding demand stops 100% of carbon emissions immediately.",
+                targetScore: 500
+            },
+            {
+                number: 2,
+                title: "STAGE 2: LOW-IMPACT SWAP",
+                color: "#00ff66",
+                mission: "🔄 SWAP TO LOW-CARBON ALTERNATIVES!",
+                instruction: "Essential needs remain! Walk to HIGH-CARBON choices (Solo Car, Meat Lunch, Coal Power) and press SPACE to SWAP them to clean options (Bus, Plant Lunch, Solar)!",
+                takeaway: "Choosing sustainable choices slashes carbon when demand is necessary.",
+                targetScore: 1200
+            },
+            {
+                number: 3,
+                title: "STAGE 3: CIRCULAR LOOPS",
+                color: "#ffea00",
+                mission: "♻️ RECOVER & RECYCLE ALL WASTE!",
+                instruction: "Pick up discarded equipment, boxes, and food scraps. Carry them UP to the RECYCLE HUB to eliminate landfill waste!",
+                takeaway: "Circular materials stay in use and avoid end-of-life waste.",
+                targetScore: 2000
+            },
+            {
+                number: 4,
+                title: "STAGE 4: MANAGE RESIDUAL",
+                color: "#ff00ff",
+                mission: "🌱 ABSORB REMAINING EMISSIONS WITH NATURE!",
+                instruction: "Unavoidable carbon remains! Walk across the field and press SPACE to plant native trees and restore habitats to capture carbon!",
+                takeaway: "Residual unavoidable emissions must be managed transparently through nature.",
+                targetScore: 3000
+            }
+        ];
+
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let gameState = 'INTRO';
+        let currentStageIdx = 0;
+        let score = 0;
+        let totalCarbonSaved = 0;
+
+        const player = {
+            x: 385, y: 400, width: 32, height: 32, speed: 4.5, color: "#ffea00"
+        };
+
+        let stageEntities = [];
+        let floatingText = [];
+
+        const keys = {
+            ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false,
+            w: false, s: false, a: false, d: false, " ": false
+        };
+
+        window.addEventListener('keydown', (e) => {
+            soundFx.init();
+            if (e.key in keys || e.key === " ") {
+                keys[e.key] = true;
+                if (e.key === " " || e.key.startsWith("Arrow")) e.preventDefault();
+            }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            if (e.key in keys || e.key === " ") {
+                keys[e.key] = false;
+            }
+        });
+
+        function bindBtn(id, keyName) {
+            const btn = document.getElementById(id);
+            if (!btn) return;
+            const press = (e) => { e.preventDefault(); soundFx.init(); keys[keyName] = true; };
+            const release = (e) => { e.preventDefault(); keys[keyName] = false; };
+            btn.addEventListener('touchstart', press);
+            btn.addEventListener('touchend', release);
+            btn.addEventListener('mousedown', press);
+            btn.addEventListener('mouseup', release);
+        }
+
+        bindBtn('btn-up', 'ArrowUp');
+        bindBtn('btn-down', 'ArrowDown');
+        bindBtn('btn-left', 'ArrowLeft');
+        bindBtn('btn-right', 'ArrowRight');
+        bindBtn('btn-action', ' ');
+    </script>
+
+    <script>
+        function initStage(stageIdx) {
+            currentStageIdx = stageIdx;
+            const config = STAGES[currentStageIdx];
+
+            for (let i = 1; i <= 4; i++) {
+                const card = document.getElementById(`step-card-${i}`);
+                if (i === config.number) {
+                    card.className = "p-2.5 rounded-lg border bg-gray-900 step-active";
+                } else {
+                    card.className = "p-2.5 rounded-lg border border-gray-800 bg-gray-900";
+                }
+            }
+
+            document.getElementById('mission-title').innerText = config.mission;
+            document.getElementById('mission-instruction').innerText = config.instruction;
+            document.getElementById('screen-border').style.borderColor = config.color;
+
+            player.x = 385;
+            player.y = 400;
+
+            stageEntities = [];
+            floatingText = [];
+            spawnStageEntities();
+            updateHUD();
+        }
+
+        function spawnStageEntities() {
+            stageEntities = [];
+            
+            if (currentStageIdx === 0) {
+                const demands = [
+                    { name: "Unneeded Heating", label: "🔥 HEAT", carbon: 1.5 },
+                    { name: "Excess Paper", label: "📄 PAPER", carbon: 0.8 },
+                    { name: "Single-Use Plastic", label: "🥤 PLASTIC", carbon: 1.2 },
+                    { name: "Unneeded Travel", label: "✈️ FLIGHT", carbon: 3.5 }
+                ];
+                for (let i = 0; i < 5; i++) {
+                    const item = demands[Math.floor(Math.random() * demands.length)];
+                    stageEntities.push({
+                        x: 60 + Math.random() * 680,
+                        y: 110 + Math.random() * 240,
+                        width: 50, height: 42,
+                        name: item.name, label: item.label, carbon: item.carbon,
+                        active: true, color: "#ff3366"
+                    });
+                }
+            } else if (currentStageIdx === 1) {
+                const swaps = [
+                    { highLabel: "🚗 CAR", lowLabel: "🚌 BUS", carbon: 2.5 },
+                    { highLabel: "🥩 MEAT", lowLabel: "🥗 VEG", carbon: 2.0 },
+                    { highLabel: "⚡ COAL", lowLabel: "☀️ SOLAR", carbon: 3.0 }
+                ];
+                for (let i = 0; i < 4; i++) {
+                    const item = swaps[Math.floor(Math.random() * swaps.length)];
+                    stageEntities.push({
+                        x: 80 + Math.random() * 640,
+                        y: 120 + Math.random() * 220,
+                        width: 54, height: 42,
+                        highLabel: item.highLabel, lowLabel: item.lowLabel,
+                        carbon: item.carbon, swapped: false, color: "#ff9900"
+                    });
+                }
+            } else if (currentStageIdx === 2) {
+                const items = [
+                    { label: "🔬 GEAR", carbon: 2.2 },
+                    { label: "🍲 SCRAPS", carbon: 1.4 },
+                    { label: "📦 BOXES", carbon: 1.0 }
+                ];
+                for (let i = 0; i < 4; i++) {
+                    const item = items[Math.floor(Math.random() * items.length)];
+                    stageEntities.push({
+                        x: 80 + Math.random() * 640,
+                        y: 200 + Math.random() * 180,
+                        width: 52, height: 42,
+                        label: item.label, carbon: item.carbon,
+                        carried: false, recycled: false, color: "#ffea00"
+                    });
+                }
+            } else if (currentStageIdx === 3) {
+                for (let i = 0; i < 5; i++) {
+                    stageEntities.push({
+                        x: 80 + (i * 135),
+                        y: 220 + (i % 2 === 0 ? -30 : 30),
+                        width: 58, height: 50,
+                        planted: false, color: "#854d0e"
+                    });
+                }
+            }
+        }
+    </script>
+
+    <script>
+        function update() {
+            if (gameState !== 'PLAYING') return;
+
+            if (keys.ArrowUp || keys.w) player.y -= player.speed;
+            if (keys.ArrowDown || keys.s) player.y += player.speed;
+            if (keys.ArrowLeft || keys.a) player.x -= player.speed;
+            if (keys.ArrowRight || keys.d) player.x += player.speed;
+
+            if (player.x < 10) player.x = 10;
+            if (player.x + player.width > 790) player.x = 790 - player.width;
+            if (player.y < 70) player.y = 70;
+            if (player.y + player.height > 460) player.y = 460 - player.height;
+
+            const isActionPressed = keys[" "];
+
+            // STAGE 1: AVOID
+            if (currentStageIdx === 0) {
+                stageEntities.forEach((ent) => {
+                    if (ent.active && checkCollision(player, ent)) {
+                        if (isActionPressed) {
+                            ent.active = false;
+                            score += 100;
+                            totalCarbonSaved += ent.carbon;
+                            soundFx.playCancelSound();
+                            addFloatingText(ent.x, ent.y, `CANCELLED! -${ent.carbon}kg CO2`, "#00ffff");
+                            keys[" "] = false;
+                            checkStageProgress();
+                        }
+                    }
+                });
+            }
+            // STAGE 2: SWAP
+            else if (currentStageIdx === 1) {
+                stageEntities.forEach((ent) => {
+                    if (!ent.swapped && checkCollision(player, ent)) {
+                        if (isActionPressed) {
+                            ent.swapped = true;
+                            ent.color = "#00ff66";
+                            score += 150;
+                            totalCarbonSaved += ent.carbon;
+                            soundFx.playSuccessSound();
+                            addFloatingText(ent.x, ent.y, `SWAPPED TO ${ent.lowLabel}!`, "#00ff66");
+                            keys[" "] = false;
+                            checkStageProgress();
+                        }
+                    }
+                });
+            }
+            // STAGE 3: CIRCULAR RECOVERY
+            else if (currentStageIdx === 2) {
+                const inHubZone = player.y < 120;
+
+                stageEntities.forEach((ent) => {
+                    if (!ent.recycled) {
+                        if (!ent.carried && checkCollision(player, ent)) {
+                            ent.carried = true;
+                            soundFx.playBeep(600, 0.05);
+                            addFloatingText(player.x, player.y, "CARRIED! Bring to REUSE HUB ▲", "#ffea00");
+                        }
+                        if (ent.carried) {
+                            ent.x = player.x + 2;
+                            ent.y = player.y - 25;
+
+                            if (inHubZone) {
+                                ent.carried = false;
+                                ent.recycled = true;
+                                score += 200;
+                                totalCarbonSaved += ent.carbon;
+                                soundFx.playSuccessSound();
+                                addFloatingText(player.x, player.y, "RECYCLED IN CIRCULAR LOOP!", "#ffea00");
+                                checkStageProgress();
+                            }
+                        }
+                    }
+                });
+            }
+            // STAGE 4: NATURE RESTORATION
+            else if (currentStageIdx === 3) {
+                stageEntities.forEach((ent) => {
+                    if (!ent.planted && checkCollision(player, ent)) {
+                        if (isActionPressed) {
+                            ent.planted = true;
+                            ent.color = "#00ff66";
+                            score += 200;
+                            totalCarbonSaved += 2.5;
+                            soundFx.playSuccessSound();
+                            addFloatingText(ent.x, ent.y, "TREE PLANTED! +2.5kg CO2 absorbed", "#ff00ff");
+                            keys[" "] = false;
+                            checkStageProgress();
+                        }
+                    }
+                });
+            }
+
+            for (let i = floatingText.length - 1; i >= 0; i--) {
+                const ft = floatingText[i];
+                ft.y -= 1;
+                ft.alpha -= 0.025;
+                if (ft.alpha <= 0) floatingText.splice(i, 1);
+            }
+
+            updateHUD();
+        }
+
+        function checkCollision(a, b) {
+            return a.x < b.x + b.width &&
+                   a.x + a.width > b.x &&
+                   a.y < b.y + b.height &&
+                   a.y + a.height > b.y;
+        }
+
+        function addFloatingText(x, y, text, color) {
+            floatingText.push({ x, y, text, color, alpha: 1.0 });
+        }
+
+        function checkStageProgress() {
+            let complete = false;
+            if (currentStageIdx === 0) complete = stageEntities.every(e => !e.active);
+            else if (currentStageIdx === 1) complete = stageEntities.every(e => e.swapped);
+            else if (currentStageIdx === 2) complete = stageEntities.every(e => e.recycled);
+            else if (currentStageIdx === 3) complete = stageEntities.every(e => e.planted);
+
+            if (complete) {
+                soundFx.playStageClearSound();
+                if (currentStageIdx < STAGES.length - 1) {
+                    gameState = 'STAGE_CLEAR';
+                    showModalStageClear();
+                } else {
+                    gameState = 'VICTORY';
+                    showModalVictory();
+                }
+            }
+        }
+
+        function updateHUD() {
+            document.getElementById('hud-score').innerText = String(score).padStart(6, '0');
+            document.getElementById('hud-stage').innerText = `${currentStageIdx + 1}/4`;
+            document.getElementById('hud-carbon').innerText = `${totalCarbonSaved.toFixed(1)} kg`;
+        }
+    </script>
+
+    <script>
+        function render() {
+            ctx.fillStyle = "#030712";
+            ctx.fillRect(0, 0, 800, 480);
+
+            drawHierarchyBar();
+
+            if (currentStageIdx === 0) drawStage1Env();
+            else if (currentStageIdx === 1) drawStage2Env();
+            else if (currentStageIdx === 2) drawStage3Env();
+            else if (currentStageIdx === 3) drawStage4Env();
+
+            stageEntities.forEach((ent) => {
+                if (currentStageIdx === 0 && ent.active) {
+                    ctx.fillStyle = ent.color;
+                    ctx.fillRect(ent.x, ent.y, ent.width, ent.height);
+                    ctx.strokeStyle = "#ffffff";
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(ent.x, ent.y, ent.width, ent.height);
+                    
+                    ctx.fillStyle = "#ffffff";
+                    ctx.font = "bold 11px Inter";
+                    ctx.fillText(ent.label, ent.x + 4, ent.y + 26);
+                } 
+                else if (currentStageIdx === 1) {
+                    ctx.fillStyle = ent.color;
+                    ctx.fillRect(ent.x, ent.y, ent.width, ent.height);
+                    ctx.strokeStyle = "#ffffff";
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(ent.x, ent.y, ent.width, ent.height);
+                    
+                    ctx.fillStyle = "#ffffff";
+                    ctx.font = "bold 11px Inter";
+                    ctx.fillText(ent.swapped ? ent.lowLabel : ent.highLabel, ent.x + 4, ent.y + 26);
+                } 
+                else if (currentStageIdx === 2 && !ent.recycled) {
+                    ctx.fillStyle = ent.carried ? "#00ffff" : ent.color;
+                    ctx.fillRect(ent.x, ent.y, ent.width, ent.height);
+                    ctx.strokeStyle = "#ffffff";
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(ent.x, ent.y, ent.width, ent.height);
+                    
+                    ctx.fillStyle = "#000000";
+                    ctx.font = "bold 11px Inter";
+                    ctx.fillText(ent.label, ent.x + 4, ent.y + 26);
+                } 
+                else if (currentStageIdx === 3) {
+                    ctx.fillStyle = ent.planted ? "#00ff66" : "#78350f";
+                    ctx.fillRect(ent.x, ent.y, ent.width, ent.height);
+                    ctx.strokeStyle = ent.planted ? "#ffffff" : "#d97706";
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(ent.x, ent.y, ent.width, ent.height);
+                    
+                    ctx.fillStyle = "#ffffff";
+                    ctx.font = "bold 11px Inter";
+                    ctx.fillText(ent.planted ? "🌳 TREE" : "🌱 PLOT", ent.x + 4, ent.y + 30);
+                }
+            });
+
+            // Player Avatar
+            ctx.fillStyle = player.color;
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+            ctx.fillStyle = "#0284c7";
+            ctx.fillRect(player.x + 6, player.y + 6, 20, 8); // Visor
+
+            drawActionPrompt();
+
+            // Floating Text
+            floatingText.forEach((ft) => {
+                ctx.fillStyle = ft.color;
+                ctx.font = "bold 12px Inter";
+                ctx.fillText(ft.text, ft.x, ft.y);
+            });
+        }
+
+        function drawHierarchyBar() {
+            ctx.fillStyle = "#0f172a";
+            ctx.fillRect(0, 0, 800, 32);
+
+            const steps = ["1. AVOID", "2. SWAP", "3. CIRCLE", "4. MANAGE"];
+            steps.forEach((stepText, idx) => {
+                ctx.fillStyle = (idx === currentStageIdx) ? "#ffea00" : "#64748b";
+                ctx.font = "bold 12px Inter";
+                ctx.fillText(stepText, 20 + (idx * 190), 21);
+            });
+        }
+
+        function drawStage1Env() {
+            ctx.fillStyle = "#0c4a6e";
+            ctx.fillRect(0, 32, 800, 32);
+            ctx.fillStyle = "#38bdf8";
+            ctx.font = "bold 12px Inter";
+            ctx.fillText("STAGE 1: CANCEL UNNECESSARY DEMAND BEFORE RESOURCES ARE WASTED", 110, 52);
+        }
+
+        function drawStage2Env() {
+            ctx.fillStyle = "#064e3b";
+            ctx.fillRect(0, 32, 800, 32);
+            ctx.fillStyle = "#34d399";
+            ctx.font = "bold 12px Inter";
+            ctx.fillText("STAGE 2: SWAP HIGH-CARBON CHOICES FOR CLEAN ALTERNATIVES", 130, 52);
+        }
+
+        function drawStage3Env() {
+            ctx.fillStyle = "#713f12";
+            ctx.fillRect(0, 32, 800, 75);
+            ctx.strokeStyle = "#ffea00";
+            ctx.lineWidth = 2;
+            ctx.strokeRect(10, 38, 780, 62);
+            ctx.fillStyle = "#fef08a";
+            ctx.font = "bold 13px Inter";
+            ctx.fillText("♻️ CIRCULAR REUSE HUB - BRING ALL CARRIED WASTE HERE!", 180, 74);
+        }
+
+        function drawStage4Env() {
+            ctx.fillStyle = "#701a75";
+            ctx.fillRect(0, 32, 800, 32);
+            ctx.fillStyle = "#f0abfc";
+            ctx.font = "bold 12px Inter";
+            ctx.fillText("STAGE 4: PLANT TREES TO ABSORB REMAINING UNAVOIDABLE CARBON", 120, 52);
+        }
+
+        function drawActionPrompt() {
+            let near = stageEntities.some(ent => checkCollision(player, ent));
+            if (near) {
+                ctx.fillStyle = "#ffea00";
+                ctx.font = "bold 13px Inter";
+                ctx.fillText("PRESS [SPACE] / ACTION BUTTON!", player.x - 70, player.y - 12);
+            }
+        }
+
+        function gameLoop() {
+            update();
+            render();
+            requestAnimationFrame(gameLoop);
+        }
+    </script>
+
+    <script>
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalContent = document.getElementById('modal-content');
+
+        function showModalIntro() {
+            gameState = 'INTRO';
+            modalOverlay.classList.remove('hidden');
+            modalContent.innerHTML = `
+                <div class="border border-yellow-400/50 p-5 bg-gray-950 rounded-2xl text-left space-y-4 shadow-2xl">
+                    <h2 class="text-base text-yellow-400 font-extrabold text-center uppercase tracking-wide">
+                        DEMAND FIRST PRINCIPLE
+                    </h2>
+                    <div class="spectrum-stripe my-2 rounded-full"></div>
+                    
+                    <p class="text-xs text-gray-300 font-medium leading-relaxed">
+                        Learn how Cardiff University slashes carbon through 4 simple steps:
+                    </p>
+
+                    <div class="bg-gray-900 p-3 rounded-xl border border-gray-800 text-xs space-y-2">
+                        <p><strong class="text-cyan-400">1. AVOID:</strong> Cancel unneeded demand at source.</p>
+                        <p><strong class="text-green-400">2. SWAP:</strong> Choose clean low-impact alternatives.</p>
+                        <p><strong class="text-yellow-400">3. CIRCLE:</strong> Reuse & recycle to stop waste.</p>
+                        <p><strong class="text-pink-400">4. MANAGE:</strong> Plant trees for remaining carbon.</p>
+                    </div>
+
+                    <button id="btn-start" class="zx-btn zx-btn-green w-full py-3.5 text-xs font-bold tracking-wider">
+                        START STAGE 1: AVOID DEMAND
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('btn-start').onclick = () => {
+                modalOverlay.classList.add('hidden');
+                score = 0;
+                totalCarbonSaved = 0;
+                initStage(0);
+                gameState = 'PLAYING';
+            };
+        }
+
+        function showModalStageClear() {
+            const current = STAGES[currentStageIdx];
+            const next = STAGES[currentStageIdx + 1];
+
+            modalOverlay.classList.remove('hidden');
+            modalContent.innerHTML = `
+                <div class="border border-green-500/50 p-5 bg-gray-950 rounded-2xl text-left space-y-4 shadow-2xl">
+                    <h2 class="text-base text-green-400 font-extrabold text-center uppercase tracking-wide">
+                        STAGE ${current.number} COMPLETE!
+                    </h2>
+                    <div class="spectrum-stripe my-2 rounded-full"></div>
+                    
+                    <div class="bg-gray-900 p-3.5 rounded-xl border border-gray-800 text-xs space-y-2">
+                        <p class="text-yellow-400 font-bold uppercase tracking-wide">KEY LESSON:</p>
+                        <p class="text-white font-medium leading-relaxed">${current.takeaway}</p>
+                        <p class="text-cyan-300 font-bold pt-1">CARBON SAVED: ${totalCarbonSaved.toFixed(1)} kg</p>
+                    </div>
+
+                    <button id="btn-next" class="zx-btn zx-btn-green w-full py-3.5 text-xs font-bold tracking-wider">
+                        PROCEED TO STAGE ${next.number}
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('btn-next').onclick = () => {
+                modalOverlay.classList.add('hidden');
+                initStage(currentStageIdx + 1);
+                gameState = 'PLAYING';
+            };
+        }
+
+        function showModalVictory() {
+            gameState = 'VICTORY';
+            modalOverlay.classList.remove('hidden');
+            modalContent.innerHTML = `
+                <div class="border border-yellow-400/50 p-5 bg-gray-950 rounded-2xl text-left space-y-4 shadow-2xl">
+                    <h2 class="text-base text-yellow-400 font-extrabold text-center uppercase tracking-wide">
+                        DEMAND FIRST MASTERED!
+                    </h2>
+                    <div class="spectrum-stripe my-2 rounded-full"></div>
+
+                    <div class="bg-gray-900 p-3 rounded-xl border border-gray-800 text-xs space-y-1.5 text-green-400 font-medium">
+                        <p>✔ Avoided unnecessary resource consumption</p>
+                        <p>✔ Substituted low-impact choices</p>
+                        <p>✔ Kept materials in circular loops</p>
+                        <p>✔ Restored nature for residual carbon</p>
+                    </div>
+
+                    <p class="text-sm text-center text-cyan-300 font-bold">
+                        TOTAL CARBON SAVED: ${totalCarbonSaved.toFixed(1)} kg
+                    </p>
+
+                    <button id="btn-replay" class="zx-btn zx-btn-green w-full py-3.5 text-xs font-bold tracking-wider">
+                        PLAY AGAIN
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('btn-replay').onclick = () => {
+                modalOverlay.classList.add('hidden');
+                score = 0;
+                totalCarbonSaved = 0;
+                initStage(0);
+                gameState = 'PLAYING';
+            };
+        }
+
+        window.onload = () => {
+            showModalIntro();
+            gameLoop();
+        };
+    </script>
+</body>
+</html>

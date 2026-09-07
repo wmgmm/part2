@@ -23,13 +23,13 @@ test runner.
 The AI in the Workplace Part 2 workshop site for Cardiff University staff: six guided
 exercises plus one bonus (`MISSIONS` in code), anchored on one real document, Cardiff's
 Sustainable Futures plan 2025-35. Teaches Gemini Deep Research, Notebook, Canvas and Copilot.
-Core step time is 76 minutes, bonus excluded, so nobody runs all six.
+Core step time is 78 minutes, bonus excluded, so nobody runs all six.
 
 | # | Title | Tool | What it does |
 |---|---|---|---|
 | 01 | The Landscape | Deep Research + Copilot | Research the plan, then make Copilot fact-check and rebuild it |
 | 02 | The Image | Copilot | Clone a photo's style into a reusable prompt, then audit an image |
-| 03 | The Game | Gemini Canvas | Build the same 8-bit game twice, thinly then fully specified |
+| 03 | The Game | Gemini Canvas | Build a playable 8-bit game from the plan, then fix it in words |
 | 04 | The Module | Gemini or Copilot | Run `Training_Module_Builder.md` on the plan |
 | 05 | The Brand | Gemini Notebook | One source, two skills, two decks that differ only by the skill |
 | 06 | The Story | Gemini Canvas | Build a dashboard from real HESA data, compare it with ours, repair it |
@@ -172,13 +172,13 @@ thumbnails, attach lists, `attachExtra` and logos, derived from `MISSIONS` so it
 **A new field naming a file must be added to `collectUrls` in `DoctorPanel.jsx` in the same
 commit.** Missed twice, both times reporting all-clear over an invisible asset.
 
-Thirteen files ship. **Not generated:** `Sustainable-Futures-en.pdf` (the plan),
+Fourteen files ship. **Not generated:** `Sustainable-Futures-en.pdf` (the plan),
 `Deep_research_output.pdf` (01's fallback), `Example_Training_Session.pdf` (05's backup source),
-`HESA_Estates_Management.xlsx` (13 MB, **unlinked**, the generator's input),
-`Cardiff_Estates_Dashboard.html` (06 step 2's card: a real Canvas run, repaired against the
-CSV) and `Example_Bubble_Chart.html` (its first, fabricated version, **unlinked, kept as
-evidence**). Check either with `python3 tools/verify_chart_data.py <file>`; exit 0 means clean.
-**Generated:** the five skills, `Example_Style_Block.md` (Matt's step 1 output) and `HESA_Estates_Workshop.csv`/`.xlsx`.
+`HESA_Estates_Management.xlsx` (13 MB, **unlinked**, the generator's input), and three real
+Canvas runs: `Cardiff_Estates_Dashboard.html` (06 step 2, repaired against the CSV),
+`Demand_First_Game.html` (03, rescored to rank the four stages as the plan does) and
+`Example_Bubble_Chart.html` (fabricated, **unlinked**). `verify_chart_data.py` checks a chart.
+**Generated:** the five skills, `Example_Style_Block.md` and `HESA_Estates_Workshop.csv`/`.xlsx`.
 
 ## Styling
 
