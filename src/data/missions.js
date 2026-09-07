@@ -876,7 +876,7 @@ export const MISSIONS = [
         title: 'Always verify, and repair if required',
         artifact: A.fixedChart,
         body:
-          'The first version of our app got the data slightly wrong, and it flattered Cardiff. So we downloaded the HTML, opened a new Gemini chat and attached the app and the CSV together. This is what came back.',
+          'The first version of our app got the data slightly wrong, and it flattered Cardiff (Thanks Gemini 😂). So we downloaded the HTML, opened a new Gemini chat and attached the app and the CSV together. This is what came back.',
         attachLabel: 'NEW CHAT',
         attach: [A.yourChart, A.hesaData],
         promptLabel: 'THE REPAIR PROMPT',
