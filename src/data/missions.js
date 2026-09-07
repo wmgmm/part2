@@ -564,7 +564,7 @@ export const MISSIONS = [
         estMinutes: 2,
         title: 'Turn on Deep Research and paste the prompt',
         body:
-          'Use Gemini. Click the + under the box where you type, then select Deep Research (limited usage).',
+          'Use Gemini. Click the + under the box where you type, then select Deep Research (limited usage). Paste the brief and send it: Gemini replies with a research plan, not the report. No Deep Research on your account? Use the Matts\' report at step 4.',
         attachLabel: 'ENABLE',
         attachExtra: {
           src: 'deep_research_button.png',
@@ -576,20 +576,20 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 2,
-        title: 'Review and Edit the plan',
+        title: 'Review and edit the deep research plan',
         body:
-          'Edit the plan it shows you if it does not match what you want. Changing a line now is cheaper in time and energy than waiting for the run and redoing it. Then press Start research.',
+          'Edit the deep research plan if it does not match what you want: changing a line now is cheaper in time and energy than a rerun. Then press Start research. The run takes ten minutes or more, so do not wait: do step 4 with the Matts\' report from the top of the page, and come back when yours is done.',
       },
       {
         tier: 'core',
         estMinutes: 1,
         title: 'Copy the Deep Research Report',
         body:
-          'Click "Share and export", then "Copy contents". Paste the report into a Word document and save it.',
+          'Click "Share and export", then "Copy contents". Paste the report into a new Word document and save it to your Desktop or OneDrive, where Copilot can find it.',
         backup: {
           label: 'OR PASTE IT STRAIGHT IN',
           text:
-            'Skip Word and paste the report at the end of the Copilot prompt in step 4.',
+            'Skip Word: in step 4, paste the prompt into Copilot first, then come back and click Copy contents again, and paste the report after the prompt\'s last line. Do not press Enter in between.',
         },
       },
       {
@@ -601,7 +601,7 @@ export const MISSIONS = [
         promptLabel: 'THE FACT-CHECK AND REDRAFT',
         attachLabel: 'NEW CHAT',
         attach: [A.yourReport, A.thisPrompt],
-        promptNote: '[attach the file, or paste the copied report after the last line]',
+        promptNote: '[attach the file, or paste this prompt first, then the report after its last line]',
         // Display only, and deliberately so: MH_COPILOT_TOP_AND_TAIL is 133
         // lines and this is his own heading on line 5. COPY still writes the
         // constant byte for byte.
@@ -613,7 +613,7 @@ export const MISSIONS = [
         estMinutes: 1,
         title: 'Responsible AI',
         body:
-          'AI uses energy: a chat reply is about a web search, a Deep Research run far more. Fix the plan at step 2 rather than rerun. Handy hint: guide AI on sources you trust, peer-reviewed or official ones. The web can be wrong too.',
+          'AI uses energy: a chat reply is about a web search, a Deep Research run far more. Fix the deep research plan at step 2 rather than rerun. Handy hint: guide AI on sources you trust, peer-reviewed or official ones. The web can be wrong too.',
       },
     ],
     verdictBy: 'The Matts',
