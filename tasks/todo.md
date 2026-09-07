@@ -3720,6 +3720,12 @@ current state and what is about to change.
 
 ## Snapshot
 
+**Deployed 2026-09-07, tag `snapshot-2026-09-07-deploy`.** Matt asked for the push in the same
+message ("COMMIT SNAPSHOT LETS DEPLOY TO GITHUB"). `main` pushed to `origin/main`, which runs
+`.github/workflows/deploy.yml` to GitHub Pages at https://wmgmm.github.io/part2/. The live site
+is now this tree: six exercises plus the bonus, both Exercise 03 games, the screen-based text
+adventure, the polish pass, and every prompt edit of the day.
+
 `git tag snapshot-2026-09-07-pre-mh-tweaks` on `d81e929`, tree clean apart from three untracked
 snapshot images at the repo root. **`main` is 120 commits ahead of `origin/main` and the live
 site is far behind. That is expected. Never push unless Matt asks in that same message.**
