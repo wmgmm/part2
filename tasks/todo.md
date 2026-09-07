@@ -3057,6 +3057,40 @@ route is the reliable check.
 
 ---
 
+## 2026-09-07 (addendum 99): Matt ran the repair prompt, and Gemini repaired nothing
+
+Matt ran Exercise 06 step 3 (attach the fabricated dashboard plus the CSV, "check every number
+in the app against the CSV ... then rebuild the file using the CSV values only") and brought
+back `animated_bubble_chart (2).html` with Gemini's "Audit Findings and Discrepancies": eight
+RenewablesPct cells, Bangor 2015/16 and 2016/17 and York 2015/16 to 2020/21, "empty in the
+HTML, corrected from the CSV".
+
+**`tools/verify_chart_data.py` on the returned file: identical result to the original.** 180
+rows against 307, 18 institutions against 31, 11 of 180 matching, Cardiff 38.1% off by
+2024/25. Then the direct comparison: **the returned file is byte-identical to the original
+download**, and a cell-by-cell diff of the embedded CSV finds **zero changes**.
+
+The eight claimed corrections fail twice. They are not in the file (all eight cells are still
+blank). And the "CSV values" it claims to have read are not in the CSV: Bangor's RenewablesPct
+is `0` for both years, not 0.2 and 0.5, and all six York cells are **blank** in the source, not
+0.3 rising to 1.6. So it invented source values, then reported having applied them, to a file it
+did not touch, while saying nothing about the 169 altered rows and 13 missing universities that
+are the actual defect.
+
+**Why this is the best exhibit the exercise has.** It is both failure modes from addendum 62 in
+one message: silent omission of the real problem, and confident confirmation of work not done.
+And it looks diligent: a numbered list, specific cells, a tidy before-and-after. The shape of a
+careful answer with none of the substance. This is the thing step 3's verdict is about, and the
+reason the step's card carries *our* repaired `Cardiff_Estates_Dashboard.html`, which passes
+the same check with exit 0.
+
+**Open question for Matt**, not acted on: did Gemini return a downloadable HTML at all, or only
+the audit text (with the attached file being the original, re-saved)? If the latter, the repair
+prompt should say "return the complete corrected HTML file" explicitly, since "rebuild the file"
+was read as optional. One line; waiting on the answer before changing a tested prompt.
+
+---
+
 # HANDOVER, end of 2026-09-05
 
 Read this first. It supersedes the earlier "OPEN" block, which is folded in below.
