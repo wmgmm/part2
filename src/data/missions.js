@@ -548,7 +548,7 @@ export const MISSIONS = [
         estMinutes: 5,
         title: 'Top and tail it in Copilot',
         body:
-          'Use Copilot. Attach the file you saved in step 3, or paste what you copied after the last line of the prompt. It returns the rebuilt report in the chat, not as a file, so keep the tab open.',
+          'Use Copilot. Attach the file you saved in step 3, or paste what you copied after the last line of the prompt.',
         promptLabel: 'THE FACT-CHECK AND REDRAFT',
         promptNote: '[attach the file, or paste the copied report after the last line]',
         // Display only, and deliberately so: MH_COPILOT_TOP_AND_TAIL is 133
