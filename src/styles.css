@@ -2272,3 +2272,11 @@ a:hover,
   line-height: 1.5;
   color: var(--black);
 }
+
+/* Inline body icon, 2026-09-07: a control shown in running text. */
+.body-icon {
+  height: 1.05em;
+  width: auto;
+  vertical-align: -0.12em;
+  margin: 0 0.1em;
+}

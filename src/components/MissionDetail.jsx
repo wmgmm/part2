@@ -53,6 +53,18 @@ function WorkflowStrip({ workflow }) {
 
 // A downloadable file. Rendered in the strip under the header, and also
 // inside a step, so a skill can sit where it is actually used.
+// A step body can carry {name} tokens that render as small inline images from
+// step.bodyIcons, for controls the reader must find (a Download button). A
+// token with no icon renders as its own text, so nothing is ever lost.
+function renderBody(body, icons = {}) {
+  return body.split(/(\{[a-z_]+\})/i).map((part, i) => {
+    const m = part.match(/^\{([a-z_]+)\}$/i);
+    const icon = m && icons[m[1]];
+    if (!icon) return part;
+    return <img key={i} className="body-icon" src={`${BASE}${icon.src}`} alt={icon.alt} />;
+  });
+}
+
 function ArtifactCard({ artifact }) {
   const [copied, setCopied] = useState(false);
   const isText = /\.(md|txt)$/.test(artifact.filename);
@@ -255,7 +267,7 @@ function ChoiceStep({ step }) {
         </summary>
         <div className="path-acc__content">
           {step.hook && <p className="path-acc__hook">{step.hook}</p>}
-          {step.body && <p className="mission-step__body">{step.body}</p>}
+          {step.body && <p className="mission-step__body">{renderBody(step.body, step.bodyIcons)}</p>}
           {step.image && <StepFigure image={step.image} />}
           {(step.attach || step.attachExtra) && (
         <AttachStrip items={step.attach} label={step.attachLabel} extra={step.attachExtra} />
@@ -299,7 +311,7 @@ function Step({ step, number, lane }) {
         <span className="mission-step__num">{step.check ? '✓' : badge}</span>
         <h4 className="mission-step__title">{step.title}</h4>
       </div>
-      {step.body && <p className="mission-step__body">{step.body}</p>}
+      {step.body && <p className="mission-step__body">{renderBody(step.body, step.bodyIcons)}</p>}
       {laneNotes.map((note, i) => (
         <p key={i} className="mission-step__lane-note">{note}</p>
       ))}

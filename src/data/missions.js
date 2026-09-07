@@ -876,7 +876,12 @@ export const MISSIONS = [
         estMinutes: 3,
         title: 'Always verify, and repair if required',
         body:
-          'The first version of our app got the data slightly wrong, and it flattered Cardiff (Thanks Gemini 😂). So we downloaded the HTML, opened a new Gemini chat with Canvas on, and attached the app and the CSV together. Afterwards, open Code and Show recent changes to see exactly what it altered.',
+          'The first version of our app got the data slightly wrong, and it flattered Cardiff (Thanks Gemini 😂). So we downloaded the HTML {download}, opened a new Gemini chat with Canvas on, and attached the app and the CSV together. Afterwards, open Code and Show recent changes to see exactly what it altered.',
+        // {download} in the body renders Matt's screenshot of the Canvas Download
+        // button inline, so the reader sees the control they are looking for.
+        bodyIcons: {
+          download: { src: 'download_icon.png', alt: 'the Download button in Canvas' },
+        },
         attachLabel: 'NEW CHAT',
         attach: [A.yourChart, A.hesaData],
         attachExtra: {

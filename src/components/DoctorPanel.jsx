@@ -34,6 +34,7 @@ function collectUrls() {
         if (a.thumb) add(`${BASE}${a.thumb}`, `${m.code} · ${a.thumb}`);
       });
       if (s.attachExtra) add(`${BASE}${s.attachExtra.src}`, `${m.code} · ${s.attachExtra.src}`);
+      Object.values(s.bodyIcons || {}).forEach(ic => add(`${BASE}${ic.src}`, `${m.code} · ${ic.src}`));
     });
   });
   add(`${BASE}${HERO_IMAGE}`, 'Gallery · hero illustration');

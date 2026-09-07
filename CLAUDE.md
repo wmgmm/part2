@@ -130,6 +130,7 @@ an exercise, edit the data file.
 | `promptNote` | bold line under the prompt, **deliberately not copied** (it sits outside the `<pre>`). For "[attach the ...]": an instruction to the reader, not text to send. |
 | `promptEmphasis` | a substring of `prompt` shown bold. **Display only:** COPY writes the plain string, so it is safe on `MH_*`. A non-matching substring degrades to no emphasis, never lost text. |
 | `backup` | `{label, text, attach, attachLabel}`: a card under the prompt for the fallback route, label defaults to BACKUP, optional strip |
+| `bodyIcons` | `{name: {src, alt}}`; `{name}` in `body` renders that image inline, for a control the reader must find |
 | `artifact` | a download card inside the step, for a file used only there |
 | `attach`, `attachLabel`, `attachExtra` | the attach strip: paperclip, label, each file as thumbnail plus filename, optionally a trailing control image joined by "then enable". Label defaults from the count. `attachExtra` works with no files. |
 | `image` | `{src, alt, caption, ui}`; `src` is site-root relative, `ui: true` gives it the full column |
@@ -141,7 +142,6 @@ sequence, `'or'` where either will do (Exercise 04). `mission.bonus: true` keeps
 card, leaves it out of the "n of 6" tally, and sets the eyebrow to BONUS EXERCISE.
 
 **Unused renderers, live, no data:** `SortGame` (`type: 'sort'`), `check: true`, `laneNotes`, artifact `sourceLink`. **Grep before reusing those names.**
-
 ### Components worth knowing
 
 `MissionDetail.jsx` also holds `ArtifactCard`, `AttachStrip`, `StepFigure`, `ChoiceStep` and
