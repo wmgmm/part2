@@ -442,7 +442,7 @@ export const MISSIONS = [
         'Deep Research browses the web on its own and comes back with a cited report. Copilot then fact-checks it and rebuilds it as a document.',
       apps: [APPS.gemini, APPS.copilot],
     },
-    workflow: ['Paste the brief', 'Edit the research plan', 'Save as PDF', 'Top and tail it'],
+    workflow: ['Paste the brief', 'Review and edit', 'Save as PDF', 'Top and tail it'],
     brief:
       'Research how other organisations deliver what the plan promises, then have Copilot prove every claim.',
     artifacts: [A.susPlan, A.deepResearch],
@@ -466,9 +466,9 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 2,
-        title: 'Edit the research plan',
+        title: 'Review and Edit the plan',
         body:
-          'Change a line in the numbered research plan it shows you, then press Start research and leave it running. That plan is its own, not the sustainability plan.',
+          'The numbered plan it shows you is its own, not the sustainability plan. Edit it if it does not match what you want: changing a line now is cheaper in time and energy than waiting for the run and redoing it. Then press Start research.',
       },
       {
         tier: 'core',
