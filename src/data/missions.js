@@ -965,7 +965,7 @@ export const MISSIONS = [
         promptNote: '[reattach the CSV in this chat]',
         promptEmphasis: 'Check every number in the app against the CSV',
         prompt:
-          'Open a Canvas workspace for the attached HTML file and rebuild it there, so it runs as an app rather than showing as code in the chat.\n\nThe app has a copy of its data written inside it. Check every number in the app against the CSV, which is the only source you should trust. List anything that does not match, then rebuild the file using the CSV values only. Do not retype, round or fill in any figure: if a cell is blank, show NEEDS DATA.',
+          'The app has a copy of its data written inside it. Check every number in the app against the CSV, which is the only source you should trust. List anything that does not match, then rebuild the file using the CSV values only. Do not retype, round or fill in any figure: if a cell is blank, show NEEDS DATA.',
         backup: {
           label: 'OPTIONAL: THE CLEANER AUDIT',
           text:
@@ -976,6 +976,10 @@ export const MISSIONS = [
             src: 'canvas_button.webp',
             alt: 'The Canvas button in Gemini, a small grey chip reading Canvas.',
           },
+          // Only needed on this route, where an HTML file is actually uploaded.
+          promptLabel: 'ADD THIS LINE ABOVE THE PROMPT',
+          prompt:
+            'Open a Canvas workspace for the attached HTML file and rebuild it there, so it runs as an app rather than showing as code in the chat.',
         },
       },
       {

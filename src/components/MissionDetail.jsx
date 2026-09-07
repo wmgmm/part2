@@ -341,6 +341,9 @@ function ChoiceStep({ step }) {
               {step.backup.attach && (
                 <AttachStrip items={step.backup.attach} label={step.backup.attachLabel} extra={step.backup.attachExtra} />
               )}
+              {step.backup.prompt && (
+                <PromptBox prompt={step.backup.prompt} label={step.backup.promptLabel} />
+              )}
             </div>
           )}
           {step.link && (
@@ -408,6 +411,9 @@ function Step({ step, number, lane }) {
               )}
               {step.backup.attach && (
                 <AttachStrip items={step.backup.attach} label={step.backup.attachLabel} extra={step.backup.attachExtra} />
+              )}
+              {step.backup.prompt && (
+                <PromptBox prompt={step.backup.prompt} label={step.backup.promptLabel} />
               )}
             </div>
           )}

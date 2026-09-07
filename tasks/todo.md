@@ -3761,6 +3761,10 @@ yesterday's copy and make you doubt a correct edit.** Add any new file-bearing s
 
 ## Traps added today
 
+- **`npm run preview` serves a cached `index.html`, so a rebuild can look like it did nothing.**
+  Navigating to the same hash URL showed the previous bundle even after a clean build. A
+  cache-busting query (`?cb=<timestamp>#/m6`) forced the new one. Do that before concluding an
+  edit failed to land.
 - **The `MH_*` anchor hash covers the comments inside the range, not just the prompts.** Parking
   a note above `MH_CANVAS_THIN` moved the hash with no prompt text changed. Expect that, and do
   not read a mismatch as evidence a prompt was edited: diff before you conclude anything.
