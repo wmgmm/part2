@@ -369,7 +369,7 @@ const A = {
     label: 'OPTIONAL: A FINISHED DEEP RESEARCH RUN',
     filename: 'Deep_research_output.pdf',
     downloadPath: `${BASE}placeholders/Deep_research_output.pdf`,
-    note: 'A copy of the Matts Deep Research report, a backup for step 4 if your own run is still going.',
+    note: 'A copy of the Matts\' Deep Research report, a backup for step 4 if your own run is still going.',
     thumb: EXAMPLE_ICON,
   },
   trainingSkill: {
@@ -785,7 +785,7 @@ export const MISSIONS = [
     ],
     verdictBy: 'The Matts',
     verdict:
-      'The model is the same one that would have given you a toy from one thin line. Everything that separates that from this is in the prompt: the detail, the document, the constraints. Then share responsibly, because a Canvas link is public and public is not where work data goes.',
+      'The model did not get cleverer for you. Everything that made this a game rather than a toy is in the prompt: the detail, the document, the constraints. Then share responsibly, because a Canvas link is public and public is not where work data goes.',
   },
 
   {
@@ -844,14 +844,14 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'Review and Augment',
         body:
-          'It is useful to focus on the gap note: what the training needed and the plan does not say, no dates, no owners, no thresholds. In real life this is where you augment it, editing, deleting and adding; today, just look over them.',
+          'It is useful to focus on the gap note: what the training needed and the plan does not say, no dates, no owners, no thresholds. In real life this is where you augment it, editing, deleting and adding; today, just look it over.',
       },
       {
         tier: 'core',
         estMinutes: 2,
         title: 'Copy the training session, Exercise 05 needs it',
         body:
-          'In Copilot, the three dots give you Export to Word. In Gemini, the copy icon under the answer copies the whole thing, and Exercise 05 pastes it straight into a notebook, so you never need a file. Note: we always have classic copy and paste. If it did not run, move on: Exercise 05 has a ready-made session you can use.',
+          'In Copilot, copy the answer (or the three dots give you Export to Word). In Gemini, the copy icon under the answer copies the whole thing, and Exercise 05 pastes it straight into a notebook, so you never need a file. Note: we always have classic copy and paste. If it did not run, move on: Exercise 05 has a ready-made session you can use.',
       },
       {
         tier: 'core',
@@ -916,7 +916,7 @@ export const MISSIONS = [
         estMinutes: 6,
         title: 'Generate the deck, then export',
         body:
-          'Read the prompt back before you press Generate. The three-dot menu on the slide viewer then gives you PowerPoint or PDF. Generation takes a few minutes: read the brand skill while you wait.',
+          'Read the prompt back before you press Generate. Generation takes a few minutes: read the brand skill while you wait. The three-dot menu on the slide viewer then gives you PowerPoint or PDF.',
       },
       {
         tier: 'core',
@@ -954,6 +954,8 @@ export const MISSIONS = [
     tools: [TOOLS.gemini, TOOLS.canvas],
     estMinutesCore: 16,
     toolInfo: {
+      feature:
+        'Canvas turns a description into a working web app you can edit in place, and it can read a CSV you attach.',
       apps: [APPS.gemini],
     },
     workflow: ['Build the dashboard', 'Compare with ours', 'Verify and repair'],
