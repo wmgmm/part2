@@ -829,7 +829,7 @@ export const MISSIONS = [
 
   {
     id: 'm6',
-    stage: 'Analyse',
+    stage: 'Narrate',
     code: '06',
     level: 3,
     title: 'The Story',
