@@ -322,7 +322,7 @@ WORDS IN THE IMAGE:
 ALT TEXT: under 125 characters, most important thing first, written for what the image is doing on the page rather than a list of what is in it. Assume it needs alt text, and do not start it with "image of".
 I ASSUMED: the one guess you had to make about where this image will be used. Name one, not a list.
 IN GREYSCALE: does any meaning depend on colour alone? Say "nothing" if not. Do not comment on how it looks.
-A PERSON COULD: one accessibility problem with the image itself, and the change that fixes it, worded so it can go straight into a prompt to regenerate the image. Not a caption and not any wording placed beside it.`;
+REGENERATION PROMPT: one accessibility problem with the image itself and the change that fixes it, worded to go straight into a prompt for a new image. Look at legibility, clutter, and text baked into the picture, which cannot be resized or read aloud. Say what you want rather than what to remove. Not a caption and not any wording placed beside the image.`;
 
 // Deck slide 21, the short version he shows first. Exercise 03, step 1.
 const MH_CANVAS_THIN = `Generate a functional mini-game reminiscent of classic ZX Spectrum titles. In this game, a character must navigate a university dining hall to collect low-impact foods while dodging high-carbon options.`;
