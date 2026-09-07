@@ -264,7 +264,7 @@ function ChoiceStep({ step }) {
           {step.prompt && <PromptBox prompt={step.prompt} label={step.promptLabel} note={step.promptNote} emphasis={step.promptEmphasis} />}
           {step.backup && (
             <div className="step-backup">
-              <span className="step-backup__label">Backup</span>
+              <span className="step-backup__label">{step.backup.label || 'Backup'}</span>
               <p className="step-backup__text">{step.backup.text}</p>
               {step.backup.attach && (
                 <AttachStrip items={step.backup.attach} label={step.backup.attachLabel} />
@@ -315,7 +315,7 @@ function Step({ step, number, lane }) {
           quiet, so the main instruction stays the main instruction. */}
       {step.backup && (
             <div className="step-backup">
-              <span className="step-backup__label">Backup</span>
+              <span className="step-backup__label">{step.backup.label || 'Backup'}</span>
               <p className="step-backup__text">{step.backup.text}</p>
               {step.backup.attach && (
                 <AttachStrip items={step.backup.attach} label={step.backup.attachLabel} />
