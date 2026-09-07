@@ -2242,3 +2242,16 @@ a:hover,
   color: var(--black);
   font-weight: 600;
 }
+
+/* Step backup line, 2026-09-07: a fallback route under the prompt. */
+.step-backup {
+  margin: 0.7rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--grey);
+}
+
+.step-backup strong {
+  color: var(--accent);
+  font-weight: 700;
+}

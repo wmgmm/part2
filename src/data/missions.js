@@ -880,6 +880,8 @@ export const MISSIONS = [
         promptEmphasis: 'Check every number in the app against the CSV',
         prompt:
           'Open a Canvas workspace for the attached HTML file and rebuild it there, so it runs as an app rather than showing as code in the chat.\n\nThe app has a copy of its data written inside it. Check every number in the app against the CSV, which is the only source you should trust. List anything that does not match, then rebuild the file using the CSV values only. Do not retype, round or fill in any figure: if a cell is blank, show NEEDS DATA.',
+        backup:
+          'It is better to audit the app in a new chat. But Canvas sometimes messes up and does not display the app. If that happens, run the audit in the same chat that created the app, and reattach the CSV.',
       },
     ],
     verdictBy: 'The Matts',
