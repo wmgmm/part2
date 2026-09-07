@@ -865,7 +865,7 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 2,
-        title: 'Open the one the Matts made earlier, then check it against yours',
+        title: 'Open the one the Matts made earlier, then compare against yours',
         artifact: A.exampleChart,
         body:
           'Open ours and run yours beside it. Same prompt, same file, so do they agree?',
