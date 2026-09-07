@@ -842,7 +842,7 @@ export const MISSIONS = [
         estMinutes: 2,
         title: 'Save/copy the training session',
         body:
-          'In Copilot, the three dots give you Export to Word. In Gemini, the copy icon under the answer copies the whole thing, and Exercise 05 pastes it straight into a notebook, so you never need a file.',
+          'In Copilot, the three dots give you Export to Word. In Gemini, the copy icon under the answer copies the whole thing, and Exercise 05 pastes it straight into a notebook, so you never need a file. Note: we always have classic copy and paste.',
       },
       {
         tier: 'core',
