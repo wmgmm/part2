@@ -596,11 +596,11 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'Use the reusable prompt from step 1 with a new subject',
         body:
-          'Start a NEW chat. Paste the prompt Copilot generated in step 1, replace [INSERT SUBJECT HERE] with the example below, and send it. Remember to experiment: for this one the subject is Mr Judge complaining about his noisy cats.',
+          'Start a NEW chat. Paste the prompt Copilot generated in step 1, replace [INSERT SUBJECT HERE] with the example below, and send it. Remember to experiment: for this one the subject is Mr Judge complaining about his noisy cats, with a sign.',
         attachLabel: 'NEW CHAT',
         attach: [A.stepOnePrompt],
         promptLabel: 'AN EXAMPLE SUBJECT',
-        prompt: 'Mr Judge complaining about his noisy cats',
+        prompt: 'Mr Judge complaining about his noisy cats, with a sign',
       },
       {
         tier: 'core',
@@ -619,6 +619,7 @@ export const MISSIONS = [
           // negative prompt field: describe the scene, do not ban the thing.
           examples: [
             ['No text', 'Bare walls and blank screens'],
+            ['No cats', 'Mr Judge alone, the sofa to himself'],
             ['No cars', 'A deserted street'],
             ['No people', 'An empty room'],
           ],
