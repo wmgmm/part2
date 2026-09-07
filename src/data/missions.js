@@ -575,7 +575,7 @@ export const MISSIONS = [
           alt: 'Three students talking around a small round table in a bright Cardiff University social space, red sofas, a laptop and a vase of pink flowers on the table, floor-to-ceiling windows behind.',
           caption: 'The image to work from.',
         },
-        promptLabel: 'THE REVERSE PROMPT',
+        promptLabel: 'THE PROMPT THAT TURNS AN IMAGE INTO A PROMPT',
         prompt: MH_IMAGE_REVERSE,
       },
       {
