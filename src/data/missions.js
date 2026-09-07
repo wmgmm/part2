@@ -837,11 +837,11 @@ export const MISSIONS = [
     pageTitle: 'Turn Ten Years of Real Data Into a Story You Can Show',
     summary: 'Build an animated dashboard from the real numbers, then check it before you trust it.',
     tools: [TOOLS.gemini, TOOLS.canvas],
-    estMinutesCore: 11,
+    estMinutesCore: 12,
     toolInfo: {
       apps: [APPS.gemini],
     },
-    workflow: ['Build the dashboard', 'Compare with ours', 'Verify and repair'],
+    workflow: ['Build the dashboard', 'Compare with ours', 'Verify and repair', 'Responsible AI'],
     brief:
       'Turn ten years of real emissions data into an animated story that a room can follow, then prove the numbers in it are the ones in the file.',
     artifacts: [A.hesaData],
@@ -894,6 +894,13 @@ export const MISSIONS = [
           attachLabel: 'SAME CHAT',
           attach: [A.thisPrompt, A.hesaData],
         },
+      },
+      {
+        tier: 'core',
+        estMinutes: 1,
+        title: 'Responsible AI',
+        body:
+          'Human evaluation is a key part of the workflow, but AI can still augment this verification.',
       },
     ],
     verdictBy: 'The Matts',
