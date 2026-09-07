@@ -2407,15 +2407,40 @@ main:focus {
 
 /* The swap list on a backup card: "No cars" becomes "A deserted street". */
 .step-backup__swaps {
-  /* Nested inside the steps <ol>, so the marker defaults to a hollow circle. */
-  list-style: disc;
+  /* The cross is the marker, so no disc: one line per swap, wrong then right. */
+  list-style: none;
   margin: 0.45rem 0 0;
-  padding-left: 1.1rem;
+  padding-left: 0;
   font-size: 0.9rem;
-  line-height: 1.5;
+  line-height: 1.6;
   color: var(--black);
 }
 
 .step-backup__swaps li {
   margin: 0.15rem 0;
+}
+
+.swap-mark {
+  font-weight: 700;
+  margin-right: 0.35em;
+}
+
+.swap-mark--no {
+  color: var(--red);
+}
+
+.swap-mark--yes {
+  color: #1a7a1a;
+  margin-left: 0.7em;
+}
+
+.swap-from {
+  color: var(--grey);
+}
+
+.step-backup__after {
+  margin: 0.55rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--black);
 }

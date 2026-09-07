@@ -321,13 +321,18 @@ function ChoiceStep({ step }) {
                 <ul className="step-backup__swaps">
                   {step.backup.examples.map(([from, to]) => (
                     <li key={from}>
-                      &ldquo;{from}&rdquo;
-                      <span aria-hidden="true"> &rarr; </span>
-                      <span className="sr-only"> becomes </span>
+                      <span className="swap-mark swap-mark--no" aria-hidden="true">&#10007;</span>
+                      <span className="sr-only">Instead of </span>
+                      <span className="swap-from">&ldquo;{from}&rdquo;</span>
+                      <span className="swap-mark swap-mark--yes" aria-hidden="true">&#10003;</span>
+                      <span className="sr-only">, write </span>
                       &ldquo;{to}&rdquo;
                     </li>
                   ))}
                 </ul>
+              )}
+              {step.backup.after && (
+                <p className="step-backup__after">{step.backup.after}</p>
               )}
               {step.backup.attach && (
                 <AttachStrip items={step.backup.attach} label={step.backup.attachLabel} />
@@ -384,13 +389,18 @@ function Step({ step, number, lane }) {
                 <ul className="step-backup__swaps">
                   {step.backup.examples.map(([from, to]) => (
                     <li key={from}>
-                      &ldquo;{from}&rdquo;
-                      <span aria-hidden="true"> &rarr; </span>
-                      <span className="sr-only"> becomes </span>
+                      <span className="swap-mark swap-mark--no" aria-hidden="true">&#10007;</span>
+                      <span className="sr-only">Instead of </span>
+                      <span className="swap-from">&ldquo;{from}&rdquo;</span>
+                      <span className="swap-mark swap-mark--yes" aria-hidden="true">&#10003;</span>
+                      <span className="sr-only">, write </span>
                       &ldquo;{to}&rdquo;
                     </li>
                   ))}
                 </ul>
+              )}
+              {step.backup.after && (
+                <p className="step-backup__after">{step.backup.after}</p>
               )}
               {step.backup.attach && (
                 <AttachStrip items={step.backup.attach} label={step.backup.attachLabel} />

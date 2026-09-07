@@ -614,7 +614,7 @@ export const MISSIONS = [
         attach: [A.thisPrompt],
         backup: {
           label: 'STILL GOT TEXT?',
-          text: 'Open a NEW chat and send the step 2 prompt again, with the ban replaced by what you want instead.',
+          text: 'Rewrite the ban as the thing you do want. Describe the surfaces, do not name what should not be on them.',
           // Google's own advice for Gemini image generation, which has no
           // negative prompt field: describe the scene, do not ban the thing.
           examples: [
@@ -622,6 +622,7 @@ export const MISSIONS = [
             ['No cars', 'A deserted street'],
             ['No people', 'An empty room'],
           ],
+          after: 'Those words are still in this chat and still pulling on it, so you might need a new one to shake them off.',
           attachLabel: 'NEW CHAT',
           attach: [A.stepTwoPrompt],
         },
