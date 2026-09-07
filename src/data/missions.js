@@ -316,7 +316,7 @@ Then end with four labelled lines:
 ALT TEXT: under 125 characters, most important thing first, written for what the image is doing on the page rather than a list of what is in it. Assume it needs alt text, and do not start it with "image of".
 I ASSUMED: the one thing you had to guess about where this image will be used.
 IN GREYSCALE: what the colour alone is carrying that would be lost in black and white, or "nothing".
-A PERSON COULD: the single change we should make to the image itself to improve its accessibility, such as contrast, the legibility of any text in it, or something that only the colour is carrying. Name the change to the image, not new wording.`;
+A PERSON COULD: what is the single change we could make to the image to improve its accessibility?`;
 
 // Deck slide 21, the short version he shows first. Exercise 03, step 1.
 const MH_CANVAS_THIN = `Generate a functional mini-game reminiscent of classic ZX Spectrum titles. In this game, a character must navigate a university dining hall to collect low-impact foods while dodging high-carbon options.`;
