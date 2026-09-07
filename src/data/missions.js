@@ -468,7 +468,7 @@ export const MISSIONS = [
         estMinutes: 2,
         title: 'Review and Edit the plan',
         body:
-          'The numbered plan it shows you is its own, not the sustainability plan. Edit it if it does not match what you want: changing a line now is cheaper in time and energy than waiting for the run and redoing it. Then press Start research.',
+          'Edit the plan it shows you if it does not match what you want. Changing a line now is cheaper in time and energy than waiting for the run and redoing it. Then press Start research.',
       },
       {
         tier: 'core',
