@@ -742,12 +742,12 @@ export const MISSIONS = [
         estMinutes: 1,
         title: 'Responsible AI',
         body:
-          'Reviewing is part of the workflow, so think about risk: nobody has reviewed this code, which is fine for a demo with friends. And if your app holds confidential (C1/C2) work data, do not share it by link.',
+          'Share responsibly: no C1 or C2 data in anything you make public. Do not put staff, student or sensitive financial or research data into something you are sharing by link. Nobody has reviewed this code either, which is fine for a demo with friends.',
       },
     ],
     verdictBy: 'The Matts',
     verdict:
-      'The model is the same one that would have given you a toy from one thin line. Everything that separates that from this is in the prompt: the detail, the document, the constraints.',
+      'The model is the same one that would have given you a toy from one thin line. Everything that separates that from this is in the prompt: the detail, the document, the constraints. Then share responsibly, because a Canvas link is public and public is not where work data goes.',
   },
 
   {
