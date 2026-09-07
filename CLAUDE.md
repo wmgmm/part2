@@ -131,7 +131,7 @@ an exercise, edit the data file.
 | `promptEmphasis` | a substring of `prompt` shown bold. **Display only:** COPY writes the plain string, so it is safe on `MH_*`. A non-matching substring degrades to no emphasis, never lost text. |
 | `backup` | `{label, text, examples, after, attach, attachLabel, attachExtra}`: a card under the prompt for the other route, label defaults to BACKUP. `examples` is a list of `[from, to]` swaps, `after` a closing line, the strip and an optional `prompt`/`promptLabel` work as the step's own, and `text` renders the step's `bodyIcons` |
 | `bodyIcons` | `{name: {src, alt}}`; `{name}` in `body` renders that image inline, for a control the reader must find. `**word**` in a `body` renders bold |
-| `artifact` | a download card inside the step, for a file used only there |
+| `artifact` | a download card inside the step, or a list of them, for files used only there |
 | `attach`, `attachLabel`, `attachExtra` | the attach strip: paperclip, label, each file as thumbnail plus filename, optionally a trailing control image joined by "then enable". Label defaults from the count. `attachExtra` works with no files; an item with `paste: true` shows no paperclip. |
 | `image` | `{src, alt, caption, ui}`; `src` is site-root relative, `ui: true` gives it the full column |
 | `choice`, `hook`, `toolChip`, `collapsed` | the accordion rows under the stretch heading |
@@ -158,7 +158,7 @@ leaderboard backend is kept for a planned check-in wall: `src/lib/leaderboard.js
 Served from `public/placeholders/`, except `cardiff_study_space.jpg` at the site root
 because it is also Exercise 02's step image. Downloaded via a synthetic `<a download>`,
 same-origin only. Fields: `label`, `filename`, `downloadPath`, `note`, `thumb` (site-root
-relative, all twelve carry one), `copyable` (adds COPY), `sourceLink` (unused).
+relative, all twelve carry one), `copyable` (adds COPY), `openOnly` (a page to play: no DOWNLOAD), `sourceLink` (unused).
 
 **Buttons:** DOWNLOAD is a blue pill, everything else a hairline ghost, one primary action per
 card, except `.html`: a working page, so **OPEN IT takes the pill and DOWNLOAD drops to ghost**.
@@ -177,7 +177,7 @@ Fifteen files ship. **Not generated:** `Sustainable-Futures-en.pdf` (the plan),
 `HESA_Estates_Management.xlsx` (13 MB, **unlinked**, the generator's input), three real Canvas
 runs: `Cardiff_Estates_Dashboard.html` (06 step 2), `Demand_First_Game.html` (03 step 4, rescored
 to rank the four stages as the plan does), `Example_Bubble_Chart.html` (fabricated, **unlinked**);
-and `Demand_First_Adventure.html`, a text adventure built to a PRD, **unlinked**, hosted for Matt.
+and `Demand_First_Adventure.html`, a text adventure built to a PRD, beside the game on 03 step 4.
 **Generated:** the five skills, `Example_Style_Block.md` and `HESA_Estates_Workshop.csv`/`.xlsx`.
 
 ## Styling

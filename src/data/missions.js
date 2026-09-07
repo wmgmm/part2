@@ -437,11 +437,22 @@ const A = {
   // Matt's own Canvas game, improved for the Demand First hierarchy: the four
   // stages now reward avoiding demand above offsetting it, which is the point.
   demandFirstGame: {
-    label: 'OPTIONAL: ONE WE MADE EARLIER',
+    label: 'OPTIONAL: THE ARCADE ONE WE MADE EARLIER',
     filename: 'Demand_First_Game.html',
     downloadPath: `${BASE}placeholders/Demand_First_Game.html`,
     note: 'A real Canvas build, tuned so the four stages of Demand First score in the order the plan puts them.',
     thumb: EXAMPLE_ICON,
+    openOnly: true,
+  },
+  // Built to a written brief rather than in Canvas: a green-screen text
+  // adventure that teaches the same hierarchy through sixteen decisions.
+  demandFirstAdventure: {
+    label: 'OPTIONAL: THE TEXT ADVENTURE',
+    filename: 'Demand_First_Adventure.html',
+    downloadPath: `${BASE}placeholders/Demand_First_Adventure.html`,
+    note: 'Oregon Trail meets Zork meets Cardiff procurement. Sixteen decisions, four meters, and the best move is often doing less.',
+    thumb: EXAMPLE_ICON,
+    openOnly: true,
   },
   exampleChart: {
     label: 'OPTIONAL: ONE WE MADE EARLIER',
@@ -452,6 +463,7 @@ const A = {
     // 11 of its 180 embedded rows matched the CSV and it dropped 13 universities.
     note: 'A real Canvas build from the prompt above. It looks superb, but after manual checking we had to adjust some of the numbers.',
     thumb: EXAMPLE_ICON,
+    openOnly: true,
   },
   // Not a download: the reader already has this one, because Canvas made it.
   // It exists so the attach strip can show what goes in the new chat.
@@ -749,10 +761,10 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 2,
-        title: 'Play the one the Matts made earlier',
-        artifact: A.demandFirstGame,
+        title: 'Play the ones the Matts made earlier',
+        artifact: [A.demandFirstGame, A.demandFirstAdventure],
         body:
-          'Ours went through the same feedback loop you just used. Play it and watch the scoring: avoiding demand is worth more than offsetting it, because that is the order the plan puts them in.',
+          'Two of ours. The arcade one went through the feedback loop you just used; the text adventure was built from a written brief. Play either and watch the scoring: avoiding demand beats offsetting it, because that is the order the plan puts them in.',
       },
       {
         tier: 'core',

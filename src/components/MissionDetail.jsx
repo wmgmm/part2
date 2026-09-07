@@ -183,14 +183,17 @@ function ArtifactCard({ artifact }) {
             OPEN IT
           </a>
         )}
-        <button
-          type="button"
-          className={`btn-artifact${isPage ? ' btn-artifact--ghost' : ''}`}
-          onClick={download}
-          aria-label={`Download ${artifact.filename}`}
-        >
-          DOWNLOAD
-        </button>
+        {/* openOnly: a page that is meant to be played, not kept. */}
+        {!artifact.openOnly && (
+          <button
+            type="button"
+            className={`btn-artifact${isPage ? ' btn-artifact--ghost' : ''}`}
+            onClick={download}
+            aria-label={`Download ${artifact.filename}`}
+          >
+            DOWNLOAD
+          </button>
+        )}
         {/* COPY is opt-in: only the brand skill needs it, because Studio's
             description box takes pasted text, not files. Everything else is attached. */}
         {isText && artifact.copyable && (
@@ -315,7 +318,7 @@ function ChoiceStep({ step }) {
           {(step.attach || step.attachExtra) && (
         <AttachStrip items={step.attach} label={step.attachLabel} extra={step.attachExtra} />
       )}
-          {step.artifact && <ArtifactCard artifact={step.artifact} />}
+          {step.artifact && [].concat(step.artifact).map(a => <ArtifactCard key={a.filename} artifact={a} />)}
           {step.prompt && <PromptBox prompt={step.prompt} label={step.promptLabel} note={step.promptNote} emphasis={step.promptEmphasis} />}
           {step.backup && (
             <div className="step-backup">
@@ -417,7 +420,7 @@ function Step({ step, number, lane }) {
               )}
             </div>
           )}
-      {step.artifact && <ArtifactCard artifact={step.artifact} />}
+      {step.artifact && [].concat(step.artifact).map(a => <ArtifactCard key={a.filename} artifact={a} />)}
       {step.link && (
         <a
           className="mission-step__link"

@@ -21,10 +21,10 @@ function collectUrls() {
     // (Exercise 05's brand skill), so the preflight has to look inside them too.
     (m.steps || []).forEach(s => {
       if (s.image) add(`${BASE}${s.image.src}`, `${m.code} · ${s.image.src}`);
-      if (s.artifact) {
-        add(s.artifact.downloadPath, `${m.code} · ${s.artifact.filename}`);
-        if (s.artifact.thumb) add(`${BASE}${s.artifact.thumb}`, `${m.code} · ${s.artifact.thumb}`);
-      }
+      [].concat(s.artifact || []).forEach(a => {
+        if (a.downloadPath) add(a.downloadPath, `${m.code} · ${a.filename}`);
+        if (a.thumb) add(`${BASE}${a.thumb}`, `${m.code} · ${a.thumb}`);
+      });
       // The attach strip: its files are usually also in mission.artifacts, but
       // nothing enforces that, and attachExtra is an image nothing else points at.
       // A strip-only item (the reader's own file, the prompt above) has no
