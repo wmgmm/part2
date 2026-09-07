@@ -473,16 +473,19 @@ for filename, body in SKILLS.items():
     flag = "" if n < 4900 else "   <-- OVER 4,900: will truncate in Notebook's 5,000-char box"
     print(f"  {filename:32} {n:5,d} chars{flag}")
 
-# Exercise 02's backup card: Matt Hayden's style block, extracted from the
-# MH_STYLE_BLOCK constant in missions.js so the file and the constant cannot
-# drift. Not a skill, so it is not in SKILLS and has no length warning.
-import re
-_missions = (Path(__file__).resolve().parent.parent / "src" / "data" / "missions.js").read_text(encoding="utf-8")
-_m = re.search(r"^const MH_STYLE_BLOCK = `(.*?)`;$", _missions, re.S | re.M)
-assert _m, "MH_STYLE_BLOCK not found in missions.js"
-_style = _m.group(1).replace("\\'", "'").replace("\\`", "`") + "\n"
-(OUT / "Example_Style_Block.md").write_text(_style, encoding="utf-8")
-print(f"  {'Example_Style_Block.md':32} {len(_style):5,d} chars (from MH_STYLE_BLOCK)")
+# Exercise 02's backup card: the reusable prompt Matt got from step 1 on the
+# study-space picture (2026-09-07), for anyone whose own run did not return a
+# template. Not a skill, so it is not in SKILLS and has no length warning.
+EXAMPLE_STYLE_BLOCK = """Create an image of [INSERT SUBJECT HERE]
+Composition: Place the subject within a modern collaborative indoor environment featuring curved lounge seating, round tables, and subtle workplace or campus activity in the background. Position the subject slightly off-centre as the primary focal point, with supporting people, furniture, and architectural elements creating depth and a natural social setting. Include foreground seating, mid-ground interactions, and a softly detailed background with large windows and visible outdoor greenery.
+Camera/Perspective: Eye-level documentary-style perspective from a seated observer’s viewpoint. Use a medium-wide composition that captures both the subject and the surrounding environment. Apply a shallow to moderate depth of field to keep the subject sharp while softly blurring background activity.
+Lighting: Use bright natural daylight streaming through large windows combined with gentle ambient indoor lighting. Create even illumination, soft shadows, realistic highlights, and a welcoming atmosphere without dramatic contrast.
+Colour Palette: Warm neutrals, light creams, natural wood tones, soft greys, vibrant red seating accents, muted greens, and subtle pops of colour from decor and floral elements. Maintain realistic colour balance with a clean, contemporary appearance.
+Illustration Style: High-resolution photorealistic lifestyle photography, candid and unposed, professional editorial quality, realistic textures, authentic environmental details, natural depth of field, sharp focus on key subjects, and polished modern architectural interiors.
+Mood: Friendly, collaborative, productive, welcoming, community-focused, contemporary, relaxed, and professional with a strong sense of engagement and connection.
+"""
+(OUT / "Example_Style_Block.md").write_text(EXAMPLE_STYLE_BLOCK, encoding="utf-8")
+print(f"  {'Example_Style_Block.md':32} {len(EXAMPLE_STYLE_BLOCK):5,d} chars")
 
 # Retired 2026-09-04: the workshop now hands out working skills rather than
 # asking participants to write one, and Document QA's accountability finding

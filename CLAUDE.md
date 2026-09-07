@@ -178,7 +178,7 @@ Thirteen files ship. **Not generated:** `Sustainable-Futures-en.pdf` (the plan),
 `Cardiff_Estates_Dashboard.html` (06 step 2's card: a real Canvas run, repaired against the
 CSV) and `Example_Bubble_Chart.html` (its first, fabricated version, **unlinked, kept as
 evidence**). Check either with `python3 tools/verify_chart_data.py <file>`; exit 0 means clean.
-**Generated:** the five skills, `Example_Style_Block.md` (from `MH_STYLE_BLOCK`) and `HESA_Estates_Workshop.csv`/`.xlsx`.
+**Generated:** the five skills, `Example_Style_Block.md` (Matt's step 1 output) and `HESA_Estates_Workshop.csv`/`.xlsx`.
 
 ## Styling
 

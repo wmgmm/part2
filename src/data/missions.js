@@ -277,9 +277,9 @@ Mood: ...
 Describe each section as image-generation instructions rather than observations. Capture enough detail to recreate the image accurately while allowing the subject to be replaced. Keep the subject placeholder exactly as written.`;
 
 // His covering email, "Example image style guide prompt for consistency".
-// Deck slide 18 is the summary of it. Since 2026-09-07 it ships as Exercise
-// 02's backup card, Example_Style_Block.md, which tools/make_artifacts.py
-// extracts from this constant so the two cannot drift.
+// Deck slide 18 is the summary of it. No longer on the page since 2026-09-07:
+// Exercise 02's backup card is Matt's own step 1 output instead
+// (Example_Style_Block.md, held in tools/make_artifacts.py). Kept verbatim.
 const MH_STYLE_BLOCK = `Task: Create a reusable visual style block that will be applied to every image in this project. The style must remain consistent across all illustrations, characters, scenes and learning materials.
 
 Style Block:
@@ -391,13 +391,13 @@ const A = {
     note: 'A Cardiff social space. Download it, then attach it to Copilot.',
     thumb: 'cardiff_study_space.jpg',
   },
-  // Matt Hayden's style block, the kind of template step 1 should hand back.
-  // Generated from MH_STYLE_BLOCK by tools/make_artifacts.py.
+  // The reusable prompt Matt got from step 1 on the study-space picture, for
+  // anyone whose own run did not return one. Text in tools/make_artifacts.py.
   styleExample: {
     label: 'OPTIONAL: A REUSABLE PROMPT WE MADE EARLIER',
     filename: 'Example_Style_Block.md',
     downloadPath: `${BASE}placeholders/Example_Style_Block.md`,
-    note: 'Matt Hayden\'s reusable style prompt, a backup for step 2 if step 1 did not give you a template.',
+    note: 'The reusable prompt we got from step 1 on this picture, a backup for step 2 if yours did not come back as a template.',
     copyable: true,
     thumb: EXAMPLE_ICON,
   },

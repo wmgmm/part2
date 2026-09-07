@@ -1,25 +1,7 @@
-Task: Create a reusable visual style block that will be applied to every image in this project. The style must remain consistent across all illustrations, characters, scenes and learning materials.
-
-Style Block:
-
-Visual Style Standard
-
-Create illustrations in a clean, modern educational vector style suitable for professional brochures, online learning platforms and university teaching materials.
-
-Colour palette: Use a consistent palette of soft professional colours with muted blues, teal, emerald, warm grey and white. Use accent colours sparingly for emphasis. Avoid highly saturated colours, neon tones and strong colour clashes.
-
-Line weight: Use crisp medium-weight outlines throughout, with consistent stroke thickness across all elements. Avoid sketch effects, rough edges or varying line weights.
-
-Perspective: Use a slightly elevated three-quarter perspective with simple depth and clear spatial relationships. Maintain the same viewing angle across all images.
-
-Background treatment: Use clean, uncluttered backgrounds with subtle gradients or simple geometric shapes. Include enough environmental detail to provide context without distracting from the main subject. Avoid photographic textures and excessive decoration.
-
-Characters: Depict diverse, professional, approachable adults with friendly expressions and realistic proportions. Use contemporary clothing suitable for education, healthcare, research and professional office environments. Character design must remain visually consistent across all images.
-
-Composition: Ensure balanced layouts, clear focal points and ample whitespace. Optimise for readability in both print and digital formats.
-
-Illustration quality: High-quality vector illustration with polished edges, consistent lighting and a cohesive visual language across all assets.
-
-Consistency requirement: Match all previously generated images in style, palette, character design, perspective, line weight and overall visual treatment.
-
-Subject: [Replace only this section for each image]
+Create an image of [INSERT SUBJECT HERE]
+Composition: Place the subject within a modern collaborative indoor environment featuring curved lounge seating, round tables, and subtle workplace or campus activity in the background. Position the subject slightly off-centre as the primary focal point, with supporting people, furniture, and architectural elements creating depth and a natural social setting. Include foreground seating, mid-ground interactions, and a softly detailed background with large windows and visible outdoor greenery.
+Camera/Perspective: Eye-level documentary-style perspective from a seated observer’s viewpoint. Use a medium-wide composition that captures both the subject and the surrounding environment. Apply a shallow to moderate depth of field to keep the subject sharp while softly blurring background activity.
+Lighting: Use bright natural daylight streaming through large windows combined with gentle ambient indoor lighting. Create even illumination, soft shadows, realistic highlights, and a welcoming atmosphere without dramatic contrast.
+Colour Palette: Warm neutrals, light creams, natural wood tones, soft greys, vibrant red seating accents, muted greens, and subtle pops of colour from decor and floral elements. Maintain realistic colour balance with a clean, contemporary appearance.
+Illustration Style: High-resolution photorealistic lifestyle photography, candid and unposed, professional editorial quality, realistic textures, authentic environmental details, natural depth of field, sharp focus on key subjects, and polished modern architectural interiors.
+Mood: Friendly, collaborative, productive, welcoming, community-focused, contemporary, relaxed, and professional with a strong sense of engagement and connection.
