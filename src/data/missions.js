@@ -651,7 +651,7 @@ export const MISSIONS = [
         estMinutes: 1,
         title: 'Responsible AI',
         body:
-          'Seeing your own work from someone else\'s perspective is hard. AI is a cheap second pair of eyes for accessibility: alt text, a plain description, what a screen reader would give. A start, not a substitute for asking the people who rely on it.',
+          'AI can support accessibility: alt text, a plain description, what a screen reader would give. A start, but not a substitute for asking the people who actually rely on it.',
       },
     ],
     verdictBy: 'The Matts',
