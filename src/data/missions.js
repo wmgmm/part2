@@ -406,6 +406,14 @@ const A = {
     downloadPath: `${BASE}placeholders/Cardiff_Estates_Dashboard.html`,
     thumb: HTML_ICON,
   },
+  verifySkill: {
+    label: 'SKILL 5: VERIFY AND REPAIR',
+    filename: 'Verify_And_Repair.md',
+    downloadPath: `${BASE}placeholders/Verify_And_Repair.md`,
+    note: 'The long version of the check in this step, to keep. Works on any figure from any tool.',
+    copyable: true,
+    thumb: SKILL_ICON,
+  },
   factCheckSkill: {
     label: 'SKILL 4: CHECK IT BEFORE IT GOES',
     filename: 'Fact_Check_Cardiff.md',
@@ -828,7 +836,7 @@ export const MISSIONS = [
     pageTitle: 'Ten Years of Real Data, Run Twice and Checked',
     summary: 'Run the real numbers in one tool, check them in another, then build a dashboard.',
     tools: [TOOLS.copilot, TOOLS.gemini, TOOLS.canvas],
-    estMinutesCore: 21,
+    estMinutesCore: 22,
     toolInfo: {
       feature:
         'Copilot and Gemini both write and run Python on a data file you attach, so the numbers are computed rather than guessed. Both prefer CSV, not Excel.',
@@ -856,22 +864,27 @@ export const MISSIONS = [
       },
       {
         tier: 'core',
-        estMinutes: 4,
+        estMinutes: 5,
         title: 'Verify and repair the numbers',
+        artifact: A.verifySkill,
         body:
-          'Repeat the same analysis with Gemini. Do the two agree? Then run this check in both. It works on any AI analysis, so keep it: a person signs the numbers off, and a rubber stamp does not count.',
+          'Repeat the same analysis with Gemini. Do the two agree? Then check the number that matters in a fresh chat, and do not tell it where the figure came from.',
+        attachLabel: 'NEW CHAT',
+        attach: [A.hesaData],
         promptLabel: 'THE REUSABLE CHECK',
-        promptNote: '[keep this one, it works on any AI analysis]',
-        // Built on the evidence, not on instinct. Asking a model to review its
-        // own answer ("are you sure?") measurably makes things worse: intrinsic
-        // self-correction degrades accuracy and flips right answers to wrong.
-        // What works is extrinsic verification, recomputing from the source with
-        // a tool. Hence "recompute, do not review". The closing line is the
-        // Responsible AI point and it is also UK law: under the DUAA 2025,
-        // rubber-stamping an AI output is not meaningful human oversight.
-        promptEmphasis: 'Do not review your own answer. Recompute it from the source.',
+        promptNote: '[paste your figure in, and do not say who produced it]',
+        // Built on evidence, not instinct, and the evidence sets the shape.
+        // Intrinsic self-correction, a model reviewing its own answer in the same
+        // chat, degrades accuracy and flips right answers to wrong. Worse, models
+        // rate their own output higher (self-preference bias), and that bias
+        // NEARLY DISAPPEARS when they do not know the authorship. Hence a fresh
+        // chat, the figure pasted in bare, and the instruction not to say where it
+        // came from: the anonymity is the mechanism, so explaining undoes it.
+        // The closing line is the Responsible AI point and also UK law: under the
+        // DUAA 2025, rubber-stamping an AI output is not meaningful oversight.
+        promptEmphasis: 'Recompute this from the attached file.',
         prompt:
-          'Do not review your own answer. Recompute it from the source.\n\n1. Take the single most important figure in what you just told me. Work it out again from the attached file by writing and running code, and show the code.\n2. Work it out a second, independent way. If the two disagree, give both and say which is wrong.\n3. Anything you cannot check against the file, list under UNVERIFIED. Do not estimate it.\n4. If a figure has changed, say what it was, what it is now, and why.\n\nShow your working so a person can follow it and disagree with it. I am signing this off, not you.',
+          'Recompute this from the attached file.\n\nFIGURE TO CHECK: [paste the number and what it claims]\n\n1. Work it out from the file by writing and running code, and show the code.\n2. Work it out a second, independent way. If the two disagree, give both and say which is wrong.\n3. Anything the file cannot settle, list under UNVERIFIED. Do not estimate it.\n4. Say whether the figure is right, wrong or unverifiable, and what it should be.\n\nShow your working so a person can follow it and disagree with it. I am signing this off, not you.',
       },
       {
         tier: 'core',
