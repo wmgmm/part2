@@ -850,7 +850,7 @@ export const MISSIONS = [
         estMinutes: 6,
         title: 'Build the dashboard in Gemini\'s Canvas',
         body:
-          'Use Gemini, in a new chat, with the CSV attached and Canvas on from the Tools menu. It works on Flash but Pro handles it better. The first build often takes a while or falls over. Just send it again.',
+          'Use Gemini, in a new chat, with the CSV attached and Canvas on from the Tools menu. Pro handles it better, but if no preview appears, switch to Flash. The first build often falls over: just send it again.',
         promptLabel: 'THE BUILD PROMPT',
         attachLabel: 'NEW CHAT',
         attach: [A.hesaData],
@@ -876,7 +876,7 @@ export const MISSIONS = [
         title: 'Always verify, and repair if required',
         artifact: A.fixedChart,
         body:
-          'The first version of our app got the data slightly wrong, and it flattered Cardiff (Thanks Gemini 😂). So we downloaded the HTML, opened a new Gemini chat with Canvas on, and attached the app and the CSV together. This is what came back.',
+          'The first version of our app got the data slightly wrong, and it flattered Cardiff (Thanks Gemini 😂). So we downloaded the HTML, opened a new Gemini chat with Canvas on, and attached the app and the CSV together. This is what came back. Afterwards, open Code and Show recent changes to see exactly what it altered.',
         attachLabel: 'NEW CHAT',
         attach: [A.yourChart, A.hesaData],
         attachExtra: {
