@@ -3116,6 +3116,50 @@ Untested in the new form: Matt runs it next.
 
 ---
 
+## 2026-09-07 (addendum 101): Responsible AI endings, and one line of human augmentation
+
+**A Responsible AI closing step now ends 03, 04, 05 and 06.** Each is one sentence, one
+minute, and specific to what that exercise just built rather than a generic warning:
+
+- 03, the game: nobody has reviewed this code, keep real or personal data out, and a public
+  Canvas link is not university hosting. It picks up the stretch step that already says the
+  share link is not university hosting.
+- 04, the module: the human value is in the review and the improvement.
+- 05, the brand: AI branding will not be as good as a human designer, so use it for low-risk
+  work like that internal presentation, not anything public facing.
+- 06, the story: human evaluation is a key part of the workflow, but AI can still augment it.
+
+Core step time is now **75 minutes** (10 / 12 / 12 / 13 / 16 / 12), bonus excluded.
+
+**Exercise 04 step 3 is now Review and Augment**, retitled from "Review the gap note at the
+bottom". The gap note stays in the body as where to start, and the workflow chip follows. The
+augment line was first written into 03 by mistake, then moved.
+
+**The training skill gained one line, and only one.** Research on AI-drafted training says the
+same thing repeatedly: the model gives you the first 80%, and the human jobs are the local
+example, the real case and the terminology. The risk was that asking for augmentation ideas
+would invite the model to draft the missing content, which the skill spends three paragraphs
+preventing. The constraint that makes it safe is **name the action, not the content**, capped
+at a single line so the module does not become an account of what is missing:
+
+> Close the gap note with one line beginning **a person could**: the single change a human
+> would make that improves this training most, such as a local example or a real case from
+> their own team. One line, and name the action, not the content.
+
+`Training_Module_Builder.md` went 3,886 to 4,129 characters, still under the 4,900 ceiling.
+
+**Tested the same day.** Matt ran it on the sustainability plan and the note closed with:
+"a person could replace the fictional walkthrough with one completed, anonymised purchase from
+a Professional Services team and show the evidence used at each Demand First step." One line,
+an action, a named source of the material, and no invented policy. It landed at the end of the
+gap note, not floated into the module.
+
+**Open, if it annoys anyone:** that run's gap note ran to eighteen bullets plus a paragraph on
+teaching conventions, so the augment line is the last thing on a long list. Capping the gap
+note itself is a separate change and has not been made.
+
+---
+
 # HANDOVER, end of 2026-09-05
 
 Read this first. It supersedes the earlier "OPEN" block, which is folded in below.
