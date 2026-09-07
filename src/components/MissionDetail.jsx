@@ -262,7 +262,12 @@ function ChoiceStep({ step }) {
       )}
           {step.artifact && <ArtifactCard artifact={step.artifact} />}
           {step.prompt && <PromptBox prompt={step.prompt} label={step.promptLabel} note={step.promptNote} emphasis={step.promptEmphasis} />}
-          {step.backup && <p className="step-backup"><strong>Backup:</strong> {step.backup}</p>}
+          {step.backup && (
+            <div className="step-backup">
+              <span className="step-backup__label">Backup</span>
+              <p className="step-backup__text">{step.backup}</p>
+            </div>
+          )}
           {step.link && (
             <a
               className="mission-step__link"
@@ -305,7 +310,12 @@ function Step({ step, number, lane }) {
       {step.prompt && <PromptBox prompt={step.prompt} label={step.promptLabel} note={step.promptNote} emphasis={step.promptEmphasis} />}
       {/* A fallback route when the main one misbehaves. Sits under the prompt,
           quiet, so the main instruction stays the main instruction. */}
-      {step.backup && <p className="step-backup"><strong>Backup:</strong> {step.backup}</p>}
+      {step.backup && (
+            <div className="step-backup">
+              <span className="step-backup__label">Backup</span>
+              <p className="step-backup__text">{step.backup}</p>
+            </div>
+          )}
       {step.artifact && <ArtifactCard artifact={step.artifact} />}
       {step.link && (
         <a

@@ -2243,15 +2243,30 @@ a:hover,
   font-weight: 600;
 }
 
-/* Step backup line, 2026-09-07: a fallback route under the prompt. */
+/* Step backup card, 2026-09-07: the fallback route, in its own panel under the
+   prompt so it reads as a second path rather than a footnote. Same hairline
+   idiom as the attach strip and the artifact card. */
 .step-backup {
-  margin: 0.7rem 0 0;
-  font-size: 0.85rem;
-  line-height: 1.45;
-  color: var(--grey);
+  margin: 0.8rem 0 0;
+  padding: 0.75rem 1rem 0.85rem;
+  background: var(--white);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-card);
 }
 
-.step-backup strong {
-  color: var(--accent);
+.step-backup__label {
+  display: block;
+  font-size: 0.68rem;
   font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+
+.step-backup__text {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--black);
 }
