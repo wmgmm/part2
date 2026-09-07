@@ -71,6 +71,10 @@ The complete module in the seven sections above, then a **gap note** listing
 every place the source was silent and you left something for a person to fill,
 and every criterion that is house convention rather than sourced.
 
+Close the gap note with one line beginning **a person could**: the single change
+a human would make that improves this training most, such as a local example or a
+real case from their own team. One line, and name the action, not the content.
+
 The gap note is not optional and it is not an apology. It is the most useful
 thing in the document, because it tells whoever owns the policy what their policy
 does not yet say.
