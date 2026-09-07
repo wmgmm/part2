@@ -56,8 +56,12 @@ function WorkflowStrip({ workflow }) {
 // A step body can carry {name} tokens that render as small inline images from
 // step.bodyIcons, for controls the reader must find (a Download button). A
 // token with no icon renders as its own text, so nothing is ever lost.
+// **like this** also renders bold, for the one word in a body that has to
+// carry the weight. Nothing else in the body is parsed as markdown.
 function renderBody(body, icons = {}) {
-  return body.split(/(\{[a-z_]+\})/i).map((part, i) => {
+  return body.split(/(\{[a-z_]+\}|\*\*[^*]+\*\*)/i).map((part, i) => {
+    const bold = part.match(/^\*\*([^*]+)\*\*$/);
+    if (bold) return <strong key={i}>{bold[1]}</strong>;
     const m = part.match(/^\{([a-z_]+)\}$/i);
     const icon = m && icons[m[1]];
     if (!icon) return part;

@@ -607,7 +607,7 @@ export const MISSIONS = [
         estMinutes: 3,
         title: 'Try to ban something from the image',
         body:
-          'Add the line below and send it. You will usually still get text: naming what you do not want puts it into the prompt, and the noun outweighs the negation. Describe what you want instead, a bare white wall rather than no signage.',
+          'Add the line below and send it. You **MIGHT** still get text: naming what you do not want puts it into the prompt, and the noun outweighs the negation. Describe what you want instead, a bare white wall rather than no signage.',
         promptLabel: 'THE LINE TO ADD',
         prompt: 'No text anywhere in the image.',
         attachLabel: 'SAME CHAT',
