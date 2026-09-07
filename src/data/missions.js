@@ -742,7 +742,7 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'Run the detailed prompt with the PDF for context',
         body:
-          'Use Gemini. Turn Canvas on in the Tools menu and attach the plan before you send this. The detail and the document are what lift the output.',
+          'Use Gemini, in a new chat. Click the + under the box to attach the plan, paste the prompt below, then turn Canvas on and send. The detail and the document are what lift the output.',
         promptLabel: 'THE ENGINEERED ASK',
         attachLabel: 'NEW CHAT',
         attach: [A.susPlan],
@@ -780,7 +780,7 @@ export const MISSIONS = [
         estMinutes: 1,
         title: 'Responsible AI',
         body:
-          'Share responsibly: no C1 or C2 data in anything you make public. Do not put staff, student or sensitive financial or research data into something you are sharing by link.',
+          'Share responsibly: no C1 or C2 (confidential or highly confidential) data in anything you make public. Do not put staff, student or sensitive financial or research data into something you are sharing by link.',
       },
     ],
     verdictBy: 'The Matts',
