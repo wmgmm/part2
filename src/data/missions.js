@@ -536,7 +536,7 @@ export const MISSIONS = [
         estMinutes: 1,
         title: 'Copy the Deep Research Report',
         body:
-          'Click "Share and export", then "Copy contents". Paste the report into a Word document and save it: Copilot prefers an attached file to a copy and paste.',
+          'Click "Share and export", then "Copy contents". Paste the report into a Word document and save it. It is best to attach a file rather than copy and paste, because a long paste can get truncated.',
         backup: {
           label: 'OR PASTE IT STRAIGHT IN',
           text:
