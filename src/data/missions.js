@@ -652,7 +652,7 @@ export const MISSIONS = [
         estMinutes: 2,
         title: 'Read the code tab',
         body:
-          'Canvas has a Code toggle at the top, next to Preview. Look at the strings: the title, the messages, the food names. Augment it as a human here: review what it wrote, then add or alter anything.',
+          'Canvas has a Code toggle at the top, next to Preview. Look at the strings: the title, the messages, the food names.',
       },
       {
         tier: 'core',
@@ -666,7 +666,7 @@ export const MISSIONS = [
         estMinutes: 1,
         title: 'Responsible AI',
         body:
-          'The human value is in the review and the improvement. AI gets you a draft in seconds; deciding what is wrong and changing it is yours.',
+          'Nobody has reviewed this code. Fine for a demo, but keep real or personal data out of it, and a public Canvas link is not university hosting.',
       },
       {
         tier: 'stretch',
@@ -706,7 +706,7 @@ export const MISSIONS = [
     // works in either. The card was telling people they needed both.
     tools: [TOOLS.gemini, TOOLS.copilot],
     toolsJoin: 'or',
-    estMinutesCore: 12,
+    estMinutesCore: 13,
     toolInfo: {
       feature:
         'A skill is a file you attach alongside your document. Nothing to install and it works in Gemini and Copilot.',
@@ -750,7 +750,7 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'Review the gap note at the bottom',
         body:
-          'The gap note is everything the training needed and the plan does not say: no dates, no named owners, no thresholds. That list is your questions for whoever owns the plan.',
+          'The gap note is everything the training needed and the plan does not say: no dates, no named owners, no thresholds. That list is your questions for whoever owns the plan. Augment it as a human: review the session and add or alter anything.',
       },
       {
         tier: 'core',
@@ -758,6 +758,13 @@ export const MISSIONS = [
         title: 'Save/copy the training session',
         body:
           'In Gemini, the copy icon sits under the answer. Copy the whole thing: Exercise 05 pastes it straight into a notebook, so you never need a file. In Copilot, the three dots give you Export to Word.',
+      },
+      {
+        tier: 'core',
+        estMinutes: 1,
+        title: 'Responsible AI',
+        body:
+          'The human value is in the review and the improvement. AI gets you a draft in seconds; deciding what is wrong and changing it is yours.',
       },
     ],
     verdictBy: 'The Matts',
