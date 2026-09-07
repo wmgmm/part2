@@ -66,8 +66,7 @@
 
   header { border-bottom: 1px solid var(--dim); padding-bottom: 0.5rem; margin-bottom: 0.5rem; }
   .brand { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 1rem; justify-content: space-between; }
-  .brand h1 { font-size: 1.15em; margin: 0; letter-spacing: 0.08em; }
-  .brand .sub { margin: 0; color: var(--dim); font-size: 0.85em; }
+  .brand .sub { margin: 0; color: var(--dim); font-size: 0.85em; font-weight: normal; }
   .toggles { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; }
 
   button {
@@ -80,7 +79,7 @@
   button:focus-visible { outline: 3px solid var(--warn); outline-offset: 2px; }
   button[disabled] { opacity: 0.55; cursor: default; }
   .toggles button { font-size: 0.8em; min-height: 2em; padding: 0.2em 0.6em; }
-  .settings { font-size: 0.75em; min-height: 1.8em; padding: 0.15em 0.55em; margin-top: 0.35rem; color: var(--dim); border-color: var(--dim); }
+  .settings { font-size: 0.75em; min-height: 1.8em; padding: 0.15em 0.55em; color: var(--dim); border-color: var(--dim); }
   .settings[aria-expanded="true"] { color: var(--fg); }
   .toggles[hidden] { display: none; }
   .toggles .hint { flex-basis: 100%; color: var(--dim); font-size: 0.75em; }
@@ -93,7 +92,8 @@
   .meter.mid .bar { color: var(--warn); }
   .meter.high .bar { color: var(--ok); }
 
-  .hier { display: flex; flex-wrap: wrap; gap: 0.3rem 0.9rem; color: var(--dim); font-size: 0.85em; border-bottom: 1px solid var(--dim); padding: 0.25rem 0 0.45rem; margin-bottom: 0.6rem; }
+  .hier { display: flex; flex-wrap: wrap; gap: 0.3rem 0.9rem; color: var(--fg); font-size: 0.95em; padding: 0.5rem 0 0.1rem; }
+  .toggles { margin-top: 0.6rem; }
   .hier span { padding: 0 0.2em; border: 1px solid transparent; }
   .hier span.lit { color: var(--warn); border-color: var(--warn); }
 
@@ -131,10 +131,15 @@
 <div class="wrap">
   <header>
     <div class="brand">
-      <h1>DEMAND FIRST</h1>
-      <p class="sub">The Sustainable Adventures of Cardiff University</p>
+      <h1 class="sub">The Sustainable Adventures of Cardiff University</h1>
+      <button type="button" id="btn-settings" class="settings" aria-expanded="false" aria-controls="toggles">SETTINGS</button>
     </div>
-    <button type="button" id="btn-settings" class="settings" aria-expanded="false" aria-controls="toggles">SETTINGS</button>
+    <nav class="hier" aria-label="The Demand First hierarchy, in order">
+      <span id="h1">1 AVOID DEMAND</span>
+      <span id="h2">2 LOW-IMPACT ALTERNATIVE</span>
+      <span id="h3">3 CIRCULARITY</span>
+      <span id="h4">4 MANAGE THE RESIDUE</span>
+    </nav>
     <div class="toggles" id="toggles" aria-label="Display settings" hidden>
       <button type="button" id="tgl-text" aria-pressed="false">TEXT: NORMAL</button>
       <button type="button" id="tgl-hc" aria-pressed="false">CONTRAST: NORMAL</button>
@@ -150,13 +155,6 @@
     <div class="meter" id="m-wellbeing"><span class="lbl">WELLBEING</span><span class="bar"></span></div>
     <div class="meter" id="m-reputation"><span class="lbl">REPUTATION</span><span class="bar"></span></div>
   </section>
-
-  <nav class="hier" aria-label="The Demand First hierarchy, in order">
-    <span id="h1">1 AVOID DEMAND</span>
-    <span id="h2">2 LOW-IMPACT ALTERNATIVE</span>
-    <span id="h3">3 CIRCULARITY</span>
-    <span id="h4">4 MANAGE THE RESIDUE</span>
-  </nav>
 
   <main>
     <div id="term" role="log" aria-live="polite" tabindex="-1"></div>
