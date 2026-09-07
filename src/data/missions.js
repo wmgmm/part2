@@ -629,12 +629,10 @@ export const MISSIONS = [
         'Canvas turns a description into working web apps, decks and documents you can edit in place. You write no code at any point.',
       apps: [APPS.gemini],
     },
-    workflow: ['Run the thin ask', 'Run the detailed prompt', 'Read the code', 'Fix it in words'],
+    workflow: ['Run the thin ask', 'Run the detailed prompt', 'Read the code', 'Give AI feedback'],
     brief:
       'Build the same 8-bit game twice from the sustainability plan, once thinly and once fully specified.',
     artifacts: [A.susPlan],
-    stretchTitle: 'CHOOSE YOUR NEXT MOVE',
-    stretchIntro: 'Pick ONE path below; come back for another any time.',
     steps: [
       {
         tier: 'core',
@@ -676,9 +674,9 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 3,
-        title: 'Play it, then fix it in words',
+        title: 'Play it, then give AI feedback',
         body:
-          'Name the one thing that spoils it and type that into the chat: \"too fast, slow the items by half\". Canvas rebuilds it in place.',
+          'Name the one thing that spoils it and type that into the chat. Good feedback says what is wrong and what you want instead: \"too fast, slow the items by half\". \"This is bad\" gives it nothing to work with. Canvas rebuilds it in place.',
       },
       {
         tier: 'core',
@@ -686,26 +684,6 @@ export const MISSIONS = [
         title: 'Responsible AI',
         body:
           'Reviewing is part of the workflow, so think about risk: nobody has reviewed this code, which is fine for a demo with friends. And if your app holds confidential (C1/C2) work data, do not share it by link.',
-      },
-      {
-        tier: 'stretch',
-        choice: 'A',
-        toolChip: 'Gemini Canvas',
-        hook: 'Something your team would actually open.',
-        estMinutes: 6,
-        title: 'Build the one your team would use',
-        body:
-          'Ask Canvas for a one-page helper that walks a colleague through the Demand First ladder for a purchase, every rung in the plan\'s own words.',
-      },
-      {
-        tier: 'stretch',
-        choice: 'B',
-        toolChip: 'Gemini Canvas',
-        hook: 'Getting it out of Canvas and in front of people.',
-        estMinutes: 3,
-        title: 'Share it',
-        body:
-          'Canvas exports to Docs, Slides and PDF, and gives an app a public link. It works on the desktop site and is not university hosting.',
       },
     ],
     verdictBy: 'The Matts',
