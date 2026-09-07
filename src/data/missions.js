@@ -341,6 +341,7 @@ const EXCEL_ICON = 'excel_icon.webp';
 const HTML_ICON = 'html_icon.svg';
 const PROMPT_ICON = 'prompt_icon.svg';
 const IMAGE_ICON = 'image_icon.svg';
+const DOC_ICON = 'doc_icon.svg';
 
 const A = {
   susPlan: {
@@ -457,6 +458,13 @@ const A = {
     thumb: PROMPT_ICON,
     paste: true,
   },
+  // Strip-only: the report the reader saved in Exercise 01 step 3, so step 4
+  // can show what goes into Copilot rather than only describing it.
+  yourReport: {
+    label: 'YOUR DEEP RESEARCH REPORT',
+    filename: 'the file you saved in step 3',
+    thumb: DOC_ICON,
+  },
   // Strip-only: the picture the reader has just generated, so the audit step
   // can show what goes in the new chat rather than only describing it.
   yourImage: {
@@ -550,6 +558,8 @@ export const MISSIONS = [
         body:
           'Use Copilot. Attach the file you saved in step 3. You could copy and paste after the last line of the prompt, but it is best to attach a file because a long paste can get truncated.',
         promptLabel: 'THE FACT-CHECK AND REDRAFT',
+        attachLabel: 'NEW CHAT',
+        attach: [A.yourReport, A.thisPrompt],
         promptNote: '[attach the file, or paste the copied report after the last line]',
         // Display only, and deliberately so: MH_COPILOT_TOP_AND_TAIL is 133
         // lines and this is his own heading on line 5. COPY still writes the
