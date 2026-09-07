@@ -104,6 +104,7 @@
   #term .ok { color: var(--ok); }
   #term .dim { color: var(--dim); }
   #term .box { color: var(--warn); }
+  #term .prompt { margin-top: 0.4em; }
   .cursor::after { content: "\2588"; animation: blink 1s steps(1) infinite; }
   body.nomo .cursor::after { animation: none; }
   @keyframes blink { 50% { opacity: 0; } }
@@ -605,6 +606,14 @@ function finish() {
   scrollDown();
   trim();
   if (job && job.done) job.done();
+  promptLine();
+}
+
+// The idle prompt: a blinking block after "> ", the way a terminal waits.
+function promptLine() {
+  if (term.querySelector(".prompt")) return;
+  const el = line("> ", "prompt cursor");
+  el.setAttribute("aria-hidden", "true");
 }
 
 function scrollDown() {
@@ -795,10 +804,10 @@ function choose(key) {
   renderMeters();
   litStage(o.s);
 
-  const verdict = pts === 3 ? ["+3 points. Best available.", "ok"]
-    : pts === 2 ? ["+2 points. A better option existed.", "warn"]
-    : pts === 1 ? ["+1 point. Two better options existed.", "warn"]
-    : ["+0 points. That was the worst of the four.", "fail"];
+  const verdict = pts === 3 ? ["BEST AVAILABLE. +3 POINTS.", "ok"]
+    : pts === 2 ? ["A BETTER OPTION EXISTED. +2 POINTS.", "warn"]
+    : pts === 1 ? ["TWO BETTER OPTIONS EXISTED. +1 POINT.", "warn"]
+    : ["THE WORST OF THE FOUR. +0 POINTS.", "fail"];
 
   const out = [
     ...banner(sc.banner),
