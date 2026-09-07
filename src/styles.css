@@ -2206,9 +2206,10 @@ a:hover,
 .bonus-strip {
   width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.25rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.45rem;
   margin-top: 1.2rem;
   padding: 0.9rem 1.4rem;
   background: var(--white);
