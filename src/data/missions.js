@@ -606,7 +606,7 @@ export const MISSIONS = [
         attach: [A.thisPrompt],
         backup: {
           label: 'STILL GOT TEXT?',
-          text: 'Open a NEW chat and send the step 2 prompt again, with the ban replaced by what you want instead, such as bare, unlettered walls. Fresh context and positive wording.',
+          text: 'Open a NEW chat and send the step 2 prompt again, with the ban replaced by what you want instead.',
           attachLabel: 'NEW CHAT',
           attach: [A.stepTwoPrompt],
         },
