@@ -264,19 +264,17 @@ Output only the completed, professionally formatted new PDF. Do not substitute a
 DEEP RESEARCH REPORT BY GEMINI, PASTED BELOW (leave this empty if the PDF is attached):`;
 
 // Deck slide 17. Exercise 02, step 1.
-const MH_IMAGE_REVERSE = `Review the image and reverse-engineer it into a reusable AI image generation prompt. Return ONLY the final prompt. No introductions, explanations, notes, markdown, code fences, analysis or commentary.
-
+const MH_IMAGE_REVERSE = `Review the image and reverse-engineer it into a reusable AI image generation prompt that can be pasted directly into an AI image generator.
+Return ONLY the final prompt. No introductions, explanations, notes, markdown, code fences, analysis or commentary.
 Format exactly as:
-
-Subject: [INSERT SUBJECT HERE]
+Create an image of [INSERT SUBJECT HERE]
 Composition: ...
 Camera/Perspective: ...
 Lighting: ...
 Colour Palette: ...
 Illustration Style: ...
 Mood: ...
-
-Describe each section in enough detail to recreate the image accurately while allowing the subject to be replaced. Keep the subject placeholder exactly as written.`;
+Describe each section as image-generation instructions rather than observations. Capture enough detail to recreate the image accurately while allowing the subject to be replaced. Keep the subject placeholder exactly as written.`;
 
 // His covering email, "Example image style guide prompt for consistency".
 // Deck slide 18 is the summary of it. Since 2026-09-07 it ships as Exercise
@@ -582,7 +580,7 @@ export const MISSIONS = [
         body:
           'Paste the template Copilot gave you, replace [INSERT SUBJECT HERE] with the example below, and send it. Then send it again with another subject, nothing else changed. No template from step 1? Use the one we made earlier at the top.',
         promptLabel: 'AN EXAMPLE SUBJECT',
-        prompt: 'Subject: two colleagues comparing notes over coffee in a university library atrium',
+        prompt: 'two colleagues comparing notes over coffee in a university library atrium',
       },
       {
         tier: 'core',
