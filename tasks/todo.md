@@ -3504,7 +3504,7 @@ Mac before the day.
 
 **Matt's rewrite of `MH_IMAGE_REVERSE`** landed in the same commit: output-only, a fixed
 seven-line format, the placeholder pinned. Anchor hash is now
-`6f0cc6af26103db0d2ce3cff8290ad61d8368c36b99a7b0b846a480c9c4d1b5f`. His pasted text had a
+`f383ae55a98d88aab143485fd30167c7e2a5d4e49ed5534fda2b43c0fd0eed6e`. His pasted text had a
 non-breaking hyphen in "reverse-engineer"; the constant uses a plain hyphen.
 
 ## 2026-09-07 (addendum 107): the accessibility audit prompt, researched and rewritten
@@ -3618,7 +3618,39 @@ first, out loud, so a findings block above DESCRIPTION would fight the deck bein
 Two to three changes rather than one, because regeneration takes thirty seconds and the
 expensive cycle is read, decide, paste. A fast participant pastes all three, a slow one pastes
 number 1 and still gets the biggest win. The floor of one stops an empty list and the ceiling
-of three stops an essay. Prompt is now 1,430 characters and 252 words, against 1,154 and 207.
+of three stops an essay. **The research strand landed after that and refined it.** It reached the same no-rating verdict
+independently and with better evidence, then improved three things:
+
+- **A three-point scale is the specific length the psychometric literature says not to use.**
+  Preston and Colman (2000, peer-reviewed, about 2,000 citing papers) found scales of two,
+  three or four categories "clearly and unambiguously the least reliable, valid, and
+  discriminating". Separately, LLM judges are measurably worse on graded scales than on flat
+  checks, Likert scores compress near the top so Medium and High collapse together, and when
+  several criteria are judged in one call the verdicts shift on reordering alone, with factor
+  correlations above 0.93. Three named ratings would have been one halo judgement wearing three
+  hats. Also, Deque's severity levels are defined by consequence in context, so with a
+  standalone unpublished image there is nothing to instantiate them against.
+- **`WHAT THE EYE FINDS FIRST` became `ONE CLEAR SUBJECT`, and moved below ALT TEXT**, because
+  the better question is falsifiable against the model's own output: "could you write that alt
+  text without leaving something important out?" W3C defines a complex image as one carrying
+  more than a short sentence can convey, so the alt text is the right proxy for clutter, and
+  the model has to check itself rather than invent a complexity score.
+- **A defect fixed:** the formatting line said "one sentence for each answer" while the last
+  heading asked for up to three numbered changes. It now says "except the last".
+- **Added:** "only where you can point at what you saw", to stop the model inventing faults on
+  a clean image, and a closing instruction to give one line containing all the changes. That
+  last one matters because the participant regenerates once, so a single pasteable line beats
+  three separate ones. The ranking then only decides what to drop if time runs out.
+
+**Two open disagreements between the strands, both flagged to Matt, neither actioned.** The
+research says keep `IN GREYSCALE`, tightened to forbid naming colours and judging contrast,
+because it is the one colour question a vision model can answer, being compositional rather
+than photometric (exact colour naming accuracy is 6.3%). Matt cut it, so it stays cut. And the
+research says cut `I ASSUMED` as the only heading that cannot produce a change, which pays for
+the new check almost exactly; the design strand says keep it as the only place context enters.
+It stays for now.
+
+Prompt is now 1,374 characters and 246 words, against 1,154 and 207 before this work.
 
 # HANDOVER, end of 2026-09-07
 
@@ -3648,7 +3680,7 @@ reworded prompt shows up live.** Verify the block by anchor, never a line range:
 start=$(grep -n "^const MH_DEEP_RESEARCH" src/data/missions.js | cut -d: -f1)
 end=$(grep -n "^const MH_CANVAS_GAME" src/data/missions.js | cut -d: -f1)
 sed -n "${start},${end}p" src/data/missions.js | sha256sum
-# 6f0cc6af26103db0d2ce3cff8290ad61d8368c36b99a7b0b846a480c9c4d1b5f
+# f383ae55a98d88aab143485fd30167c7e2a5d4e49ed5534fda2b43c0fd0eed6e
 ```
 
 **Editable without touching his words:** step `title`, `body`, `promptLabel`, `promptNote`,
