@@ -773,7 +773,7 @@ export const MISSIONS = [
         title: 'Play the ones the Matts made earlier',
         artifact: [A.demandFirstGame, A.demandFirstAdventure],
         body:
-          'Two of ours. The arcade one went through the feedback loop you just used; the text adventure was built from a written brief. Play either and watch the scoring: avoiding demand beats offsetting it, because that is the order the plan puts them in.',
+          'Two of ours.',
       },
       {
         tier: 'core',
