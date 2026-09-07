@@ -34,7 +34,7 @@ export default function SplashScreen({ onStart }) {
         {/* Headline */}
         <h1 className="splash-headline">AI in the Workplace Part 2</h1>
         <p className="splash-deck">
-          One Real Cardiff Document, Six Exercises, Skills You Will Use on Monday
+          One Real Cardiff Document, Six Exercises,<br />Skills You Will Use on Monday
         </p>
         <p className="splash-byline">
           Your new line manager: <strong>Chris Gravitas</strong>, Sustainability Engagement Officer
@@ -55,7 +55,7 @@ export default function SplashScreen({ onStart }) {
               <a href="https://notebooklm.google.com/" target="_blank" rel="noopener noreferrer" className="splash-link">
                 Gemini Notebook
               </a>{' '}
-              <em>(sign in with your work account).</em>
+              <em>(use your work account).</em>
             </span>
           </li>
           <li className="splash-step">
