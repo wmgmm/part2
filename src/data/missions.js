@@ -904,7 +904,7 @@ export const MISSIONS = [
     level: 3,
     title: 'Analyse the Numbers',
     pageTitle: 'Ten Years of Real Data, Run Twice and Checked',
-    summary: 'Run the real numbers in Copilot, then verify the one that matters in Gemini with a skill.',
+    summary: 'Data analysis with Copilot and Verify with Gemini using a skill',
     tools: [TOOLS.copilot, TOOLS.gemini],
     estMinutesCore: 11,
     toolInfo: {

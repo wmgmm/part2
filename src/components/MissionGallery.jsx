@@ -67,10 +67,8 @@ export default function MissionGallery({ progress }) {
           className="bonus-strip"
           onClick={() => { window.location.hash = '#/' + m.id; }}
         >
-          <span className="bonus-strip__label">Bonus exercises</span>
-          <span className="bonus-strip__line">
-            <strong>{m.title}.</strong> {m.summary} &rarr;
-          </span>
+          <span className="bonus-strip__label">Bonus Exercise:</span>
+          <span className="bonus-strip__line">{m.summary}</span>
         </button>
       ))}
 
