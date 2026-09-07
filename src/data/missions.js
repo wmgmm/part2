@@ -446,6 +446,11 @@ const A = {
   },
   // Strip-only too: Exercise 02 step 3's new-chat retry needs the whole step 2
   // prompt, not just the line on the page.
+  stepOnePrompt: {
+    label: 'YOUR STEP 1 PROMPT',
+    filename: 'the prompt from step 1, subject replaced',
+    thumb: PROMPT_ICON,
+  },
   stepTwoPrompt: {
     label: 'YOUR STEP 2 PROMPT',
     filename: 'your step 2 prompt, plus the line above',
@@ -578,7 +583,9 @@ export const MISSIONS = [
         estMinutes: 4,
         title: 'Use the reusable prompt from step 1 with a new subject',
         body:
-          'Paste the template Copilot gave you, replace [INSERT SUBJECT HERE] with the example below, and send it. Then send it again with another subject, nothing else changed. No template from step 1? Use the one we made earlier at the top.',
+          'Start a NEW chat. Paste the prompt Copilot generated in step 1, replace [INSERT SUBJECT HERE] with the example below, and send it. Then send it again with another subject, nothing else changed. None from step 1? Use the one at the top.',
+        attachLabel: 'NEW CHAT',
+        attach: [A.stepOnePrompt],
         promptLabel: 'AN EXAMPLE SUBJECT',
         prompt: 'two colleagues comparing notes over coffee in a university library atrium',
       },
