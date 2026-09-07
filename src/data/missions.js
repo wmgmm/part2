@@ -599,7 +599,7 @@ export const MISSIONS = [
         estMinutes: 3,
         title: 'Try to ban something from the image',
         body:
-          'In the same chat, add the line below to your step 2 prompt and send it. You will usually still get text: the model weights the noun (text) over the negation (no). Then try the same prompt in a NEW chat, which often fixes it.',
+          'In the same chat, change the subject to Mr Judge complaining about his noisy cats, add the line below, and send it. You will usually still get text: the model weights the noun (text) over the negation (no). A NEW chat often fixes it.',
         promptLabel: 'THE LINE TO ADD',
         prompt: 'No text anywhere in the image.',
         attachLabel: 'SAME CHAT',
