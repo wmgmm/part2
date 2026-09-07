@@ -2460,3 +2460,24 @@ main:focus {
   margin-left: auto;
   margin-right: auto;
 }
+
+/* Gallery cards a fifth shorter, 2026-09-07, so the grid and the bonus strip
+   fit a laptop without scrolling. Type sizes unchanged; the floor drops and the
+   panel and label paddings tighten. */
+.evidence-card.mission-card {
+  min-height: 168px;
+}
+
+/* The grid pinned its rows at 210px as well, so the floor has to drop in both places. */
+.evidence-grid {
+  grid-auto-rows: minmax(168px, auto);
+}
+
+.mission-card__panel {
+  padding: 0.9rem 1.2rem 0.8rem;
+  gap: 0.3rem;
+}
+
+.evidence-card__label.mission-card__label {
+  padding: 0.4rem 1.2rem 0.5rem;
+}
