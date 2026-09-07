@@ -2823,6 +2823,67 @@ the previous exercise's DOM. Reload after changing the hash before trusting what
 
 ---
 
+## 2026-09-07 (addendum 94): Exercise 06 down to five steps, and a reusable verification prompt
+
+Matt: combine steps 1 and 2, turn the old step 3 into a Verify and repair step to rhyme with
+step 6, and research a **reusable** prompt for it that includes Responsible AI, because the
+human check is part of it.
+
+**Five steps now**, 21 minutes, site total 81.
+
+| # | Step | Min |
+|---|---|---|
+| 1 | Attach the data and run the prompt (old 1 and 2 merged; the prompt and the file arrive together, which is how anyone actually does it) | 6 |
+| 2 | **Verify and repair the numbers** | 4 |
+| 3 | Build the dashboard in Gemini's Canvas | 6 |
+| 4 | Open the one the Matts made earlier, then check it against yours | 2 |
+| 5 | Always verify, and repair if required | 3 |
+
+The two verify steps are deliberately parallel: step 2 verifies the analysis, step 5 verifies
+the app. Same habit, twice, at different scales.
+
+**The prompt was researched, not guessed, and the research changed it.** The old wording was
+"Pick the single most important number ... show how you calculated it". Searching turned up
+that the instinctive framing, asking a model to check its own work, is actively harmful:
+
+- **Intrinsic self-correction degrades accuracy.** Prompting a model to review its own answer
+  with no external signal does not reliably fix reasoning errors and often makes them worse,
+  and adding rounds of self-critique makes it worse still. Huang et al., *Large Language Models
+  Cannot Self-Correct Reasoning Yet* (arXiv 2310.01798); Kambhampati et al., *On the
+  Self-Verification Limitations of LLMs* (arXiv 2402.08115).
+- **"Are you sure?" flips correct answers to incorrect ones**, by lowering confidence rather
+  than finding errors.
+- **Extrinsic verification does work:** feedback from an external tool or the source itself.
+  CRITIC runs a verify-then-correct loop with a Python interpreter for arithmetic and a search
+  API for facts.
+
+So the prompt now opens **"Do not review your own answer. Recompute it from the source."**,
+which is also its `promptEmphasis`. It then asks for the figure to be recomputed with code, a
+second independent method, an explicit **UNVERIFIED** list for anything not checkable against
+the file, and a statement of what changed. That is a self-review converted into a tool-grounded
+recomputation.
+
+**Responsible AI, and it is also UK law.** `docs/PROMPT_GUIDANCE_2026.md` records that under
+the Data (Use and Access) Act 2025, **rubber-stamping an AI output is not meaningful human
+oversight** (cf. Schufa). So the human check is written into the prompt as an instruction with
+teeth, "Show your working so a person can follow it and disagree with it. I am signing this
+off, not you.", and the step body says a rubber stamp does not count. Better than a disclaimer,
+because it changes the output shape rather than just warning the reader.
+
+**Reusable by construction: it contains no placeholders.** No brackets to edit, nothing about
+Cardiff, HESA or emissions. It works on any AI analysis, which is why the note under it reads
+"[keep this one, it works on any AI analysis]". A prompt with nothing to swap is more reusable
+than one with swap points.
+
+**Verified.** Build green, five steps in the right order, the bold line renders, COPY writes
+573 plain characters identical to the `<pre>`, strips unchanged, `CLAUDE.md` still 200 lines.
+Logged to `~/.claude/llm-learnings.md` with the sources.
+
+**Worth reusing elsewhere:** `PROMPT_LIBRARY` should carry this check if that page is ever
+relinked (open item 3), since it is the most portable thing on the site.
+
+---
+
 # HANDOVER, end of 2026-09-05
 
 Read this first. It supersedes the earlier "OPEN" block, which is folded in below.

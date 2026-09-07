@@ -828,23 +828,24 @@ export const MISSIONS = [
     pageTitle: 'Ten Years of Real Data, Run Twice and Checked',
     summary: 'Run the real numbers in one tool, check them in another, then build a dashboard.',
     tools: [TOOLS.copilot, TOOLS.gemini, TOOLS.canvas],
-    estMinutesCore: 22,
+    estMinutesCore: 21,
     toolInfo: {
       feature:
         'Copilot and Gemini both write and run Python on a data file you attach, so the numbers are computed rather than guessed. Both prefer CSV, not Excel.',
       apps: [APPS.copilot, APPS.gemini],
     },
-    workflow: ['Paste the prompt', 'Run it in Copilot', 'Repeat in Gemini', 'Build the dashboard', 'Check it', 'Repair it'],
+    workflow: ['Run it in Copilot', 'Verify and repair', 'Build the dashboard', 'Compare with ours', 'Verify and repair'],
     brief:
       'Analyse ten years of Cardiff\'s real emissions, then check the answer in a second tool before you trust it.',
     artifacts: [A.hesaData],
     steps: [
       {
         tier: 'core',
-        estMinutes: 3,
-        title: 'Copy the prompt and paste it',
+        estMinutes: 6,
+        title: 'Attach the data and run the prompt',
         body:
-          'Start in Copilot and analyse the data (you will repeat this in Gemini).',
+          'Start in Copilot, and you will repeat this in Gemini. Download the CSV from the card above, attach it with the paperclip and send. Read what comes back before you go near the second tool.',
+        attach: [A.hesaData],
         promptLabel: 'YOUR PROMPT',
         promptNote: '[attach HESA_Estates_Workshop.csv]',
         // "the attached file", not "the Excel file": the card hands out a CSV for
@@ -856,21 +857,21 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 4,
-        title: 'Attach the data and run it',
+        title: 'Verify and repair the numbers',
         body:
-          'Download the CSV from the card above. In Copilot, attach it with the paperclip and send, then read what comes back before you go anywhere near the second tool.',
-        attach: [A.hesaData],
-      },
-      {
-        tier: 'core',
-        estMinutes: 4,
-        title: 'Run it again in the other tool',
-        body:
-          'Same prompt, same file, in Gemini this time. Do Gemini and Copilot\'s numbers match? AI does make mistakes.',
-        promptLabel: 'THEN GET A CHECK YOU CAN RUN YOURSELF',
-        promptNote: '[paste into either chat]',
+          'Same prompt, same file, in Gemini this time. Do the two agree? Then run this check in both. It works on any AI analysis, so keep it: a person signs the numbers off, and a rubber stamp does not count.',
+        promptLabel: 'THE REUSABLE CHECK',
+        promptNote: '[keep this one, it works on any AI analysis]',
+        // Built on the evidence, not on instinct. Asking a model to review its
+        // own answer ("are you sure?") measurably makes things worse: intrinsic
+        // self-correction degrades accuracy and flips right answers to wrong.
+        // What works is extrinsic verification, recomputing from the source with
+        // a tool. Hence "recompute, do not review". The closing line is the
+        // Responsible AI point and it is also UK law: under the DUAA 2025,
+        // rubber-stamping an AI output is not meaningful human oversight.
+        promptEmphasis: 'Do not review your own answer. Recompute it from the source.',
         prompt:
-          'Pick the single most important number in your summary. Show exactly how you calculated it from the source data so I can verify it manually.\n\nThen independently calculate it a second way and confirm both methods give the same result. If they differ, explain why.',
+          'Do not review your own answer. Recompute it from the source.\n\n1. Take the single most important figure in what you just told me. Work it out again from the attached file by writing and running code, and show the code.\n2. Work it out a second, independent way. If the two disagree, give both and say which is wrong.\n3. Anything you cannot check against the file, list under UNVERIFIED. Do not estimate it.\n4. If a figure has changed, say what it was, what it is now, and why.\n\nShow your working so a person can follow it and disagree with it. I am signing this off, not you.',
       },
       {
         tier: 'core',
