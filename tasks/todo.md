@@ -3419,9 +3419,11 @@ been told by this session.
   fixed the seven internal "attached PDF" references without touching them.
 - `MH_IMAGE_REVERSE`: "an AI image generation prompt", and the placeholder is pinned to
   `Subject: [INSERT SUBJECT HERE]` so step 2 can tell people what to replace.
-- `MH_ACCESSIBILITY_AUDIT`: asks for alt text under 125 characters (the de facto ceiling, an old
-  JAWS limit; WCAG sets none) and whether anything is lost in greyscale (WCAG 1.4.1, colour
-  alone).
+- `MH_ACCESSIBILITY_AUDIT`: asks for alt text under 125 characters and whether anything is lost
+  in greyscale (WCAG 1.4.1, colour alone). **Correction, later on 2026-09-07:** 125 is not a
+  ceiling and never was. WCAG sets no limit, and JAWS does not truncate long alt text, it splits
+  it across several graphics; the truncation story is a misreading of that. Keep the number
+  anyway, because a hard figure constrains model verbosity where "concise" does not.
 
 **01.** Step 3 is "Copy the report out" and quotes the two options Cardiff actually shows. Step
 4 says attach or paste. The "Choose your next move" block is gone. New step 5, Responsible AI:
