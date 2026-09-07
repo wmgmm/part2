@@ -469,7 +469,7 @@ const A = {
   // It exists so the attach strip can show what goes in the new chat.
   yourChart: {
     label: 'YOUR CANVAS APP',
-    filename: 'your-dashboard.html',
+    filename: 'the HTML you downloaded',
     thumb: HTML_ICON,
   },
   verifySkill: {
@@ -952,7 +952,7 @@ export const MISSIONS = [
     pageTitle: 'Turn Ten Years of Real Data Into a Story You Can Show',
     summary: 'Chart the real numbers, then check them.',
     tools: [TOOLS.gemini, TOOLS.canvas],
-    estMinutesCore: 12,
+    estMinutesCore: 16,
     toolInfo: {
       apps: [APPS.gemini],
     },
@@ -963,10 +963,10 @@ export const MISSIONS = [
     steps: [
       {
         tier: 'core',
-        estMinutes: 6,
+        estMinutes: 8,
         title: 'Build the dashboard in Gemini\'s Canvas',
         body:
-          'Use Gemini, in a new chat, with the CSV attached and Canvas on from the Tools menu. Pro handles it better, but if no preview appears, switch to Flash. The first build often falls over: just send it again.',
+          'Use Gemini, in a new chat, with the CSV attached and Canvas on from the Tools menu. Pro handles it better, but if no preview appears, switch to Flash. While it builds, open ours in step 2.',
         promptLabel: 'THE BUILD PROMPT',
         attachLabel: 'NEW CHAT',
         attach: [A.hesaData],
@@ -988,10 +988,10 @@ export const MISSIONS = [
       },
       {
         tier: 'core',
-        estMinutes: 3,
+        estMinutes: 5,
         title: 'Always verify, and repair if required',
         body:
-          'The first version of The Matts\' app got the data slightly wrong, and it flattered Cardiff (Thanks Gemini 😂). Run the repair in this same chat, reattaching the CSV.',
+          'The first version of The Matts\' app got the data slightly wrong, and it flattered Cardiff (Thanks Gemini 😂). Now repair your own build: in the same chat, paste the repair prompt and attach the CSV again.',
         // {download} in the body renders Matt's screenshot of the Canvas Download
         // button inline, so the reader sees the control they are looking for.
         bodyIcons: {
@@ -1000,7 +1000,7 @@ export const MISSIONS = [
         attachLabel: 'SAME CHAT',
         attach: [A.repairPromptBelow, A.hesaData],
         promptLabel: 'THE REPAIR PROMPT',
-        promptNote: '[reattach the CSV in this chat]',
+        promptNote: '[attach the CSV again: Gemini must read the file, not its memory of it]',
         promptEmphasis: 'Check every number in the app against the CSV',
         prompt:
           'The app has a copy of its data written inside it. Check every number in the app against the CSV, which is the only source you should trust. List anything that does not match, then rebuild the file using the CSV values only. Do not retype, round or fill in any figure: if a cell is blank, show NEEDS DATA.',
@@ -1015,7 +1015,7 @@ export const MISSIONS = [
             alt: 'The Canvas button in Gemini, a small grey chip reading Canvas.',
           },
           // Only needed on this route, where an HTML file is actually uploaded.
-          promptLabel: 'ADD THIS LINE ABOVE THE PROMPT',
+          promptLabel: 'PASTE THIS FIRST, THEN THE REPAIR PROMPT UNDER IT',
           prompt:
             'Open a Canvas workspace for the attached HTML file and rebuild it there, so it runs as an app rather than showing as code in the chat.',
         },
