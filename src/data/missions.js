@@ -532,9 +532,14 @@ export const MISSIONS = [
       {
         tier: 'core',
         estMinutes: 1,
-        title: 'Copy the report out',
+        title: 'Copy the Deep Research Report',
         body:
-          'Click "Share and export" at the top of the report. At Cardiff that offers "Copy contents" and "Export to notebook". Use "Copy contents" today; the notebook route is useful later, not here. Out of runs? Use Deep_research_output.pdf from the links above.',
+          'Click "Share and export", then "Copy contents". Cardiff also offers "Export to notebook", useful later but not here. Paste the report into a Word document and save it: Copilot reads an attached file better than one very long paste.',
+        backup: {
+          label: 'OR PASTE IT STRAIGHT IN',
+          text:
+            'Skip Word and paste the report at the end of the Copilot prompt in step 4. Quicker, but a long report may not survive the box. Out of runs? Use Deep_research_output.pdf from the links above.',
+        },
       },
       {
         tier: 'core',
