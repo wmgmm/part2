@@ -630,7 +630,7 @@ export const MISSIONS = [
     ],
     verdictBy: 'The Matts',
     verdict:
-      'Models weight nouns, not negations, so describe what you want rather than banning what you do not. And an image the model cannot describe back to you is one a screen reader user cannot use either.',
+      'Describe what you want rather than banning what you do not. And an image the model cannot describe back to you is one a screen reader user cannot use either.',
   },
 
   {
