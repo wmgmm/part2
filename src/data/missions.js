@@ -311,11 +311,13 @@ Subject: [Replace only this section for each image]`;
 // Deck slide 19. Exercise 02, step 4.
 const MH_ACCESSIBILITY_AUDIT = `Describe this image for someone who cannot see it. What is the main message? What might be ambiguous or misleading? Quote any words in the image exactly, and say so if you cannot read them. Do not guess anyone's age, background or feelings.
 
+Be concise: about 60 words for the description, then one sentence for each answer. No preamble, no hedging, no lists of maybes.
+
 Then end with four labelled lines:
 
 ALT TEXT: under 125 characters, most important thing first, written for what the image is doing on the page rather than a list of what is in it. Assume it needs alt text, and do not start it with "image of".
-I ASSUMED: the one thing you had to guess about where this image will be used.
-IN GREYSCALE: what the colour alone is carrying that would be lost in black and white, or "nothing".
+I ASSUMED: the one guess you had to make about where this image will be used. Name one, not a list.
+IN GREYSCALE: does any meaning depend on colour alone? Say "nothing" if not. Do not comment on how it looks.
 A PERSON COULD: what is the single change we could make to the image to improve its accessibility?`;
 
 // Deck slide 21, the short version he shows first. Exercise 03, step 1.
