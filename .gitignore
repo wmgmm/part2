@@ -5,3 +5,6 @@ dist/
 
 # Participant folder: copies of files already tracked under public/
 deliverables/2026-09-08-participant-files/Exercise_*/
+
+# Copies of files already tracked under public/placeholders/
+deliverables/2026-09-08-workshop-pack/large/Demand_First_Purchasing.pptx
