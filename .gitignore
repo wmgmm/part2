@@ -2,3 +2,6 @@ node_modules/
 dist/
 .DS_Store
 *.local
+
+# Participant folder: copies of files already tracked under public/
+deliverables/2026-09-08-participant-files/Exercise_*/
