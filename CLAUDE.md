@@ -102,8 +102,7 @@ https://wmgmm.github.io/thematts/workshop.html:
   to The Matts via `verdictBy`.
 - **UK English, no emdashes.**
 
-Site total is about 1,100 words of step body, down from 3,000. Chris Gravitas survives only
-in the gallery memo. All prompts follow `docs/PROMPT_GUIDANCE_2026.md`.
+Site total is about 1,100 words of step body. All prompts follow `docs/PROMPT_GUIDANCE_2026.md`.
 
 **Page order:** eyebrow, title and tool cards, then `brief` (the goal, black), then
 `toolInfo.feature` (what the tool is, grey). Goal before explanation.
@@ -173,12 +172,13 @@ thumbnails, attach lists, `attachExtra` and logos, derived from `MISSIONS` so it
 **A new field naming a file must be added to `collectUrls` in `DoctorPanel.jsx` in the same
 commit.** Missed twice, both times reporting all-clear over an invisible asset.
 
-Fifteen files ship. **Not generated:** `Sustainable-Futures-en.pdf` (the plan),
+Sixteen files ship. **Not generated:** `Sustainable-Futures-en.pdf` (the plan),
 `Deep_research_output.pdf` (01's fallback), `Example_Training_Session.pdf` (05's backup source),
-`HESA_Estates_Management.xlsx` (13 MB, **unlinked**, the generator's input), three real Canvas
-runs: `Cardiff_Estates_Dashboard.html` (06 step 2), `Demand_First_Game.html` (03 step 4, rescored
-to rank the four stages as the plan does), `Example_Bubble_Chart.html` (fabricated, **unlinked**);
-and `Demand_First_Adventure.html`, a text adventure built to a PRD, beside the game on 03 step 4.
+`HESA_Estates_Management.xlsx` (13 MB, **unlinked**, the generator's input); real tool runs:
+`Cardiff_Estates_Dashboard.html` (06 step 2), `Demand_First_Game.html` (03 step 4, rescored to rank
+the four stages as the plan does), `Demand_First_Purchasing.pptx` (05, the brand skill in
+Notebook), `Example_Bubble_Chart.html` (fabricated, **unlinked**); and
+`Demand_First_Adventure.html`, a text adventure built to a PRD, beside the game on 03 step 4.
 **Generated:** the five skills, `Example_Style_Block.md` and `HESA_Estates_Workshop.csv`/`.xlsx`.
 
 ## Styling

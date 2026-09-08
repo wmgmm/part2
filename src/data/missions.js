@@ -404,6 +404,15 @@ const A = {
     note: "Here's one we made earlier, in case Exercise 04 did not run for you. Upload it to Notebook as a source.",
     thumb: EXAMPLE_ICON,
   },
+  // A real run of Cardiff_Brand_SKILL.md, exported from Notebook: the deck
+  // Exercise 05 is asking for, so the room can see the target first.
+  brandDeckExample: {
+    label: 'OPTIONAL: THE DECK WE MADE EARLIER',
+    filename: 'Demand_First_Purchasing.pptx',
+    downloadPath: `${BASE}placeholders/Demand_First_Purchasing.pptx`,
+    note: 'A real Notebook run with the Cardiff brand skill, on the plan\'s purchasing section. This is what the skill does to a deck.',
+    thumb: EXAMPLE_ICON,
+  },
   // The picture Exercise 02 works from. Served from the site root rather than
   // placeholders/, and it is its own thumbnail.
   studySpace: {
@@ -900,7 +909,7 @@ export const MISSIONS = [
     workflow: ['Add your training', 'Paste the brand skill', 'Generate and export', 'Run it again'],
     brief:
       'Turn your training session into a slide deck that looks like it came from this university.',
-    artifacts: [A.exampleTraining],
+    artifacts: [A.brandDeckExample, A.exampleTraining],
     steps: [
       {
         tier: 'core',
