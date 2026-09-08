@@ -148,6 +148,12 @@ def page(m, url):
         story.append(Paragraph(f"{i}.  {esc(s['title'])}", st["step"]))
         if s.get("body"):
             story.append(Paragraph(clean(s["body"]), st["body"]))
+        for part in s.get("parts", []):
+            story.append(Paragraph(f"<b>{part['letter']}.</b> {clean(part.get('body', ''))}", st["body"]))
+            for frm, to in part.get("examples", []):
+                story.append(Paragraph(esc(f"Instead of \u201c{frm}\u201d write \u201c{to}\u201d"), st["note"]))
+            story += attach_line(part)
+            story += prompt_block(part, i)
         story += attach_line(s)
         arts = s.get("artifact")
         for a in (arts if isinstance(arts, list) else ([arts] if arts else [])):
@@ -156,6 +162,8 @@ def page(m, url):
         if s.get("backup"):
             b = s["backup"]
             story.append(Paragraph(f"<b>{esc(b.get('label') or 'Backup')}:</b> {clean(b.get('text', ''))}", st["note"]))
+            if b.get("after"):
+                story.append(Paragraph(clean(b["after"]), st["note"]))
     if m.get("verdict"):
         story.append(Paragraph("“" + esc(m["verdict"]) + "”", st["verdict"]))
         story.append(Paragraph(esc(m.get("verdictBy", "")), st["by"]))

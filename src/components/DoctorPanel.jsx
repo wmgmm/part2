@@ -29,12 +29,14 @@ function collectUrls() {
       // nothing enforces that, and attachExtra is an image nothing else points at.
       // A strip-only item (the reader's own file, the prompt above) has no
       // downloadPath; its icon is still a file to check.
-      [...(s.attach || []), ...(s.backup?.attach || [])].forEach(a => {
+      const parts = s.parts || [];
+      [...(s.attach || []), ...(s.backup?.attach || []), ...parts.flatMap(p => p.attach || [])].forEach(a => {
         if (a.downloadPath) add(a.downloadPath, `${m.code} · ${a.filename}`);
         if (a.thumb) add(`${BASE}${a.thumb}`, `${m.code} · ${a.thumb}`);
       });
       if (s.attachExtra) add(`${BASE}${s.attachExtra.src}`, `${m.code} · ${s.attachExtra.src}`);
       if (s.backup?.attachExtra) add(`${BASE}${s.backup.attachExtra.src}`, `${m.code} · ${s.backup.attachExtra.src}`);
+      parts.forEach(p => { if (p.attachExtra) add(`${BASE}${p.attachExtra.src}`, `${m.code} · ${p.attachExtra.src}`); });
       Object.values(s.bodyIcons || {}).forEach(ic => add(`${BASE}${ic.src}`, `${m.code} · ${ic.src}`));
     });
   });

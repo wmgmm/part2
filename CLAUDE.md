@@ -129,9 +129,10 @@ an exercise, edit the data file.
 | `prompt`, `promptLabel` | copyable `PromptBox` |
 | `promptNote` | bold line under the prompt, **deliberately not copied** (it sits outside the `<pre>`). For "[attach the ...]": an instruction to the reader, not text to send. |
 | `promptEmphasis` | a substring of `prompt` shown bold. **Display only:** COPY writes the plain string, so it is safe on `MH_*`. A non-matching substring degrades to no emphasis, never lost text. |
-| `backup` | `{label, text, examples, after, attach, attachLabel, attachExtra}`: a card under the prompt for the other route, label defaults to BACKUP. `examples` is a list of `[from, to]` swaps, `after` a closing line, the strip and an optional `prompt`/`promptLabel` work as the step's own, and `text` renders the step's `bodyIcons` |
+| `backup` | `{label, text, examples, after, attach, attachLabel, attachExtra, prompt, promptLabel}`: a card under the prompt for the other route, label defaults to BACKUP; `examples` is a list of `[from, to]` swaps, `after` a closing line, `text` and `after` render `bodyIcons` and bold |
 | `bodyIcons` | `{name: {src, alt}}`; `{name}` in `body` renders that image inline, for a control the reader must find. `**word**` in a `body` renders bold |
 | `artifact` | a download card inside the step, or a list of them, for files used only there |
+| `parts` | lettered sub-steps, `[{letter, body, examples, attach, attachLabel, attachExtra, prompt, promptLabel, promptNote}]`, badges aligned down the left (02 step 3) |
 | `attach`, `attachLabel`, `attachExtra` | the attach strip: paperclip, label, each file as thumbnail plus filename, optionally a trailing control image joined by "then enable". Label defaults from the count. `attachExtra` works with no files; an item with `paste: true` shows no paperclip. |
 | `image` | `{src, alt, caption, ui}`; `src` is site-root relative, `ui: true` gives it the full column |
 | `choice`, `hook`, `toolChip`, `collapsed` | the accordion rows under the stretch heading |
@@ -196,5 +197,4 @@ covers (`*_cover.*`) keep one. Escaperoom and leaderboard were deleted 2026-09-0
 `wmgmm/part2` → https://wmgmm.github.io/part2/). Vite base path `/part2/`: keep it matching
 the repo name.
 
-**Never `git push` unless Matt explicitly asks in that same message.** `main` is many commits
-ahead of `origin/main` and the live site is far behind. That is expected, not a fault.
+**Never `git push` unless Matt explicitly asks in that same message.** Unpushed commits are expected.

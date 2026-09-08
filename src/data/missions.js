@@ -522,8 +522,8 @@ const A = {
     paste: true,
   },
   stepTwoPrompt: {
-    label: 'YOUR STEP 2 PROMPT',
-    filename: 'your step 2 prompt with your rewritten line on the end',
+    label: 'THE STYLE PROMPT FROM STEP 1',
+    filename: 'the prompt from step 1, subject rewritten',
     thumb: PROMPT_ICON,
     paste: true,
   },
@@ -671,27 +671,43 @@ export const MISSIONS = [
         tier: 'core',
         estMinutes: 3,
         title: 'Try to ban something from the image',
-        body:
-          'Add the line below and send it. You **MIGHT** still get text: naming what you do not want puts it into the prompt, and the noun outweighs the negation. Describe what you want instead, a bare white wall rather than no signage.',
-        promptLabel: 'THE LINE TO ADD',
-        prompt: 'No text anywhere in the image.',
-        attachLabel: 'SAME CHAT',
-        attach: [A.thisPrompt],
-        backup: {
-          label: 'STILL GOT TEXT?',
-          text: 'Copy your step 2 message from this chat first. Then rewrite the ban as the thing you do want: describe the surfaces, do not name what should not be on them.',
-          // Google's own advice for Gemini image generation, which has no
-          // negative prompt field: describe the scene, do not ban the thing.
-          examples: [
-            ['No text', 'A blank sign, bare walls and blank screens'],
-            ['No cats', 'Mr Judge alone, the sofa to himself'],
-            ['No cars', 'A deserted street'],
-            ['No people', 'An empty room'],
-          ],
-          after: 'Those words are still in this chat and still pulling on it, so you need a new chat to shake them off.',
-          attachLabel: 'NEW CHAT',
-          attach: [A.stepTwoPrompt],
-        },
+        parts: [
+          {
+            letter: 'A',
+            body:
+              'In the same chat, add the line below and send it. You **MIGHT** still get text: naming what you do not want puts it into the prompt, and the noun outweighs the negation.',
+            attachLabel: 'SAME CHAT',
+            attach: [A.thisPrompt],
+            promptLabel: 'THE LINE TO ADD',
+            prompt: 'No text anywhere in the image.',
+          },
+          {
+            letter: 'B',
+            body:
+              'Still got text? Send the ban rewritten as the thing you do want: describe the surfaces, do not name what should not be on them.',
+            // Google's own advice for Gemini image generation, which has no
+            // negative prompt field: describe the scene, do not ban the thing.
+            examples: [
+              ['No text', 'A blank sign, bare walls and blank screens'],
+              ['No cats', 'Mr Judge alone, the sofa to himself'],
+              ['No cars', 'A deserted street'],
+              ['No people', 'An empty room'],
+            ],
+            attachLabel: 'SAME CHAT',
+            attach: [A.thisPrompt],
+            promptLabel: 'THE LINE TO SEND INSTEAD',
+            prompt: 'A blank sign, bare walls and blank screens',
+          },
+          {
+            letter: 'C',
+            body:
+              'Still got text? Those words are in this chat and still pulling on it. Start a NEW chat and paste the style prompt Copilot made in step 1, with what you want written into the subject, not banned at the end.',
+            attachLabel: 'NEW CHAT',
+            attach: [A.stepTwoPrompt],
+            promptLabel: 'THE SUBJECT, REWRITTEN: PASTE THIS OVER [INSERT SUBJECT HERE]',
+            prompt: 'Mr Judge complaining about his noisy cats, with a BLANK sign',
+          },
+        ],
       },
       {
         tier: 'core',

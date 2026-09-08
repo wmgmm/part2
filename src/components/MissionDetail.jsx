@@ -69,6 +69,42 @@ function renderBody(body, icons = {}) {
   });
 }
 
+function SwapList({ examples }) {
+  return (
+    <ul className="step-backup__swaps">
+      {examples.map(([from, to]) => (
+        <li key={from}>
+          <span className="swap-mark swap-mark--no" aria-hidden="true">&#10007;</span>
+          <span className="sr-only">Instead of </span>
+          <span className="swap-from">&ldquo;{from}&rdquo;</span>
+          <span className="swap-mark swap-mark--yes" aria-hidden="true">&#10003;</span>
+          <span className="sr-only">, write </span>
+          &ldquo;{to}&rdquo;
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+// A lettered sub-step (A, B, C) inside one numbered step: its own body,
+// swaps, attach strip and prompt, so siblings line up down the left.
+function StepPart({ part, icons }) {
+  return (
+    <li className="step-part">
+      <span className="step-part__num" aria-hidden="true">{part.letter}</span>
+      <span className="sr-only">Part {part.letter}. </span>
+      <div className="step-part__content">
+        {part.body && <p className="mission-step__body">{renderBody(part.body, icons)}</p>}
+        {part.examples && <SwapList examples={part.examples} />}
+        {(part.attach || part.attachExtra) && (
+          <AttachStrip items={part.attach} label={part.attachLabel} extra={part.attachExtra} />
+        )}
+        {part.prompt && <PromptBox prompt={part.prompt} label={part.promptLabel} note={part.promptNote} />}
+      </div>
+    </li>
+  );
+}
+
 function ArtifactCard({ artifact }) {
   const [copied, setCopied] = useState(false);
   const isText = /\.(md|txt)$/.test(artifact.filename);
@@ -325,21 +361,10 @@ function ChoiceStep({ step }) {
               <span className="step-backup__label">{step.backup.label || 'Backup'}</span>
               <p className="step-backup__text">{renderBody(step.backup.text, step.bodyIcons)}</p>
               {step.backup.examples && (
-                <ul className="step-backup__swaps">
-                  {step.backup.examples.map(([from, to]) => (
-                    <li key={from}>
-                      <span className="swap-mark swap-mark--no" aria-hidden="true">&#10007;</span>
-                      <span className="sr-only">Instead of </span>
-                      <span className="swap-from">&ldquo;{from}&rdquo;</span>
-                      <span className="swap-mark swap-mark--yes" aria-hidden="true">&#10003;</span>
-                      <span className="sr-only">, write </span>
-                      &ldquo;{to}&rdquo;
-                    </li>
-                  ))}
-                </ul>
+                <SwapList examples={step.backup.examples} />
               )}
               {step.backup.after && (
-                <p className="step-backup__after">{step.backup.after}</p>
+                <p className="step-backup__after">{renderBody(step.backup.after, step.bodyIcons)}</p>
               )}
               {step.backup.attach && (
                 <AttachStrip items={step.backup.attach} label={step.backup.attachLabel} extra={step.backup.attachExtra} />
@@ -381,6 +406,11 @@ function Step({ step, number, lane }) {
       {laneNotes.map((note, i) => (
         <p key={i} className="mission-step__lane-note">{note}</p>
       ))}
+      {step.parts && (
+        <ol className="step-parts">
+          {step.parts.map(part => <StepPart key={part.letter} part={part} icons={step.bodyIcons} />)}
+        </ol>
+      )}
       {step.image && <StepFigure image={step.image} />}
       {(step.attach || step.attachExtra) && (
         <AttachStrip items={step.attach} label={step.attachLabel} extra={step.attachExtra} />
@@ -396,21 +426,10 @@ function Step({ step, number, lane }) {
               <span className="step-backup__label">{step.backup.label || 'Backup'}</span>
               <p className="step-backup__text">{renderBody(step.backup.text, step.bodyIcons)}</p>
               {step.backup.examples && (
-                <ul className="step-backup__swaps">
-                  {step.backup.examples.map(([from, to]) => (
-                    <li key={from}>
-                      <span className="swap-mark swap-mark--no" aria-hidden="true">&#10007;</span>
-                      <span className="sr-only">Instead of </span>
-                      <span className="swap-from">&ldquo;{from}&rdquo;</span>
-                      <span className="swap-mark swap-mark--yes" aria-hidden="true">&#10003;</span>
-                      <span className="sr-only">, write </span>
-                      &ldquo;{to}&rdquo;
-                    </li>
-                  ))}
-                </ul>
+                <SwapList examples={step.backup.examples} />
               )}
               {step.backup.after && (
-                <p className="step-backup__after">{step.backup.after}</p>
+                <p className="step-backup__after">{renderBody(step.backup.after, step.bodyIcons)}</p>
               )}
               {step.backup.attach && (
                 <AttachStrip items={step.backup.attach} label={step.backup.attachLabel} extra={step.backup.attachExtra} />
