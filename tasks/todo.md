@@ -3877,3 +3877,26 @@ yesterday's copy and make you doubt a correct edit.** Add any new file-bearing s
 - `PROMPT_LIBRARY` still routes at `#/prompts` with nothing linking to it. Relink or delete.
 - The gap note in a real 04 run came back at eighteen bullets. Capping it is a one-line skill
   change, deliberately not made without a second run to look at.
+
+## 2026-09-21 (addendum 112): Exercise 01 step 4, the PDF ask comes out of the top-and-tail prompt
+
+Matt ran Exercise 01 live: Copilot's PDF conversion of the rebuilt report was poor, and on
+the first send Copilot summarised the attachment or asked a question instead of producing the
+report. Matt directed one edit to `MH_COPILOT_TOP_AND_TAIL` (recorded in the block's header
+comment; the anchor hash is now `3ea04f3e…`, updated in CLAUDE.md):
+
+- Every PDF reference is gone. Output is "the completed, professionally formatted new report,
+  as a document".
+- The prompt now opens by naming the input and the output: the Deep Research report is "the
+  source report", "the scaffold"; the job is "a new, standalone report that fact-checks,
+  corrects and improves the source report, written afresh". "The attached PDF" became "the
+  source report" throughout, since it may be pasted rather than attached.
+- Run-now instruction at the top ("Do this now, in this reply. Do not ask clarifying
+  questions, do not summarise the source report first...") and at the bottom ("If something
+  is unclear, make a sensible choice and record it in the change appendix rather than asking").
+- Step 4 body gained a fallback line: reply "Produce the full report now" if Copilot
+  summarises or asks. **Untested**: it is the standard nudge, not a verified one.
+
+Verified: `npm run build` green; the bundle contains the new opening and the fallback line,
+`standalone PDF report` no longer appears, `CRITICAL SEPARATION RULE` (the display emphasis)
+still does. CLAUDE.md still 200 lines. Pushed on Matt's ask in the same message.

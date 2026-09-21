@@ -39,7 +39,7 @@ Core step time is 86 minutes, bonus excluded, so nobody runs all six.
 
 **Exercises 01-03 are Matt Hayden's.** His prompts are held as `MH_*` constants at the top
 of `missions.js`, **verbatim** from his deck (`AI in the workplace 2.pptx`, slides 7-24) and
-email, except three edits Matt directed on 2026-09-07, listed in the block's header comment
+email, except four edits Matt directed on 2026-09-07 and one on 2026-09-21, listed in the block's header comment
 (deck slides 9, 17 and 19 now differ). **Do not reword, retitle, reformat or improve them**
 beyond that. `promptEmphasis` is allowed on them because it is display-only. Exercises 04-06
 are Matt Mort's and can be edited freely.
@@ -51,7 +51,7 @@ as comments are added above it and reports a false mismatch.
 start=$(grep -n "^const MH_DEEP_RESEARCH" src/data/missions.js | cut -d: -f1)
 end=$(grep -n "^const MH_CANVAS_GAME" src/data/missions.js | cut -d: -f1)
 sed -n "${start},${end}p" src/data/missions.js | sha256sum
-# bbd4bd12a54c03beae87c57434155273b848ae05c933f199c4448244c5545207
+# 3ea04f3e121b071f504a9c937588e861c79dd064d604903426fdfb6d7319fd4f
 ```
 
 ### The skills

@@ -119,6 +119,11 @@ export const APPS = {
 // ending in a ranked list of changes, researched 2026-09-07 (see tasks/todo.md
 // addenda 107 and 108); MH_CANVAS_GAME gained one sentence naming the four-stage
 // 'Demand First' principle as the thing the game should teach.
+// One more on 2026-09-21: MH_COPILOT_TOP_AND_TAIL no longer asks for a PDF
+// (Copilot's conversion was poor); it now opens by naming the input (the
+// source report, the scaffold) and the output (a new report), tells Copilot to
+// run now without questions or a summary, and ends with the same. "The
+// attached PDF" became "the source report" throughout.
 // Nothing else was changed.
 // ============================================================================
 
@@ -131,7 +136,7 @@ const MH_DEEP_RESEARCH = `The Sustainable Futures plan establishes a four-stage 
 // His covering email. Exercise 01, step 4. Deck slide 16 is the summary of it.
 const MH_COPILOT_TOP_AND_TAIL = `Act as a rigorous research editor, fact-checker and professional report designer.
 
-Use the Google Deep Research report as source material and produce a completely new, standalone PDF report. The report is supplied in one of two ways: attached to this message as a file, or pasted at the end of this prompt under the heading DEEP RESEARCH REPORT BY GEMINI, PASTED BELOW. Wherever this prompt says "the attached PDF", it means that report.
+You are given one input: a Google Deep Research report, either attached to this message as a file or pasted at the end of this prompt under the heading DEEP RESEARCH REPORT BY GEMINI, PASTED BELOW. Call it the source report. It is the scaffold. Your job is to produce one output: a new, standalone report that fact-checks, corrects and improves the source report, written afresh. Do this now, in this reply. Do not ask clarifying questions, do not summarise the source report first, and do not describe what you would do: produce the finished report.
 
 CRITICAL SEPARATION RULE
 
@@ -149,12 +154,12 @@ Do not use phrases such as:
 - "the previous version omitted";
 - "our review found".
 
-Use the information and sources from the attached PDF as research inputs, but write the main report entirely afresh. References to the original document and the changes made are permitted only in the final change appendix.
+Use the information and sources from the source report as research inputs, but write the main report entirely afresh. References to the original document and the changes made are permitted only in the final change appendix.
 
 1. Fact-checking
 
 - Check every material factual claim, statistic, date, quotation, target and organisational policy against its cited source.
-- Open and assess the underlying sources rather than relying on the PDF's summaries or reference list.
+- Open and assess the underlying sources rather than relying on the source report's summaries or reference list.
 - Confirm that each source directly supports the specific claim attributed to it.
 - Check whether information remains current as of the date the new report is produced.
 - Prioritise primary and authoritative sources, including legislation, government publications, official organisational documents, recognised datasets and peer-reviewed research.
@@ -177,7 +182,7 @@ Use the information and sources from the attached PDF as research inputs, but wr
 Create an entirely new report, rather than an edited or annotated copy.
 
 The report must:
-- preserve the useful subject, scope and purpose of the attached PDF;
+- preserve the useful subject, scope and purpose of the source report;
 - present a coherent analysis that stands on its own;
 - use plain UK English suitable for an informed non-specialist audience;
 - use Welsh sources and policy where relevant;
@@ -187,7 +192,7 @@ The report must:
 - use concise paragraphs, informative headings and a consistent visual hierarchy;
 - avoid promotional, exaggerated or overly certain language.
 
-The main report must contain no references to the attached PDF, Google Deep Research, the fact-checking exercise or the process used to produce the new version.
+The main report must contain no references to the source report, Google Deep Research, the fact-checking exercise or the process used to produce the new version.
 
 4. Citations and references
 
@@ -213,7 +218,7 @@ All visual elements must:
 - use legible text, accessible colours and a professional layout;
 - avoid decorative imagery that does not add information.
 
-Do not reproduce illustrations from the attached PDF unless their reuse is legally permitted and their accuracy has been independently checked. Create new visuals where appropriate.
+Do not reproduce illustrations from the source report unless their reuse is legally permitted and their accuracy has been independently checked. Create new visuals where appropriate.
 
 6. Conclusions and practical implications
 
@@ -230,7 +235,7 @@ End with an appendix titled:
 
 "Appendix: Changes from the original Google Deep Research report"
 
-This appendix is the only part of the new PDF that may mention the original report, source document, Google Deep Research or the revision process.
+This appendix is the only part of the new report that may mention the original report, source document, Google Deep Research or the revision process.
 
 For every substantive change, record:
 - original page or section;
@@ -246,7 +251,7 @@ Group minor copy-editing, formatting and presentational improvements rather than
 
 8. Final quality controls
 
-Before producing the final PDF:
+Before producing the final report:
 
 - conduct a second claim-by-claim evidence check;
 - confirm that every material factual claim is supported by the cited source;
@@ -257,11 +262,11 @@ Before producing the final PDF:
 - check that links and citation numbering work correctly;
 - ensure terminology is used consistently;
 - ensure uncertainties and evidence limitations are clearly expressed;
-- confirm that the main report contains no mention of the original PDF, Google Deep Research or the revision process;
+- confirm that the main report contains no mention of the source report, Google Deep Research or the revision process;
 - confirm that all commentary on changes is confined to the appendix;
 - confirm that the final document reads as a coherent, standalone report.
 
-Output only the completed, professionally formatted new PDF. Do not substitute an outline, draft, summary, methodology note or commentary for the finished PDF.
+Output only the completed, professionally formatted new report, as a document. Do not substitute an outline, draft, summary, methodology note or commentary for the finished report. If something is unclear, make a sensible choice and record it in the change appendix rather than asking.
 
 ---
 
@@ -606,7 +611,7 @@ export const MISSIONS = [
         estMinutes: 5,
         title: 'Top and tail it in Copilot',
         body:
-          'Use Copilot. Attach the file you saved in step 3. You could copy and paste after the last line of the prompt, but it is best to attach a file because a long paste can get truncated.',
+          'Use Copilot. Attach the file you saved in step 3. You could copy and paste after the last line of the prompt, but it is best to attach a file because a long paste can get truncated. If Copilot summarises or asks a question instead, reply "Produce the full report now" and it will.',
         promptLabel: 'THE FACT-CHECK AND REDRAFT',
         attachLabel: 'NEW CHAT',
         attach: [A.yourReport, A.thisPrompt],
