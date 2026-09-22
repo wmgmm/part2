@@ -3900,3 +3900,14 @@ comment; the anchor hash is now `3ea04f3e…`, updated in CLAUDE.md):
 Verified: `npm run build` green; the bundle contains the new opening and the fallback line,
 `standalone PDF report` no longer appears, `CRITICAL SEPARATION RULE` (the display emphasis)
 still does. CLAUDE.md still 200 lines. Pushed on Matt's ask in the same message.
+
+## 2026-09-22 (addendum 113): Exercise 01 step 1 suggests attaching SF.pdf
+
+Matt's ask: on a few live runs, attaching Sustainable-Futures-en.pdf to the Deep Research
+brief did not work on every account, so the step now says "try". Step 1 gained
+`attach: [A.susPlan]` with `attachLabel: 'TRY ATTACHING'`, so the strip reads TRY ATTACHING,
+clip, cover thumbnail, Sustainable-Futures-en.pdf, "then enable", the Deep Research button.
+Body reworded to name the file (not "the plan", which collides with the research plan in the
+same step) and to say carry on without it if it refuses. `MH_*` untouched, hash `3ea04f3e…`.
+Verified in the preview build with a cache-busting query: strip text, both images present.
+Pushed on Matt's ask in the same message.

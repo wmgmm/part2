@@ -578,8 +578,9 @@ export const MISSIONS = [
         estMinutes: 2,
         title: 'Turn on Deep Research and paste the prompt',
         body:
-          'Use Gemini. Click the + under the box where you type, then select Deep Research (limited usage). Paste the brief and send it: Gemini replies with a research plan, not the report. No Deep Research on your account? Use the Matts\' report at step 4.',
-        attachLabel: 'ENABLE',
+          'Use Gemini. Click the + under the box where you type: try attaching Sustainable-Futures-en.pdf, then select Deep Research (limited usage). Attaching does not work on every account, so carry on without it if it refuses. Paste the brief and send it: Gemini replies with a research plan, not the report. No Deep Research at all? Use the Matts\' report at step 4.',
+        attachLabel: 'TRY ATTACHING',
+        attach: [A.susPlan],
         attachExtra: {
           src: 'deep_research_button.png',
           alt: 'The Deep Research item in Gemini\'s + menu, ticked.',
